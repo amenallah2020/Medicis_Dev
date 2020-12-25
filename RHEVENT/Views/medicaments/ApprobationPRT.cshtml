@@ -1,0 +1,102 @@
+﻿@model RHEVENT.Models.CommandeL
+@{
+    ViewBag.titre_page = "Approbation PRT";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+@using (Html.BeginForm())
+{
+    <div class="table-responsive table-responsive-data2">
+        <table class="table" id="table">
+
+            <thead>
+                <tr>
+
+                    <th>
+                        <span class="badge badge-primary">           @Html.DisplayNameFor(model => model.Designation_medicament) </span>
+                    </th>
+                    <th>
+                        <span class="badge badge-primary">     @Html.DisplayNameFor(model => model.Code_medicament) </span>
+                    </th>
+                    <th>
+                        <span class="badge badge-primary">   @Html.DisplayNameFor(model => model.Nom_prenom) </span>
+                    </th>
+                    <th>
+                        <span class="badge badge-primary">    @Html.DisplayNameFor(model => model.Service) </span>
+                    </th>
+
+                    <th>
+                        <span class="badge badge-primary">    @Html.DisplayNameFor(model => model.Decision_prt) </span>
+                    </th>
+                    <th>
+                        <span class="badge badge-primary">     @Html.DisplayNameFor(model => model.Commentaire_prt) </span>
+                    </th>
+                    <th>
+
+                    </th>
+
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.list_afficher)
+                {
+                  
+                    <tr class="tr-shadow">
+                        <td>
+                            <span class="badge badge-light">   @Html.DisplayFor(modelItem => item.Designation_medicament) </span>
+                        </td>
+                        <td>
+                            <span class="badge badge-info">     @Html.DisplayFor(modelItem => item.Code_medicament) </span>
+                        </td>
+                        <td>
+                            <span class="badge badge-info">      @Html.DisplayFor(modelItem => item.Nom_prenom) </span>
+                        </td>
+                        <td>
+                            <span class="badge badge-info">      @Html.DisplayFor(modelItem => item.Service) </span>
+                        </td>
+                        <td>
+                                 @Html.DisplayFor(modelItem => item.Decision_prt) 
+                        </td>
+                        <td>
+                               @Html.DisplayFor(modelItem => item.Commentaire_prt) 
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Editer", "Update_demande_by_PRT", new { id = item.Id })
+                        </td>
+
+                        <td>
+                            @Html.HiddenFor(modelItem => item.Id, new { htmlAttributes = new { @id = "rowtable" + item.Id } })
+                        </td>
+                    </tr>
+           
+                }
+        </table>
+
+    </div>
+}
+
+<script>
+  
+    var length_table = document.getElementById("table").rows.length;
+
+
+    for (var i = 1; i < length_table; i++)
+    {
+        
+       var table_element = document.getElementById("table").rows[i].cells[4].innerText;
+         
+        if (table_element == "RIEN") {
+            document.getElementById("table").rows[i].style.color = "blue"
+        }
+         if (table_element == "OUI") {
+            document.getElementById("table").rows[i].style.color = "green"
+        }
+         if (table_element == "NON") {
+            document.getElementById("table").rows[i].style.color = "red"
+        }
+      
+    }     
+
+</script>

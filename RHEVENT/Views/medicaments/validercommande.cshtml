@@ -1,0 +1,94 @@
+﻿@model RHEVENT.Models.CommandeL
+@{
+    ViewBag.titre_page = "Validation du demande";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Code_medicament)
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Designation_medicament)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantite_Commandee)
+            </th>
+        </tr>
+
+        @foreach (var item in Model.list_afficher)
+        {
+            <tr>
+                <td>
+                    @Html.EditorFor(modelItem => item.Code_medicament, new { htmlAttributes = new { @id = item.Code_medicament + item.Quantite_Commandee } })
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Designation_medicament)
+
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => item.Quantite_Commandee)
+
+                </td>
+
+
+            </tr>
+        }
+    </table>
+
+
+    <input type="hidden" class="form-control" id="list_lignes_valider" name="list_lignes_valider" />
+
+
+
+    <button type="submit" value="Create" class="btn btn-outline-success btn-lg btn-block" onclick="retour_list()">
+        <i class="fas fa-send"></i>
+        valider
+    </button>
+    <script>
+        function retour_list() {
+
+            allElements = document.getElementsByTagName("*");
+            var n = allElements.length;
+            var list = "";
+            for (var i = 0; i < n; i++) {
+
+                var sel = allElements[i].id;
+                if (sel.substring(0, 2) == 'PF' || sel.substring(0, 2) == 'PP') {
+                    list = list + sel;
+
+                }
+
+            }
+
+
+            var text = document.getElementById("list_lignes_valider");
+            text.value = list;
+
+
+        }
+    </script>
+
+
+
+}
+<button type="submit" value="Create" class="btn btn-outline-danger btn-lg btn-block" onclick="annuler()">
+    <i class="fas fa-send"></i>
+    annuler
+</button>
+
+<script>
+    function annuler()
+    {
+        window.location.href = '@Url.Action("Commande", "medicaments")';
+        }
+
+
+</script>

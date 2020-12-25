@@ -1,0 +1,119 @@
+﻿@model RHEVENT.Models.Conge
+@{
+    ViewBag.titre_page = "RH";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+    if (Model.acceptation_ressource != RHEVENT.Models.acceptation_ressource_humaine.Demande_en_cours)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("Action refusée ! Demande  prise en considération par le service RH");
+                window.location.href = "@Url.Action("Approbation_superieur_hiéarchique", "Conge")";
+            };
+        </script>
+    }
+}
+
+
+
+<h2 class="text" style="color:coral">
+    <span class="glyphicon   glyphicon-list-alt"> </span>
+    Congés - Approbation Sup.Hiérarchique
+</h2>
+<br /><br />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div  >
+        
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-4" })
+
+            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nom_prenom, htmlAttributes: new { @class = "control-label col-md-4" })
+
+            @Html.EditorFor(model => model.nom_prenom, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.nom_prenom, "", new { @class = "text-danger" })
+
+        </div>
+
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Date_emission_demande, htmlAttributes: new { @class = "control-label col-md-4" })
+
+            @Html.EditorFor(model => model.Date_emission_demande, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.Date_emission_demande, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.jour_debut, htmlAttributes: new { @class = "control-label col-md-4" })
+
+            @Html.EditorFor(model => model.jour_debut, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.jour_debut, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.heure_sortie, htmlAttributes: new { @class = "control-label col-md-4" })
+
+            @Html.EditorFor(model => model.heure_sortie, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.heure_sortie, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.jour_fin, htmlAttributes: new { @class = "control-label col-md-4" })
+
+            @Html.EditorFor(model => model.jour_fin, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.jour_fin, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.heure_entree, htmlAttributes: new { @class = "control-label col-md-4" })
+
+            @Html.EditorFor(model => model.heure_entree, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.heure_entree, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.commentaire_superieur_hiearchique, htmlAttributes: new { @class = "control-label col-md-4" })
+
+            @Html.EditorFor(model => model.commentaire_superieur_hiearchique, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.commentaire_superieur_hiearchique, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.acceptation_superieur, htmlAttributes: new { @class = "control-label col-md-4" })
+
+            @Html.EnumDropDownListFor(model => model.acceptation_superieur, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.acceptation_superieur, "", new { @class = "text-danger" })
+
+        </div>
+
+        <br />
+        @*<div class="form-group">*@
+            <div class="col-lg-12">
+                <button type="submit" value="Sauvegarder" class="btn btn-success">
+                    @*<i class="fa fa-save">*@
+                        Sauvegarder
+                    @*</i>*@
+                </button>
+            </div>
+        @*</div>*@
+    </div>
+}

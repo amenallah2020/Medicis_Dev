@@ -1,0 +1,93 @@
+﻿@model PagedList.IPagedList<RHEVENT.Models.Attestation>
+@using PagedList.Mvc
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.titre_page = "RH";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+
+<h2 class="text-danger ">
+    <span class="glyphicon  glyphicon-file"> </span>
+    Attestations - Mes attestaions
+</h2>
+
+
+<div class="row m-t-30">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-top-campaign" id="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @*class="badge badge-primary"*@
+                            <span style="color:grey">           Date demande </span>
+                        </th>
+                        <th>
+                            <span style="color:grey">      Titre demande </span>
+                        </th>
+                        <th>
+                            <span style="color:grey">   Etat demande </span>
+                        </th>
+                        <th>
+                            <span style="color:grey">    Commentaire </span>
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                @*class="badge badge-light"*@
+                                <span style="color:black ; font-size:12px">      @Html.DisplayFor(modelItem => item.Datetime) </span>
+                            </td>
+                            <td>
+                                <span  style="color:black  ; font-size:12px">     @Html.DisplayFor(modelItem => item.Intitule) </span>
+                            </td>
+                            <td>
+                                <span  style="color:black  ; font-size:12px">     @Html.DisplayFor(modelItem => item.etat_demande) </span>
+                            </td>
+                            <td>
+                                <span  style="color:black  ; font-size:12px">    @Html.DisplayFor(modelItem => item.commentaire) </span>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+   @* Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
+    @Html.PagedListPager(Model, page => Url.Action("Mes_attestations", new { page, PagedListRenderOptions.ClassicPlusFirstAndLast }))
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+    <script>
+
+        var length_table = document.getElementById("table").rows.length;
+        for (var i = 1; i < length_table; i++) {
+
+
+            var table_element = document.getElementById("table").rows[i].cells[2].innerText;
+
+            if (table_element == 'Demande_refusée') {
+                document.getElementById("table").rows[i].cells[2].style.color = "red"
+            }
+            if (table_element == 'Demande_validée') {
+                document.getElementById("table").rows[i].cells[2].style.color = "green"
+            }
+
+        }
+    </script>

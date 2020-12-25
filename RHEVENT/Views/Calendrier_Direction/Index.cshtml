@@ -1,0 +1,62 @@
+﻿@model IEnumerable<RHEVENT.Models.Calendrier_Direction>
+
+@{
+    /**/
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewBag.titre_page = "RH";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+<h2 class="text" style="color:crimson">
+    <span class="glyphicon   glyphicon-calendar"> </span>
+    Calendrier de direction - Gestion de calendrier
+</h2>
+<br />
+@*<h2>Index</h2>*@
+
+<p style="color:blue">
+    @Html.ActionLink("Ajouter", "Create")<br />
+</p>
+
+<table class="table">
+    <tr>
+        <th style="font-size:12px">
+            @Html.DisplayNameFor(model => model.matricule)
+        </th>
+        <th style="font-size:12px">
+            @Html.DisplayNameFor(model => model.nom_prenom)
+        </th>
+        <th style="font-size:12px">
+            @Html.DisplayNameFor(model => model.service)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.matricule)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nom_prenom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.service)
+            </td>
+            <td>
+                @Html.ActionLink("Modifier", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Détails", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Supprimer", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

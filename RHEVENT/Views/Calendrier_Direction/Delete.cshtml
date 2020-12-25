@@ -1,0 +1,56 @@
+﻿@model RHEVENT.Models.Calendrier_Direction
+
+@{
+    ViewBag.Title = "RH";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2 class="text" style="color:crimson">
+    <span class="glyphicon   glyphicon-calendar"> </span>
+    Calendrier de direction - Supprimer
+</h2>
+<br />
+ 
+
+<h3>Voulez-vous vraiment supprimer cela?</h3>
+<div>
+    <h4>Calendrier_Direction</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.matricule)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.matricule)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nom_prenom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nom_prenom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.service)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.service)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-success" /> |
+            @Html.ActionLink("Retour à la liste", "Index")
+        </div>
+    }
+</div>

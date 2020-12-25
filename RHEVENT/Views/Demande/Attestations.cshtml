@@ -1,0 +1,124 @@
+﻿@model PagedList.IPagedList<RHEVENT.Models.Attestation>
+@using PagedList.Mvc
+@using RHEVENT.Models
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.titre_page = "RH";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+ 
+
+<h2 class="text" style="color:crimson">
+    <span class="glyphicon   glyphicon-check"> </span>
+    Administration RH - Approbation des attestaions
+</h2>
+
+
+<div class="row m-t-30">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-top-campaign" id="table">
+                <thead>
+                    <tr>
+                        @*class="text-left"*@ @*class="badge badge-primary"*@
+                        <th>
+                            <span style="color:blue">    Demandeur </span>
+                        </th>
+                        <th>
+                            <span style="color:blue">     @Html.ActionLink("Matricule", "Attestations", new { sortOrder = ViewBag.MatriculeSortParam }) </span>
+                        </th>
+                        <th>
+                            <span style="color:blue">     @Html.ActionLink("Date demande", "Attestations", new { sortOrder = ViewBag.DateDemande }) </span>
+                        </th>
+                        <th>
+                            <span style="color:blue">     @Html.ActionLink("Titre demande", "Attestations", new { sortOrder = ViewBag.TitreDemande }) </span>
+                        </th>
+                        <th>
+                            <span style="color:blue">    @Html.ActionLink("Etat demande", "Attestations", new { sortOrder = ViewBag.EtatDemande }) </span>
+                        </th>
+                        <th>
+                            <span style="color:blue">      Commentaire </span>
+                        </th>
+
+                        <th>
+                            <span style="color:blue">   App.RH </span>
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        @*class= "tr-shadow"*@
+                        <tr>
+                            @Html.HiddenFor(modelItem => item.Id)
+                            <td>
+                                @*class="badge badge-info"*@
+                                <span style="color:black; font-size:12px">     @Html.DisplayFor(modelItem => item.nom_prenom) </span>
+                            </td>
+                            <td>
+                                <span style="color:black; font-size:12px">      @Html.DisplayFor(modelItem => item.UserName) </span>
+                            </td>
+
+                            <td>
+                                <span style="color:black; font-size:12px">        @Html.DisplayFor(modelItem => item.Datetime) </span>
+                            </td>
+
+                            <td>
+                                <span style="color:black; font-size:12px">        @Html.DisplayFor(modelItem => item.Intitule) </span>
+                            </td>
+
+                            <td>
+                                <span style="color:black; font-size:12px">      @Html.DisplayFor(modelItem => item.etat_demande) </span>
+                            </td>
+                            <td>
+                                <span style="color:black; font-size:12px">        @Html.DisplayFor(modelItem => item.commentaire) </span>
+                            </td>
+
+                            <td>
+                                <span style="color:black; font-size:12px">        @Html.DisplayFor(modelItem => item.Approbateur_RH) </span>
+                            </td>
+
+                            <td style="color:red; font-size:13px">
+                                @Html.ActionLink("Modifier", "UpdateAttestation", new { id = item.Id })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+@*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
+@Html.PagedListPager(Model, page => Url.Action("Attestations", new { page, PagedListRenderOptions.ClassicPlusFirstAndLast }))
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+
+    var length_table = document.getElementById("table").rows.length;
+    for (var i = 1; i < length_table; i++) {
+
+
+        var table_element = document.getElementById("table").rows[i].cells[4].innerText;
+
+        if (table_element == 'Demande_refusée') {
+            document.getElementById("table").rows[i].cells[4].style.color = "red"
+        }
+        if (table_element == 'Demande_validée') {
+            document.getElementById("table").rows[i].cells[4].style.color = "green"
+        }
+        if (table_element == 'Demande_en_cours') {
+            document.getElementById("table").rows[i].cells[4].style.color = "blue"
+        }
+    }
+
+</script>

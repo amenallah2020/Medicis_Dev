@@ -1,0 +1,76 @@
+﻿@model IEnumerable<RHEVENT.Models.Heure_Superieur>
+
+@{
+    ViewBag.titre_page = "Export état des heures supplémentaires";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="row">
+        <div class="form-group">
+            Date de début   <input type="text" name="date_debut" id="date_debut" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            Date de fin  <input type="text" name="date_fin" id="date_fin" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+
+            <button type="submit" value="exporter" class="btn btn-success">
+                <i class="fas fa-send"></i>
+                exporter
+            </button>
+        </div>
+    </div>
+}
+
+
+<script>
+    jQuery.datetimepicker.setLocale('fr');
+
+    jQuery('#date_debut').datetimepicker({
+        i18n: {
+            de: {
+                months: [
+                    'Janvier', 'Fevrier', 'Mars', 'Avril',
+                    'Mai', 'Juin', 'Juillet', 'Aout',
+                    'Septembre', 'Octobre', 'Novembre', 'Décembre',
+                ],
+                dayOfWeek: [
+                    "So.", "Mo", "Di", "Mi",
+                    "Do", "Fr", "Sa.",
+                ]
+            }
+        },
+        timepicker: false,
+        format: 'd.m.Y'
+    });
+
+    jQuery('#date_fin').datetimepicker({
+        i18n: {
+            de: {
+                months: [
+                    'Janvier', 'Fevrier', 'Mars', 'Avril',
+                    'Mai', 'Juin', 'Juillet', 'Aout',
+                    'Septembre', 'Octobre', 'Novembre', 'Décembre',
+                ],
+                dayOfWeek: [
+                    "So.", "Mo", "Di", "Mi",
+                    "Do", "Fr", "Sa.",
+                ]
+            }
+        },
+        timepicker: false,
+        format: 'd.m.Y'
+    });
+</script>

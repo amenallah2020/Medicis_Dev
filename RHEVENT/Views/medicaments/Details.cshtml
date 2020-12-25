@@ -1,0 +1,53 @@
+﻿@model RHEVENT.Models.medicament
+
+@{
+
+    ViewBag.titre_page = "Gestion des médicaments";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>medicament</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.code_medicament)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.code_medicament)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.designation_medicament)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.designation_medicament)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.validation_prt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.validation_prt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lien_image)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lien_image)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,66 @@
+﻿@model RHEVENT.Models.Attestation
+
+@using RHEVENT.Models
+
+@{
+    ViewBag.titre_page = "RH";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+<h2 class="text-danger ">
+    <span class="glyphicon   glyphicon-file"> </span>
+    Attestations - Demande
+</h2>
+
+ 
+
+<br /><br />
+
+
+@using (Html.BeginForm("Demander_attestation", "Demande", FormMethod.Post, htmlAttributes: new { @class = "form cf", id = "form_demande" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.UserId)
+    @Html.HiddenFor(model => model.Datetime)
+    @Html.HiddenFor(model => model.Approbateur_demande)
+
+
+    <section class="plan cf">
+        @foreach (var favsub in Enum.GetValues(typeof(AttestationDemandee)))
+        {
+            var id = TagBuilder.CreateSanitizedId(string.Format("{0}_{1}_{2}", "rdbtn", typeof(AttestationDemandee), favsub));
+            <div class="col-lg-3">
+                @Html.RadioButtonFor(s => s.Intitule, favsub, new { id, onchange = "send_form()" })
+                @Html.Label(favsub.ToString(), new { @for = id, @class = "btn btn-outline-success btn-lg btn-block", @style = "font-size:medium" })
+            </div>
+        }
+    </section>
+
+    <br />
+    <br>
+    <h4 class="pb-2 display-5">NB:<span>Le délai de traitement des attestations est 48 heures à partir du date de soumission de demande </span></h4>
+
+
+
+    <br /><br />
+}
+<script>
+    radiobtn = document.getElementById("rdbtn_RHEVENT_Models_AttestationDemandee_Stage");
+    radiobtn.checked = true;
+    function send_form() {
+        if (confirm("confirmer votre demande d'attestation"))
+
+            document.getElementById("form_demande").submit();
+    }
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

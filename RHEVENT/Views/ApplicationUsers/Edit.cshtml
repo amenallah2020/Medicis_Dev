@@ -1,0 +1,236 @@
+﻿@model RHEVENT.Models.ApplicationUser
+
+
+@{
+    ViewBag.titre_page = "Administration";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+<h2 class="text " style="color:red">
+    <span class=" glyphicon glyphicon-user"> </span>
+    Modifier utilisateur
+</h2>
+
+<br /><br />
+
+@{
+    List<SelectListItem> listSites = new List<SelectListItem>();
+    listSites.Add(new SelectListItem { Text = " ", Value = "" });
+    listSites.Add(new SelectListItem { Text = "MEDICIS", Value = "MEDICIS" });
+
+}
+
+@{
+    List<SelectListItem> listServices = new List<SelectListItem>();
+    listServices.Add(new SelectListItem { Text = " ", Value = "" });
+    listServices.Add(new SelectListItem { Text = "INFORMATION TECHNOLOGY", Value = "IT" });
+    listServices.Add(new SelectListItem { Text = "CONTROLE QUALITE", Value = "CQ" });
+    listServices.Add(new SelectListItem { Text = "ASSURANCE QUALITE", Value = "AQ" });
+    listServices.Add(new SelectListItem { Text = "RESSOURCES HUMAINES", Value = "RH" });
+    listServices.Add(new SelectListItem { Text = "ACHAT & APPROVISIONNEMENT", Value = "ACHAT" });
+    listServices.Add(new SelectListItem { Text = "AFFAIRE REGLEMENTAIRE", Value = "AR" });
+    listServices.Add(new SelectListItem { Text = "CONROLE DE GESTION", Value = "CG" });
+    listServices.Add(new SelectListItem { Text = "COMMERCIAL", Value = "COM" });
+    listServices.Add(new SelectListItem { Text = "DIRECTION ADMINISTRATIVE & FINANCIERE", Value = "DAF" });
+    listServices.Add(new SelectListItem { Text = "MARKETING", Value = "MAR" });
+    listServices.Add(new SelectListItem { Text = "MAINTENANCE", Value = "MAINT" });
+    listServices.Add(new SelectListItem { Text = "PLANIFICATION", Value = "PLANIF" });
+    listServices.Add(new SelectListItem { Text = "PRODUCTION", Value = "PROD" });
+    listServices.Add(new SelectListItem { Text = "AUDIT", Value = "AUDIT" });
+    listServices.Add(new SelectListItem { Text = "PROMOTION MEDICALE", Value = "PM" });
+    listServices.Add(new SelectListItem { Text = "BUSINESS SUPPORT", Value = "BS" });
+
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+      @*<div class="form-horizontal">*@
+
+          @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+          @Html.HiddenFor(model => model.Id)
+
+          @* <div class="panel-body">*@
+          <div class="row form-group">
+
+              <div class="col-3" style="font-size:13px">
+                  <div class="form-group">
+                      @Html.LabelFor(model => model.nom)
+
+                      @Html.EditorFor(model => model.nom, new { htmlAttributes = new { @class = "form-control" } })
+                      @Html.ValidationMessageFor(model => model.nom, "", new { @class = "text-danger" })
+                  </div>
+              </div>
+              <div class="col-3" style="font-size:13px">
+                  <div class="form-group">
+
+                      @Html.LabelFor(model => model.prenom)
+
+                      @Html.EditorFor(model => model.prenom, new { htmlAttributes = new { @class = "form-control" } })
+                      @Html.ValidationMessageFor(model => model.prenom, "", new { @class = "text-danger" })
+                  </div>
+              </div>
+              <div class="col-3" style="font-size:13px">
+                  <div class="form-group">
+
+                      @Html.LabelFor(model => model.matricule)
+
+                      @Html.EditorFor(model => model.matricule, new { htmlAttributes = new { @class = "form-control" } })
+                      @Html.ValidationMessageFor(model => model.matricule, "", new { @class = "text-danger" })
+                  </div>
+              </div>
+              <div class="col-3" style="font-size:13px">
+                  <div class="form-group">
+
+                      @Html.LabelFor(model => model.telephone)
+
+                      @Html.EditorFor(model => model.telephone, new { htmlAttributes = new { @class = "form-control" } })
+                      @Html.ValidationMessageFor(model => model.telephone, "", new { @class = "text-danger" })
+                  </div>
+              </div>
+          </div>
+
+
+
+          <div class="row form-group" style="font-size:13px">
+              <div class="col-3">
+                  <div class="form-group">
+                      @Html.LabelFor(model => model.fonction)
+
+                      @Html.EditorFor(model => model.fonction, new { htmlAttributes = new { @class = "form-control" } })
+                      @Html.ValidationMessageFor(model => model.fonction, "", new { @class = "text-danger" })
+
+                  </div>
+              </div>
+
+              <!--    <div class="col-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.date_naissance)
+
+                @Html.EditorFor(model => model.date_naissance, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.date_naissance, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+
+
+        <div class="col-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.date_recrutement)
+
+                @Html.EditorFor(model => model.date_recrutement, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.date_recrutement, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+        -->
+
+
+              <div class="col-3" style="font-size:13px">
+                  <div class="form-group">
+                      @Html.LabelFor(model => model.Email)
+
+                      @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                      @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+                  </div>
+              </div>
+
+          </div>
+
+
+          <div class="row form-group">
+              <div class="col-3" style="font-size:13px">
+                  <div class="form-group">
+                      @Html.LabelFor(model => model.signataire)
+
+                      @Html.DropDownListFor(model => model.signataire, Model.signataires, new { @class = "form-control" })
+                      @Html.ValidationMessageFor(model => model.signataire, "", new { @class = "text-danger" })
+
+                  </div>
+              </div>
+
+              <div class="col-3" style="font-size:13px">
+                  <div class="form-group">
+                      @Html.LabelFor(model => model.service)
+
+                      @Html.DropDownListFor(model => model.service, listServices, new { @class = "form-control" })
+                      @Html.ValidationMessageFor(model => model.service, "", new { @class = "text-danger" })
+
+                  </div>
+              </div>
+
+              <div class="col-3" style="font-size:13px">
+                  <div class="form-group">
+                      @Html.LabelFor(model => model.site)
+
+                      @Html.DropDownListFor(model => model.site, listSites, new { @class = "form-control" })
+                      @Html.ValidationMessageFor(model => model.site, "", new { @class = "text-danger" })
+
+                  </div>
+              </div>
+
+              @*<div class="col-3" style="font-size:13px">
+                  <div class="form-group">
+                      @Html.LabelFor(model => model.UserName)
+
+                      @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                      @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+
+                  </div>
+              </div>*@
+
+
+
+
+
+
+          </div>
+
+          @*<div class="row form-group">
+
+              <div class="col-3">
+                  <div class="form-group">*@
+                      @*@Html.LabelFor(model => model.RoleName)*@
+                      @*<label>Role</label>
+                      @Html.EnumDropDownListFor(model => model.RoleName, new { htmlAttributes = new { @class = "form-control" } })
+                      @Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "text-danger" })
+
+                  </div>
+              </div>
+
+          </div>*@
+
+          @*<hr />*@
+
+
+
+          <div class="form-group">
+              <div class="col-lg-6">
+                  <input type="submit" value="Modifier" class="btn btn-success" />
+
+                  @*<a asp-action="ManageUserRoles" asp-route-userId="@Model.Id" style="width:auto" class="btn btn-success">Gérer le rôle</a>*@
+                   
+                  <class style="color:blue"> @Html.ActionLink("Retour à la liste", "Index") </class>
+              </div>
+          </div>
+
+
+          @*   </div>*@
+          @*</div>*@
+          }
+
+          <script src="~/Scripts/jquery-ui.js"></script>
+
+
+          <script src="~/Scripts/datepicker-fr.js" type="text/javascript"></script>
+          @*<div>
+              @Html.ActionLink("Back to List", "Index")
+          </div>*@
+          @section Scripts {
+              @Scripts.Render("~/bundles/jqueryval")
+          }
+

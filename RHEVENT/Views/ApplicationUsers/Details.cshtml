@@ -1,0 +1,125 @@
+﻿@model RHEVENT.Models.ApplicationUser
+
+@{
+    ViewBag.titre_page = "Administration";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+<h2 class="text " style="color:red">
+    <span class=" glyphicon glyphicon-user"> </span>
+    Détails de l'utilisateur
+</h2>
+
+<br /><br />
+
+ 
+<div>
+    @*<h4>ApplicationUser</h4>
+    <hr />*@
+    <dl >
+        <dt class="col-lg-6">
+            @Html.DisplayNameFor(model => model.nom)
+        </dt>
+
+        <dd  class="col-lg-6">
+            @Html.DisplayFor(model => model.nom)
+        </dd>
+
+        <dt  class="col-lg-6">
+            @Html.DisplayNameFor(model => model.prenom)
+        </dt>
+
+        <dd  class="col-lg-6">
+            @Html.DisplayFor(model => model.prenom)
+        </dd>
+
+        <dt  class="col-lg-6">
+            @Html.DisplayNameFor(model => model.matricule)
+        </dt>
+
+        <dd  class="col-lg-6">
+            @Html.DisplayFor(model => model.matricule)
+        </dd>
+
+        <dt  class="col-lg-6">
+            @Html.DisplayNameFor(model => model.telephone)
+        </dt>
+
+        <dd  class="col-lg-6">
+            @Html.DisplayFor(model => model.telephone)
+        </dd>
+
+        <dt  class="col-lg-6">
+            @Html.DisplayNameFor(model => model.fonction)
+        </dt>
+
+        <dd  class="col-lg-6"> 
+            @Html.DisplayFor(model => model.fonction)
+        </dd>
+
+
+        <dt  class="col-lg-6">
+            @Html.DisplayNameFor(model => model.signataire)
+        </dt>
+
+        <dd  class="col-lg-6">
+            @Html.DisplayFor(model => model.signataire)
+        </dd>
+
+        <dt  class="col-lg-6">
+            @Html.DisplayNameFor(model => model.site)
+        </dt>
+
+        <dd  class="col-lg-6">
+            @Html.DisplayFor(model => model.site)
+        </dd>
+
+        <dt  class="col-lg-6">
+            @Html.DisplayNameFor(model => model.service)
+        </dt>
+
+        <dd  class="col-lg-6">
+            @Html.DisplayFor(model => model.service)
+        </dd>
+        <dt  class="col-lg-6">
+            @Html.DisplayNameFor(model => model.date_naissance)
+        </dt>
+
+        <dd  class="col-lg-6">
+            @Html.DisplayFor(model => model.date_naissance)
+        </dd>
+
+        <dt  class="col-lg-6">
+            @Html.DisplayNameFor(model => model.date_recrutement)
+        </dt>
+
+        <dd  class="col-lg-6">
+            @Html.DisplayFor(model => model.date_recrutement)
+        </dd>
+
+        <dt  class="col-lg-6">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd  class="col-lg-6">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt  class="col-lg-6">
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd  class="col-lg-6">
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+    </dl>
+</div>
+<br />
+
+<p class="col-lg-12" style="color:blue">
+  <br />  @Html.ActionLink("Modifier", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Retour à la liste", "Index")
+</p>

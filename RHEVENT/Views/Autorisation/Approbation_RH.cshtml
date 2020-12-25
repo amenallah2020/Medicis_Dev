@@ -1,0 +1,123 @@
+﻿@model PagedList.IPagedList<RHEVENT.Models.Autorisation>
+@using PagedList.Mvc
+@{
+    ViewBag.titre_page = "RH";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+ 
+
+
+<h2 class="text" style="color:crimson">
+    <span class="glyphicon   glyphicon-check"> </span>
+    Administration RH - Approbation des autorisations
+</h2>
+
+<br /><br />
+
+<div class="table-responsive">
+    <table class="table table-top-campaign" id="table">
+        <tr>
+            <th>
+                <span style="color:blue">     Date demande </span>
+            </th>
+            <th>
+                <span style="color:blue">     Date APP SUP.H </span>
+            </th>
+            <th>
+                <span style="color:blue">     Employer </span>
+            </th>
+            <th>
+                <span style="color:blue">      Jour autorisation </span>
+            </th>
+            <th>
+                <span style="color:blue">     H.Sortie </span>
+            </th>
+            <th>
+                <span style="color:blue">      H.Entrée </span>
+            </th>
+            <th>
+                <span style="color:blue">    Réponse supérieur </span>
+            </th>
+            <th>
+                <span style="color:blue">    Réponse RH </span>
+            </th>
+
+            <th>
+                <span style="color:blue">    App.RH </span>
+            </th>
+            <th>
+
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <span style="color:black; font-size:12px">    @Html.DisplayFor(modelItem => item.Date_emission_demande) </span>
+                </td>
+                <td>
+                    <span style="color:black; font-size:12px">   @Html.DisplayFor(modelItem => item.Date_validation_superieur) </span>
+                </td>
+                <td>
+                    <span style="color:black; font-size:12px">     @Html.DisplayFor(modelItem => item.nom_prenom) </span>
+                </td>
+                <td>
+                    <span style="color:black; font-size:12px">       @Html.DisplayFor(modelItem => item.jour_autorisation) </span>
+                </td>
+                <td>
+                    <span style="color:black; font-size:12px">      @Html.DisplayFor(modelItem => item.heure_sortie) </span>
+                </td>
+                <td>
+                    <span style="color:black; font-size:12px">        @Html.DisplayFor(modelItem => item.heure_entree) </span>
+                </td>
+                <td>
+                    <span style="color:black; font-size:12px">        @Html.DisplayFor(modelItem => item.acceptation_superieur) </span>
+                </td>
+                <td>
+                    <span style="color:black; font-size:12px">       @Html.DisplayFor(modelItem => item.acceptation_ressource) </span>
+                </td>
+
+                <td>
+                    <span style="color:black; font-size:12px">     @Html.DisplayFor(modelItem => item.Approbateur_RH) </span>
+                </td>
+                <td>
+                    <span style="color:red; font-size:13px">     @Html.ActionLink("Modifier", "UpdateAutorisationRessourcesHumaines", new { id = item.Id }) </span>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+@*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
+@Html.PagedListPager(Model, page => Url.Action("Approbation_RH", new { page, PagedListRenderOptions.ClassicPlusFirstAndLast }))
+
+<script>
+
+    var length_table = document.getElementById("table").rows.length;
+    for (var i = 1; i < length_table; i++) {
+        var table_element = document.getElementById("table").rows[i].cells[5].innerText;
+        var table_element_1 = document.getElementById("table").rows[i].cells[6].innerText;
+
+        if (table_element == 'Demande_refusée') {
+            document.getElementById("table").rows[i].cells[5].style.color = "red"
+        }
+        if (table_element == 'Demande_validée') {
+            document.getElementById("table").rows[i].cells[5].style.color = "green"
+        }
+        if (table_element == 'Demande_en_cours') {
+            document.getElementById("table").rows[i].cells[5].style.color = "blue"
+        }
+
+        if (table_element_1 == 'Demande_refusée') {
+            document.getElementById("table").rows[i].cells[6].style.color = "red"
+        }
+        if (table_element_1 == 'Demande_validée') {
+            document.getElementById("table").rows[i].cells[6].style.color = "green"
+        }
+        if (table_element_1 == 'Demande_en_cours') {
+            document.getElementById("table").rows[i].cells[6].style.color = "blue"
+        }
+    }
+
+</script>

@@ -1,0 +1,160 @@
+﻿@model RHEVENT.Models.CongeViewModels
+
+@{
+    ViewBag.titre_page = "RH";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+@{
+    ViewBag.Title = "AttribuerCongé";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2 class="text" style="color:coral">
+    <span class="glyphicon   glyphicon-check"> </span>
+    Congés - Attribuer congé
+</h2>
+<br />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="au-card au-card--bg-white au-card-top-countries m-b-30">
+        <div class="au-card-inner"> </div>
+
+        <table class="table">
+            <tbody>
+
+
+                <tr>
+                    <td style="color:black ; font-size:13px">
+                        @Html.LabelFor(model => model.nom_prenom)
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(model => model.nom_prenom, Model.employers, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.nom_prenom, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="color:black ; font-size:13px">
+                        @Html.LabelFor(model => model.jour_debut)
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.jour_debut, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.jour_debut, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="color:black ; font-size:13px">
+                        @Html.LabelFor(model => model.jour_fin)
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.jour_fin, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.jour_fin, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="color:black ; font-size:13px">
+                        @Html.LabelFor(model => model.heure_sortie)
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.heure_sortie, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.heure_sortie, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="color:black ; font-size:13px">
+                        @Html.LabelFor(model => model.heure_entree)
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.heure_entree, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.heure_entree, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style="color:black ; font-size:13px">
+                        @Html.LabelFor(model => model.commentaire_superieur_hiearchique)
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.commentaire_superieur_hiearchique, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.commentaire_superieur_hiearchique, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+
+
+        </table>
+    </div>
+
+
+    <div class="col-lg-12">
+        <input type="submit" value="Envoyer" class="btn btn-success" />
+        <class style="color:blue"> @Html.ActionLink("Retour", "Demander_conge")</class>
+    </div>
+}
+
+@*<div>
+    @Html.ActionLink("retour", "Demander_conge")
+</div>*@
+<script>
+    jQuery('#heure_sortie').datetimepicker({
+        datepicker: false,
+        format: 'H:i'
+    });
+    jQuery('#heure_entree').datetimepicker({
+        datepicker: false,
+        format: 'H:i'
+    });
+</script>
+
+
+<script>
+    jQuery.datetimepicker.setLocale('fr');
+
+    jQuery('#jour_debut').datetimepicker({
+        i18n: {
+            de: {
+                months: [
+                    'Janvier', 'Fevrier', 'Mars', 'Avril',
+                    'Mai', 'Juin', 'Juillet', 'Aout',
+                    'Septembre', 'Octobre', 'Novembre', 'Décembre',
+                ],
+                dayOfWeek: [
+                    "So.", "Mo", "Di", "Mi",
+                    "Do", "Fr", "Sa.",
+                ]
+            }
+        },
+        timepicker: false,
+        format: 'd.m.Y'
+    });
+
+    jQuery('#jour_fin').datetimepicker({
+        i18n: {
+            de: {
+                months: [
+                    'Janvier', 'Fevrier', 'Mars', 'Avril',
+                    'Mai', 'Juin', 'Juillet', 'Aout',
+                    'Septembre', 'Octobre', 'Novembre', 'Décembre',
+                ],
+                dayOfWeek: [
+                    "So.", "Mo", "Di", "Mi",
+                    "Do", "Fr", "Sa.",
+                ]
+            }
+        },
+        timepicker: false,
+        format: 'd.m.Y'
+    });
+</script>
+
+

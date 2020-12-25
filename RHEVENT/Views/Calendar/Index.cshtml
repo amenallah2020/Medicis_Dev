@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.titre_page = "RH";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+
+<h2 class="text" style="color:lightseagreen">
+    <span class="glyphicon   glyphicon-calendar"> </span>
+    Calendrier du service
+</h2>
+<br /> 
+
+<!--
+
+ <staticContent>
+      <mimeMap fileExtension=".json" mimeType="application/json"/>
+    </staticContent>
+
+-->
+<script>
+    var str1 = "/RH_MEDICIS/Files/";
+    var str2 = "@ViewData["service"]";
+    var str3 = ".json";
+    var str = str1 + str2 + str3;
+</script>
+
+<script>
+        $(function () {
+
+            // page is now ready, initialize the calendar...
+
+            $('#calendar').fullCalendar({
+                 lang:'fr',
+                height: 700,
+
+                header: {
+                    left: 'prev,next today myCustomButton',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                eventSources: [
+
+                    str
+
+                ],
+                eventClick: function (calEvent, jsEvent, view) {
+                    alert(calEvent.title);
+                    window.opener.location.href = '@Url.Action("Index", "Calendar")', window.close();
+                }
+            })
+        });
+</script>
+
+<center ><h4 style="color:blue">NB : L'affichage des congés ne prends pas en considération l'approbation du service RH</h4></center>
+<br />
+<div id="calendar">
+
+</div>

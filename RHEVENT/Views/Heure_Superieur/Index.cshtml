@@ -1,0 +1,130 @@
+﻿@model PagedList.IPagedList<RHEVENT.Models.Heure_Superieur>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.titre_page = "Planing des heures SUP";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+<p>
+    <div style="color:blue"> <b>  @Html.ActionLink("Créer", "Create")</b></div>
+</p>
+
+
+@using (Html.BeginForm("Index", "Heure_Superieur", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-lg-4"><span class="badge badge-secondary"> Nom ou prénom ou matricule</span> @Html.TextBox("search_nom_prenom_matricule", ViewBag.CurrentFilter as string, new { @class = "form-control" })</div>
+        <div class="col-lg-2"><span class="badge badge-secondary"> Jour du planing </span> @Html.TextBox("Search_jour_planing", ViewBag.FilterValue_jour_planing as string, new { @class = "form-control" })</div>
+     
+        <div class="col-lg-2"><br />  <input type="submit" value="trouver" class="btn btn-outline-secondary btn-sm" /></div>
+    </div>
+}
+<br />
+<table class="table">
+    <tr>
+        <th>
+            <span class="badge badge-primary">   @Html.ActionLink("Employer", "Index", new { sortOrder = ViewBag.Sorting_nom_prenom, currentFilter = ViewBag.CurrentFilter })</span>
+        </th>
+        <th>
+            <span class="badge badge-primary">     Matricule </span>
+        </th>
+
+        <th>
+            <span class="badge badge-primary">     @Html.ActionLink("Jour du planing", "Index", new { sortOrder = ViewBag.Sortig_jour_planing, currentFilter = ViewBag.CurrentFilter }) </span>
+        </th>
+
+        <th>
+            <span class="badge badge-primary">    Approbation RH </span>
+        </th>
+        <th>
+            <span class="badge badge-primary">    Commentaire </span>
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        <span class="badge badge-info">       @Html.DisplayFor(modelItem => item.nom_prenom_employer) </span>
+    </td>
+    <td>
+        <span class="badge badge-light">   @Html.DisplayFor(modelItem => item.matricule_employer) </span>
+    </td>
+    <td>
+        <span class="badge badge-light">      @Html.DisplayFor(modelItem => item.jour_planing).ToString().Substring(0,10) </span>
+    </td>
+
+    <td>
+        <span class="badge badge-info">     @Html.DisplayFor(modelItem => item.Approbation_Heure_Sup) </span>
+    </td>
+    <td>
+        <span class="badge badge-light">     @Html.DisplayFor(modelItem => item.Commentaire) </span>
+    </td>
+    <td>
+
+
+        <span class="badge badge-dark">
+            @Html.ActionLink("Editer", "Edit", new { id = item.Id })
+        </span>
+
+        <span class="badge badge-dark">
+            @Html.ActionLink("Détails", "Details", new { id = item.Id })
+        </span>
+        <span class="badge badge-dark"> @Html.ActionLink("Supprimer", "Delete", new { id = item.Id })</span>
+    </td>
+</tr>
+    }
+</table>
+
+
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+<script>
+    jQuery.datetimepicker.setLocale('fr');
+
+    jQuery('#Search_jour_planing').datetimepicker({
+        i18n: {
+            de: {
+                months: [
+                    'Janvier', 'Fevrier', 'Mars', 'Avril',
+                    'Mai', 'Juin', 'Juillet', 'Aout',
+                    'Septembre', 'Octobre', 'Novembre', 'Décembre',
+                ],
+                dayOfWeek: [
+                    "So.", "Mo", "Di", "Mi",
+                    "Do", "Fr", "Sa.",
+                ]
+            }
+        },
+        timepicker: false,
+        format: 'd.m.Y'
+    });
+
+
+</script>
+
+
+<script>
+
+    var length_table = document.getElementById("table").rows.length;
+    for (var i = 1; i < length_table; i++) {
+        var table_element = document.getElementById("table").rows[i].cells[8].innerText;
+
+        if (table_element == 'Demande_refusée') {
+            document.getElementById("table").rows[i].cells[8].style.color = "red"
+        }
+        if (table_element == 'Demande_validée') {
+            document.getElementById("table").rows[i].cells[8].style.color = "green"
+        }
+
+        if (table_element == 'Demande_en_cours') {
+            document.getElementById("table").rows[i].cells[8].style.color = "black"
+        }
+    }
+</script>

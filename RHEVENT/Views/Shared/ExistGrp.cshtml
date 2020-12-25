@@ -1,0 +1,26 @@
+﻿@*@{
+        ViewData["Title"] = "Interdit";
+    }*@
+
+
+@*<h1 class="text-danger">
+        <span class="glyphicon glyphicon-ban-circle"> </span>
+        Interdit
+    </h1>*@
+
+<h3 style="color:red">@ViewBag.ErrorMessage</h3>
+
+@*<div class="row">
+        <div class="col-md-12">
+            <img src="~/images/stop.jpg" style="float:left;margin:0 10px 0 200px;" />
+        </div>
+    </div>*@
+
+<br />
+
+<div class="btn btn-danger">
+    @Html.ActionLink("Retour", "Create", "E_GrpByUsr", new { id = @ViewBag.codeF }, null)
+
+</div>
+
+

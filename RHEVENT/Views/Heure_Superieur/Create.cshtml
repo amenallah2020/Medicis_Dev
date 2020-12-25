@@ -1,0 +1,204 @@
+﻿@model RHEVENT.Models.Heure_Superieur
+
+
+@{
+    ViewBag.titre_page = "Planing des heures SUP";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="au-card au-card--bg-white au-card-top-countries m-b-30">
+        <div class="au-card-inner"> </div>
+
+
+
+        <div class="col-lg-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.jour_planing)
+
+                @Html.EditorFor(model => model.jour_planing, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.jour_planing, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+
+
+
+        <div class="table-responsive">
+            <table class="table table-top-countries" style="border:medium">
+                @foreach (var m in Model.employers)
+                {
+                    <tbody>
+                        <tr>
+                            <td style="color:black">
+                                @Html.Label(m.Text, new { @for = m.Value });
+
+                            </td>
+
+                            <td style="color:black">
+                                NON<br />
+                                @Html.RadioButton("RB" + m.Value, m.Value, m.Selected, new { @id = m.Value + "00-->00" })
+                            </td>
+
+                            <td style="color:black">
+                                07-->15<br />
+                                @Html.RadioButton("RB" + m.Value, m.Value, m.Selected, new { @id = m.Value + "07-->15" })
+                            </td>
+                            <td style="color:black">
+                                15-->23<br />
+                                @Html.RadioButton("RB" + m.Value, m.Value, m.Selected, new { @id = m.Value + "15-->23" })
+                            </td>
+                            <td style="color:black">
+                                23-->07<br />
+                                @Html.RadioButton("RB" + m.Value, m.Value, m.Selected, new { @id = m.Value + "23-->07" })
+                            </td>
+                            <td style="color:black">
+                                08-->17<br />
+                                @Html.RadioButton("RB" + m.Value, m.Value, m.Selected, new { @id = m.Value + "08-->17" })
+                            </td>
+                            <td style="color:black">
+                                07-->19<br />
+                                @Html.RadioButton("RB" + m.Value, m.Value, m.Selected, new { @id = m.Value + "07-->19" })
+                            </td>
+                            <td style="color:black">
+                                19-->07<br />
+                                @Html.RadioButton("RB" + m.Value, m.Value, m.Selected, new { @id = m.Value + "19-->07" })
+                            </td>
+                            <td style="color:black">
+                                07-->16<br />
+                                @Html.RadioButton("RB" + m.Value, m.Value, m.Selected, new { @id = m.Value + "07-->16" })
+                            </td>
+                            <td style="color:black">
+                                05-->17<br />
+                                @Html.RadioButton("RB" + m.Value, m.Value, m.Selected, new { @id = m.Value + "05-->17" })
+                            </td>
+                            <td style="color:black">
+                                17-->05<br />
+                                @Html.RadioButton("RB" + m.Value, m.Value, m.Selected, new { @id = m.Value + "17-->05" })
+                            </td>
+                        </tr>
+
+                    </tbody>
+                }
+            </table>
+        </div>
+    </div>
+
+
+
+
+    <input type="hidden" class="form-control" id="userid" name="userid" />
+    <div class="col-md-offset-4 col-md-8">
+        <input type="submit" value="envoyer" class="btn btn-outline-success btn-lg btn-block" onclick="return clik()" />
+    </div>
+    @Html.EditorFor(model => model.list_employers, new { htmlAttributes = new { @style = "display: none" } })
+    <script>
+        function clik() {
+            allElements = document.getElementsByTagName("*");
+            var tabs = [];
+            var n = allElements.length;
+            var list = "";
+            for (var i = 0; i < n; i++) {
+                var el = allElements[i];
+                if (allElements[i].checked) {
+                    if (document.getElementById(el.id).checked) {
+                        list = el.id + list;
+                    }
+                }
+            }
+ 
+            var text = document.getElementById("list_employers");
+            text.value = list;
+        }
+    </script>
+
+
+
+  
+
+
+}
+
+
+
+
+<div>
+    @Html.ActionLink("retour", "Index")
+</div>
+<script>
+    jQuery('#heure_debut').datetimepicker({
+        datepicker: false,
+        format: 'H:i'
+    });
+    jQuery('#heure_fin').datetimepicker({
+        datepicker: false,
+        format: 'H:i'
+    });
+</script>
+
+
+<script>
+    jQuery.datetimepicker.setLocale('fr');
+
+    jQuery('#jour_debut').datetimepicker({
+        i18n: {
+            de: {
+                months: [
+                    'Janvier', 'Fevrier', 'Mars', 'Avril',
+                    'Mai', 'Juin', 'Juillet', 'Aout',
+                    'Septembre', 'Octobre', 'Novembre', 'Décembre',
+                ],
+                dayOfWeek: [
+                    "So.", "Mo", "Di", "Mi",
+                    "Do", "Fr", "Sa.",
+                ]
+            }
+        },
+        timepicker: false,
+        format: 'd.m.Y'
+    });
+
+    jQuery('#jour_fin').datetimepicker({
+        i18n: {
+            de: {
+                months: [
+                    'Janvier', 'Fevrier', 'Mars', 'Avril',
+                    'Mai', 'Juin', 'Juillet', 'Aout',
+                    'Septembre', 'Octobre', 'Novembre', 'Décembre',
+                ],
+                dayOfWeek: [
+                    "So.", "Mo", "Di", "Mi",
+                    "Do", "Fr", "Sa.",
+                ]
+            }
+        },
+        timepicker: false,
+        format: 'd.m.Y'
+    });
+</script>
+
+<script>
+    jQuery.datetimepicker.setLocale('fr');
+
+    jQuery('#jour_planing').datetimepicker({
+        i18n: {
+            de: {
+                months: [
+                    'Janvier', 'Fevrier', 'Mars', 'Avril',
+                    'Mai', 'Juin', 'Juillet', 'Aout',
+                    'Septembre', 'Octobre', 'Novembre', 'Décembre',
+                ],
+                dayOfWeek: [
+                    "So.", "Mo", "Di", "Mi",
+                    "Do", "Fr", "Sa.",
+                ]
+            }
+        },
+        timepicker: false,
+        format: 'd.m.Y'
+    });
+</script>

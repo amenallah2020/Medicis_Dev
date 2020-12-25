@@ -1,0 +1,204 @@
+﻿
+@{
+    ViewBag.titre_page = "RH";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+
+<h2 class="text" style="color:crimson">
+    <span class="glyphicon   glyphicon-list-alt"> </span>
+    Administration RH
+</h2>
+<br />
+
+
+<div class="row">
+    <div class="col-lg-3">
+        <div class="card border border-info">
+
+            <div class="card-header">
+                <strong class="card-title">App Attestations</strong>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    Approuver les attestations
+                </p>
+                <a class="btn btn-outline-info" role="button" href="@Url.Action("Attestations", "Demande")">Voir</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <div class="card border border-info">
+
+            <div class="card-header">
+                <strong class="card-title">App Congés</strong>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    Approuver les congés
+                </p>
+                <a class="btn btn-outline-info" role="button" href="@Url.Action("Approbation_RH", "Conge")">Voir</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <div class="card border border-info">
+
+            <div class="card-header">
+                <strong class="card-title">App Autorisations</strong>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    Approuver les autorisations
+                </p>
+                <a class="btn btn-outline-info" role="button" href="@Url.Action("Approbation_RH", "Autorisation")">Voir</a>
+            </div>
+        </div>
+    </div>
+    @*<div class="col-lg-3">
+        <div class="card border border-info">
+
+            <div class="card-header">
+                <strong class="card-title">   App Heures.SUP</strong>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    Approuver les heures supplémentaires
+                </p>
+                <a class="btn btn-outline-info" role="button" href="@Url.Action("List_Heures_Superieurs", "Heure_Superieur")">Voir</a>
+            </div>
+        </div>
+    </div>*@
+
+</div>
+<div class="row">
+    <div class="col-lg-3">
+        <div class="card border border-info">
+            <div class="card-header">
+                <strong class="card-title">Exp Attestations</strong>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    Export attestations
+                </p>
+                <a class="btn btn-outline-info" role="button" href="@Url.Action("Export_Attestation", "ExportEtat")">Exporter</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-3">
+        <div class="card border border-info">
+            <div class="card-header">
+                <strong class="card-title">Exp Congés</strong>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    Export congés
+                </p>
+                <a class="btn btn-outline-info" role="button" href="@Url.Action("Export_Conges", "ExportEtat")">Exporter</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <div class="card border border-info">
+            <div class="card-header">
+                <strong class="card-title">Exp Autorisations</strong>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    Export autorisations
+                </p>
+                <a class="btn btn-outline-info" role="button" href="@Url.Action("Export_Autorisation", "ExportEtat")">Exporter</a>
+            </div>
+        </div>
+    </div>
+
+    @*<div class="col-lg-3">
+            <div class="card border border-info">
+                <div class="card-header">
+                    <strong class="card-title">Exp Heures SUP</strong>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        Export heures supplémentaires
+                    </p>
+                    <a class="btn btn-outline-info" role="button" href="@Url.Action("Export_Heures_supplementaires", "ExportEtat")">Exporter</a>
+                </div>
+            </div>
+        </div>*@
+</div>
+<div class="row">
+
+    @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("RH") && User.IsInRole("RH_Admin")))
+    {
+        <div class="col-lg-3">
+            <div class="card border border-info">
+                <div class="card-header">
+                    <strong class="card-title">Solde Congés</strong>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        Importation Soldes congés
+                    </p>
+                    <a class="btn btn-outline-info" role="button" href="@Url.Action("Import_Etat_Conges", "Conge")">Importer</a>
+                </div>
+            </div>
+        </div>
+    }
+
+
+    @*@if (User.IsInRole("Admin_Medicis") || (User.IsInRole("RH") && User.IsInRole("RH_Admin")))
+    {
+        <div class="col-lg-3">
+            <div class="card border border-info">
+                <div class="card-header">
+                    <strong class="card-title">Supervision RH</strong>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        Module des états RH
+                    </p>
+                    <a class="btn btn-outline-info" role="button" href="@Url.Action("SupervisionRH", "AdministrationRH")">Supervision</a>
+                </div>
+            </div>
+        </div>
+    }*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @if (User.IsInRole("Admin") || User.IsInRole("Chargé_personnel_RH"))
+    {
+
+        <div class="col-lg-3">
+            <div class="card border border-info">
+                <div class="card-header">
+                    <strong class="card-title">Téliviseur & Annonces RH</strong>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        Gestion d'affichage de l'application RHEVENTS
+                    </p>
+                    <a class="btn btn-outline-info" role="button" href="@Url.Action("Index", "Images")">Images </a>
+                    <a class="btn btn-outline-info" role="button" href="@Url.Action("Ecran", "Partage")">Téliviseur RH </a>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

@@ -1,0 +1,82 @@
+﻿@model IEnumerable<RHEVENT.Models.CommandeL>
+
+@{
+    ViewBag.titre_page = "Détails demande";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+
+}
+
+
+ <span class="badge badge-info">  @ViewBag.refcommande</span>
+
+<table class="table">
+    <tr>
+
+        <th>
+            <span class="badge badge-primary">    @Html.DisplayNameFor(model => model.Designation_medicament) </span>
+        </th>
+        <th>
+            <span class="badge badge-primary">       @Html.DisplayNameFor(model => model.Code_medicament) </span>
+        </th>
+        <th>
+            <span class="badge badge-primary">      @Html.DisplayNameFor(model => model.Quantite_Commandee) </span>
+        </th>
+        <th>
+            <span class="badge badge-primary">      @Html.DisplayNameFor(model => model.Quantite_acceptee) </span>
+        </th>
+        <th>
+            <span class="badge badge-primary">       @Html.DisplayNameFor(model => model.Validation_prt) </span>
+        </th>
+        <th>
+            <span class="badge badge-primary">      @Html.DisplayNameFor(model => model.Decision_prt) </span>
+        </th>
+        <th>
+            <span class="badge badge-primary">      @Html.DisplayNameFor(model => model.Commentaire_prt) </span>
+        </th>
+        <th>
+            <span class="badge badge-primary">      @Html.DisplayNameFor(model => model.Decision_primaire) </span>
+        </th>
+
+        <th>
+            <span class="badge badge-primary">      @Html.DisplayNameFor(model => model.Commentaire_primaire) </span>
+        </th>
+
+
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+
+    <td>
+        <span class="badge badge-light">    @Html.DisplayFor(modelItem => item.Designation_medicament) </span>
+    </td>
+    <td>
+        <span class="badge badge-light">    @Html.DisplayFor(modelItem => item.Code_medicament) </span>
+    </td>
+    <td>
+        <span class="badge badge-light">   @Html.DisplayFor(modelItem => item.Quantite_Commandee) </span>
+    </td>
+    <td>
+        <span class="badge badge-light">  @Html.DisplayFor(modelItem => item.Quantite_acceptee) </span>
+    </td>
+    <td>
+        <span class="badge badge-light">   @Html.DisplayFor(modelItem => item.Validation_prt) </span>
+    </td>
+    <td>
+        <span class="badge badge-light">    @Html.DisplayFor(modelItem => item.Decision_prt) </span>
+    </td>
+    <td>
+        <span class="badge badge-light">     @Html.DisplayFor(modelItem => item.Commentaire_prt) </span>
+    </td>
+    <td>
+        <span class="badge badge-light">   @Html.DisplayFor(modelItem => item.Decision_primaire)  </span>
+</td>
+    <td>
+        <span class="badge badge-light">      @Html.DisplayFor(modelItem => item.Commentaire_primaire) </span>
+    </td>
+
+</tr>
+}
+
+</table>

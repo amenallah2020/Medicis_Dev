@@ -1,0 +1,55 @@
+﻿@model RHEVENT.Models.Autorisation
+
+
+   @{
+    ViewBag.titre_page = "Supprimer autorisation";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+   } 
+
+    <h3>Vous êtes en train de supprimer une autorisation ?</h3>
+    <div>
+
+        <hr />
+        <dl class="dl-horizontal">
+
+
+            <dt>
+                @Html.DisplayNameFor(model => model.jour_autorisation)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.jour_autorisation)
+            </dd>
+
+
+            <dt>
+                @Html.DisplayNameFor(model => model.heure_sortie)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.heure_sortie)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.heure_entree)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.heure_entree)
+            </dd>
+
+
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+
+            <input type="submit" value="Supprimer" class="btn btn-outline-danger" />
+
+
+        }
+    </div>

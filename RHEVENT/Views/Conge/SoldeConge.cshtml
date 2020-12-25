@@ -1,0 +1,84 @@
+﻿@model PagedList.IPagedList<RHEVENT.Models.ApplicationUser>
+@using PagedList.Mvc
+
+@{ 
+                ViewBag.titre_page = "RH";
+                ViewBag.email = ViewBag.email;
+                ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+<h2 class="text" style="color:coral">
+    <span class="glyphicon   glyphicon-check"> </span>
+    Congés - Soldes  
+</h2>
+<br /> 
+
+
+<center style="color:black"><b>Mon solde est : <b> @ViewBag.soldeConge  </b>   jours</b></center>
+<br />
+
+@{
+    if (ViewBag.Role.ToString() == "show_solde_menu")
+    {
+        <center style="color:blue"><b>Soldes des subordonnés en (jours)</b></center>
+        <div class="row m-t-30">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="table-responsive">
+                    <table class="table table-top-campaign" id="table">
+                        <thead>
+                            <tr>
+                                <th style="color:grey">
+                                    Employer
+                                </th>
+                                <th style="color:grey">
+                                    Service
+                                </th>
+                                <th style="color:grey">
+                                    Solde
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr >
+
+                                    <td style="color:black">
+                                        @Html.DisplayFor(modelItem => item.prenom)  @Html.DisplayFor(modelItem => item.nom)
+                                    </td>
+                                    <td style="color:black">
+                                        @Html.DisplayFor(modelItem => item.service)
+                                    </td>
+                                    <td style="color:blue">
+                                        @Html.DisplayFor(modelItem => item.Solde_Conge)
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+
+
+    }
+
+}
+
+<b style="color:blue">NB  : le solde est arrêté à : @ViewBag.dernier_date</b>
+<br /><br />
+
+@*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount*@
+@Html.PagedListPager(Model, page => Url.Action("SoldeConge", new { page, PagedListRenderOptions.ClassicPlusFirstAndLast }))
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

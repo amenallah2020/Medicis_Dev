@@ -1,0 +1,111 @@
+﻿@model IEnumerable<RHEVENT.Models.E_listeUsr>
+ 
+
+@{
+                /**/
+
+                ViewBag.titre_page = "E-learning";
+                ViewBag.email = ViewBag.email;
+                ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+
+<h2 class="text" style="color:cornflowerblue">
+    <span class="glyphicon   glyphicon-expand"> </span>
+    Diffusion des formations
+</h2>
+
+<br /><br />
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+</head>
+<body>
+    <div class="btn btn-danger">
+        @Html.ActionLink("Retour à la liste des groupes", "Index", "E_GrpByUsr", new { id = @ViewBag.form }, null)
+    </div>
+
+    
+    <h3 class="text" style="color:cornflowerblue">  <br />Liste des utilisateurs</h3>
+
+    <div class="card border border-info " style="background-color:antiquewhite">
+        <div class="card-header">
+            @*  <strong class="card-title">  </strong>*@
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                <dl class="dl-horizontal ">
+                    @*<dt>
+                            Formation :
+                        </dt>
+                        <dd>
+                            @ViewBag.codeForm
+                        </dd>*@
+                    <dt>
+                        Groupe :
+                    </dt>
+                    <dd>
+                        @ViewBag.codeGrp
+                    </dd>
+                </dl>
+            </p>
+        </div>
+    </div>
+
+
+
+
+
+
+    <br />
+    <table class="table table-striped table-bordered " style="font-size:14px">
+        <tr>
+            <th style="color:blue">
+                @Html.DisplayNameFor(model => model.Mat_usr)
+            </th>
+            <th style="color:blue">
+                @Html.DisplayNameFor(model => model.Nom_usr)
+            </th>
+            @*<th style="color:blue">
+                    @Html.DisplayNameFor(model => model.Code_grp)
+                </th>
+                <th style="color:blue">
+                    @Html.DisplayNameFor(model => model.Code_formt)
+                </th>*@
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="color:black; font-size:12px">
+                    @Html.DisplayFor(modelItem => item.Mat_usr)
+                </td>
+                <td style="color:black; font-size:12px">
+                    @Html.DisplayFor(modelItem => item.Nom_usr)
+                </td>
+                @*<td style="color:black; font-size:12px">
+                        @Html.DisplayFor(modelItem => item.Code_grp)
+                    </td>
+                    <td style="color:black; font-size:12px">
+                        @Html.DisplayFor(modelItem => item.Code_formt)
+                    </td>*@
+                @*<td style="color:red">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |*@
+                @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
+                @*@Html.ActionLink("Supprimer", "Delete", new { id = item.Id })*@
+                @*</td>*@
+            </tr>
+        }
+
+    </table>
+</body>
+</html>
+

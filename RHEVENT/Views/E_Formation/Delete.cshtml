@@ -1,0 +1,99 @@
+﻿@model RHEVENT.Models.E_Formation
+
+
+@{
+    ViewBag.titre_page = "E-learning";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+<h2 class="text" style="color:cornflowerblue">
+    <span class="glyphicon   glyphicon-expand"> </span>
+    Liste des formatations non diffusées - Suppression
+</h2>
+<br />
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+     
+</head>
+<body>
+    <h3>Voulez-vous vraiment supprimer cela?</h3>
+
+    <div hidden>
+        @(Session["code"] = Model.Code)
+    </div>
+
+    <div>
+        <h4>Formation</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt style="color:black">
+
+            </dt>
+            <dt style="color:black">
+                @Html.DisplayNameFor(model => model.Code)
+            </dt>
+
+            <dd style="color:black">
+                @Html.DisplayFor(model => model.Code)
+            </dd>
+
+            <dt style="color:black">
+                @Html.DisplayNameFor(model => model.Objet)
+            </dt>
+
+            <dd style="color:black">
+                @Html.DisplayFor(model => model.Objet)
+            </dd>
+
+            @*<dt>
+                    @Html.DisplayNameFor(model => model.Etat_Formation)
+                </dt>*@
+
+            @*<dd>
+                    @Html.DisplayFor(model => model.Etat_Formation)
+                </dd>*@
+
+            <dt style="color:black">
+                @Html.DisplayNameFor(model => model.Date_Creation)
+            </dt>
+
+            <dd style="color:black">
+                @Html.DisplayFor(model => model.Date_Creation)
+            </dd>
+
+            @*<dt>
+                    @Html.DisplayNameFor(model => model.Etat_Diffusion)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Etat_Diffusion)
+                </dd>*@
+
+            @*<dt>
+                    @Html.DisplayNameFor(model => model.Matricule_Formateur)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Matricule_Formateur)
+                </dd>*@
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="col-lg-12">
+                <br /><br /><input type="submit" value="Supprimer" class="btn btn-success" /> |
+                @Html.ActionLink("Retour à la liste", "Index")
+            </div>
+        }
+    </div>
+</body>
+</html>

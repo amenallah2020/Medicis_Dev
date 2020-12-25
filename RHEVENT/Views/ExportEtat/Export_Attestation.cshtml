@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.titre_page = "RH";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+ 
+<h2 class="text" style="color:crimson">
+    <span class="glyphicon   glyphicon-check"> </span>
+    Administration RH - Export attestations
+</h2>
+
+<br /><br />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="col-lg-9">
+        <div class="col-lg-3" style="color:black ; font-size:16px">
+            Date de début
+        </div>
+        <div class="col-lg-6">
+            <input type="text" name="date_debut" id="date_debut" class="form-control" />
+        </div>
+    </div>
+
+
+    <div class="col-lg-9">
+        <div class="col-lg-3" style="color:black; font-size:16px">
+            <br />    Date de fin
+        </div>
+        <div class="col-lg-6">
+            <br /> <input type="text" name="date_fin" id="date_fin" class="form-control" />
+        </div>
+    </div>
+
+
+    @*<div class="form-group">*@
+    <div class="col-lg-9">
+        <br />
+        <button type="submit" value="exporter" class="btn btn-success">
+            @*<i class="fas fa-send"></i>*@
+            Exporter
+        </button>
+    </div>
+    @*</div>*@
+}
+
+
+<script>
+    jQuery.datetimepicker.setLocale('fr');
+
+    jQuery('#date_debut').datetimepicker({
+        i18n: {
+            de: {
+                months: [
+                    'Janvier', 'Fevrier', 'Mars', 'Avril',
+                    'Mai', 'Juin', 'Juillet', 'Aout',
+                    'Septembre', 'Octobre', 'Novembre', 'Décembre',
+                ],
+                dayOfWeek: [
+                    "So.", "Mo", "Di", "Mi",
+                    "Do", "Fr", "Sa.",
+                ]
+            }
+        },
+        timepicker: false,
+        format: 'd.m.Y'
+    });
+
+    jQuery('#date_fin').datetimepicker({
+        i18n: {
+            de: {
+                months: [
+                    'Janvier', 'Fevrier', 'Mars', 'Avril',
+                    'Mai', 'Juin', 'Juillet', 'Aout',
+                    'Septembre', 'Octobre', 'Novembre', 'Décembre',
+                ],
+                dayOfWeek: [
+                    "So.", "Mo", "Di", "Mi",
+                    "Do", "Fr", "Sa.",
+                ]
+            }
+        },
+        timepicker: false,
+        format: 'd.m.Y'
+    });
+</script>

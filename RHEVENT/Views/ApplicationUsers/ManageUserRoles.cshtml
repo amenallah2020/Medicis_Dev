@@ -1,0 +1,184 @@
+﻿@model List<RHEVENT.Models.RoleUsersViewModel>
+
+@{
+    ViewBag.titre_page = "Administration";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+@{
+    var userId = ViewBag.userId;
+}
+
+<h2 class="text " style="color:red">
+    <span class=" glyphicon glyphicon-user"> </span>
+    Gestion des roles
+</h2>
+ 
+
+<form method="post">
+    <div class="card-body">
+
+        <h4 style=" font-size:16px large; color:Highlight">Administrateur Médicis</h4>
+
+        @for (int i = 0; i <= 0; i++)
+        {
+            <div class="form-check m-1" style="font-size:12px ; color:crimson">
+                @Html.HiddenFor(x => @Model[i].RoleId)
+                @Html.HiddenFor(x => @Model[i].RoleName)
+
+
+                @Html.CheckBoxFor(x => @Model[i].IsSelected)
+
+                <label class="form-check-label" asp-for="@Model[i].IsSelected">
+                    @Model[i].RoleName
+                </label>
+            </div>
+
+        }
+
+        <br /> <h4 style=" font-size:16px large; color:Highlight">Ressources humaines</h4>
+
+        @for (int i = 1; i <= 1; i++)
+        {
+            <div class="col-lg-6">
+                <div class="form-check m-1" style="font-size:12px ; color:crimson">
+                    @Html.HiddenFor(x => @Model[i].RoleId)
+                    @Html.HiddenFor(x => @Model[i].RoleName)
+
+
+                    @Html.CheckBoxFor(x => @Model[i].IsSelected)
+
+                    <label class="form-check-label" asp-for="@Model[i].IsSelected">
+                        @Model[i].RoleName
+                    </label>
+                </div>
+            </div>
+        }
+
+        @for (int i = 2; i <= 8; i++)
+        {
+            <div class="col-lg-6">
+                <div class="form-check m-1" style="font-size:12px">
+                    @Html.HiddenFor(x => @Model[i].RoleId)
+                    @Html.HiddenFor(x => @Model[i].RoleName)
+
+
+                    @Html.CheckBoxFor(x => @Model[i].IsSelected)
+
+                    <label class="form-check-label" asp-for="@Model[i].IsSelected">
+                        @Model[i].RoleName
+                    </label>
+                </div>
+            </div>
+        }
+
+        <h4 class="col-lg-12" style=" font-size:16px large; color:Highlight"> <br />E-learning</h4>
+
+        @for (int i = 9; i <= 9; i++)
+        {
+            <div class="col-lg-6">
+                <div class="form-check m-1" style="font-size:12px ; color:crimson">
+                    @Html.HiddenFor(x => @Model[i].RoleId)
+                    @Html.HiddenFor(x => @Model[i].RoleName)
+
+
+                    @Html.CheckBoxFor(x => @Model[i].IsSelected)
+
+                    <label class="form-check-label" asp-for="@Model[i].IsSelected">
+                        @Model[i].RoleName
+                    </label>
+                </div>
+            </div>
+        }
+
+        @for (int i = 10; i <= 12; i++)
+        {
+            <div class="col-lg-6">
+                <div class="form-check m-1" style="font-size:12px">
+                    @Html.HiddenFor(x => @Model[i].RoleId)
+                    @Html.HiddenFor(x => @Model[i].RoleName)
+
+
+                    @Html.CheckBoxFor(x => @Model[i].IsSelected)
+
+                    <label class="form-check-label" asp-for="@Model[i].IsSelected">
+                        @Model[i].RoleName
+                    </label>
+                </div>
+            </div>
+        }
+
+        <h4 class="col-lg-12" style=" font-size:16px large; color:Highlight"> <br />Demande d'actions</h4>
+
+        @for (int i = 13; i <= 13; i++)
+        {
+            <div class="col-lg-6">
+                <div class="form-check m-1" style="font-size:12px ; color:crimson">
+                    @Html.HiddenFor(x => @Model[i].RoleId)
+                    @Html.HiddenFor(x => @Model[i].RoleName)
+
+
+                    @Html.CheckBoxFor(x => @Model[i].IsSelected)
+
+                    <label class="form-check-label" asp-for="@Model[i].IsSelected">
+                        @Model[i].RoleName
+                    </label>
+                </div>
+            </div>
+        }
+
+        @*@for (int i = 0; i < Model.Count; i++)
+        {
+
+            <div class="form-check m-1">
+                @Html.HiddenFor(x => @Model[i].RoleId)
+                @Html.HiddenFor(x => @Model[i].RoleName)
+
+                @*<input type="hidden" asp-for="@Model[i].RoleId" />
+                <input type="hidden" asp-for="@Model[i].RoleName" />*@
+        @* name="check" onclick="onlyOne(this)"*@
+
+
+        @*  @Html.CheckBoxFor(x => @Model[i].IsSelected)*@
+
+        @*<label class="form-check-label" asp-for="@Model[i].IsSelected">
+            @Model[i].RoleName
+        </label>*@
+
+        @*<input asp-for="@Model[i].IsSelected" class="form-check-input" />*@
+
+        @*<label class="form-check-label" asp-for="@Model[i].IsSelected">
+                @Model[i].RoleName
+            </label>
+        </div>*@
+
+        @*}*@
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+    </div>
+
+    <br /> <br />
+    <div class="col-lg-12">
+        <br />  <input type="submit" value="MAJ" asp-route-id="@userId" class="btn btn-danger" style="width:auto" />
+        <class style="color:grey"> @Html.ActionLink("Retour à la liste", "Index") </class>
+        @*<a asp-action="EditUser" asp-route-id="@userId" class="btn btn-danger" style="width:auto">Annuler</a>*@
+    </div>
+
+</form>
+
+<script>
+    function onlyOne(checkbox) {
+
+        var checkboxes = document.getElementsByName('check')
+
+        checkboxes.forEach((item) => {
+            if (item !== checkbox)
+                item.checked = false
+            else
+                item.checked = true
+        })
+
+    }
+</script>

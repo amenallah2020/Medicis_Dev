@@ -1,0 +1,113 @@
+﻿@model PagedList.IPagedList<RHEVENT.Models.Commande>
+@using PagedList.Mvc
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.titre_page = "Commandes"; 
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+
+
+@using (Html.BeginForm())
+{
+<div class="row">
+    <div class="col-lg-3"><span class="badge badge-secondary"> nom ou prénom ou matricule </span>  @Html.TextBox("search_nom_prenom_matricule", ViewBag.CurrentFilter as string, new { @class = "form-control" })</div>
+    <div class="col-lg-2"><span class="badge badge-secondary">Date commande </span>   @Html.TextBox("Search_jour_commande", ViewBag.FilterValue_jour_planing as string, new { @class = "form-control" })</div>
+    <div class="col-lg-2"><br /> <input type="submit" value="trouver" class="btn btn-outline-secondary btn-sm" />  </div>
+    <div class="col-2"><br /><span class="btn btn-outline-secondary btn-sm">  @Html.ActionLink("Exporter liste du jour", "Commande_du_jour")  </span> </div>
+</div>
+
+<br />
+
+
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            <span class="badge badge-primary">  Référence</span>
+        </th>
+        <th>
+            <span class="badge badge-primary">   @Html.ActionLink("Demandeur", "Commandes", new { sortOrder = ViewBag.Sorting_nom_prenom, currentFilter = ViewBag.CurrentFilter })</span>
+        </th>
+        <th>
+            <span class="badge badge-primary">   Matricule</span>
+        </th>
+        <th>
+            <span class="badge badge-primary">   Service </span>
+        </th>
+        <th>
+            <span class="badge badge-primary">   @Html.ActionLink("Etat commande", "Commandes", new { sortOrder = ViewBag.Sorting_nom_prenom, currentFilter = ViewBag.CurrentFilter })</span>
+        </th>
+        <th>
+            <span class="badge badge-primary">  @Html.ActionLink("Date commande", "Commandes", new { sortOrder = ViewBag.Sorting_nom_prenom, currentFilter = ViewBag.CurrentFilter })   </span>
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <span class="badge badge-info"> @Html.DisplayFor(modelItem => item.Ref_cmd)</span>
+            </td>
+            <td>
+                <span class="badge badge-light"> @Html.DisplayFor(modelItem => item.Nom_prenom)</span>
+            </td>
+            <td>
+                <span class="badge badge-light">    @Html.DisplayFor(modelItem => item.Matricule) </span>
+            </td>
+            <td>
+                <span class="badge badge-info"> @Html.DisplayFor(modelItem => item.Service)</span>
+            </td>
+            <td>
+                <span class="badge badge-light">  @Html.DisplayFor(modelItem => item.Etat_commande_medicament) </span>
+            </td>
+            <td>
+                <span class="badge badge-light">    @Html.DisplayFor(modelItem => item.Date_commande) </span>
+            </td>
+            <td>
+
+                <div class="table-data-feature">
+                    <button class="item" data-toggle="tooltip" data-placement="top" title="Détails">
+                        @Html.ActionLink("voir", "LignesCommande", new { id = item.Ref_cmd })
+                    </button>
+                </div>
+            </td>
+
+        </tr>
+    }
+
+</table>
+
+}
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Commandes", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+<script>
+    jQuery.datetimepicker.setLocale('fr');
+
+    jQuery('#Search_jour_commande').datetimepicker({
+        i18n: {
+            de: {
+                months: [
+                    'Janvier', 'Fevrier', 'Mars', 'Avril',
+                    'Mai', 'Juin', 'Juillet', 'Aout',
+                    'Septembre', 'Octobre', 'Novembre', 'Décembre',
+                ],
+                dayOfWeek: [
+                    "So.", "Mo", "Di", "Mi",
+                    "Do", "Fr", "Sa.",
+                ]
+            }
+        },
+        timepicker: false,
+        format: 'd.m.Y'
+    });
+
+
+</script>

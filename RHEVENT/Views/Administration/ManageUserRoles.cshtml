@@ -1,0 +1,61 @@
+﻿@model  List<RoleUsersViewModel>
+
+@{
+    ViewBag.titre_page = "Administration";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+<h2 class="text " style="color:red">
+    <span class=" glyphicon glyphicon-user"> </span>
+    Gestion des roles
+</h2>
+
+<br /><br />
+
+
+
+<form method="post">
+    <div class="card-body">
+
+        @for (int i = 0; i < Model.Count; i++)
+        {
+
+            <div class="form-check m-1">
+                <input type="hidden" asp-for="@Model[i].RoleId" />
+                <input type="hidden" asp-for="@Model[i].RoleName" />
+                @* name="check" onclick="onlyOne(this)"*@
+
+                <input asp-for="@Model[i].IsSelected" class="form-check-input" />
+
+                <label class="form-check-label" asp-for="@Model[i].IsSelected">
+                    @Model[i].RoleName
+                </label>
+            </div>
+
+        }
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+    </div>
+
+    <div class="card-footer">
+        <input type="submit" value="MAJ" class="btn btn-success" style="width:auto" />
+        <a asp-action="EditUser" asp-route-id="@userId" class="btn btn-danger" style="width:auto">Annuler</a>
+    </div>
+</form>
+
+<script>
+    function onlyOne(checkbox) {
+
+        var checkboxes = document.getElementsByName('check')
+
+        checkboxes.forEach((item) => {
+            if (item !== checkbox)
+                item.checked = false
+            else
+                item.checked = true
+        })
+
+    }
+</script>

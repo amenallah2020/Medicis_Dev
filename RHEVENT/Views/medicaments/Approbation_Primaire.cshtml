@@ -1,0 +1,165 @@
+﻿@model RHEVENT.Models.CommandeL
+@{
+    ViewBag.titre_page = "Approbation Primaire";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+@using (Html.BeginForm())
+{
+    <div class="table-responsive table-responsive-data2">
+        <table class="table table-data2" id="table">
+
+            <thead>
+                <tr>
+
+                    <th>
+                        <span class="badge badge-primary">           @Html.DisplayNameFor(model => model.Designation_medicament) </span>
+                    </th>
+
+                    <th>
+                        <span class="badge badge-primary">       @Html.DisplayNameFor(model => model.Quantite_Commandee) </span>
+                    </th>
+                    <th>
+                        <span class="badge badge-primary">       @Html.DisplayNameFor(model => model.Nom_prenom) </span>
+                    </th>
+
+                    <th>
+                        <span class="badge badge-primary">       @Html.DisplayNameFor(model => model.Service) </span>
+                    </th>
+                  
+                    <th>
+                        <span class="badge badge-primary">      @Html.DisplayNameFor(model => model.Decision_primaire) </span>
+                    </th>
+
+                    <th>
+                        <span class="badge badge-primary">      @Html.DisplayNameFor(model => model.Commentaire_primaire) </span>
+                    </th>
+
+                    <th></th>
+
+                </tr>
+
+                @foreach (var item in Model.list_afficher)
+                {
+
+            <tr class="tr-shadow">
+
+                <td>
+                    <span class="badge badge-light">     @Html.DisplayFor(modelItem => item.Designation_medicament) </span>
+                </td>
+
+                <td>
+                    @Html.EditorFor(modelItem => item.Quantite_Commandee, new { htmlAttributes = new { @class = "form-control-success form-control", @id = "qte" + item.Id } })
+
+
+                </td>
+                <td>
+
+                    <span class="badge badge-info">      @Html.DisplayFor(modelItem => item.Nom_prenom) </span>
+
+                </td>
+
+                <td>
+
+                    <span class="badge badge-info">       @Html.DisplayFor(modelItem => item.Service) </span>
+
+                </td>
+             
+                <td>
+
+
+
+                    <div class="rs-select2--dark rs-select2--sm rs-select2--border">
+                        @Html.EnumDropDownListFor(modelItem => item.Decision_primaire, new { @class = "js-select2 au-select-dark", @name = "time", @id = "list_deroulante" + item.Id })
+                        <div class="dropDownSelect2"></div>
+                    </div>
+
+
+
+                </td>
+
+
+
+                <td>
+                    @Html.EditorFor(modelItem => item.Commentaire_primaire, new { htmlAttributes = new { @class = "form-control-success form-control", @id = "cmt" + item.Id } })
+
+                </td>
+                <td>
+                    @Html.HiddenFor(modelItem => item.Id, new { htmlAttributes = new { @id = "row"+ item.Id } })
+
+                </td>
+
+
+
+
+            </tr>
+                    <tr class="spacer"></tr>
+                }
+        </table>
+
+
+    </div>
+
+<input type="submit" name="valider" value="valider" onclick="return show()" class="btn btn-primary" />
+
+
+
+
+<input type="hidden" class="form-control" id="list_lignes_valider" name="list_lignes_valider" />
+<script>
+
+
+    function show() {
+        allElements = document.getElementsByClassName("js-select2 au-select-dark select2-hidden-accessible");
+        var n = allElements.length;
+        var list = "";
+   
+       for (var i = 0; i < n; i++)
+       {
+
+      
+           var sel = allElements[i].id;
+          
+           if (sel != "")
+           {
+
+              /*  if (sel.includes("-list"))
+                {
+
+                }
+                else if (sel.includes("list"))
+                { */             
+                    var s = document.getElementById(sel);
+                    var selected_item = s.options[s.selectedIndex].value;
+                    if (selected_item != '0')
+                    {
+                     
+
+                        var id = sel.substring(15, sel.length);
+                          
+                              var qte = document.getElementById("qte" + id).value;
+                              var cmt = document.getElementById("cmt" + id).value;
+                              list = list + id + "-" + qte + "_" + selected_item + cmt + ";";  
+  
+                    }
+                    
+                 
+                }                      
+          // }   
+
+         
+
+        }
+
+         //   alert(list);
+       var text = document.getElementById("list_lignes_valider");
+        text.value = list;
+
+
+
+     //   alert(list);
+       
+    }
+</script>
+}

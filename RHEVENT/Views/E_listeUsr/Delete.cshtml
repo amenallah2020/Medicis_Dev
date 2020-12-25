@@ -1,0 +1,78 @@
+﻿@model RHEVENT.Models.E_listeUsr
+
+<h2 class="text" style="color:cornflowerblue">
+    <span class="glyphicon   glyphicon-expand"> </span>
+    Diffusion des formations
+</h2>
+
+<br />
+
+
+<h3 class="text" style="color:cornflowerblue">Supprimer utilisateur</h3>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+
+</head>
+<body>
+
+    <h4 style="color:gray">Voulez-vous vraiment supprimer cela?</h4>
+
+    <div>
+        <h4 style="color:gray">Utilisateur</h4>
+        <hr />
+        <dl class="dl-horizontal" style="color:black">
+
+            @*<dt>
+                    @Html.DisplayNameFor(model => model.Code_formt)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Code_formt)
+                </dd>*@
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Code_grp)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Code_grp)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Mat_usr)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Mat_usr)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Nom_usr)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Nom_usr)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+
+            //TempData["CodeFormation"] = @ViewBag.form;
+
+
+            <div class="form-actions no-color">
+                <br /> <input type="submit" value="Supprimer" class="btn btn-success" /> |
+                @Html.ActionLink("Retour à la liste", "Index", new { id = @Session["idgrp"] }, null)
+            </div>
+        }
+    </div>
+</body>
+</html>

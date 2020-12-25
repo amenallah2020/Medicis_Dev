@@ -1,0 +1,98 @@
+﻿@model RHEVENT.Models.Image
+
+@{
+    ViewBag.titre_page = "Accueil";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+<h2>Détails</h2>
+
+
+    <h4>Image</h4>
+    <hr />
+
+
+    
+                <dt>
+                    @Html.DisplayNameFor(model => model.image_id)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.image_id)
+                </dd>
+
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.UserName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.titre)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.titre)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.text)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.text)
+                </dd>
+
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.date_upload)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.date_upload)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.suppresseur)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.suppresseur)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.date_suppression)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.date_suppression)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.type_photo)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.type_photo)
+                </dd>
+
+           
+
+ 
+         <center>   <img src="../../@Html.DisplayFor(model=>model.lien)" alt="teriak" class="" style="width:250px;height:325px"></center>
+
+
+    
+
+
+
+
+
+<p>
+    @Html.ActionLink("Editer", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Liste des images", "Index")
+</p>

@@ -1,0 +1,13 @@
+﻿<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.titre_page = "Importation Heures supplémentaires";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+@using (Html.BeginForm("Import_Etat_HeuresSupp", "Heure_Superieur", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <label for="file">Importation Heures supérieur</label>
+    <input type="file" name="file" id="file" />
+    <input type="submit" value="telecharger" />
+}

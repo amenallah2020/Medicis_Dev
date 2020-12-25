@@ -1,0 +1,71 @@
+﻿@model RHEVENT.Models.E_listeUsr
+
+@{
+    ViewBag.titre_page = "E-learning";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+<h2 class="text" style="color:cornflowerblue">
+    <span class="glyphicon   glyphicon-expand"> </span>
+     Gestion de groupe de diffusion
+</h2>
+<br /><br />
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <h3 class="text" style="color:cornflowerblue">Ajouter utilisateur</h3>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            <hr />
+           
+            <div class="form-group">
+                <br />  @Html.LabelFor(a => a.Code_grp, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                <div class="col-md-9">
+                    @Html.DropDownListFor(m => m.Code_grp, new SelectList(@ViewBag.CodeGroup, "Id", "Code"), new { disabled = "disabled" })
+                    @Html.ValidationMessageFor(model => model.Code_grp, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <br />  @Html.LabelFor(model => model.SelectUsr, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                <div class="col-md-9">
+
+                    @Html.DropDownListFor(m => m.SelectUsr, new SelectList(@ViewBag.listUser, "Matricule", "NomPrenom"), new { @id = "Usr" })
+                    @Html.ValidationMessageFor(model => model.SelectUsr, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+
+
+            @using (Html.BeginForm("Create", "E_listeUsr", method: FormMethod.Post))
+            {
+                <div hidden>
+                      @(TempData["Group"] = ViewBag.codeg);
+                </div>
+            }
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <br />  <input type="submit" value="Ajouter" class="btn btn-info" />
+                </div>
+            </div>
+        </div>
+    }
+     
+
+</body>
+</html>

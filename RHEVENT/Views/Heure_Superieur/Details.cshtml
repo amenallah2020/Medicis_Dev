@@ -1,0 +1,75 @@
+﻿@model RHEVENT.Models.Heure_Superieur
+
+@{
+    ViewBag.titre_page = "Planing des heures SUP";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+
+
+    <div class="au-card au-card--bg-white au-card-top-countries m-b-30">
+         <div class="au-card-inner"> </div>
+        <div class="table-responsive">
+            <table class="table table-top-countries">
+
+                <tbody>
+                    <tr>
+                        <td style="color:black"><b>@Html.DisplayNameFor(model => model.matricule_employer)</b></td>
+                        <td style="color:black">@Html.DisplayFor(model => model.matricule_employer)</td>
+                    </tr>
+
+                    <tr>
+                        <td style="color:black"><b> @Html.DisplayNameFor(model => model.nom_prenom_employer)</b></td>
+                        <td style="color:black"> @Html.DisplayFor(model => model.nom_prenom_employer)</td>
+                    </tr>
+
+                    <tr>
+
+                        <td style="color:black"><b>@Html.DisplayNameFor(model => model.Service)</b></td>
+                        <td style="color:black">@Html.DisplayFor(model => model.Service)</td>
+
+                    </tr>
+                    <tr>
+
+                        <td style="color:black"><b>@Html.DisplayNameFor(model => model.date_creation)</b></td>
+                        <td style="color:black">@Html.DisplayFor(model => model.date_creation)</td>
+
+                    </tr>
+                    <tr>
+
+                        <td style="color:black"><b>@Html.DisplayNameFor(model => model.jour_planing)</b></td>
+                        <td style="color:black">@Html.DisplayFor(model => model.jour_planing)</td>
+
+                    </tr>
+
+                    <tr>
+                        <td style="color:black"><b>@Html.DisplayNameFor(model => model.date_debut_prevu)</b></td>
+                        <td style="color:black">@Html.DisplayFor(model => model.date_debut_prevu)</td>
+
+                    </tr>
+                    <tr>
+                        <td style="color:black"><b>@Html.DisplayNameFor(model => model.date_fin_prevu)</b></td>
+                        <td style="color:black">@Html.DisplayFor(model => model.date_fin_prevu)</td>
+
+                    </tr>
+                    <tr>
+                        <td style="color:black"><b>@Html.DisplayNameFor(model => model.date_debut_pointage)</b></td>
+                        <td style="color:black">@Html.DisplayFor(model => model.date_debut_pointage)</td>
+
+                    </tr>
+                    <tr>
+                        <td style="color:black"><b>@Html.DisplayNameFor(model => model.date_fin_pointage)</b></td>
+                        <td style="color:black">@Html.DisplayFor(model => model.date_fin_pointage)</td>
+
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+

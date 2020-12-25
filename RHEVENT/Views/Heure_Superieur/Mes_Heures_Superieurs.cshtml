@@ -1,0 +1,38 @@
+﻿@model IEnumerable<RHEVENT.ViewModels.MesHeuresSup>
+
+@{
+    ViewBag.Title = "Mes_Heures_Superieurs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<table class="table">
+    <tr>
+        <th>
+            <span class="badge badge-primary">      @Html.DisplayNameFor(model => model.date) </span>
+        </th>
+        <th>
+            <span class="badge badge-primary">    @Html.DisplayNameFor(model => model.Total_HN) </span>
+        </th>
+        <th>
+            <span class="badge badge-primary">     @Html.DisplayNameFor(model => model.Total_HD) </span>
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <span class="badge badge-info"> @Html.DisplayFor(modelItem => item.date)</span>
+        </td>
+        <td>
+            <span class="badge badge-info">@Html.DisplayFor(modelItem => item.Total_HN)</span>
+</td>
+        <td>
+            <span class="badge badge-info">@Html.DisplayFor(modelItem => item.Total_HD)</span>
+</td>
+      
+    </tr>
+}
+
+</table>

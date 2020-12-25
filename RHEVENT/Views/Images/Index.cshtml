@@ -1,0 +1,47 @@
+﻿@model IEnumerable<RHEVENT.Models.Image>
+
+@{
+    ViewBag.titre_page = "Images";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+<p>
+    @Html.ActionLink("Ajouter image", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.image_id)
+        </th>    
+        <th>
+            @Html.DisplayNameFor(model => model.titre)
+        </th>
+          
+        <th>
+            @Html.DisplayNameFor(model => model.type_photo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.image_id)
+        </td>        
+        <td>
+            @Html.DisplayFor(modelItem => item.titre)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.type_photo)
+        </td>
+        <td>
+            @Html.ActionLink("Editer", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Détails", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Supprimer", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,135 @@
+﻿@model RHEVENT.Models.Autorisation
+@{
+    ViewBag.titre_page = "RH";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+
+<h2 class="text" style="color:crimson">
+    <span class="glyphicon   glyphicon-check"> </span>
+    Administration RH - Approbation des autorisations
+</h2>
+<br /><br />
+
+@{
+
+    if (Model.acceptation_ressource != RHEVENT.Models.acceptation_ressource_humaine.Demande_en_cours)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("Action refusée ! Demande  déja approuvée ");
+                window.location.href = "@Url.Action("Approbation_RH", "Autorisation")";
+            };
+        </script>
+    }
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        @*<h4>Autorisation</h4>*@
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-4" })
+
+            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nom_prenom, htmlAttributes: new { @class = "control-label col-md-4" })
+
+            @Html.EditorFor(model => model.nom_prenom, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.nom_prenom, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.service, htmlAttributes: new { @class = "control-label col-md-4" })
+
+            @Html.EditorFor(model => model.service, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.service, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Date_emission_demande, htmlAttributes: new { @class = "control-label col-md-4" })
+
+            @Html.EditorFor(model => model.Date_emission_demande, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.Date_emission_demande, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.jour_autorisation, htmlAttributes: new { @class = "control-label col-md-4" })
+
+            @Html.EditorFor(model => model.jour_autorisation, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.jour_autorisation, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.heure_sortie, htmlAttributes: new { @class = "control-label col-md-4" })
+
+            @Html.EditorFor(model => model.heure_sortie, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.heure_sortie, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.heure_entree, htmlAttributes: new { @class = "control-label col-md-4" })
+
+            @Html.EditorFor(model => model.heure_entree, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.heure_entree, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.commentaire_superieur_hiearchique, htmlAttributes: new { @class = "control-label col-md-4" })
+
+            @Html.EditorFor(model => model.commentaire_superieur_hiearchique, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.commentaire_superieur_hiearchique, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.acceptation_superieur, htmlAttributes: new { @class = "control-label col-md-4" })
+
+            @Html.EnumDropDownListFor(model => model.acceptation_superieur, htmlAttributes: new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })
+            @Html.ValidationMessageFor(model => model.acceptation_superieur, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.commentaire_rh, htmlAttributes: new { @class = "control-label col-md-4" })
+
+            @Html.EditorFor(model => model.commentaire_rh, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.commentaire_rh, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.acceptation_ressource, htmlAttributes: new { @class = "control-label col-md-4" })
+
+            @Html.EnumDropDownListFor(model => model.acceptation_ressource, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.acceptation_ressource, "", new { @class = "text-danger" })
+
+        </div>
+
+        @*<div class="form-group">*@
+        <div class="col-lg-12">
+            <button type="submit" value="Sauvegarder" class="btn btn-success">
+                @*<i class="fa fa-save">*@
+                Sauvegarder
+                @*</i>*@
+            </button>
+        </div>
+        @*</div>*@
+    </div>
+}

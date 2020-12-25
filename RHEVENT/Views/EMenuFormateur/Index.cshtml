@@ -1,0 +1,31 @@
+﻿@{
+        ViewBag.titre_page = "E-learning";
+        ViewBag.email = ViewBag.email;
+        ViewBag.nom_prenom = ViewBag.nom_prenom;
+     
+ }
+  
+<h2 class="text" style="color:cornflowerblue">
+    <span class="glyphicon   glyphicon-expand"> </span>
+    Formation
+</h2>
+<br /><br /> 
+<div class="row">
+    <p>
+        <div class="col-lg-12">
+            @*<span class="role user">*@
+            <a class="btn btn-info alert label-info" role="button" href="@Url.Action("Create", "E_Formation" )">Création de formation</a>
+
+            <a class="btn btn-info alert label-info" role="button" href="@Url.Action("Index", "E_Formation" )">Diffusion des formations</a>
+
+            <a class="btn btn-info alert label-info" role="button" href="@Url.Action("Index", "E_ListFormationDiffus" )">Liste des formations diffusées </a>
+
+            @*@if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || (User.IsInRole("RH") && User.IsInRole("RH_Directeur")) || (User.IsInRole("RH") && User.IsInRole("RH_Superieur_Hiéarchique")) || User.IsInRole("Admin_Medicis"))
+            {
+                <a class="btn btn-warning alert label-warning" role="button" href="@Url.Action("Approbation_superieur_hiéarchique", "Conge")">Approbation Sup.Hiérarchique </a>
+            }*@
+
+            </div>
+    </p>
+
+</div>

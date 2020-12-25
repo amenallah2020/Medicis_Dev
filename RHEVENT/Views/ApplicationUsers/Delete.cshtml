@@ -1,0 +1,182 @@
+﻿@model RHEVENT.Models.ApplicationUser
+
+@{
+    ViewBag.titre_page = "Administration";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+<h2 class="text " style="color:red">
+    <span class=" glyphicon glyphicon-user"> </span>
+    Supprimer utilisateur
+</h2>
+
+<br />
+
+@*<h2>Delete</h2>*@
+
+      <h3>Voulez-vous vraiment supprimer cela?</h3>
+<div>
+    <h4>Utilisateur</h4>
+    <hr />
+    <dl  >
+        <dt class="col-lg-6">
+            @Html.DisplayNameFor(model => model.nom)
+        </dt>
+
+        <dd class="col-lg-6">
+            @Html.DisplayFor(model => model.nom)
+        </dd>
+
+        <dt class="col-lg-6">
+            @Html.DisplayNameFor(model => model.prenom)
+        </dt>
+
+        <dd class="col-lg-6">
+            @Html.DisplayFor(model => model.prenom)
+        </dd>
+
+        <dt class="col-lg-6">
+            @Html.DisplayNameFor(model => model.matricule)
+        </dt>
+
+        <dd class="col-lg-6">
+            @Html.DisplayFor(model => model.matricule)
+        </dd>
+
+        <dt class="col-lg-6">
+            @Html.DisplayNameFor(model => model.telephone)
+        </dt>
+
+        <dd class="col-lg-6">
+            @Html.DisplayFor(model => model.telephone)
+        </dd>
+
+        <dt class="col-lg-6">
+            @Html.DisplayNameFor(model => model.fonction)
+        </dt>
+
+        <dd class="col-lg-6">
+            @Html.DisplayFor(model => model.fonction)
+        </dd>
+
+        <dt class="col-lg-6">
+            @Html.DisplayNameFor(model => model.date_naissance)
+        </dt>
+
+        <dd class="col-lg-6">
+            @Html.DisplayFor(model => model.date_naissance)
+        </dd>
+
+        <dt class="col-lg-6">
+            @Html.DisplayNameFor(model => model.date_recrutement)
+        </dt>
+
+        <dd class="col-lg-6">
+            @Html.DisplayFor(model => model.date_recrutement)
+        </dd>
+
+        <dt class="col-lg-6">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd class="col-lg-6">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        @*<dt class="col-lg-6">
+            @Html.DisplayNameFor(model => model.EmailConfirmed)
+        </dt>
+
+        <dd class="col-lg-6">
+            @Html.DisplayFor(model => model.EmailConfirmed)
+        </dd>*@
+
+        @*<dt class="col-lg-6">
+            @Html.DisplayNameFor(model => model.PasswordHash)
+        </dt>
+
+        <dd class="col-lg-6">
+            @Html.DisplayFor(model => model.PasswordHash)
+        </dd>*@
+
+        @*<dt class="col-lg-6">
+            @Html.DisplayNameFor(model => model.SecurityStamp)
+        </dt>
+
+        <dd class="col-lg-6">
+            @Html.DisplayFor(model => model.SecurityStamp)
+        </dd>*@
+
+        <dt class="col-lg-6">
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+
+        <dd class="col-lg-6">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+        @*<dt class="col-lg-6">
+            @Html.DisplayNameFor(model => model.PhoneNumberConfirmed)
+        </dt>
+
+        <dd class="col-lg-6">
+            @Html.DisplayFor(model => model.PhoneNumberConfirmed)
+        </dd>*@
+
+        @*<dt class="col-lg-6">
+            @Html.DisplayNameFor(model => model.TwoFactorEnabled)
+        </dt>
+
+        <dd class="col-lg-6">
+            @Html.DisplayFor(model => model.TwoFactorEnabled)
+        </dd>*@
+
+        @*<dt class="col-lg-6">
+            @Html.DisplayNameFor(model => model.LockoutEndDateUtc)
+        </dt>
+
+        <dd class="col-lg-6">
+            @Html.DisplayFor(model => model.LockoutEndDateUtc)
+        </dd>*@
+
+        @*<dt class="col-lg-6">
+            @Html.DisplayNameFor(model => model.LockoutEnabled)
+        </dt>
+
+        <dd class="col-lg-6">
+            @Html.DisplayFor(model => model.LockoutEnabled)
+        </dd>*@
+
+        @*<dt class="col-lg-6">
+            @Html.DisplayNameFor(model => model.AccessFailedCount)
+        </dt>
+
+        <dd class="col-lg-6">
+            @Html.DisplayFor(model => model.AccessFailedCount)
+        </dd>*@
+
+        @*<dt class="col-lg-6">
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd class="col-lg-6">
+            @Html.DisplayFor(model => model.UserName)
+        </dd>*@
+
+    </dl>
+
+    <div class="col-lg-12">
+        @using (Html.BeginForm())
+        {
+            <br />
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions" style="color:blue">
+                <input type="submit" value="Supprimer" class="btn btn-success" /> |
+                @Html.ActionLink("Retour à la liste", "Index")
+            </div>
+        }
+    </div>
+</div>

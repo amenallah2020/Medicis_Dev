@@ -1,0 +1,137 @@
+﻿@model PagedList.IPagedList<RHEVENT.Models.Autorisation>
+@using PagedList.Mvc
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.titre_page = "RH";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+
+<h2 class="text" style="color:blueviolet">
+    <span class="glyphicon    glyphicon-credit-card"> </span>
+    Autorisations - Mes autorisations
+</h2>
+<br /> 
+
+
+<div class="row m-t-30">
+    <div class="col-md-12">
+        <div class="table-responsive">
+
+            <table class="table table-top-campaign" id="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @*class="badge badge-primary"*@
+                            <span style="color:grey">       Date demande </span>
+                        </th>
+                        <th>
+                            <span style="color:grey">        Jour Autorisation </span>
+                        </th>
+                        <th>
+                            <span style="color:grey">       H.Sortie </span>
+                        </th>
+                        <th>
+                            <span style="color:grey">      H.Entrée </span>
+                        </th>
+                        <th>
+                            <span style="color:grey">     Réponse Supérieur </span>
+                        </th>
+                        <th>
+                            <span style="color:grey">      Réponse RH </span>
+                        </th>
+                        <th></th>
+                    </tr>
+
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                @*class="badge badge-light"*@
+                                <span style="font-size:12px">     @Html.DisplayFor(modelItem => item.Date_emission_demande) </span>
+                            </td>
+                            <td>
+                                <span style="font-size:12px">      @Html.DisplayFor(modelItem => item.jour_autorisation) </span>
+                            </td>
+                            <td>
+                                <span style="font-size:12px">     @Html.DisplayFor(modelItem => item.heure_sortie) </span>
+                            </td>
+                            <td>
+                                <span style="font-size:12px">      @Html.DisplayFor(modelItem => item.heure_entree) </span>
+                            </td>
+                            <td>
+                                <span style="font-size:12px">      @Html.DisplayFor(modelItem => item.acceptation_superieur) </span>
+                            </td>
+                            <td>
+                                <span style="font-size:12px">      @Html.DisplayFor(modelItem => item.acceptation_ressource) </span>
+                            </td>
+
+                            <td>
+                                @if (item.acceptation_superieur == RHEVENT.Models.acceptation_superieur_hierarchique.Demande_en_cours)
+                                {
+                                    <span class="abdge badge-dark">  @Html.ActionLink("Editer", "UpdateAutorisationByUser", new { id = item.Id })</span>
+                                }
+
+
+                            </td>
+
+
+
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+    @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
+    @Html.PagedListPager(Model, page => Url.Action("Mes_autorisations", new { page, PagedListRenderOptions.ClassicPlusFirstAndLast }))
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+    <script>
+
+        var length_table = document.getElementById("table").rows.length;
+        for (var i = 1; i < length_table; i++) {
+
+
+            var table_element = document.getElementById("table").rows[i].cells[4].innerText;
+            var rh_approbation = document.getElementById("table").rows[i].cells[5].innerText;
+
+            if (table_element == 'Demande_refusée') {
+                document.getElementById("table").rows[i].cells[4].style.color = "red"
+            }
+            if (table_element == 'Demande_validée') {
+                document.getElementById("table").rows[i].cells[4].style.color = "green"
+            }
+            if (table_element == 'Demande_en_cours') {
+                document.getElementById("table").rows[i].cells[4].style.color = "blue"
+            }
+
+
+            if (rh_approbation == 'Demande_refusée') {
+                document.getElementById("table").rows[i].cells[5].style.color = "red"
+            }
+            if (rh_approbation == 'Demande_validée') {
+                document.getElementById("table").rows[i].cells[5].style.color = "green"
+            }
+            if (rh_approbation == 'Demande_en_cours') {
+                document.getElementById("table").rows[i].cells[5].style.color = "blue"
+            }
+
+        }
+    </script>
+

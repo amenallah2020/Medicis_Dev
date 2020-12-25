@@ -1,0 +1,9 @@
+﻿@{
+    ViewBag.titre_page = "A propos";
+    ViewBag.email = User.Identity.Name;
+    ViewBag.nom_prenom = User.Identity.Name.ToString().Replace("@teriak.com", "");
+}
+
+
+<p>Application destiné aux employers de l'entrprise TERIAK</p>
+<p>Cette application permet de gérer les évenements RH</p>

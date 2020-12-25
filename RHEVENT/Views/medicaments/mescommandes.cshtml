@@ -1,0 +1,45 @@
+﻿@model IEnumerable<RHEVENT.Models.Commande>
+
+@{
+    ViewBag.titre_page = "Mes demandes";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+<table class="table" id="table">
+    <tr>
+        <th>
+            <span class="badge badge-primary">    @Html.DisplayNameFor(model => model.Ref_cmd) </span>
+        </th>
+        <th>
+            <span class="badge badge-primary">       @Html.DisplayNameFor(model => model.Etat_commande_medicament) </span>
+        </th>
+        <th>
+            <span class="badge badge-primary">     @Html.DisplayNameFor(model => model.Date_commande) </span>
+        </th>
+       
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <span class="badge badge-info">    @Html.DisplayFor(modelItem => item.Ref_cmd) </span>
+            </td>
+            <td>
+                <span class="badge badge-light">       @Html.DisplayFor(modelItem => item.Etat_commande_medicament) </span>
+            </td>
+            <td>
+                <span class="badge badge-light">       @Html.DisplayFor(modelItem => item.Date_commande) </span>
+            </td>
+            <td>
+
+                <div class="table-data-feature">
+                    <button class="item" data-toggle="tooltip" data-placement="top" >                 
+                            @Html.ActionLink("voir", "LignesCommande", new { id = item.Ref_cmd })                       
+                    </button>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>

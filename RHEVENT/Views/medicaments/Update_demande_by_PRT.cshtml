@@ -1,0 +1,120 @@
+﻿@model RHEVENT.Models.CommandeL
+
+@{
+
+    ViewBag.titre_page = "Approbation PRT";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="row">
+        <div class="col-lg-3">
+            <span class="badge badge-secondary">     @Html.LabelFor(model => model.Service) </span>
+
+            @Html.EditorFor(model => model.Service, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.Service, "", new { @class = "text-danger" })
+
+        </div>
+
+
+
+        <div class="col-lg-3">
+            <span class="badge badge-secondary">   @Html.LabelFor(model => model.Nom_prenom) </span>
+
+            @Html.EditorFor(model => model.Nom_prenom, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.Nom_prenom, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="col-lg-3">
+            <span class="badge badge-secondary">  @Html.LabelFor(model => model.Matricule) </span>
+
+            @Html.EditorFor(model => model.Matricule, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.Matricule, "", new { @class = "text-danger" })
+
+        </div>
+    </div>
+    <div class="row">
+       
+
+        <div class="col-lg-3">
+
+            <span class="badge badge-secondary">  @Html.LabelFor(model => model.Designation_medicament)</span>
+
+            @Html.EditorFor(model => model.Designation_medicament, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Designation_medicament, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-lg-3">
+
+
+            <div class="form-group">
+                <span class="badge badge-secondary">    @Html.LabelFor(model => model.Code_medicament) </span>
+
+                @Html.EditorFor(model => model.Code_medicament, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Code_medicament, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+
+
+        <div class="col-lg-3">
+            <span class="badge badge-secondary">     @Html.LabelFor(model => model.Quantite_Commandee) </span>
+
+            @Html.EditorFor(model => model.Quantite_Commandee, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Quantite_Commandee, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="col-lg-3">
+            <span class="badge badge-secondary">  @Html.LabelFor(model => model.Decision_prt) </span>
+
+            @Html.EnumDropDownListFor(model => model.Decision_prt, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Decision_prt, "", new { @class = "text-danger" })
+
+        </div>
+
+
+
+        <div class="col-lg-6">
+            <span class="badge badge-secondary">@Html.LabelFor(model => model.Commentaire_prt)</span>
+
+            @Html.EditorFor(model => model.Commentaire_prt, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Commentaire_prt, "", new { @class = "text-danger" })
+
+        </div>
+        <div class="col-lg-3">
+            <br />
+            <button type="submit" value="Save" class="btn btn-outline-primary">
+                <i class="fas fa-save"></i>
+                valider
+            </button>
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+}
+
+<div>
+    @Html.ActionLink("retour", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

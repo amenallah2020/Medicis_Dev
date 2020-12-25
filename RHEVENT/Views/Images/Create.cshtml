@@ -1,0 +1,70 @@
+﻿@model RHEVENT.Models.Image
+
+@{
+    ViewBag.titre_page = "Accueil";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "Images", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row form-group">
+        <div class="col-lg-3"></div>
+        <div class="col col-md-2">
+            <label for="textarea-input" class=" form-control-label">Choisir un fichier</label>
+        </div>
+
+        <input type="file" name="file" id="file" class="form-control" />
+    </div>
+
+
+
+    <div class="row form-group">
+        <div class="col-lg-3"></div>
+        <div class="col col-md-2">
+            <label for="type_photo" class=" form-control-label">@Html.LabelFor(model => model.type_photo)</label>
+        </div>
+        @Html.EnumDropDownListFor(model => model.type_photo, "", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.type_photo, "", new { @class = "text-danger" })
+
+    </div>
+
+
+
+        <div class="row form-group">
+            <div class="col-lg-3"></div>
+            <div class="col col-md-2">
+                <label for="textarea-input" class=" form-control-label">@Html.LabelFor(model => model.titre)</label>
+            </div>
+
+            @Html.EditorFor(model => model.titre, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.titre, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="row form-group">
+            <div class="col-lg-3"></div>
+            <div class="col col-md-2">
+                <label for="textarea-input" class=" form-control-label">@Html.LabelFor(model => model.text)</label>
+            </div>
+
+            @Html.TextAreaFor(model => model.text, new { cols = 35, @rows = 3, @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.text, "", new { @class = "text-danger" })
+
+
+        </div>
+
+        <div class="row form-group">
+            <div class="col-lg-6"></div>
+            <input type="submit" value="Télécharger" class="btn btn-outline-success btn-sm" />
+        </div>
+}
+
+
+<div>
+    @Html.ActionLink("Liste des images", "Index")
+</div>

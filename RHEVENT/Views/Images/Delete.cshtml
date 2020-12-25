@@ -1,0 +1,79 @@
+﻿@model RHEVENT.Models.Image
+
+@{
+    ViewBag.titre_page = "Accueil";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+<h2>Supprimer</h2>
+
+<h3>Vous êtes sur le point de supprimer cette image?</h3>
+<div>
+    <h4>Image</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.image_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.image_id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.titre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.titre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.text)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.text)
+        </dd>
+
+      
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_upload)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_upload)
+        </dd>    
+
+        <dt>
+            @Html.DisplayNameFor(model => model.type_photo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.type_photo)
+        </dd>
+
+    </dl>
+
+    <center>   <img src="../../@Html.DisplayFor(model=>model.lien)" alt="teriak" class="" style="width:250px;height:325px"></center>
+
+
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="supprimer" class="btn btn-outline-danger btn-sm" /> |
+            @Html.ActionLink("Liste des images", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,41 @@
+﻿
+@{
+      ViewBag.titre_page = "Calendrier direction";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+<script>
+    var str1 = "/RH_MEDICIS/Files/";
+    var str2 = "@ViewData["service"]";
+    var str3 = ".json";
+    var str = str1 + str2 + str3;
+</script>
+<div class="panel-group">
+    <script>
+        $(function () {
+            // page is now ready, initialize the calendar...
+            $('#calendar').fullCalendar({
+                 lang:'fr',
+                height: 700,
+              
+                header: {
+                    left: 'prev,next today myCustomButton',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                eventSources: [
+                    str
+                ],
+                eventClick: function (calEvent, jsEvent, view) {
+                    alert(calEvent.title);
+                    window.opener.location.href = '@Url.Action("CalendrierDirection", "Calendar")', window.close();
+                }
+            })
+        });
+    </script>
+    <div id="calendar">
+    </div>
+</div>
+
+

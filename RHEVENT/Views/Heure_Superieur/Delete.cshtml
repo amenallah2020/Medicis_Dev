@@ -1,0 +1,111 @@
+﻿@model RHEVENT.Models.Heure_Superieur
+
+@{
+    ViewBag.titre_page = "Planing des heures SUP";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+    if (Model.Approbation_Heure_Sup != RHEVENT.Models.Approbation_Heures_Superieurs.Demande_en_cours)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("Action refusée ! Demande  prise en considération par le service RH");
+                window.location.href = "@Url.Action("Index", "Heure_Superieur")";
+            };
+        </script>
+    }
+}
+
+
+
+
+<h3>Valider la suppression SVP ?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.matricule_employer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.matricule_employer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nom_prenom_superieur)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nom_prenom_superieur)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nom_prenom_employer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nom_prenom_employer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Service)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Service)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.jour_planing)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.jour_planing)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_debut_prevu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_debut_prevu)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_fin_prevu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_fin_prevu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Commentaire)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Commentaire)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_creation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_creation)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("retour", "Index")
+        </div>
+    }
+</div>

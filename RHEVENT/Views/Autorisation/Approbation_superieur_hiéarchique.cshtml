@@ -1,0 +1,93 @@
+﻿@model PagedList.IPagedList<RHEVENT.Models.Autorisation>
+@using PagedList.Mvc
+@{
+    ViewBag.titre_page = "RH";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+<h2 class="text" style="color:blueviolet">
+    <span class="glyphicon   glyphicon-credit-card"> </span>
+    Autorisations - Approbation Sup.Hiérarchique
+</h2>
+<br /><br />
+
+<div class="table-responsive">
+    <table class="table table-top-campaign" id="table">
+        <tr>
+
+            <th>
+                @*class="badge badge-primary"*@
+                <span style="color:blue ; font-size:13px">   Employer </span>
+            </th>
+            <th>
+                <span style="color:blue ; font-size:13px">   Solde de congé </span>
+            </th>
+            <th>
+                <span style="color:blue ; font-size:13px">   Jour autorisation</span>
+            </th>
+            <th>
+                <span style="color:blue ; font-size:13px">   H.Sortie</span>
+            </th>
+            <th>
+                <span style="color:blue ; font-size:13px">   H.Entrée</span>
+            </th>
+            <th>
+                <span style="color:blue ; font-size:13px">Etat Demande</span>
+            </th>
+            <th>
+
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @*class="badge badge-info"*@
+                    <span style="color:black ;font-size:12px">   @Html.DisplayFor(modelItem => item.nom_prenom)</span>
+                </td>
+                <td>
+                    <span style="color:black ;font-size:12px">   @Html.DisplayFor(modelItem => item.Solde_Conge)</span>
+                </td>
+                <td>
+                    <span style="color:black ;font-size:12px">     @Html.DisplayFor(modelItem => item.jour_autorisation)</span>
+                </td>
+                <td>
+                    <span style="color:black ;font-size:12px">  @Html.DisplayFor(modelItem => item.heure_sortie) </span>
+                </td>
+                <td>
+                    <span style="color:black ;font-size:12px">   @Html.DisplayFor(modelItem => item.heure_entree) </span>
+                </td>
+                <td>
+                    <span style="color:black ;font-size:12px">   @Html.DisplayFor(modelItem => item.acceptation_superieur) </span>
+                </td>
+                <td>
+                    <span style="color:red ;font-size:13px">  @Html.ActionLink("Modifier", "UpdateAutorisationSuperieur", new { id = item.Id }) </span>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+  @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
+@Html.PagedListPager(Model, page => Url.Action("Approbation_superieur_hiéarchique", new { page, PagedListRenderOptions.ClassicPlusFirstAndLast }))
+
+<script>
+      /*  var length_table = document.getElementById("table").rows.length;
+        for (var i = 1; i < length_table; i++) {
+            var table_element = document.getElementById("table").rows[i].cells[6].innerText;
+
+            if (table_element == 'Demande_refusée') {
+                document.getElementById("table").rows[i].cells[6].style.color = "red"
+            }
+            if (table_element == 'Demande_validée') {
+                document.getElementById("table").rows[i].cells[6].style.color = "green"
+            }
+              if (table_element == 'Demande_en_cours') {
+                document.getElementById("table").rows[i].cells[6].style.color = "blue"
+            }
+        }
+        */
+</script>

@@ -1,0 +1,45 @@
+﻿@model RHEVENT.Models.Calendrier_Direction
+@{
+              
+                ViewBag.titre_page = "RH";
+                ViewBag.email = ViewBag.email;
+                ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+<h2 class="text" style="color:crimson">
+    <span class="glyphicon   glyphicon-calendar"> </span>
+    Calendrier de direction
+</h2>
+<br /> 
+
+
+
+@*@{ if (ViewBag.Role == "Admin")
+    {*@
+        <p>
+            <div style="color:blue"> <b>  @Html.ActionLink("Gestion du calendrier", "Index", "Calendrier_Direction", null, null)</b></div>
+        </p>
+    @*}
+}*@
+
+<br />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @*@Html.LabelFor(model => model.list_service)*@
+
+    <label>Liste de service</label>
+    @Html.DropDownListFor(m => m.service, Model.list_service, new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.service, "", new { @class = "text-danger" })
+
+    @*<div class="panel-group">
+        <div class="col-lg-3">
+
+        </div>*@
+        <div class="col-lg-12">
+              <br /> <input type="submit" value="Afficher" class="btn btn-success" />
+        </div>
+    @*</div>*@
+}

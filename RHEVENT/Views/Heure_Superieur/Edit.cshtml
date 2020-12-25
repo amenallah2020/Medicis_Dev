@@ -1,0 +1,108 @@
+﻿@model RHEVENT.Models.Heure_Superieur
+
+@{
+    ViewBag.titre_page = "Planing des heures SUP";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+
+    if (Model.Approbation_Heure_Sup != RHEVENT.Models.Approbation_Heures_Superieurs.Demande_en_cours)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("Action refusée ! Demande  prise en considération par le service RH");
+                window.location.href = "@Url.Action("Index", "Heure_Superieur")";
+            };
+        </script>
+    }
+}
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.matricule_superieur)
+    @Html.HiddenFor(model => model.nom_prenom_superieur)
+    @Html.HiddenFor(model => model.date_creation)
+    @Html.HiddenFor(model => model.matricule_employer)
+    @Html.HiddenFor(model => model.approbateur)
+    @Html.HiddenFor(model => model.date_approbation)
+    <div class="au-card au-card--bg-white au-card-top-countries m-b-30">
+        <div class="au-card-inner"> </div>
+        <div class="table-responsive">
+            <table class="table table-top-countries">
+                <tbody>
+
+                    <tr>
+                        <td style="color:black"> @Html.LabelFor(model => model.nom_prenom_employer)</td>
+
+                        <td>
+                            @Html.EditorFor(model => model.nom_prenom_employer, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                            @Html.ValidationMessageFor(model => model.nom_prenom_employer, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="color:black">    @Html.LabelFor(model => model.Service)</td>
+
+                        <td>
+                            @Html.EditorFor(model => model.Service, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                            @Html.ValidationMessageFor(model => model.Service, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="color:black">    @Html.LabelFor(model => model.jour_planing)</td>
+
+                        <td>
+                            @Html.EditorFor(model => model.jour_planing, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                            @Html.ValidationMessageFor(model => model.jour_planing, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="color:black">    @Html.LabelFor(model => model.date_debut_prevu)</td>
+
+                        <td>
+                            @Html.EditorFor(model => model.date_debut_prevu, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                            @Html.ValidationMessageFor(model => model.date_debut_prevu, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="color:black">    @Html.LabelFor(model => model.date_fin_prevu)</td>
+
+                        <td>
+                            @Html.EditorFor(model => model.date_fin_prevu, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                            @Html.ValidationMessageFor(model => model.date_fin_prevu, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="color:black">
+                            @Html.LabelFor(model => model.Commentaire)
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.Commentaire, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Commentaire, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+
+</table>
+        </div>
+    </div>
+
+
+    <div class="col-md-offset-4 col-md-8">
+        <input type="submit" value="Sauvegarder" class="btn btn-outline-success btn-lg btn-block" />
+    </div>
+}
+
+<div>
+    @Html.ActionLink("retour", "Index")
+</div>

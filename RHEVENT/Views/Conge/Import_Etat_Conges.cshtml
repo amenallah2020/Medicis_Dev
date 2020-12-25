@@ -1,0 +1,22 @@
+﻿<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.titre_page = "RH";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+<h2 class="text" style="color:crimson">
+    <span class="glyphicon   glyphicon-check"> </span>
+    Administration RH - Importation solde congés
+</h2>
+<br /><br />
+
+
+@using (Html.BeginForm("Import_Etat_Conges", "Conge", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <label style="color:blue" for="file">Synchroniser les soldes des congés</label>
+  <br />  <input type="file" name="file" id="file" />
+   <br /> <input  style="color:crimson" type="submit"  value="Télécharger" />
+}
