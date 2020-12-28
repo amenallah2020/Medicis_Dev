@@ -1,0 +1,74 @@
+﻿@model RHEVENT.Models.DA_Budget
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DA_Budget</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Réference)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Réference)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BudgetElementaire)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BudgetElementaire)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrixUnitaire)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrixUnitaire)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantité)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantité)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fournisseur)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fournisseur)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AL)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
