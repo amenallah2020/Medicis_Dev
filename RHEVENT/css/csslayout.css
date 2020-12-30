@@ -9,7 +9,7 @@
     z-index: 2;
     top: 0;
     left: 0;
-    background-color:cornsilk;
+    background-color:beige;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
@@ -19,7 +19,7 @@
     border-left-style: unset;
 }
 
-    .sidenav a, .dropdown-btn {
+    .sidenav a {
         padding: 8px 8px 8px 32px;
         text-decoration: none;
         font-size: 15px;
@@ -31,6 +31,19 @@
         
 
     }
+.dropdown-btn {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 15px;
+    /*color: #818181;*/
+    display: block;
+    transition: 0.3s;
+    width: 100%;
+    background-color: darkgray;
+    color: white;
+}
+
+
 .menu {
     height: 10%;
     width: 100%;
@@ -40,13 +53,15 @@
     left: 0;
     background-color: beige;
     overflow-x: hidden;
-    transition: 0.5s;
+    /*transition: 0.5s;*/
     /*padding-top: 60px;*/
 }
 
-        .sidenav a:hover, .dropdown-btn:hover {
-            color: crimson;
-        }
+.sidenav a:hover, .dropdown-btn:hover {
+    color: crimson;
+    background-color: cadetblue;
+
+}
 
 .sidenav .closebtn {
     position: absolute;
@@ -54,6 +69,7 @@
     left: 70%;
     font-size: 25px;
     border: unset;
+    background-color:transparent;
 }
 
 #main {

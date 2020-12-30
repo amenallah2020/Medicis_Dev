@@ -5,10 +5,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
+
 namespace RHEVENT.Models
 {
-    public class DA_Demande
+    public class MesDemAjout
     {
+        [NotMapped]
+        public List<DA_Demande> listesDemandes { get; set; }
+
         [Key]
         public int Id { get; set; }
 
@@ -55,8 +59,6 @@ namespace RHEVENT.Models
         [Display(Name = "Etat demande")]
         public string Etat { get; set; }
 
-        [NotMapped]
-        public List<DA_ListesGammes> listesGammes { get; set; }
+        
     }
- 
 }

@@ -1,13 +1,13 @@
-﻿@model RHEVENT.Models.DA_Demande
+﻿@model RHEVENT.Models.MesDemAjout
 
 @{
-    ViewBag.Title = "Détails demande d'action";
-
+    ViewBag.Title = "Details";
 }
 
+<h2>Details</h2>
 
 <div>
-
+    <h4>MesDemAjout</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -88,6 +88,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.Date_action)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Etat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Etat)
         </dd>
 
     </dl>

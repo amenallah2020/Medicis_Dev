@@ -1,3 +1,29 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    if ((ViewContext.RouteData.Values["controller"].ToString() == "DA_Demande") ||
+   (ViewContext.RouteData.Values["controller"].ToString() == "DA_TypesAchats") ||
+   (ViewContext.RouteData.Values["controller"].ToString() == "DA_TypesActions") ||
+   (ViewContext.RouteData.Values["controller"].ToString() == "DA_ListesGammes") ||
+   (ViewContext.RouteData.Values["controller"].ToString() == "DA_Labo") ||
+   (ViewContext.RouteData.Values["controller"].ToString() == "DA_Fournisseurs") ||
+   (ViewContext.RouteData.Values["controller"].ToString() == "DA_Materiels") ||
+
+   (ViewContext.RouteData.Values["controller"].ToString() == "EMenuFormateur") ||
+(ViewContext.RouteData.Values["controller"].ToString() == "E_Formation") ||
+(ViewContext.RouteData.Values["controller"].ToString() == "E_ListFormationDiffus") ||
+(ViewContext.RouteData.Values["controller"].ToString() == "E_GrpByUsr") ||
+(ViewContext.RouteData.Values["controller"].ToString() == "E_listeUsr") ||
+(ViewContext.RouteData.Values["controller"].ToString() == "E_listFormationDiffus"))
+    {
+        Layout = "~/Views/Shared/_Layout1.cshtml";
+    }
+
+
+
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    // Layout = "~/Views/Shared/_Layout2.cshtml";
 }
