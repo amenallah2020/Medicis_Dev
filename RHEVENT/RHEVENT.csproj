@@ -386,6 +386,7 @@
     <Content Include="Content\caroussel_files\docs.theme.min.css" />
     <Content Include="Content\caroussel_files\CustomScript.js" />
     <Content Include="Content\caroussel_files\jquery.min.js" />
+    <Content Include="Content\caroussel_files\Formation.js" />
     <Content Include="Content\caroussel_files\owl.carousel.js" />
     <Content Include="Content\caroussel_files\owl.carousel.min.css" />
     <Content Include="Content\caroussel_files\owl.theme.default.min.css" />
