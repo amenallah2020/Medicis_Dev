@@ -218,18 +218,18 @@
 
                                 </li>
 
-                                        }
+                            }
 
-                                         if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
-                                        {
+                            // if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
+                            //{
                                             <li>
-                                                <a class="js-arrow" href="#">
-                                                    <i class="glyphicon glyphicon-bell"></i>Demande d'actions
+                                                <a class="js-arrow" href="@Url.Action("Create", "DA_Demande" )">
+                                                    <i class="glyphicon glyphicon-bell"></i>Demandes d'actions
                                                 </a>
 
 
                                             </li>
-                                         }
+                            //}
                         }
                    </ul>
                         

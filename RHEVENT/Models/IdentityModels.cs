@@ -180,6 +180,22 @@ namespace RHEVENT.Models
         public System.Data.Entity.DbSet<RHEVENT.Models.E_listeUsr> E_listeUsr { get; set; }
 
         public System.Data.Entity.DbSet<RHEVENT.Models.E_ListFormationDiffus> e_ListFormationDiffus { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.DA_Fournisseurs> DA_Fournisseurs { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.DA_Demande> DA_Demande { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.DA_Budget> DA_Budget { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.DA_Materiels> DA_Materiels { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.DA_Labo> DA_Labo { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.DA_TypesAchats> DA_TypesAchats { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.DA_TypesActions> DA_TypesActions { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.DA_ListesGammes> DA_ListesGammes { get; set; }
     }
 
 
