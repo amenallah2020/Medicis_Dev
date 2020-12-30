@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -13,7 +15,7 @@ namespace RHEVENT.Controllers
     public class DA_LaboController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
+        private SqlConnection con;
 
         public JsonResult IsLaboNameExist(string LaboName, int? Id)
         {
@@ -27,6 +29,33 @@ namespace RHEVENT.Controllers
             {
                 return Json(true, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        [HttpPost]
+        public ActionResult Addlaboo(DA_Labo obj)
+        {
+            AddDetails(obj);
+            return View();
+        }
+        private void connection()
+        {
+            string constr = ConfigurationManager.ConnectionStrings["SqlConn"].ToString();
+            con = new SqlConnection(constr);
+
+        }
+        private void AddDetails(DA_Labo obj)
+        {
+            connection();
+            SqlCommand com = new SqlCommand("AddLabo", con);
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@Laboratoire", obj.Laboratoire);
+            com.Parameters.AddWithValue("@Adresse", obj.Adresse);
+            com.Parameters.AddWithValue("@Tel", obj.Tel);
+            com.Parameters.AddWithValue("@Mobile", obj.Mobile);
+            con.Open();
+            com.ExecuteNonQuery();
+            con.Close();
+
         }
 
         // GET: DA_Labo

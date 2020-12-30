@@ -289,6 +289,7 @@
     <Compile Include="Controllers\E_GrpByUsrController.cs" />
     <Compile Include="Controllers\E_listeUsrController.cs" />
     <Compile Include="Controllers\E_ListFormationDiffusController.cs" />
+    <Compile Include="Controllers\MesDemAjoutsController.cs" />
     <Compile Include="Controllers\RH\RhCongeMenuController.cs" />
     <Compile Include="Controllers\RH\RhAutorisationMenuController.cs" />
     <Compile Include="Controllers\RH\RhAttestationMenuController.cs" />
@@ -319,9 +320,13 @@
     <Compile Include="Migrations\202001221112051_mig2.Designer.cs">
       <DependentUpon>202001221112051_mig2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202012300902381_m44.cs" />
-    <Compile Include="Migrations\202012300902381_m44.Designer.cs">
-      <DependentUpon>202012300902381_m44.cs</DependentUpon>
+    <Compile Include="Migrations\202012290732267_da18.cs" />
+    <Compile Include="Migrations\202012290732267_da18.Designer.cs">
+      <DependentUpon>202012290732267_da18.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012291558018_da19.cs" />
+    <Compile Include="Migrations\202012291558018_da19.Designer.cs">
+      <DependentUpon>202012291558018_da19.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -338,6 +343,7 @@
     <Compile Include="Models\keyAttribute.cs" />
     <Compile Include="Models\E_ModelView.cs" />
     <Compile Include="Models\DA_ListesGammes.cs" />
+    <Compile Include="Models\MesDemAjout.cs" />
     <Compile Include="Models\RH\Attestation.cs" />
     <Compile Include="Models\RH\Autorisation.cs" />
     <Compile Include="Models\RH\AutorisationViewModels.cs" />
@@ -394,6 +400,7 @@
     <Content Include="Content\fullcalendar_lib\moment.min.js" />
     <Content Include="Content\images\bg-title-01.jpg" />
     <Content Include="Content\images\bg-title-02.jpg" />
+    <Content Include="Content\images\details.jfif" />
     <Content Include="Content\images\Diapositive1.png" />
     <Content Include="Content\images\edit.png" />
     <Content Include="Content\images\F\Diapositive1.PNG" />
@@ -838,7 +845,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout1.cshtml" />
+    <Content Include="Views\Shared\_Layout2.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -1058,9 +1065,13 @@
     <Content Include="Views\DA_ListesGammes\Index.cshtml" />
     <Content Include="Views\DA_Demande\MesDemandes.cshtml" />
     <Content Include="Views\DA_Demande\DemendesEnAttente.cshtml" />
-    <Content Include="Views\DA_Demande\ContactForm.cshtml" />
+    <Content Include="Views\Shared\_Layout1.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Shared\_Layout - Copier.cshtml" />
+    <Content Include="Views\MesDemAjouts\Create.cshtml" />
+    <Content Include="Views\MesDemAjouts\Delete.cshtml" />
+    <Content Include="Views\MesDemAjouts\Details.cshtml" />
+    <Content Include="Views\MesDemAjouts\Edit.cshtml" />
+    <Content Include="Views\MesDemAjouts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\images_accueil\" />
@@ -1079,8 +1090,11 @@
     <EmbeddedResource Include="Migrations\202001221112051_mig2.resx">
       <DependentUpon>202001221112051_mig2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012300902381_m44.resx">
-      <DependentUpon>202012300902381_m44.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202012290732267_da18.resx">
+      <DependentUpon>202012290732267_da18.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012291558018_da19.resx">
+      <DependentUpon>202012291558018_da19.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

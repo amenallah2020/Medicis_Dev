@@ -21,7 +21,7 @@ namespace RHEVENT.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
-
+        
 
         public ActionResult aaaa()
         {
@@ -33,10 +33,13 @@ namespace RHEVENT.Controllers
             return View(db.DA_Demande.ToList());
         }
 
+        
         public ActionResult MesDemandes()
         {
             return View(db.DA_Demande.ToList());
         }
+
+       
 
         public ActionResult DemendesEnAttente()
         {

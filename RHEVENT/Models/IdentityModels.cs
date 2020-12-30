@@ -196,6 +196,8 @@ namespace RHEVENT.Models
         public System.Data.Entity.DbSet<RHEVENT.Models.DA_TypesActions> DA_TypesActions { get; set; }
 
         public System.Data.Entity.DbSet<RHEVENT.Models.DA_ListesGammes> DA_ListesGammes { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.MesDemAjout> MesDemAjouts { get; set; }
     }
 
 
