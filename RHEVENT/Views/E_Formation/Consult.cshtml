@@ -98,8 +98,8 @@
 
 <br /><br /><br />
             <div class="container" style="border:solid;border-radius:10px;border-width:thin;width:1800px;height:600px;">
-           
-                
+
+
                 @*<div class="mySlides">
             <div class="numbertext"> 1/2 </div>
             <img src="~/SlideImages/F_23122020_07/Diapositive1.PNG" style="width:100%">
@@ -108,53 +108,54 @@
             <div class="numbertext"> 2/2 </div>
             <img src="~/SlideImages/F_23122020_07/Diapositive2.PNG" style="width:100%">
         </div>*@
-             
-                @for (int i = 0; i < Convert.ToInt16(Session["nbdiap"].ToString()); i++)
-                {
-                <div class="mySlides">
-                    <div class="numbertext">@(i + 1) / @Convert.ToInt16(Session["nbdiap"].ToString())</div>
 
-                    <img src="@TempData[i.ToString()]" style="width:100%">
-                  
+                <div class="modal-body">
+                    @for (int i = 0; i < Convert.ToInt16(Session["nbdiap"].ToString()); i++)
+                    {
+                        <div class="mySlides">
+                            <div class="numbertext">@(i + 1) / @Convert.ToInt16(Session["nbdiap"].ToString())</div>
+
+                            <img src="@TempData[i.ToString()]" style="width:100%">
+
+                        </div>
+
+                    }
+
+                    <a class="prev" onclick="plusSlides(-1)">❮</a>
+                    <a class="next" onclick="plusSlides(1)">❯</a>
                 </div>
-                 
+                </div>
+
+                @section Scripts {
+                    @Scripts.Render("~/bundles/jqueryval")
+
+
+                    <script>
+                        var slideIndex = 1;
+                        showSlides(slideIndex);
+
+                        function plusSlides(n) {
+                            showSlides(slideIndex += n);
+                        }
+
+                        function showSlides(n) {
+                            var i;
+                            var slides = document.getElementsByClassName("mySlides");
+                            var dots = document.getElementsByClassName("demo");
+                            var captionText = document.getElementById("caption");
+                            if (n > slides.length) { slideIndex = 1 }
+                            if (n < 1) { slideIndex = slides.length }
+                            for (i = 0; i < slides.length; i++) {
+                                slides[i].style.display = "none";
+                            }
+                            for (i = 0; i < dots.length; i++) {
+                                dots[i].className = dots[i].className.replace(" active", "");
+                            }
+                            slides[slideIndex - 1].style.display = "block";
+                            dots[slideIndex - 1].className += " active";
+                            captionText.innerHTML = dots[slideIndex - 1].alt;
+                        }
+
+
+                    </script>
                 }
-                 
-                <a class="prev" onclick="plusSlides(-1)">❮</a>
-                <a class="next" onclick="plusSlides(1)">❯</a>
-            </div>
-
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-
-
-    <script>
-        var slideIndex = 1;
-        showSlides(slideIndex);
-
-        function plusSlides(n) {
-            showSlides(slideIndex += n);
-        }
-
-        function showSlides(n) {
-            var i;
-            var slides = document.getElementsByClassName("mySlides");
-            var dots = document.getElementsByClassName("demo");
-            var captionText = document.getElementById("caption");
-            if (n > slides.length) { slideIndex = 1 }
-            if (n < 1) { slideIndex = slides.length }
-            for (i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
-            }
-            for (i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
-            }
-            slides[slideIndex - 1].style.display = "block";
-            dots[slideIndex - 1].className += " active";
-            captionText.innerHTML = dots[slideIndex - 1].alt;
-        }
-
-
-    </script>
-}  
