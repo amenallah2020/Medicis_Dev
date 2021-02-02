@@ -1,0 +1,85 @@
+﻿@model IEnumerable<RHEVENT.Models.DA_Demande>
+
+@{
+    ViewBag.Title = "Demandes d'action en attente";
+
+}
+
+<br />
+<table class="table table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Réference)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Demandeur)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gamme)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Objet)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cibles)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Argumentaires)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Budget)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date_demande)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date_reception)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date_action)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Réference)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Demandeur)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gamme)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Objet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cibles)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Argumentaires)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Budget)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date_demande)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date_reception)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date_action)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

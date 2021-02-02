@@ -56,13 +56,13 @@
                     </td>
 
                     <td>
-                        <span class="badge badge-light" style="color:blue"> @Html.ActionLink("Modifier", "Edit", new { id = item.Id }) </span>|
-                        <span class="badge badge-light" style="color:blue"> @Html.ActionLink("Détails", "Details", new { id = item.Id }) </span> |
-                        <span class="badge badge-light" style="color:blue"> @Html.ActionLink("Supprimer", "Delete", new { id = item.Id })</span> |
-                        <span class="badge badge-light" style="color:blue">  @Html.ActionLink("Mot de passe", "ChangePassword", new { id = item.Id }) </span>|
+                        <span class="badge badge-danger" style="color:blue;background-color:bisque"> @Html.ActionLink("Modifier", "Edit", new { id = item.Id }) </span>|
+                        <span class="badge badge-danger" style="color:blue;background-color:aliceblue"> @Html.ActionLink("Détails", "Details", new { id = item.Id }) </span> |
+                        <span class="badge badge-danger" style="color:blue;background-color:bisque"> @Html.ActionLink("Supprimer", "Delete", new { id = item.Id })</span> |
+                        <span class="badge badge-danger" style="color:blue;background-color:aliceblue">  @Html.ActionLink("Mot de passe", "ChangePassword", new { id = item.Id }) </span>|
 
 
-                        <span class="badge badge-light" style="color:blue"> @Html.ActionLink("Gérer le rôle", "ManageUserRoles", new { id = item.Id }) </span>|
+                        <span class="badge badge-danger" style="color:blue;background-color:bisque"> @Html.ActionLink("Gérer le rôle", "ManageUserRoles", new { id = item.Id }) </span>
                         @*<span class="badge badge-light" style="color:blue"> @Html.ActionLink("Role", "RoleIndex", new { id = item.Id })</span>*@
                     </td>
                 </tr>

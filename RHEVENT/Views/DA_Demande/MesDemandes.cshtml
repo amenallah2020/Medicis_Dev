@@ -1,0 +1,149 @@
+﻿@model IEnumerable<RHEVENT.Models.DA_Demande>
+
+
+@{
+    ViewBag.Title = "Mes Demandes d'action";
+
+}
+<head>
+    <style>
+        .supp {
+            width: auto;
+            background-image: url(../Content/images/moins.jfif);
+            cursor: pointer;
+            background-repeat: no-repeat;
+            background-color: transparent;
+            border:unset;
+        }
+
+        .details {
+            background-image: url(../Content/images/details.jfif);
+            cursor: pointer;
+            background-repeat: no-repeat;
+            background-color: transparent;
+            border: unset;
+        }
+
+        .edit {
+            color: crimson;
+            text-decoration: underline;
+        }
+        .width-textarea {
+            max-width: 95%;
+            width: 95%;
+            border: solid;
+            border-width: thin;
+        }
+    </style>
+</head>
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+    Ajouter Demande
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-url='@Url.Action("ContactForm","Home")'>
+    <div class="modal-dialog" role="document" style="width:900px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Ma formation</h4>
+            </div>
+            <div class="modal-body">
+                <center>
+
+                   
+
+                </center>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="">Save changes</button>
+                <input type="submit" value="Enregistrer" class="btn btn-info" />
+            </div>
+        </div>
+    </div>
+</div>
+<br /> <br />
+
+<table class="table table-bordered table-responsive border-primary" style="font-size:12px">
+    <tr style="background-color:beige;text-align:center;vertical-align:central">
+        <th>
+            @Html.DisplayNameFor(model => model.Réference)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Demandeur)
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Gamme)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Objet)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cibles)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Argumentaires)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Budget)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date_demande)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date_reception)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date_action)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+        <tr style="text-align:center;vertical-align:central">
+            <td width="130px">
+                @Html.ActionLink(item.Réference, "Edit", new { id = item.Id }, new { @class = "edit" })
+                @*@Html.DisplayFor(modelItem => item.Réference)*@
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Demandeur)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Gamme)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Objet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cibles)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Argumentaires)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Budget)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date_demande)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date_reception)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date_action)
+            </td>
+            <td width="100px">
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+
+                <input type="submit" value="      " class="details" onclick="location.href='@Url.Action("Details","DA_Demande", new { id = item.Id })'" />
+                <input type="submit" value="      " class="supp" onclick="location.href='@Url.Action("Delete","DA_Demande", new { id = item.Id })'" />
+            </td>
+        </tr>
+    }
+
+</table>

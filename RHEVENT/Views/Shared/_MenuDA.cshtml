@@ -1,0 +1,147 @@
+﻿
+
+
+<ul class="nav nav-tabs">
+
+    @if (ViewContext.RouteData.Values["action"].ToString() == "Create" &&
+        ViewContext.RouteData.Values["controller"].ToString() == "DA_Demande")
+    {
+        <li class="nav-item">
+            <a class="nav-link active" href="@Url.Action("Create", "DA_Demande")">Ajouter Demande</a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("Create", "DA_Demande")">Ajouter Demande</a>
+        </li>
+    }
+
+    @if (ViewContext.RouteData.Values["action"].ToString() == "DemandesAll" &&
+       ViewContext.RouteData.Values["controller"].ToString() == "DA_Demande")
+    {
+        <li class="nav-item">
+            <a class="nav-link active" href="@Url.Action("DemandesAll", "DA_Demande")">Toutes les Demandes </a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("DemandesAll", "DA_Demande")">Toutes les Demandes</a>
+        </li>
+    }
+    @if (ViewContext.RouteData.Values["action"].ToString() == "MesDemandes" &&
+        ViewContext.RouteData.Values["controller"].ToString() == "DA_Demande")
+    {
+        <li class="nav-item">
+            <a class="nav-link active" href="@Url.Action("MesDemandes", "DA_Demande")">Mes Demandes</a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("MesDemandes", "DA_Demande")">Mes Demandes</a>
+        </li>
+    }
+
+    @if (ViewContext.RouteData.Values["action"].ToString() == "DemendesEnAttente" &&
+        ViewContext.RouteData.Values["controller"].ToString() == "DA_Demande")
+    {
+        <li class="nav-item">
+            <a class="nav-link active" href="@Url.Action("DemendesEnAttente", "DA_Demande")">Demandes En Attente</a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("DemendesEnAttente", "DA_Demande")">Demandes En Attente</a>
+        </li>
+    }
+
+
+    @if ((ViewContext.RouteData.Values["controller"].ToString() == "DA_Fournisseurs") ||
+        (ViewContext.RouteData.Values["controller"].ToString() == "DA_Labo") ||
+        (ViewContext.RouteData.Values["controller"].ToString() == "DA_Materiels") ||
+        (ViewContext.RouteData.Values["controller"].ToString() == "DA_TypesActions") ||
+        (ViewContext.RouteData.Values["controller"].ToString() == "DA_TypesAchats") ||
+        (ViewContext.RouteData.Values["controller"].ToString() == "DA_ListesGammes"))
+    {
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Paramètres</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="@Url.Action("Index", "DA_TypesAchats")">Types d'achats</a>
+                <a class="dropdown-item" href="@Url.Action("Index", "DA_TypesActions")">Types d'actions</a>
+                <a class="dropdown-item" href="@Url.Action("Index", "DA_ListesGammes")">Liste des Gammes</a>
+
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="@Url.Action("Index", "DA_Labo")">Liste Loboratoires</a>
+                <a class="dropdown-item" href="@Url.Action("Index", "DA_Fournisseurs")">Liste Fournisseurs</a>
+                <a class="dropdown-item" href="@Url.Action("Index", "DA_Materiels")">Liste Matériels</a>
+            </div>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Paramètres</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="@Url.Action("Index", "DA_TypesAchats")">Types d'achats</a>
+                <a class="dropdown-item" href="@Url.Action("Index", "DA_TypesActions")">Types d'actions</a>
+                <a class="dropdown-item" href="@Url.Action("Index", "DA_ListesGammes")">Liste des Gammes</a>
+
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="@Url.Action("Index", "DA_Labo")">Liste Loboratoires</a>
+                <a class="dropdown-item" href="@Url.Action("Index", "DA_Fournisseurs")">Liste Fournisseurs</a>
+                <a class="dropdown-item" href="@Url.Action("Index", "DA_Materiels")">Liste Matériels</a>
+            </div>
+        </li>
+    }
+    <li class="nav-item" style="float:right;right:0px">
+        <div class="account-item clearfix js-item-menu">
+            <div class="image">
+                <img src="@Url.Content("~/Content/images/icon/user.png")" alt="John Doe" />
+            </div>
+            <div class="content">
+                <a class="js-acc-btn" href="#">@ViewBag.nom_prenom</a>
+            </div>
+            <div class="account-dropdown js-dropdown">
+                <div class="info clearfix">
+                    <div class="image">
+                        <a href="#">
+                            <img src="@Url.Content("~/Content/images/icon/user.png")" alt="John Doe" />
+                        </a>
+                    </div>
+                    <div class="content">
+                        <h5 class="name">
+                            <a href="#">@ViewBag.nom_prenom</a>
+                        </h5>
+                        <span class="email">@ViewBag.email</span>
+                    </div>
+                </div>
+                <div class="account-dropdown__body">
+                    <div class="account-dropdown__item">
+                        <a href="#">
+                            <i class="zmdi zmdi-account"></i>Mon compte
+                        </a>
+                    </div>
+                    <div class="account-dropdown__item">
+                        <a href="@Url.Action("ChangePasswordByUser", "ApplicationUsers")">
+                            <i class="zmdi zmdi-settings"></i>Modifier mot de passe
+                        </a>
+                    </div>
+
+                </div>
+                <div class="account-dropdown__footer">
+                    <a href="@Url.Action("LogOut","Account")">
+
+                        <i class="zmdi zmdi-power"></i>Déconnexion
+                    </a>
+                </div>
+            </div>
+        </div>
+    </li>
+
+
+</ul>
+
+

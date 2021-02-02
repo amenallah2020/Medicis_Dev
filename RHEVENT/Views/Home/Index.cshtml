@@ -187,49 +187,50 @@
                                          if (User.IsInRole("Admin_Medicis") || User.IsInRole("Elearning"))
                                         {
                                 <li>
-                                    <a class="js-arrow" href="#">
-                                        <i class="glyphicon glyphicon-globe"></i>E-learning
-                                    </a>
+                                    @*<a class="js-arrow" href="#">*@
+                                        <a class="js-arrow" href="@Url.Action("Index", "EMenuFormateur")">
+                                            <i class="glyphicon glyphicon-globe"></i>E-learning
+                                        </a>
 
-                                    <ul class="navbar-mobile-sub__list list-unstyled js-sub-list ">
-                                        @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Formateur")))
-                                        {
+                                        @*<ul class="navbar-mobile-sub__list list-unstyled js-sub-list ">
+                                            @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Formateur")))
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("Index", "EMenuFormateur")"><span class="role user">Gestion des formations</span></a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="@Url.Action("Group", "E_GrpByUsr")"><span class="role user" style="font-size:13px">Gestion grp de diffusion</span></a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="@Url.Action("Index", "Role")"><span class="role user">Gestion des evaluations</span></a>
+                                                </li>
+                                            }
+
+                                            @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Employer")))
+
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("Index", "Role")"><span class="role user">Mes formations</span></a>
+                                                </li>
+                                            }
+                                        </ul>*@
+
+</li>
+
+                            }
+
+                            // if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
+                            //{
                                             <li>
-                                                <a href="@Url.Action("Index", "EMenuFormateur")"><span class="role user">Gestion des formations</span></a>
-                                            </li>
-
-                                            <li>
-                                                <a href="@Url.Action("Group", "E_GrpByUsr")"><span class="role user" style="font-size:13px">Gestion grp de diffusion</span></a>
-                                            </li>
-
-                                            <li>
-                                                <a href="@Url.Action("Index", "Role")"><span class="role user">Gestion des evaluations</span></a>
-                                            </li>
-                                        }
-
-                                        @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Employer")))
-
-                                        {    
-                                            <li>
-                                                <a href="@Url.Action("Index", "Role")"><span class="role user">Mes formations</span></a>
-                                            </li>
-                                        }
-                                    </ul>
-
-                                </li>
-
-                                        }
-
-                                         if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
-                                        {
-                                            <li>
-                                                <a class="js-arrow" href="#">
-                                                    <i class="glyphicon glyphicon-bell"></i>Demande d'actions
+                                                <a class="js-arrow" href="@Url.Action("Create", "DA_Demande" )">
+                                                    <i class="glyphicon glyphicon-bell"></i>Demandes d'actions
                                                 </a>
 
 
                                             </li>
-                                         }
+                            //}
                         }
                    </ul>
                         

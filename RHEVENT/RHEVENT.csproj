@@ -269,15 +269,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\BundleConfig2.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\FilterConfig2.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\RouteConfig2.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\DA_BudgetController.cs" />
+    <Compile Include="Controllers\DA_DemandeController.cs" />
+    <Compile Include="Controllers\DA_FournisseursController.cs" />
+    <Compile Include="Controllers\DA_LaboController.cs" />
+    <Compile Include="Controllers\DA_ListesGammesController.cs" />
+    <Compile Include="Controllers\DA_MaterielsController.cs" />
+    <Compile Include="Controllers\DA_TypesAchatsController.cs" />
+    <Compile Include="Controllers\DA_TypesActionsController.cs" />
     <Compile Include="Controllers\EMenuFormateurController.cs" />
     <Compile Include="Controllers\E_FormationController.cs" />
     <Compile Include="Controllers\E_GrpByUsrController.cs" />
     <Compile Include="Controllers\E_listeUsrController.cs" />
     <Compile Include="Controllers\E_ListFormationDiffusController.cs" />
+    <Compile Include="Controllers\MesDemAjoutsController.cs" />
     <Compile Include="Controllers\RH\RhCongeMenuController.cs" />
     <Compile Include="Controllers\RH\RhAutorisationMenuController.cs" />
     <Compile Include="Controllers\RH\RhAttestationMenuController.cs" />
@@ -308,54 +320,30 @@
     <Compile Include="Migrations\202001221112051_mig2.Designer.cs">
       <DependentUpon>202001221112051_mig2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202012110736306_m1003.cs" />
-    <Compile Include="Migrations\202012110736306_m1003.Designer.cs">
-      <DependentUpon>202012110736306_m1003.cs</DependentUpon>
+    <Compile Include="Migrations\202012290732267_da18.cs" />
+    <Compile Include="Migrations\202012290732267_da18.Designer.cs">
+      <DependentUpon>202012290732267_da18.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202012111049304_m22.cs" />
-    <Compile Include="Migrations\202012111049304_m22.Designer.cs">
-      <DependentUpon>202012111049304_m22.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202012140852289_m222.cs" />
-    <Compile Include="Migrations\202012140852289_m222.Designer.cs">
-      <DependentUpon>202012140852289_m222.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202012140906170_m223.cs" />
-    <Compile Include="Migrations\202012140906170_m223.Designer.cs">
-      <DependentUpon>202012140906170_m223.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202012140952285_m224.cs" />
-    <Compile Include="Migrations\202012140952285_m224.Designer.cs">
-      <DependentUpon>202012140952285_m224.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202012140959262_m225.cs" />
-    <Compile Include="Migrations\202012140959262_m225.Designer.cs">
-      <DependentUpon>202012140959262_m225.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202012160857490_m2241.cs" />
-    <Compile Include="Migrations\202012160857490_m2241.Designer.cs">
-      <DependentUpon>202012160857490_m2241.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202012160916073_m2251.cs" />
-    <Compile Include="Migrations\202012160916073_m2251.Designer.cs">
-      <DependentUpon>202012160916073_m2251.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202012230739556_m444.cs" />
-    <Compile Include="Migrations\202012230739556_m444.Designer.cs">
-      <DependentUpon>202012230739556_m444.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202012230740491_m445.cs" />
-    <Compile Include="Migrations\202012230740491_m445.Designer.cs">
-      <DependentUpon>202012230740491_m445.cs</DependentUpon>
+    <Compile Include="Migrations\202012291558018_da19.cs" />
+    <Compile Include="Migrations\202012291558018_da19.Designer.cs">
+      <DependentUpon>202012291558018_da19.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\DA_Budget.cs" />
+    <Compile Include="Models\DA_Demande.cs" />
+    <Compile Include="Models\DA_Fournisseurs.cs" />
+    <Compile Include="Models\DA_Labo.cs" />
+    <Compile Include="Models\DA_Materiels.cs" />
+    <Compile Include="Models\DA_TypesAchats.cs" />
     <Compile Include="Models\E_Formation.cs" />
     <Compile Include="Models\E_GrpByUsr.cs" />
     <Compile Include="Models\E_listeUsr.cs" />
     <Compile Include="Models\E_ListFormationDiffus.cs" />
     <Compile Include="Models\keyAttribute.cs" />
     <Compile Include="Models\E_ModelView.cs" />
+    <Compile Include="Models\DA_ListesGammes.cs" />
+    <Compile Include="Models\MesDemAjout.cs" />
     <Compile Include="Models\RH\Attestation.cs" />
     <Compile Include="Models\RH\Autorisation.cs" />
     <Compile Include="Models\RH\AutorisationViewModels.cs" />
@@ -380,6 +368,7 @@
     <Compile Include="Models\RH\Ordonnance.cs" />
     <Compile Include="Models\RoleUsersViewModel.cs" />
     <Compile Include="Models\TableCommunes.cs" />
+    <Compile Include="Models\DA_TypesActions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\MesHeuresSup.cs" />
@@ -411,7 +400,9 @@
     <Content Include="Content\fullcalendar_lib\moment.min.js" />
     <Content Include="Content\images\bg-title-01.jpg" />
     <Content Include="Content\images\bg-title-02.jpg" />
+    <Content Include="Content\images\details.jfif" />
     <Content Include="Content\images\Diapositive1.png" />
+    <Content Include="Content\images\edit.png" />
     <Content Include="Content\images\F\Diapositive1.PNG" />
     <Content Include="Content\images\F\Diapositive2.PNG" />
     <Content Include="Content\images\icon\avatar-01.jpg" />
@@ -429,6 +420,7 @@
     <Content Include="Content\images\icon\Untitled-1.jpg" />
     <Content Include="Content\images\icon\user.png" />
     <Content Include="Content\images\icon\MEDICIS.png" />
+    <Content Include="Content\images\moins.jfif" />
     <Content Include="Content\images\time-icon.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -472,7 +464,9 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="css\csslayout.css" />
     <Content Include="css\datepicker.css" />
+    <Content Include="css\font-awesome.min.css" />
     <Content Include="css\font-face.css" />
     <Content Include="css\jquery-ui.css" />
     <Content Include="css\jquery.datetimepicker.css" />
@@ -743,12 +737,20 @@
     <Content Include="Content\SlideImages\F_23122020_01\22.jpg" />
     <Content Include="Content\SlideImages\F_23122020_07\Diapositive1.PNG" />
     <Content Include="Content\SlideImages\F_23122020_07\Diapositive2.PNG" />
-    <Content Include="SlideImages\F_01122020_001\dragon_chinois_45.jpg" />
-    <Content Include="SlideImages\F_01122020_001\images %281%29.jpg" />
-    <Content Include="SlideImages\F_23122020_01\11.jpg" />
-    <Content Include="SlideImages\F_23122020_01\22.jpg" />
-    <Content Include="SlideImages\F_23122020_07\Diapositive1.PNG" />
-    <Content Include="SlideImages\F_23122020_07\Diapositive2.PNG" />
+    <Content Include="SlideImages\F_27122020_01\Diapositive1.PNG" />
+    <Content Include="SlideImages\F_27122020_01\Diapositive10.PNG" />
+    <Content Include="SlideImages\F_27122020_01\Diapositive11.PNG" />
+    <Content Include="SlideImages\F_27122020_01\Diapositive12.PNG" />
+    <Content Include="SlideImages\F_27122020_01\Diapositive13.PNG" />
+    <Content Include="SlideImages\F_27122020_01\Diapositive14.PNG" />
+    <Content Include="SlideImages\F_27122020_01\Diapositive2.PNG" />
+    <Content Include="SlideImages\F_27122020_01\Diapositive3.PNG" />
+    <Content Include="SlideImages\F_27122020_01\Diapositive4.PNG" />
+    <Content Include="SlideImages\F_27122020_01\Diapositive5.PNG" />
+    <Content Include="SlideImages\F_27122020_01\Diapositive6.PNG" />
+    <Content Include="SlideImages\F_27122020_01\Diapositive7.PNG" />
+    <Content Include="SlideImages\F_27122020_01\Diapositive8.PNG" />
+    <Content Include="SlideImages\F_27122020_01\Diapositive9.PNG" />
     <Content Include="vendor\animsition\animsition.min.css" />
     <Content Include="vendor\animsition\animsition.min.js" />
     <Content Include="vendor\bootstrap-4.1\bootstrap.min.css" />
@@ -843,7 +845,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_Layout2.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -1020,13 +1022,62 @@
     <Content Include="Views\E_GrpByUsr\CreateG.cshtml" />
     <Content Include="Views\Shared\ExistGrpG.cshtml" />
     <Content Include="Views\E_Formation\Consult.cshtml" />
+    <Content Include="Views\DA_Fournisseurs\Create.cshtml" />
+    <Content Include="Views\DA_Fournisseurs\Delete.cshtml" />
+    <Content Include="Views\DA_Fournisseurs\Details.cshtml" />
+    <Content Include="Views\DA_Fournisseurs\Edit.cshtml" />
+    <Content Include="Views\DA_Fournisseurs\Index.cshtml" />
+    <Content Include="Views\DA_Demande\Create.cshtml" />
+    <Content Include="Views\DA_Demande\Delete.cshtml" />
+    <Content Include="Views\DA_Demande\Details.cshtml" />
+    <Content Include="Views\DA_Demande\Edit.cshtml" />
+    <Content Include="Views\DA_Demande\DemandesAll.cshtml" />
+    <Content Include="Views\DA_Budget\Create.cshtml" />
+    <Content Include="Views\DA_Budget\Delete.cshtml" />
+    <Content Include="Views\DA_Budget\Details.cshtml" />
+    <Content Include="Views\DA_Budget\Edit.cshtml" />
+    <Content Include="Views\DA_Budget\Index.cshtml" />
+    <Content Include="Views\DA_Materiels\Create.cshtml" />
+    <Content Include="Views\DA_Materiels\Delete.cshtml" />
+    <Content Include="Views\DA_Materiels\Details.cshtml" />
+    <Content Include="Views\DA_Materiels\Edit.cshtml" />
+    <Content Include="Views\DA_Materiels\Index.cshtml" />
+    <Content Include="Views\DA_Labo\Create.cshtml" />
+    <Content Include="Views\DA_Labo\Delete.cshtml" />
+    <Content Include="Views\DA_Labo\Details.cshtml" />
+    <Content Include="Views\DA_Labo\Edit.cshtml" />
+    <Content Include="Views\DA_Labo\Index.cshtml" />
+    <Content Include="Views\Shared\_MenuDA.cshtml" />
+    <Content Include="Views\DA_TypesAchats\Create.cshtml" />
+    <Content Include="Views\DA_TypesAchats\Delete.cshtml" />
+    <Content Include="Views\DA_TypesAchats\Details.cshtml" />
+    <Content Include="Views\DA_TypesAchats\Edit.cshtml" />
+    <Content Include="Views\DA_TypesAchats\Index.cshtml" />
+    <Content Include="Views\DA_TypesActions\Create.cshtml" />
+    <Content Include="Views\DA_TypesActions\Delete.cshtml" />
+    <Content Include="Views\DA_TypesActions\Details.cshtml" />
+    <Content Include="Views\DA_TypesActions\Edit.cshtml" />
+    <Content Include="Views\DA_TypesActions\Index.cshtml" />
+    <Content Include="Views\DA_ListesGammes\Create.cshtml" />
+    <Content Include="Views\DA_ListesGammes\Delete.cshtml" />
+    <Content Include="Views\DA_ListesGammes\Details.cshtml" />
+    <Content Include="Views\DA_ListesGammes\Edit.cshtml" />
+    <Content Include="Views\DA_ListesGammes\Index.cshtml" />
+    <Content Include="Views\DA_Demande\MesDemandes.cshtml" />
+    <Content Include="Views\DA_Demande\DemendesEnAttente.cshtml" />
+    <Content Include="Views\Shared\_Layout1.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\MesDemAjouts\Create.cshtml" />
+    <Content Include="Views\MesDemAjouts\Delete.cshtml" />
+    <Content Include="Views\MesDemAjouts\Details.cshtml" />
+    <Content Include="Views\MesDemAjouts\Edit.cshtml" />
+    <Content Include="Views\MesDemAjouts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\images_accueil\" />
     <Folder Include="Content\IMAGES_FOLDER\" />
     <Folder Include="DeleteImg\" />
     <Folder Include="Files\" />
-    <Folder Include="Views\DEMANDEACTION\" />
     <Folder Include="Views\ELEARNING\" />
   </ItemGroup>
   <ItemGroup>
@@ -1039,35 +1090,11 @@
     <EmbeddedResource Include="Migrations\202001221112051_mig2.resx">
       <DependentUpon>202001221112051_mig2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012110736306_m1003.resx">
-      <DependentUpon>202012110736306_m1003.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202012290732267_da18.resx">
+      <DependentUpon>202012290732267_da18.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012111049304_m22.resx">
-      <DependentUpon>202012111049304_m22.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012140852289_m222.resx">
-      <DependentUpon>202012140852289_m222.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012140906170_m223.resx">
-      <DependentUpon>202012140906170_m223.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012140952285_m224.resx">
-      <DependentUpon>202012140952285_m224.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012140959262_m225.resx">
-      <DependentUpon>202012140959262_m225.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012160857490_m2241.resx">
-      <DependentUpon>202012160857490_m2241.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012160916073_m2251.resx">
-      <DependentUpon>202012160916073_m2251.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012230739556_m444.resx">
-      <DependentUpon>202012230739556_m444.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202012230740491_m445.resx">
-      <DependentUpon>202012230740491_m445.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202012291558018_da19.resx">
+      <DependentUpon>202012291558018_da19.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
