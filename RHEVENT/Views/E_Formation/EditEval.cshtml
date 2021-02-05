@@ -1,0 +1,101 @@
+﻿@model RHEVENT.Models.E_Evaluation
+
+
+@{
+    ViewBag.Title = "Modification d'évaluation";
+}
+@{
+    ViewBag.titre_page = "E-learning";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+<h2 class="text" style="color:cornflowerblue">
+    <span class="glyphicon   glyphicon-expand"> </span>
+    Modification d'évaluation
+</h2>
+@*<br /><br />*@
+<hr />
+<body>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    @using (Html.BeginForm( new { CodeF = @ViewBag.CodeF }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Code_Eval, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Code_Eval, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                    @Html.ValidationMessageFor(model => model.Code_Eval, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.Etat_Eval, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Etat_Eval, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Etat_Eval, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.Date_Creation, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Date_Creation, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Date_Creation, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.Matricule_Formateur, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Matricule_Formateur, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Matricule_Formateur, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Objet_Eval, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Objet_Eval, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Objet_Eval, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Pourc_Valid, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Pourc_Valid, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Pourc_Valid, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Duree_Eval, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Duree_Eval, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Duree_Eval, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Modifier" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Retour à la liste", "ListEval" , new { CodeF = @ViewBag.CodeF , CodeEval  = @ViewBag.CodeEval })
+    </div>
+</body>
+</html>

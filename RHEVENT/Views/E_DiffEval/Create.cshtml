@@ -1,0 +1,124 @@
+﻿@model RHEVENT.Models.E_GrpByUsr
+
+@*@model  RHEVENT.Models.E_ModelView*@
+
+@{
+    ViewBag.titre_page = "E-learning";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+
+<h2 class="text" style="color:cornflowerblue">
+    <span class="glyphicon   glyphicon-expand"> </span>
+    Liste des formations non diffusées - Gestion de groupe
+</h2>
+<br />
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <h3 class="text" style="color:cornflowerblue">Ajouter groupe</h3>
+</head>
+ 
+
+<body>
+
+    @*@using (Html.BeginForm())
+        {*@
+    @using (Html.BeginForm("AddUser", "E_GrpByUsr"))
+    {
+        @Html.AntiForgeryToken()
+
+        
+    <div>
+        <hr />
+
+        @*<div class="form-group" hidden>
+            <br />  @Html.LabelFor(a => a.Code_Formation, htmlAttributes: new { @class = "control-label col-md-2" })
+
+            <div class="col-md-9">
+                <br />
+                @Html.DropDownListFor(m => m.Code_Formation, new SelectList(@ViewBag.CodeFor, "Id", "Code"))
+                @Html.ValidationMessageFor(model => model.Code_Formation, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Code, htmlAttributes: new { @class = "control-label col-md-2" })
+
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        @*<div class="form-group">
+            <br />  @Html.LabelFor(model => model.Etat_Grp, htmlAttributes: new { @class = "control-label col-md-2" })
+
+
+            <div class="col-md-9">
+                <br />  @Html.RadioButton("Etat_Grp", "Active", true)<text style="font-size:14px"> Actif </text>
+                @Html.RadioButton("Etat_Grp", "Inactive")<text style="font-size:14px"> Inactif </text> <br />
+
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            <br />  @Html.LabelFor(model => model.Utilisateur, htmlAttributes: new { @class = "control-label col-md-2" })
+
+            <div class="col-md-9">
+                <br />
+                @Html.DropDownListFor(m => m.Utilisateur, new SelectList(@ViewBag.listUser, "Matricule", "NomPrenom"), new { @id = "Usr" })
+                @Html.ValidationMessageFor(model => model.Utilisateur, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+        
+
+        <div class="col-lg-12">
+            <br />  <input type="submit" value="Ajouter" class="btn btn-info" />
+        </div>
+
+
+    </div>
+       
+    }
+
+    <div class="col-lg-12" style="color:blue">
+        <br /> @Html.ActionLink("Retour à la liste", "Index")
+    </div>
+
+
+</body>
+</html>
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $(".add").click(function () {
+            var matricule = $("#Usr").val();
+            var nom = $("#email").val();
+            var ligne = "<tr><td><input type='checkbox' name='select'></td><td>" + matricule + "</td><td>" + nom + "</td></tr>";
+            $("table.test").append(ligne);
+        });
+        $(".delete").click(function () {
+            $("table.test").find('input[name="select"]').each(function () {
+                if ($(this).is(":checked")) {
+                    $(this).parents("table.test tr").remove();
+                }
+            });
+        });
+    });
+
+</script>

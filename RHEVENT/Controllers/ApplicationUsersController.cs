@@ -146,13 +146,16 @@ namespace RHEVENT.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
       //  [Authorize(Roles="Admin")]
-        public async Task<ActionResult> Create(RegisterViewModel model)
+        public async Task<ActionResult> Create(RegisterViewModel model, string EtatUsr , string StatutUsr)
         {
             string error = "";
             try
             {
                 ApplicationDbContext context = new ApplicationDbContext();
-                    var user = new ApplicationUser { UserName = model.matricule.ToString(), Email = model.Email, nom = model.nom, prenom = model.prenom, matricule = model.matricule, telephone = model.telephone, fonction = model.fonction, date_naissance = model.date_naissance, date_recrutement = model.date_recrutement, site = model.site, signataire = model.signataire , service = model.service,RoleName=model.RoleName }; 
+
+                    string NomUsr = model.nom + " " + model.prenom;
+
+                    var user = new ApplicationUser { UserName =  model.matricule.ToString() , NomPrenom = NomUsr ,  Statut = StatutUsr ,  Etat = EtatUsr , Email = model.Email, nom = model.nom, prenom = model.prenom, matricule = model.matricule, telephone = model.telephone, fonction = model.fonction, date_naissance = model.date_naissance, date_recrutement = model.date_recrutement, site = model.site, signataire = model.signataire , service = model.service,RoleName=model.RoleName }; 
               
                     //if (user.signataires == null) { user.signataire = "admin"; }
 
@@ -238,7 +241,7 @@ namespace RHEVENT.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Authorize(Roles = "Admin")]
-        public ActionResult Edit(ApplicationUser applicationUser)
+        public ActionResult Edit(ApplicationUser applicationUser , string EtatUsr , string StatutUsr)
         {
             string error = "";
             if (ModelState.IsValid)
@@ -255,7 +258,13 @@ namespace RHEVENT.Controllers
                     //IdentityResult delete6 = UserManager.RemoveFromRole(applicationUser.Id, "Chargé_personnel_RH");
                     //UserManager.AddToRole(applicationUser.Id, applicationUser.RoleName.ToString());
 
+                    string NomUsr = applicationUser.nom + " " + applicationUser.prenom;
+
+
                     ApplicationUser appuser = db.Users.First(u => u.Id == applicationUser.Id);
+                    appuser.Statut = StatutUsr;
+                    appuser.NomPrenom = NomUsr;
+                    appuser.Etat = EtatUsr;
                     appuser.UserName = applicationUser.matricule;
                     appuser.nom = applicationUser.nom;
                     appuser.prenom = applicationUser.prenom;

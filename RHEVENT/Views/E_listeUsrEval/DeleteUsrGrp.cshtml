@@ -1,0 +1,66 @@
+﻿@model RHEVENT.Models.E_listeUsr
+
+<h2 class="text" style="color:cornflowerblue">
+    <span class="glyphicon   glyphicon-expand"> </span>
+    Supprimer utilisateur
+</h2>
+<br /><br />
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    
+</head>
+<body>
+
+    <h4>Voulez-vous vraiment supprimer cela?</h4>
+
+    <div>
+        <h4>Utilisateur</h4>
+        <hr />
+        <dl class="dl-horizontal">
+
+          
+            <dt>
+                @Html.DisplayNameFor(model => model.Code_grp)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Code_grp)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Mat_usr)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Mat_usr)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Nom_usr)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Nom_usr)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+           
+
+                <div class="form-actions no-color">
+                    <br /> <input type="submit" value="Supprimer" class="btn btn-success" /> |
+                    @Html.ActionLink("Retour à la liste", "GetListUsr","E_listeUsr" ,new { id = @Session["Idgrp"] }, null)
+                </div>
+            }
+        </div>
+</body>
+</html>

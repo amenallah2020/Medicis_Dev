@@ -173,15 +173,59 @@
                   </div>
               </div>
 
+
+              <div class="col-6">
+                  <b>
+                      <label asp-for="EtatUsr" class="control-label">Etat</label>
+                  </b>
+
+                  <br />
+                  @if (Model.Etat.ToString() == "Interne")
+                  {
+                      @Html.RadioButton("EtatUsr", "Interne", true) <label>Interne</label>
+
+                      @Html.RadioButton("EtatUsr", "Externe") <label>Externe</label>
+                  }
+                  else if (Model.Etat.ToString() == "Externe")
+                  {
+                      @Html.RadioButton("EtatUsr", "Interne") <label>Interne</label>
+
+                      @Html.RadioButton("EtatUsr", "Externe", true) <label>Externe</label>
+                  }
+
+              </div>
+
+
+              <div class="col-6">
+                  <b>
+                      <label asp-for="StatutUsr" class="control-label">Statut</label>
+                  </b>
+
+                  <br />
+                  @if (Model.Statut.ToString() == "Actif")
+                  {
+                      @Html.RadioButton("StatutUsr", "Actif", true) <label>Actif</label>
+
+                      @Html.RadioButton("StatutUsr", "Inactif") <label>Inactif</label>
+                  }
+                  else if (Model.Statut.ToString() == "Inactif")
+                  {
+                      @Html.RadioButton("StatutUsr", "Actif") <label>Actif</label>
+
+                      @Html.RadioButton("StatutUsr", "Inactif" , true) <label>Inactif</label>
+                  }
+
+              </div>
+
               @*<div class="col-3" style="font-size:13px">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.UserName)
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserName)
 
-                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
 
-                </div>
-            </div>*@
+            </div>
+        </div>*@
 
 
 

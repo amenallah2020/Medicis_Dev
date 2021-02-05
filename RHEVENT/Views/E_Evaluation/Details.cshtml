@@ -1,0 +1,87 @@
+﻿@model RHEVENT.Models.E_Evaluation
+ 
+@{
+    ViewBag.Title = "Détails d'évaluation";
+}
+@{
+    ViewBag.titre_page = "E-learning";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+<h2 class="text" style="color:cornflowerblue">
+    <span class="glyphicon   glyphicon-expand"> </span>
+    détails d'évaluation
+</h2>
+@*<br /><br />*@
+<hr />
+<body>
+    <div>
+
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Code_Eval)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Code_Eval)
+            </dd>
+
+            @*<dt>
+                    @Html.DisplayNameFor(model => model.Etat_Eval)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Etat_Eval)
+                </dd>*@
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Date_Creation)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Date_Creation)
+            </dd>
+
+            @*<dt>
+                    @Html.DisplayNameFor(model => model.Matricule_Formateur)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Matricule_Formateur)
+                </dd>*@
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Objet_Eval)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Objet_Eval)
+            </dd>
+
+            <dt>
+                Pourcentage
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Pourc_Valid) <text>%</text>
+
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Duree_Eval)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Duree_Eval)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Modifier", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Retour à la liste", "Index")
+    </p>
+</body>
+</html>

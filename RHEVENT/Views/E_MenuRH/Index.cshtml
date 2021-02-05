@@ -1,0 +1,77 @@
+﻿
+
+@{
+    ViewBag.Title = "Ressource humaine";
+}
+
+ 
+ @{
+
+        ViewBag.titre_page = "Ressource humaine";
+        ViewBag.email = ViewBag.email;
+        ViewBag.nom_prenom = ViewBag.nom_prenom;
+
+ }
+ 
+
+@*<h2 class="text" style="color:cornflowerblue">
+    <span class="glyphicon   glyphicon-expand"> </span>
+    Ressource humaine
+</h2>*@
+@*<br /><br />*@
+<br />
+<div class="row">
+    <p>
+        <div class="col-lg-12">
+
+             
+            @if (User.IsInRole("RH") || User.IsInRole("Admin_Medicis"))
+            {
+             
+                    if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || User.IsInRole("Admin_Medicis"))
+                    {
+                        
+                        <a class="btn btn-info alert label-info" role="button" href="@Url.Action("Index", "AdministrationRH")">Administration RH</a>
+                        
+                    }
+
+                    if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || (User.IsInRole("RH") && User.IsInRole("RH_Employer")) || (User.IsInRole("RH") && User.IsInRole("RH_Superieur_Hiéarchique")) || (User.IsInRole("RH") && User.IsInRole("RH_Directeur")) || User.IsInRole("Admin_Medicis"))
+                    {
+                         
+                        <a class="btn btn-info alert label-info" role="button" href="@Url.Action("Index", "RhAttestationMenu")">Attestaions</a>
+                         
+                    }
+
+                     if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || (User.IsInRole("RH") && User.IsInRole("RH_Employer")) || (User.IsInRole("RH") && User.IsInRole("RH_Superieur_Hiéarchique")) || (User.IsInRole("RH") && User.IsInRole("RH_Directeur")) || User.IsInRole("Admin_Medicis"))
+                    {
+                       
+                      <a class="btn btn-info alert label-info" role="button" href="@Url.Action("Index", "RhAutorisationMenu")">Autorisation</a>
+                        
+                    }
+
+                     if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || (User.IsInRole("RH") && User.IsInRole("RH_Employer")) || (User.IsInRole("RH") && User.IsInRole("RH_Superieur_Hiéarchique")) || (User.IsInRole("RH") && User.IsInRole("RH_Directeur")) || User.IsInRole("Admin_Medicis"))
+                    {
+                       
+                       <a class="btn btn-info alert label-info" role="button" href="@Url.Action("Index", "RhCongeMenu")">Congés</a>
+                        
+                    }
+
+                    if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || (User.IsInRole("RH") && User.IsInRole("RH_Employer")) || (User.IsInRole("RH") && User.IsInRole("RH_Superieur_Hiéarchique")) || (User.IsInRole("RH") && User.IsInRole("RH_Directeur")) || User.IsInRole("Admin_Medicis"))
+                    {
+                        
+                       <a class="btn btn-info alert label-info" role="button" href="@Url.Action("Index", "Calendar")">   Calendrier de service  </a>
+                        
+                    }
+
+                    if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || (User.IsInRole("RH") && User.IsInRole("RH_Directeur")) || User.IsInRole("Admin_Medicis"))
+                    {
+                       
+                       <a class="btn btn-info alert label-info" role="button" href="@Url.Action("CalendrierDirection", "Calendar")">  Calendrier de direction </a>
+                        
+                    } 
+            }
+             
+        </div>
+    </p>
+
+</div>

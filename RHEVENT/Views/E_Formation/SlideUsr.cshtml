@@ -1,0 +1,97 @@
+﻿@model RHEVENT.Models.E_Formation
+
+
+@{
+    ViewBag.Title = "Création d'évaluation";
+}
+@{
+    ViewBag.titre_page = "E-learning";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+<h2 class="text" style="color:cornflowerblue">
+    <span class="glyphicon   glyphicon-expand"> </span>
+    Création d'évaluation
+</h2>
+@*<br /><br />*@
+<hr />
+<html>  
+
+
+<body>
+    @using (Html.BeginForm("SlideUsr", "E_Formation", new { sld = Html.DisplayFor(model => model.NumDiapo) }, method: FormMethod.Get))
+    {
+        @*if (@Html.DisplayFor(model => model.CodeEval).ToString() != "" && Convert.ToInt32(@Html.DisplayFor(model => model.NumDiapo).ToString()) == Convert.ToInt32(@ViewBag.count))
+            {
+
+                <div onclick="location.href='@Url.Action("PassEval", "E_Formation", new { id = @Html.DisplayFor(model => model.CodeEval).ToString() }, null)'" style=" color:white ; background-color:forestgreen ; margin-left:85% " class="btn">  Passer l'évaluation</div>
+
+            }*@
+
+        if (@Html.DisplayFor(model => model.CodeEval).ToString() != "" && Convert.ToInt32(@Html.DisplayFor(model => model.NumDiapo).ToString()) == Convert.ToInt32(@ViewBag.count))
+        {
+
+            <div onclick="location.href='@Url.Action("Consult", "E_QCM", new { id = @Html.DisplayFor(model => model.CodeEval).ToString() }, null)'" style=" color:white ; background-color:forestgreen ; margin-left:85% " class="btn">  Passer l'évaluation</div>
+
+        }
+        @*if (  Convert.ToInt32(@Html.DisplayFor(model => model.NumDiapo).ToString()) == Convert.ToInt32(@ViewBag.count))
+            {
+
+                <div onclick="location.href='@Url.Action("Terminer", "E_Formation", new { Codef = @Html.DisplayFor(model => model.Code).ToString() }, null)'" style=" color:white ; background-color:forestgreen ; margin-left:92% " class="btn"> Terminer</div>
+
+            }*@
+
+        <br /><img src="@Html.DisplayFor(model => model.Chemin)" style="width:100%">
+
+
+        if (@Html.DisplayFor(model => model.NumDiapo) == null)
+        {
+            <div class="col-lg-12" style="color:blue; font-size:14px  ">
+                1/@ViewBag.count
+            </div>
+        }
+        else
+        {
+            <div class="col-lg-12" style="color:blue; font-size:14px">
+                @Html.DisplayFor(model => model.NumDiapo)/@ViewBag.count
+            </div>
+
+        }
+
+        <div hidden>
+            <input value="@Html.DisplayFor(model => model.Code)" name="codeform" />
+
+            <input value="@Html.DisplayFor(model => model.NumDiapo)" name="sld" />
+        </div>
+
+        <div class="col-lg-12">
+            @*<div class="col-md-1" >*@
+
+
+
+            <br /> <br />
+            @if (@Html.DisplayFor(model => model.NumDiapo) != null)
+            {
+                if (Convert.ToInt32(@Html.DisplayFor(model => model.NumDiapo).ToString()) != 1)
+                {
+                    <input type="submit" id="Previous" name="Previous" value="Précédent" class="btn btn-danger ">
+                }
+            }
+
+            @if (@Html.DisplayFor(model => model.NumDiapo) != null)
+            {
+                if (Convert.ToInt32(@Html.DisplayFor(model => model.NumDiapo).ToString()) != Convert.ToInt32(@ViewBag.count))
+                {
+                    <input type="submit" id="next" name="next" value="Suivant" style="margin-left:auto" class="btn btn-primary ">
+                }
+            }
+            <br />
+
+
+            @*onclick="location.href='@Url.Action("RepUser", "E_QCM", new { d = ViewBag.pp }, null)'"*@
+            @*</div>*@
+        </div>
+    }
+</body>
+</html>

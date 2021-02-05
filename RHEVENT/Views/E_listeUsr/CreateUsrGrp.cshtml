@@ -8,7 +8,7 @@
 
 <h2 class="text" style="color:cornflowerblue">
     <span class="glyphicon   glyphicon-expand"> </span>
-     Gestion de groupe de diffusion
+    Gestion de groupe de diffusion
 </h2>
 <br /><br />
 
@@ -28,7 +28,7 @@
         <div class="form-horizontal">
 
             <hr />
-           
+
             <div class="form-group">
                 <br />  @Html.LabelFor(a => a.Code_grp, htmlAttributes: new { @class = "control-label col-md-2" })
 
@@ -38,34 +38,86 @@
                 </div>
             </div>
 
+            @*<form asp-action="CreateG" method="get">*@
+
+            <div hidden> <input class="form-control " id="verif" type="search" placeholder="Recherche" name="searchString" value="@ViewData["CurrentFilter"]" /> </div>
+
             <div class="form-group">
-                <br />  @Html.LabelFor(model => model.SelectUsr, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.SelectUsr, htmlAttributes: new { @class = "control-label col-md-2" })
+
 
                 <div class="col-md-9">
 
+                    @if (Session["EtatUsrbyGrp"] != null)
+                    {
+                        if (Session["EtatUsrbyGrp"].ToString() == "Interne")
+                        {
+                            <input type="submit" class="btn-link   " style="font-size:14px ; background-color:lightpink" onclick="Desc('Interne')" value="Interne">
+                            <input type="submit" class="btn-link" style="font-size:14px" onclick="Desc('Externe')" value="Externe">
+                        }
+
+                        if (Session["EtatUsrbyGrp"].ToString() == "Externe")
+                        {
+                            <input type="submit" class="btn-link  " style="font-size:14px" onclick="Desc('Interne')" value="Interne">
+                            <input type="submit" class="btn-link btn-warning" style="font-size:14px ; background-color:lightpink" onclick="Desc('Externe')" value="Externe">
+                        }
+                    }
+
+                    @if (Session["EtatUsrbyGrp"] == null)
+                    {
+                        <input type="submit" class="btn-link btn-warning " style="font-size:14px ; background-color:lightpink" onclick="Desc('Interne')" value="Interne">
+                        <input type="submit" class="btn-link" style="font-size:14px" onclick="Desc('Externe')" value="Externe">
+                    }
+
+
+                    &nbsp;
+
                     @Html.DropDownListFor(m => m.SelectUsr, new SelectList(@ViewBag.listUser, "Matricule", "NomPrenom"), new { @id = "Usr" })
                     @Html.ValidationMessageFor(model => model.SelectUsr, "", new { @class = "text-danger" })
-                </div>
 
+                </div>
             </div>
+
+
+            @*<div class="form-group">
+                    <br />  @Html.LabelFor(model => model.SelectUsr, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                    <div class="col-md-9">
+
+                        @Html.DropDownListFor(m => m.SelectUsr, new SelectList(@ViewBag.listUser, "Matricule", "NomPrenom"), new { @id = "Usr" })
+                        @Html.ValidationMessageFor(model => model.SelectUsr, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>*@
 
 
             @using (Html.BeginForm("Create", "E_listeUsr", method: FormMethod.Post))
             {
                 <div hidden>
-                      @(TempData["Group"] = ViewBag.codeg);
+                    @(TempData["Group"] = ViewBag.codeg);
                 </div>
             }
 
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <br />  <input type="submit" value="Ajouter" class="btn btn-info" />
+                    <br />  <input type="submit" name="btnValid" value="Ajouter" class="btn btn-info" />
                 </div>
             </div>
         </div>
     }
-     
+
 
 </body>
 </html>
+
+
+
+<script>
+
+    function Desc(r) {
+        document.getElementById("verif").value = '';
+        document.getElementById("verif").value = r;
+
+    }
+</script>

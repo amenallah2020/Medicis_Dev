@@ -1,0 +1,59 @@
+﻿@model IEnumerable<RHEVENT.Models.E_listeUsr>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <table class="table">
+        <tr> 
+            @*<th style="color:blue">
+                @Html.DisplayNameFor(model => model.Code_formt)
+            </th>*@
+
+            <th style="color:blue">
+                @Html.DisplayNameFor(model => model.Code_grp)
+            </th>
+
+            <th style="color:blue">
+                @Html.DisplayNameFor(model => model.Mat_usr)
+            </th>
+            <th style="color:blue">
+                @Html.DisplayNameFor(model => model.Nom_usr)
+            </th> 
+        </tr>
+
+        @foreach (var item in Model)
+        {
+        <tr>
+            @*<td style="color:black; font-size:12px">
+                @Html.DisplayFor(modelItem => item.Code_formt)
+            </td>*@
+
+            <td style="color:black; font-size:12px">
+                @Html.DisplayFor(modelItem => item.Code_grp)
+            </td>
+            <td style="color:black; font-size:12px">
+                @Html.DisplayFor(modelItem => item.Mat_usr)
+            </td>
+            <td style="color:black; font-size:12px">
+                @Html.DisplayFor(modelItem => item.Nom_usr)
+            </td>
+             
+        </tr>
+        }
+
+    </table>
+
+    <p> 
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

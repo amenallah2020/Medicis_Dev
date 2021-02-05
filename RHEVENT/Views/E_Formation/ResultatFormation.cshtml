@@ -1,0 +1,99 @@
+﻿@model IEnumerable<RHEVENT.Models.E_ResultFormation>
+
+
+
+@{
+    ViewBag.Title = "Mes formations réalisées";
+}
+
+@{
+    ViewBag.titre_page = "E-learning";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+
+<h2 class="text" style="color:cornflowerblue">
+    <span class="glyphicon   glyphicon-expand"> </span>
+    Mes formations réalisées
+</h2>
+<br />
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+
+    
+    <br />
+    <table class="table table-striped table-bordered " style="font-size:14px">
+        <tr>
+            @*<th style="color:blue">
+
+        </th>*@
+            <th style="color:blue">
+                @Html.DisplayNameFor(model => model.Code_Formation)
+            </th>
+            <th style="color:blue">
+                @Html.DisplayNameFor(model => model.ObjForm)
+            </th>
+             
+
+            <th style="color:blue">
+                @Html.DisplayNameFor(model => model.DateTerm)
+            </th>
+
+            <th></th>
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+        <tr>
+            @*<td style="color:black; font-size:12px">
+            @Html.CheckBoxFor(x => item.IsSelected)
+        </td>*@
+
+            <td style="color:black; font-size:12px">
+                @Html.DisplayFor(modelItem => item.Code_Formation)
+            </td>
+            <td style="color:black; font-size:12px">
+                @Html.DisplayFor(modelItem => item.ObjForm)
+            </td>
+            <td style="color:black; font-size:12px">
+                @Html.DisplayFor(modelItem => item.DateTerm)
+            </td>
+            
+            <td>
+               
+                    @Html.ActionLink("Consulter", "ConsultUsr", "E_Formation", new { id = item.Code_Formation }, null)
+                 
+            </td>
+         
+        </tr>
+            }
+
+    </table>
+
+    <div>
+
+        @Html.ActionLink("Retour à mes formations", "Index", "EMenuFormUser")
+
+    </div>
+</body>
+</html>
+
+ 
+
+
+@section Scripts
+    {
+    <script src="~/Site.js"></script>
+
+    <script src="~/Content/caroussel_files/CustomScript.js"></script>
+}
