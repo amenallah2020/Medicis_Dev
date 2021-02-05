@@ -1,0 +1,90 @@
+﻿@model IEnumerable<RHEVENT.Models.E_ResultQCM>
+
+
+@{
+    ViewBag.Title = "Gestion des évaluations";
+}
+@{
+    ViewBag.titre_page = "E-learning";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+
+<h2 class="text" style="color:cornflowerblue">
+    <span class="glyphicon   glyphicon-expand"> </span>
+    Mes évaluations réalisées
+</h2>
+<br />
+
+<html>
+<body>
+
+
+
+    <table class="table table-striped table-bordered " style="font-size:14px">
+        <tr style="color:blue">
+
+            <th>
+                Evaluation
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ObjEval)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.DateEval)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Score)
+            </th>
+
+            <th>
+                Résultat
+            </th>
+
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+        <tr style="color:black; font-size:12px">
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Code_EvalByQCM)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.ObjEval)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.DateEval)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Score) <label>%</label>
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Resultat)
+            </td>
+
+
+        </tr>
+        }
+
+    </table>
+
+
+</body>
+</html>
+
+
+
+<div>
+    @Html.ActionLink("Retour à mes évaluations", "Index", "EMenuEvaluationUser")
+</div>

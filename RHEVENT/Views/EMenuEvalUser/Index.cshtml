@@ -1,0 +1,45 @@
+﻿
+
+@{
+    ViewBag.Title = "Evaluation";
+}
+
+
+@{
+    ViewBag.titre_page = "E-learning";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+
+}
+
+<h2 class="text" style="color:cornflowerblue">
+    <span class="glyphicon   glyphicon-expand"> </span>
+    Evaluation à réaliser
+</h2>
+<br /><br />
+      <div class="row">
+          <p>
+          <p>
+
+              @for (int i = 0; i < Convert.ToInt16(Session["nb"].ToString()); i++)
+              {
+                 
+                      TempData["Controller"] = "EMenuEvalUser";
+                      TempData.Keep("Controller");
+
+                      <div class="col-lg-6">
+                          <div onclick="location.href='@Url.Action("Consult", "E_QCM", new { id = @TempData[i.ToString()] }, null)'" style="width:100px; height:100px" class="btn btn-link">  <img src="~/Content/images/eval.png" style="width:100px;border-width:0px;" class="img-circle" /> @TempData[i.ToString()]<br /></div>
+                          <br />
+                      </div>
+                      @*}*@
+
+                   
+              }
+
+              </p>
+
+      </div>
+
+<div>
+    @Html.ActionLink("Retour à mes évaluations","Index","EMenuEvaluationUser")
+</div>

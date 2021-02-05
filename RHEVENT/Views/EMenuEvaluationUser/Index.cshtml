@@ -1,0 +1,32 @@
+﻿
+
+@{
+    ViewBag.Title = "Evaluation";
+}
+
+
+@{
+    ViewBag.titre_page = "E-learning";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+
+}
+
+<h2 class="text" style="color:cornflowerblue">
+    <span class="glyphicon   glyphicon-expand"> </span>
+    Mes évaluations
+</h2>
+<br /><br />
+<div class="row">
+    <p>
+        <div class="col-lg-12">
+            @*<span class="role user">*@
+            <a class="btn btn-info alert label-info"  role="button" href="@Url.Action("Index", "EMenuEvalUser" )">Mes évaluations à réaliser</a>
+
+            <a class="btn btn-info alert label-info" role="button"   href="@Url.Action("Index", "E_EvalRealiseeUser" )">Mes évaluations réalisées</a>
+
+           
+        </div>
+    </p>
+
+</div>

@@ -17,6 +17,25 @@ namespace RHEVENT
             ConfigureAuth(app);
             createRolesandUsers();
 
+            //// Mesurer le temps d'exécution.
+            //app.Use(async (context, next) =>
+            //{
+            //    // Exécuté lors du traitement de la requête HTTP.
+            //    DateTime DateHeureDebut = DateTime.Now;
+
+            //    // Exécution du middleware suivant dans le pipeline.
+            //    await next();
+
+            //    // Exécuté lors du traitement de la réponse HTTP.
+            //    DateTime DateHeureFin = DateTime.Now;
+            //    TimeSpan DureeExecution = DateHeureFin - DateHeureDebut;
+
+            //    // Log.
+            //    string Log = $"Durée d'exécution : {DureeExecution.TotalSeconds} secondes";
+            //    // ...
+            //});
+
+
         }
         private void createRolesandUsers()
         {

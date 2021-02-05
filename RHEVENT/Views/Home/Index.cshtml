@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Title Page-->
-    <title>MEDICIS</title>
+    <title>E-MEDICIS</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/jqueryui")
     @Scripts.Render("~/bundles/modernizr")
@@ -187,36 +187,40 @@
                                          if (User.IsInRole("Admin_Medicis") || User.IsInRole("Elearning"))
                                         {
                                 <li>
-                                    @*<a class="js-arrow" href="#">*@
-                                        <a class="js-arrow" href="@Url.Action("Index", "EMenuFormateur")">
+                                    <a class="js-arrow" href="#">
+                                       @* <a class="js-arrow" href="@Url.Action("Index", "EMenuFormateur")">*@
                                             <i class="glyphicon glyphicon-globe"></i>E-learning
                                         </a>
 
-                                        @*<ul class="navbar-mobile-sub__list list-unstyled js-sub-list ">
-                                            @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Formateur")))
-                                            {
-                                                <li>
-                                                    <a href="@Url.Action("Index", "EMenuFormateur")"><span class="role user">Gestion des formations</span></a>
-                                                </li>
+                                    <ul class="navbar-mobile-sub__list list-unstyled js-sub-list ">
 
-                                                <li>
-                                                    <a href="@Url.Action("Group", "E_GrpByUsr")"><span class="role user" style="font-size:13px">Gestion grp de diffusion</span></a>
-                                                </li>
+                                        @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Formateur")))
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("Index", "EMenuFormateur")"><span class="role user">Gestion des formations</span></a>
+                                            </li>
 
-                                                <li>
-                                                    <a href="@Url.Action("Index", "Role")"><span class="role user">Gestion des evaluations</span></a>
-                                                </li>
-                                            }
+                                            <li>
+                                                <a href="@Url.Action("Group", "E_GrpByUsr")"><span class="role user" style="font-size:13px">Gestion grp de diffusion</span></a>
+                                            </li>
 
-                                            @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Employer")))
+                                            <li>
+                                                <a href="@Url.Action("Index", "EMenuEvaluation")"><span class="role user">Gestion des evaluations</span></a>
+                                            </li>
+                                        }
 
-                                            {
-                                                <li>
-                                                    <a href="@Url.Action("Index", "Role")"><span class="role user">Mes formations</span></a>
-                                                </li>
-                                            }
-                                        </ul>*@
+                                        @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Employer")))
 
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("Index", "EMenuFormUser")"><span class="role user">Mes formations</span></a>
+                                            </li>
+
+                                            <li>
+                                                <a href="@Url.Action("Index", "EMenuEvaluationUser")"><span class="role user">Mes évaluations</span></a>
+                                            </li>
+                                        }
+                                    </ul> 
 </li>
 
                             }
@@ -328,8 +332,55 @@
                                         </h4>
                                     </div>
                                     <div class="card-body" style="overflow-x:auto">
-                             
+
+
+
+                                        @if (Request.IsAuthenticated)
+                                        {
+
+                                            if (User.IsInRole("Admin_Medicis") || User.IsInRole("RH") || User.IsInRole("ELearning") || User.IsInRole("DA"))
+                                            {
+
+
+                                                <div onclick="location.href='@Url.Action("Index", "Home" )'" style="width:100px; height:100px" class="btn btn-link">  <img src="~/Content/images/Menu2.jpg" style="width:100px;border-width:0px; " class="img-circle" /> Accueil<br /></div><br />
+
+
+                                            }
+
+                                            if (User.IsInRole("Admin_Medicis"))
+                                            { 
+
+                                                <div onclick="location.href='@Url.Action("Index", "E_MenuAdmMedicis" )'" style="width:100px; height:100px" class="btn btn-link">  <img src="~/Content/images/AD4.png" style="width:100px;border-width:0px; " class="img-circle" /> Administration<br /></div> <br />
+                                                 
+                                            }
+
+
+                                            if (User.IsInRole("RH") || User.IsInRole("Admin_Medicis"))
+                                            {
+
+                                                <div onclick="location.href='@Url.Action("Index", "E_MenuRH" )'" style="width:100px; height:100px" class="btn btn-link">  <img src="~/Content/images/RH2.png" style="width:100px;border-width:0px;" class="img-circle" /> Ressource humaine<br /></div><br />
+
+                                            }
+
+                                            if (User.IsInRole("Admin_Medicis") || User.IsInRole("Elearning"))
+                                            {
+
+                                                <div onclick="location.href='@Url.Action("Index", "E_MenuElearning" )'" style="width:100px; height:100px" class="btn btn-link">  <img src="~/Content/images/el2.jpg" style="width:100px;border-width:0px;" class="img-circle" /> E-learning<br /></div><br />
+
+                                            }
+
+                                            if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
+                                            {
+
+                                                <div onclick="location.href='@Url.Action("SlideUsr", "E_formation" )'" style="width:100px; height:100px" class="btn btn-link">  <img src="~/Content/images/DA2.png" style="width:100px;border-width:0px;" class="img-circle" /> Demande d'action<br /></div>
+
+                                            }
+
+
+                                        }
                                     </div>
+
+                                    
 
                                 </div>
                             </div>
@@ -341,8 +392,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="copyright">
-                                    <p>Copyright © 2018 TERIAK. All rights reserved. by <a href="http://www.teriak.com/Fr/">TERIAK</a>.</p>
-                                </div>
+                                    <p>Copyright © @System.DateTime.Now.Year. All rights reserved. by Groupe KILANI
+</div>
                             </div>
                         </div>
                     </div>

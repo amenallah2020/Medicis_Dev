@@ -24,6 +24,9 @@ namespace RHEVENT.Models
         [DisplayName("Code formation")]
         public string Code_formt { get; set; }
 
+        [DisplayName("Code évaluation")]
+        public string Code_eval { get; set; }
+
         [DisplayName("Date diffusion")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
@@ -32,6 +35,11 @@ namespace RHEVENT.Models
         public string MatFormateur { get; set; }
 
         public string Objet { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
+        [Display(Name = "Date limite")]
+        public DateTime deadline { get; set; }
 
 
     }

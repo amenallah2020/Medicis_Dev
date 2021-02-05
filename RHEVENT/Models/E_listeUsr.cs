@@ -17,6 +17,9 @@ namespace RHEVENT.Models
         [DisplayName("Nom utilisateur")]
         public string Nom_usr { get; set; }
 
+        [DisplayName("Etat")]
+        public string Etat { get; set; }
+
         [DisplayName("Groupe")]
         public string Code_grp { get; set; }
 

@@ -19,11 +19,13 @@ namespace RHEVENT.Models
 
         public string Utilisateur { get; set; }
 
+       
+
         //[Display(Name = "Etat groupe")]
         //public string Etat_Grp { get; set; }
 
         //public string Code_Formation { get; set; }
-        
+
         //public bool IsSelected { get; set; }
 
 

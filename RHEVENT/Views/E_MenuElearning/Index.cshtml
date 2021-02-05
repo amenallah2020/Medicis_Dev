@@ -1,0 +1,59 @@
+﻿
+
+@{
+    ViewBag.Title = "E-learning";
+}
+
+ 
+ @{
+
+        ViewBag.titre_page = "E-learning";
+        ViewBag.email = ViewBag.email;
+        ViewBag.nom_prenom = ViewBag.nom_prenom;
+
+ }
+ 
+
+@*<h2 class="text" style="color:cornflowerblue">
+    <span class="glyphicon   glyphicon-expand"> </span>
+    Ressource humaine
+</h2>*@
+@*<br /><br />*@
+<br />
+<div class="row">
+    <p>
+        <div class="col-lg-12">
+
+            @if (User.IsInRole("Admin_Medicis") || User.IsInRole("Elearning"))
+            {
+             
+                if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Formateur")))
+                {
+                     
+                     <a style="background-color:coral ; color:white" class="btn btn-info alert label-info" role="button" href="@Url.Action("Index", "EMenuFormateur")">Gestion des formations</a>
+                       
+                        
+                      <a style="background-color:coral ; color:white" class="btn btn-info alert label-info" role="button" href="@Url.Action("Group", "E_GrpByUsr")"> Gestion grp de diffusion </a>
+                       
+                       <a  style="background-color:coral ; color:white" class="btn btn-info alert label-info" role="button" href="@Url.Action("Index", "EMenuEvaluation")"> Gestion des évaluations </a>
+                        
+                }
+
+               if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Employer")))
+
+                {
+                         
+                   <a style="background-color:coral ; color:white" class="btn btn-info alert label-info" role="button" href="@Url.Action("Index", "EMenuFormUser")"> Mes formations </a>
+                        
+                       
+                    <a style="background-color:coral ; color:white" class="btn btn-info alert label-info" role="button" href="@Url.Action("Index", "EMenuEvaluationUser")"> Mes évaluations </a>
+                        
+              }
+                 
+
+            }
+             
+        </div>
+    </p>
+
+</div>

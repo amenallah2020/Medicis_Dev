@@ -1,0 +1,143 @@
+﻿@model IEnumerable<RHEVENT.Models.E_Evaluation>
+
+
+
+@{
+    ViewBag.Title = "Gestion des évaluations";
+}
+@{
+    ViewBag.titre_page = "E-learning";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+
+<h2 class="text" style="color:cornflowerblue">
+    <span class="glyphicon   glyphicon-expand"> </span>
+    Gestion des évaluations
+</h2>
+<br />
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    @*<title>Index</title>*@
+</head>
+<body>
+
+    <div class="card border border-info " style="background-color:antiquewhite ">
+        <div class="card-header">
+            <strong class="card-title"></strong>
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                <dl class="dl-horizontal ">
+
+                    <dt>
+                        <br /> Formation
+                    </dt>
+                    <dd>
+                        <br />   @ViewBag.CodeF
+                    </dd>
+
+                    <dt>
+                        Objet Formation
+                    </dt>
+                    <dd>
+                        @ViewBag.objetFor
+                    </dd>
+                     
+                </dl>
+                <br />
+            </p>
+        </div>
+    </div>
+
+
+    @*<p>
+            @Html.ActionLink("Ajouter évaluation", "Create")
+        </p>*@
+    <table class="table table-striped table-bordered " style="font-size:14px">
+        <tr style="color:blue">
+            <th>
+                @Html.DisplayNameFor(model => model.Code_Eval)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Objet_Eval)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Etat_Eval)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Date_Creation)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Matricule_Formateur)
+                </th>*@
+
+            <th>
+                @Html.DisplayNameFor(model => model.Pourc_Valid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Duree_Eval)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr style="color:black; font-size:12px">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Code_Eval)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Objet_Eval)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Etat_Eval)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date_Creation)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Matricule_Formateur)
+                    </td>*@
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pourc_Valid) <text>%</text>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Duree_Eval)
+                </td>
+                <td>
+
+                    @if (item.EtatDiff == null)
+                    {
+                        @Html.ActionLink("Modifier |", "EditEval", new { id = item.Id, CodeF =  @ViewBag.CodeF })
+                    }
+
+                    @*   @Html.ActionLink("Détails |", "Details", new { id = item.Id })*@
+                    @*@if (item.EtatDiff  == null)
+                        {
+                            @Html.ActionLink("Supprimer |", "Delete", new { id = item.Id })
+                        }*@
+                    @Html.ActionLink("QCM ", "ListQCM", "E_Formation", new { id = item.Id, codeF = @ViewBag.CodeF, codeEval = item.Code_Eval, EtatDiff = item.EtatDiff }, null)
+
+                    @*@Html.ActionLink("Diffuser", "Index", "E_DiffEval", new { id = item.Id, codeEval = item.Code_Eval }, null)*@
+
+                </td>
+
+
+            </tr>
+        }
+
+    </table>
+
+    <div>
+        @Html.ActionLink("Retour à la liste des formations", "Index", "E_Formation")
+    </div>
+
+</body>
+</html>

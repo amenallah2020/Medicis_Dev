@@ -1,0 +1,159 @@
+﻿@model IEnumerable<RHEVENT.Models.E_QCM>
+
+
+@{
+    ViewBag.Title = "Gestion des évaluations";
+}
+@{
+    ViewBag.titre_page = "E-learning";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+
+<h2 class="text" style="color:cornflowerblue">
+    <span class="glyphicon   glyphicon-expand"> </span>
+    Gestion des évaluations - QCM
+</h2>
+<br />
+ 
+<html> 
+<body>
+
+    <div class="card border border-info " style="background-color:antiquewhite ">
+        <div class="card-header">
+            <strong class="card-title"></strong>
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                <dl class="dl-horizontal ">
+
+                    <dt>
+                        <br /> Formation
+                    </dt>
+                    <dd>
+                        <br />   @ViewBag.codeFor
+                    </dd>
+
+                    <dt>
+                         Objet Formation
+                    </dt>
+                    <dd>
+                           @ViewBag.objetFor
+                    </dd>
+
+                    <dt>
+                        <br /> Evaluation
+                    </dt>
+                    <dd>
+                        <br />   @ViewBag.codeEval
+                    </dd>
+
+                    <dt>
+                        Objet évaluation
+                    </dt>
+                    <dd>
+                        @ViewBag.objetEval
+                    </dd>
+                </dl>
+                <br />
+            </p>
+        </div>
+    </div>
+
+
+    @if (ViewBag.EtatD == null)
+    { 
+        <p>
+            @Html.ActionLink("Ajouter QCM", "AddQCM", new { codeEval = @ViewBag.codeEval , codef = @ViewBag.codeFor})
+        </p>
+    }
+
+    <table class="table table-striped table-bordered " style="font-size:14px">
+        <tr style="color:blue">
+            @*<th>
+                @Html.DisplayNameFor(model => model.Code_QCM)
+            </th>*@
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Code_EvalByQCM)
+                </th>*@
+
+            <th>
+                @Html.DisplayNameFor(model => model.Question)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Reponse1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reponse2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reponse3)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reponse4)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Coeff)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date_Creation)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr style="color:black; font-size:12px">
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.Code_QCM)
+                </td>*@
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Code_EvalByQCM)
+                    </td>*@
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Question)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.Reponse1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Reponse2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Reponse3)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Reponse4)
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Coeff)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date_Creation)
+                </td>
+                <td>
+                    @if (ViewBag.EtatD == null)
+                    {
+                        @Html.ActionLink("Modifier  ", "EditQCM", new { id = item.Id, codeEval = @ViewBag.codeEval, codef = @ViewBag.codeFor })
+                    }
+
+                  
+                    @if (ViewBag.EtatD == null)
+                    {
+                        @Html.ActionLink("| Supprimer", "DeleteQCM", new { id = item.Id, codeEval = @ViewBag.codeEval, codef = @ViewBag.codeFor })
+                    }
+                    </td>
+            </tr>
+        }
+
+    </table>
+
+
+    <div class="col-lg-12">
+        <br /> @Html.ActionLink("Retour à la liste des formations", "Index" , "E_Formation")
+    </div>
+</body>
+</html>

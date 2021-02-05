@@ -89,6 +89,23 @@ namespace RHEVENT.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+
+            ApplicationUser UserQuery = ( from m in db.Users
+                                        where m.matricule == model.matricule
+                                        select m ).Single();
+
+
+
+            
+                if (UserQuery.Statut != "Actif")
+                { 
+                    ModelState.AddModelError(string.Empty, "Session innactive");
+                    return View(model);
+                }
+
+               
+             
+
             if (!ModelState.IsValid)
             {
                 return View(model);

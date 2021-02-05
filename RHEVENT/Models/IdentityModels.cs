@@ -37,7 +37,10 @@ namespace RHEVENT.Models
     //    [RegularExpression(@"^[a-zA-Z]{3,30}$", ErrorMessage = "Prénom invalide")]
         public string prenom { get; set; }
 
- 
+        public string Etat { get; set; }
+
+        public string Statut { get; set; }
+
         [Required(ErrorMessage ="matricule requis")]
         [RegularExpression(@"^[0-9]{4}$",ErrorMessage ="Matricule invalide")]
         [Display(Name = "Matricule")]
@@ -181,6 +184,9 @@ namespace RHEVENT.Models
 
         public System.Data.Entity.DbSet<RHEVENT.Models.E_ListFormationDiffus> e_ListFormationDiffus { get; set; }
 
+        public System.Data.Entity.DbSet<RHEVENT.Models.E_ListEvaluationDiffus> e_ListEvaluationDiffus { get; set; }
+
+
         public System.Data.Entity.DbSet<RHEVENT.Models.DA_Fournisseurs> DA_Fournisseurs { get; set; }
 
         public System.Data.Entity.DbSet<RHEVENT.Models.DA_Demande> DA_Demande { get; set; }
@@ -198,6 +204,29 @@ namespace RHEVENT.Models
         public System.Data.Entity.DbSet<RHEVENT.Models.DA_ListesGammes> DA_ListesGammes { get; set; }
 
         public System.Data.Entity.DbSet<RHEVENT.Models.MesDemAjout> MesDemAjouts { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.E_listImg> E_listImg { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.E_Evaluation> E_Evaluation { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.E_QCM> E_QCM { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.E_RepUser> E_RepUser { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.E_ResultQCM> E_ResultQCM { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.E_SlideUsr> E_SlideUsr { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.E_ResultFormation> E_ResultFormation { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.E_ResultQCM_Historiq> E_ResultQCM_Historiq { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.E_ListEvaluationDiffus_Historiq> E_ListEvaluationDiffus_Historiq { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.E_ResultFormation_Historiq> E_ResultFormation_Historiq { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.Serveur> Serveur { get; set; }
+
     }
 
 

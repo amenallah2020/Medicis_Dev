@@ -129,6 +129,23 @@
             </div>
         }
 
+        @for (int i = 14; i <= 16; i++)
+        {
+            <div class="col-lg-6">
+                <div class="form-check m-1" style="font-size:12px ">
+                    @Html.HiddenFor(x => @Model[i].RoleId)
+                    @Html.HiddenFor(x => @Model[i].RoleName)
+
+
+                    @Html.CheckBoxFor(x => @Model[i].IsSelected)
+
+                    <label class="form-check-label" asp-for="@Model[i].IsSelected">
+                        @Model[i].RoleName
+                    </label>
+                </div>
+            </div>
+        }
+
         @*@for (int i = 0; i < Model.Count; i++)
         {
 

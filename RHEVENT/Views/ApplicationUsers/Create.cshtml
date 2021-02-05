@@ -177,6 +177,28 @@
 
             </div>
         </div>
+
+        <div class="col-3">
+            <b>
+                <label asp-for="EtatUsr" class="control-label">Etat</label>
+            </b>
+
+            <br />
+            @Html.RadioButton("EtatUsr", "Interne", true)<text style="font-size:14px"> Interne </text>
+            @Html.RadioButton("EtatUsr", "Externe")<text style="font-size:14px"> Externe </text>
+
+        </div>
+
+        <div class="col-3">
+            <b>
+                <label asp-for="StatutUsr" class="control-label">Statut</label>
+            </b>
+
+            <br />
+            @Html.RadioButton("StatutUsr", "Actif", true)<text style="font-size:14px"> Actif </text>
+            @Html.RadioButton("StatutUsr", "Inactif")<text style="font-size:14px"> Inactif </text>
+
+        </div>
     </div>
 
     @*<hr />*@

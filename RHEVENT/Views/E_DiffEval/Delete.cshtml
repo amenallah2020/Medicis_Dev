@@ -1,0 +1,87 @@
+﻿@model RHEVENT.Models.E_GrpByUsr
+
+<h2 class="text" style="color:cornflowerblue">
+    <span class="glyphicon   glyphicon-expand"> </span>
+   Diffusion des formations
+</h2>
+<br /><br />
+<h3 style="color:cornflowerblue">Supprimer groupe</h3>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+</head>
+<body>
+    <h4 style="color:grey">Voulez-vous vraiment supprimer cela?</h4>
+    <div>
+        <h4 style="color:grey">Groupe</h4>
+        <hr />
+        <dl class="dl-horizontal" style="color:black">
+
+            @*<dt>
+              Formation
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Code_Formation)
+            </dd>*@
+
+            <dt>
+                Groupe
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Code)
+            </dd>
+
+            @*<dt>
+                @Html.DisplayNameFor(model => model.Matricule_Usr)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Matricule_Usr)
+            </dd>*@
+
+            @*<dt>
+                @Html.DisplayNameFor(model => model.NomPrenom_Usr)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NomPrenom_Usr)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Etat_Grp)
+            </dt>*@
+
+            @*<dd>
+                @Html.DisplayFor(model => model.Etat_Grp)
+            </dd>
+            *@
+
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            TempData["CodeFormation"] = @ViewBag.form;
+
+            <div class="form-actions no-color">
+                <br />   <br />
+
+                @*<div class="btn au-btn--green" style="color:white">
+                    @Html.ActionLink("Supprimer", "Delete", "E_GrpByUsr", new { id = @ViewBag.form }, FormMethod.Post)
+                </div>*@
+
+                <input type="submit" value="Supprimer" id=@Model.Code class="btn btn-success" /> |
+
+                @Html.ActionLink("Retour à la liste", "Index", new { id = @ViewBag.form })
+            </div>
+        }
+    </div>
+</body>
+</html>

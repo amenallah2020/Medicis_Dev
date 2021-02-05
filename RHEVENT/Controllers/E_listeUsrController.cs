@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -88,6 +90,12 @@ namespace RHEVENT.Controllers
             
             E_GrpByUsr e = db.E_GrpByUsr.Find(Convert.ToInt32(id));
 
+            string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+            SqlConnection con = new SqlConnection(constr);
+            con.Open();
+
+
+
             if (e == null)
             {
                 var list = from m in db.E_listeUsr
@@ -114,10 +122,12 @@ namespace RHEVENT.Controllers
             else
             {
                 ViewBag.codeGrp = e.Code;
- 
+
                 liste2 = from m in db.E_listeUsr
                          where m.Code_grp == e.Code
                          select m;
+                 
+
             }
 
             return View(liste2.ToList());
@@ -138,15 +148,44 @@ namespace RHEVENT.Controllers
             return View(e_listeUsr);
         }
 
-        public ActionResult CreateUsrGrp(string id)
+        public ActionResult CreateUsrGrp(string id , string codeGrp , string searchString)
         {
-            var UserQuery = from m in db.Users
-                            select m;
-             
-            string codeg = TempData["Data2"].ToString();
+          
+            string codeg = null;
+
+            if (TempData["Data2"] != null)
+            { 
+                  codeg = TempData["Data2"].ToString();
  
-            ViewBag.codeg = TempData["Data2"].ToString();
-             
+                ViewBag.codeg = TempData["Data2"].ToString();
+            }
+            else
+            {
+                 codeg = codeGrp;
+
+                ViewBag.codeg = codeGrp;
+
+                TempData["Data2"]= codeGrp;
+
+                TempData["Group"] = codeGrp;
+            }
+
+            IQueryable<ApplicationUser> UserQuery;
+
+            if (searchString != null)
+            {
+                  UserQuery = from m in db.Users
+                                where m.Etat == searchString
+                                select m; 
+            }
+            else
+            {
+                  UserQuery = from m in db.Users
+                                where m.Etat == "Interne"
+                                select m; 
+            }
+
+
             List<E_GrpByUsr> listG = new List<E_GrpByUsr>();
 
             listG.Insert(0, new E_GrpByUsr { Id = 0, Code = codeg });
@@ -165,33 +204,74 @@ namespace RHEVENT.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateUsrGrp(E_listeUsr e_listeUsr)
+        public ActionResult CreateUsrGrp(E_listeUsr e_listeUsr, string btnValid, string searchString)
         {
             if (ModelState.IsValid)
-            { 
+            {
+               
+
                 string codeg = TempData["Group"].ToString();
+
+
+                if (searchString != null && btnValid == null)
+                {
+                    //TempData["Data2"] = e_listeUsr.Code_grp;
+
+                    Session["EtatUsrbyGrp"] = searchString;
+                    return RedirectToAction("CreateUsrGrp", "E_listeUsr", new { searchString = searchString , codeGrp = codeg });
+                }
+                IQueryable<E_GrpByUsr> idGrp;
+
+
+                if (e_listeUsr.Code_grp != null)
+                { 
+                   idGrp = from m in db.E_GrpByUsr
+                            where m.Code == e_listeUsr.Code_grp
+                            select m;
+
+                }
+                else
+                {
+                    idGrp = from m in db.E_GrpByUsr
+                            where m.Code == codeg
+                            select m;
+
+                }
+
+                int ss = 0;
+                foreach (E_GrpByUsr t in idGrp)
+                {
+                    ss = t.Id;
+                }
+
+                if (ss == 0)
+                {
+                    E_GrpByUsr g = (from m in db.E_GrpByUsr
+                                    where m.Code == codeg
+                                   select m).Single();
+
+                    ss = g.Id; 
+
+                }
 
                 var usr = from m in db.Users
                           where m.matricule == e_listeUsr.SelectUsr
                           select m;
+
+              
 
                 foreach (ApplicationUser a in usr)
                 {
                     e_listeUsr.Mat_usr = a.matricule;
 
                     e_listeUsr.Nom_usr = a.NomPrenom;
+
+                    e_listeUsr.Etat = a.Etat;
                 }
 
                 e_listeUsr.Code_grp = codeg;
  
-                var idGrp = from m in db.E_GrpByUsr
-                            where m.Code == e_listeUsr.Code_grp
-                            select m;
-                int ss = 0;
-                foreach (E_GrpByUsr t in idGrp)
-                {
-                    ss = t.Id;
-                }
+                
 
                 db.E_listeUsr.Add(e_listeUsr);
 
@@ -205,20 +285,36 @@ namespace RHEVENT.Controllers
 
 
         // GET: E_listeUsr/Create
-        public ActionResult Create(string id)
+        public ActionResult Create(string id , string codeGrp    , string searchString)
         {
-            var UserQuery = from m in db.Users
-                            select m;
 
+          
             //string codef = TempData["Data1"].ToString();
-
-            string codeg = TempData["Data2"].ToString();
-
             //ViewBag.codeF = TempData["Data1"].ToString();
 
-            ViewBag.codeg = TempData["Data2"].ToString();
+            string codeg = null;
 
-           
+            if (TempData["Data2"] != null)
+            { 
+                  codeg = TempData["Data2"].ToString();
+             
+                ViewBag.codeg = TempData["Data2"].ToString();
+
+               
+            }
+            else
+            {
+                codeg = codeGrp;
+
+                ViewBag.codeg = codeGrp;
+
+                //ViewBag.codeF = codeForm;
+
+                TempData["Group"] = codeGrp;
+
+                //TempData["Form"] = codeForm;
+            }
+
 
             //List<E_Formation> listF = new List<E_Formation>();
 
@@ -237,7 +333,20 @@ namespace RHEVENT.Controllers
 
             ViewBag.CodeGroup = CodeGroup;
 
+            IQueryable<ApplicationUser> UserQuery;
 
+            if (searchString != null)
+            {
+                  UserQuery = from m in db.Users
+                              where m.Etat == searchString
+                            select m;
+            }
+            else
+            {
+                UserQuery = from m in db.Users
+                            where m.Etat == "Interne"
+                            select m;
+            }
 
             List<ApplicationUser> listUser = UserQuery.ToList<ApplicationUser>();
 
@@ -251,14 +360,26 @@ namespace RHEVENT.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( E_listeUsr e_listeUsr)
+        public ActionResult Create( E_listeUsr e_listeUsr , string btnValid, string searchString)
         {
             if (ModelState.IsValid)
             {
-                //string codef = TempData["Form"].ToString();
-
+               
                 string codeg = TempData["Group"].ToString();
 
+                //string codeF = TempData["Form"].ToString();
+
+                if (searchString != null && btnValid == null)
+                {
+                    //TempData["Data2"] = e_listeUsr.Code_grp;
+
+                    Session["EtatUsrFor"] = searchString;
+
+                    return RedirectToAction("Create", "E_listeUsr", new { searchString = searchString, codeGrp = codeg });
+                }
+                //string codef = TempData["Form"].ToString();
+
+               
                 var usr = from m in db.Users
                            where m.matricule == e_listeUsr.SelectUsr
                            select m;
@@ -268,6 +389,8 @@ namespace RHEVENT.Controllers
                     e_listeUsr.Mat_usr = a.matricule;
 
                     e_listeUsr.Nom_usr = a.NomPrenom;
+
+                    e_listeUsr.Etat = a.Etat;
                 }
 
                 e_listeUsr.Code_grp = codeg;

@@ -9,7 +9,7 @@
     z-index: 2;
     top: 0;
     left: 0;
-    background-color:beige;
+    background-color:azure;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
@@ -39,7 +39,7 @@
     display: block;
     transition: 0.3s;
     width: 100%;
-    background-color: darkgray;
+    background-color: lightcoral;
     color: white;
 }
 
@@ -51,7 +51,7 @@
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: beige;
+    background-color: azure;
     overflow-x: hidden;
     /*transition: 0.5s;*/
     /*padding-top: 60px;*/

@@ -1,0 +1,58 @@
+﻿@model RHEVENT.Models.E_listeUsr
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>E_listeUsr</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Mat_usr)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Mat_usr)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Nom_usr)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Nom_usr)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Code_grp)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Code_grp)
+            </dd>
+    
+            @*<dt>
+                @Html.DisplayNameFor(model => model.Code_formt)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Code_formt)
+            </dd>*@
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

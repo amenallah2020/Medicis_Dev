@@ -1,6 +1,9 @@
 ﻿@model IEnumerable<RHEVENT.Models.E_listeUsr>
 
 
+@{
+    ViewBag.Title = "   Diffusion des formations";
+}
 
 @{
     ViewBag.titre_page = "E-learning";
@@ -25,7 +28,7 @@
 
 </head>
 <body>
-    <div class="btn btn-danger">
+    <div  >
         @Html.ActionLink("Retour à la liste des groupes", "Index", "E_GrpByUsr", new { id = @ViewBag.form }, null)
     </div>
 
@@ -82,59 +85,66 @@
             <th style="color:blue">
                 @Html.DisplayNameFor(model => model.Nom_usr)
             </th>
+            <th style="color:blue">
+                @Html.DisplayNameFor(model => model.Etat)
+            </th>
             @*<th style="color:blue">
-                    @Html.DisplayNameFor(model => model.Code_grp)
-                </th>
-                <th style="color:blue">
-                    @Html.DisplayNameFor(model => model.Code_formt)
-                </th>*@
+            @Html.DisplayNameFor(model => model.Code_grp)
+        </th>
+        <th style="color:blue">
+            @Html.DisplayNameFor(model => model.Code_formt)
+        </th>*@
             <th></th>
         </tr>
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td style="color:black; font-size:12px">
-                    @Html.DisplayFor(modelItem => item.Mat_usr)
-                </td>
-                <td style="color:black; font-size:12px">
-                    @Html.DisplayFor(modelItem => item.Nom_usr)
-                </td>
-                @*<td style="color:black; font-size:12px">
-                        @Html.DisplayFor(modelItem => item.Code_grp)
-                    </td>
-                    <td style="color:black; font-size:12px">
-                        @Html.DisplayFor(modelItem => item.Code_formt)
-                    </td>*@
+        <tr>
+            <td style="color:black; font-size:12px">
+                @Html.DisplayFor(modelItem => item.Mat_usr)
+            </td>
+            <td style="color:black; font-size:12px">
+                @Html.DisplayFor(modelItem => item.Nom_usr)
+            </td>
+
+            <td style="color:black; font-size:12px">
+                @Html.DisplayFor(modelItem => item.Etat)
+            </td>
+            @*<td style="color:black; font-size:12px">
+            @Html.DisplayFor(modelItem => item.Code_grp)
+        </td>
+        <td style="color:black; font-size:12px">
+            @Html.DisplayFor(modelItem => item.Code_formt)
+        </td>*@
 
 
-                @*<td style="color:red">
-                    @Html.ActionLink("Supprimer", "Delete", new { id = item.Id })
-                </td>*@
+            @*<td style="color:red">
+            @Html.ActionLink("Supprimer", "Delete", new { id = item.Id })
+        </td>*@
 
 
-                <td style="color:red"> 
-                    @using (Html.BeginForm("DeleteUsr", "E_listeUsr", new { id = @item.Id }, FormMethod.Post))
-                    {
-                         
+            <td style="color:red">
+                @using (Html.BeginForm("DeleteUsr", "E_listeUsr", new { id = @item.Id }, FormMethod.Post))
+                {
 
-                            <span id="confirmDeleteSpan_@item.Id" style="display:none">
 
-                                <span> Etes-vous sûr que vous voulez supprimer?</span>
+                    <span id="confirmDeleteSpan_@item.Id" style="display:none">
 
-                                <button type="submit" class="btn au-btn--green" style="color:white">Oui</button>
+                        <span> Etes-vous sûr que vous voulez supprimer?</span>
 
-                             <a href="#" class="btn btn-primary" onclick="confirmDelete('@item.Id', false)">Non</a> 
-                            </span>
+                        <button type="submit" class="btn btn-danger" style="color:white">Oui</button>
 
-                            <span id="deleteSpan_@item.Id">
+                        <a href="#" class="btn btn-primary" onclick="confirmDelete('@item.Id', false)">Non</a>
+                    </span>
 
-                                <a href="#" class="btn" onclick="confirmDelete('@item.Id', true)">Supprimer</a>
+                    <span id="deleteSpan_@item.Id">
 
-                            </span>
-                        }
-                    </td>
-            </tr>
+                        <a href="#" class="btn" onclick="confirmDelete('@item.Id', true)">Supprimer</a>
+
+                    </span>
+                }
+            </td>
+        </tr>
         }
 
     </table>
@@ -143,5 +153,5 @@
 
 
 @section Scripts {
-    <script src="~/Content/caroussel_files/CustomScript.js"></script> 
+    <script src="~/Content/caroussel_files/CustomScript.js"></script>
 }

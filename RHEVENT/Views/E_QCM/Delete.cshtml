@@ -1,0 +1,148 @@
+﻿@model RHEVENT.Models.E_QCM
+
+@{
+    ViewBag.Title = "Suppression de QCM";
+}
+@{
+    ViewBag.titre_page = "E-learning";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+<h2 class="text" style="color:cornflowerblue">
+    <span class="glyphicon   glyphicon-expand"> </span>
+    Gestion des évaluations - QCM
+</h2>
+
+<h3 class="text" style="color:cornflowerblue">Suppression de QCM</h3>
+@*<br /><br />*@
+<hr />
+<body>
+    <h3>Voulez-vous vraiment supprimer cela?</h3>
+    <div>
+        <h4>QCM</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            @*<dt>
+            @Html.DisplayNameFor(model => model.Code_QCM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Code_QCM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Code_EvalByQCM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Code_EvalByQCM)
+        </dd>*@
+
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Question)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Question)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Reponse1)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Reponse1)
+            </dd>
+
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Reponse2)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Reponse2)
+            </dd>
+
+            @if (@Html.DisplayFor(model => model.Reponse3).ToString() == "")
+            {
+                <dt hidden>
+                    @Html.DisplayNameFor(model => model.Reponse3)
+                </dt>
+
+                <dd hidden>
+                    @Html.DisplayFor(model => model.Reponse3)
+                </dd>
+            }
+            else
+            {
+                <dt>
+                    @Html.DisplayNameFor(model => model.Reponse3)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Reponse3)
+                </dd>
+            }
+
+            @if (@Html.DisplayFor(model => model.Reponse4).ToString() == "")
+            {
+                <dt hidden>
+                    @Html.DisplayNameFor(model => model.Reponse4)
+                </dt>
+
+                <dd hidden>
+                    @Html.DisplayFor(model => model.Reponse4)
+                </dd>
+            }
+            else
+            {
+                <dt>
+                    @Html.DisplayNameFor(model => model.Reponse4)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Reponse4)
+                </dd>
+            }
+
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Coeff)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Coeff)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Date_Creation)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Date_Creation)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Date_Modif)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Date_Modif)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Supprimer" class="btn btn-success" /> |
+                @Html.ActionLink("Retour à la liste", "Index", new { codeEval = @ViewBag.codeEval })
+            </div>
+        }
+    </div>
+</body>
+</html>

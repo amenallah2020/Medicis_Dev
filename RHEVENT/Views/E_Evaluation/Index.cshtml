@@ -1,0 +1,143 @@
+﻿@model IEnumerable<RHEVENT.Models.E_Evaluation>
+
+
+
+@{
+    ViewBag.Title = "Gestion des évaluations";
+}
+@{
+    ViewBag.titre_page = "E-learning";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+
+
+<h2 class="text" style="color:cornflowerblue">
+    <span class="glyphicon   glyphicon-expand"> </span>
+    Gestion des évaluations
+</h2>
+<br />
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    @*<title>Index</title>*@
+</head>
+<body>
+
+    <div class="container-fluid" style="border: 1px dashed silver ; height:100px; background-color:white">
+
+        <form asp-action="Index" method="get" style="font-size:12px ; color:cadetblue">
+            <br />
+            <div class="col-lg-2">
+                <label>Code évaluation </label>
+                <input style="width:160px; font-size:11px" class="form-control " type="search" placeholder="Code évaluation" name="searchStringCodeE" value="@ViewData["CurrentFilterCodeE"]" /><br />
+            </div>
+
+
+
+            <div class="col-lg-2">
+                <label>Objet</label>
+                <input style="width:160px; font-size:11px" class="form-control " type="search" placeholder="Objet" name="searchStringObjet" value="@ViewData["CurrentFilterObjet"]" /><br />
+            </div>
+
+            
+            <div class="col-lg-3">
+
+                <br /><input type="submit" value="Recherche " class="btn btn-success" />
+                @*<a class="btn btn-danger" asp-action="Index"> Retour à la liste</a>*@
+
+                <a>@Html.ActionLink("Retour à la liste", "Index", "E_Evaluation")</a>
+
+            </div>
+
+
+        </form>
+    </div>
+
+    <br />
+    <p>
+        @Html.ActionLink("Ajouter évaluation", "Create")
+    </p>
+
+    <table class="table table-striped table-bordered " style="font-size:14px">
+        <tr style="color:blue">
+            <th>
+                @Html.DisplayNameFor(model => model.Code_Eval)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Objet_Eval)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Etat_Eval)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Date_Creation)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Matricule_Formateur)
+                </th>*@
+
+            <th>
+                @Html.DisplayNameFor(model => model.Pourc_Valid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Duree_Eval)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr style="color:black; font-size:12px">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Code_Eval)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Objet_Eval)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Etat_Eval)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date_Creation)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Matricule_Formateur)
+                    </td>*@
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pourc_Valid) <text>%</text>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Duree_Eval)
+                </td>
+                <td>
+
+                    @if (item.EtatDiff == null)
+                    {
+                        @Html.ActionLink("Modifier |", "Edit", new { id = item.Id })
+                    }
+
+                    @Html.ActionLink("Détails |", "Details", new { id = item.Id })
+                    @if (item.EtatDiff == null)
+                    {
+                        @Html.ActionLink("Supprimer |", "Delete", new { id = item.Id })
+                    }
+                    @Html.ActionLink("QCM |", "Index", "E_QCM", new { id = item.Id, codeEval = item.Code_Eval, EtatDiff = item.EtatDiff }, null)
+
+                    @Html.ActionLink("Diffuser", "Index", "E_DiffEval", new { id = item.Id, codeEval = item.Code_Eval }, null)
+
+                </td>
+
+
+            </tr>
+        }
+
+    </table>
+
+
+</body>
+</html>

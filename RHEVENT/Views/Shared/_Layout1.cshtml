@@ -1,4 +1,5 @@
 ﻿<!DOCTYPE html>
+<html lang="fr">
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -16,7 +17,7 @@
 
 @*<body onload="openNav()">*@
 <body>
-
+   
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
@@ -161,7 +162,7 @@
 (ViewContext.RouteData.Values["controller"].ToString() == "E_Formation") ||
 (ViewContext.RouteData.Values["controller"].ToString() == "E_ListFormationDiffus") ||
 (ViewContext.RouteData.Values["controller"].ToString() == "E_GrpByUsr") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "E_listeUsr")||
+(ViewContext.RouteData.Values["controller"].ToString() == "E_listeUsr") ||
 (ViewContext.RouteData.Values["controller"].ToString() == "E_listFormationDiffus"))
                     {
                         <button class="dropdown-btn active">
@@ -174,12 +175,18 @@
                             {
                                 <a href="@Url.Action("Index", "EMenuFormateur")">Gestion des formations </a>
                                 <a href="@Url.Action("Group", "E_GrpByUsr")">Gestion grp de diffusion </a>
-                                <a href="@Url.Action("Group", "E_GrpByUsr")">Gestion des evaluations </a>
+                                <a href="@Url.Action("Index", "EMenuEvaluation")">Gestion des évaluations </a>
                             }
                             @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Employer")))
 
                             {
-                                <a href="@Url.Action("Group", "E_GrpByUsr")">Mes formations </a>
+                                <a href="@Url.Action("Index", "EMenuFormUser")">Mes formations </a>
+                            }
+
+                            @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Employer")))
+
+                            {
+                                <a href="@Url.Action("Index", "EMenuEvaluationUser")">Mes évaluations </a>
                             }
 
                         </div>
@@ -196,39 +203,45 @@
                             {
                                 <a href="@Url.Action("Index", "EMenuFormateur")">Gestion des formations </a>
                                 <a href="@Url.Action("Group", "E_GrpByUsr")">Gestion grp de diffusion </a>
-                                <a href="@Url.Action("Group", "E_GrpByUsr")">Gestion des evaluations </a>
+                                <a href="@Url.Action("Index", "EMenuEvaluation")">Gestion des évaluations </a>
                             }
                             @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Employer")))
 
                             {
-                                <a href="@Url.Action("Group", "E_GrpByUsr")">Mes formations </a>
+                                <a href="@Url.Action("Index", "EMenuFormUser")">Mes formations </a>
+                            }
+
+                            @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Employer")))
+
+                            {
+                                <a href="@Url.Action("Index", "EMenuEvaluationUser")">Mes évaluations </a>
                             }
 
                         </div>
-                            }
+                    }
 
 
 
-                        }
-                        if (User.IsInRole("DA") || User.IsInRole("Admin_Medicis"))
-                        {
+                }
+                if (User.IsInRole("DA") || User.IsInRole("Admin_Medicis"))
+                {
 
 
-                            if ((ViewContext.RouteData.Values["controller"].ToString() == "DA_Demande") ||
-        (ViewContext.RouteData.Values["controller"].ToString() == "DA_TypesAchats") ||
-        (ViewContext.RouteData.Values["controller"].ToString() == "DA_TypesActions") ||
-        (ViewContext.RouteData.Values["controller"].ToString() == "DA_ListesGammes") ||
-        (ViewContext.RouteData.Values["controller"].ToString() == "DA_Labo") ||
-        (ViewContext.RouteData.Values["controller"].ToString() == "DA_Fournisseurs") ||
-        (ViewContext.RouteData.Values["controller"].ToString() == "DA_Materiels"))
-                            {
-                                //onclick = "location.href='@Url.Action("Create","DA_Demande")'"
-                                  <button class="dropdown-btn active">
+                    if ((ViewContext.RouteData.Values["controller"].ToString() == "DA_Demande") ||
+(ViewContext.RouteData.Values["controller"].ToString() == "DA_TypesAchats") ||
+(ViewContext.RouteData.Values["controller"].ToString() == "DA_TypesActions") ||
+(ViewContext.RouteData.Values["controller"].ToString() == "DA_ListesGammes") ||
+(ViewContext.RouteData.Values["controller"].ToString() == "DA_Labo") ||
+(ViewContext.RouteData.Values["controller"].ToString() == "DA_Fournisseurs") ||
+(ViewContext.RouteData.Values["controller"].ToString() == "DA_Materiels"))
+                    {
+                        //onclick = "location.href='@Url.Action("Create","DA_Demande")'"
+                        <button class="dropdown-btn active">
                             Demandes d'Action
                             <i class="fa-caret-down glyphicon glyphicon-arrow-down"></i>
                         </button>
                         <div class="dropdown-container1">
-                            
+
                             <a href="@Url.Action("Create", "DA_Demande")">Ajouter Demande</a>
                             <a href="@Url.Action("DemandesAll", "DA_Demande")">Toutes les Demandes</a>
                             <a href="@Url.Action("MesDemandes", "DA_Demande")">Mes Demandes</a>
@@ -292,53 +305,55 @@
 
 
     </div>
-        <div id="main">
-            <div class="menu" style="height:6.5%;overflow:unset">
-                <p> <span style="font-size:30px;cursor:pointer;z-index:5" onclick="openNav()">&#9776;</span> </p>
-            </div>
-            <br />
-            @RenderBody()
-            <br />
-            <hr />
-            <div style="float:none">
-            <center>
-                <p>Copyright © @DateTime.Now.Year TERIAK. All rights reserved. by <a href="http://www.teriak.com/Fr/" style="color:blue" target="_blank">TERIAK</a>.</p>
-            </center>
-            </div>
+    <div id="main">
+        <div class="menu" style="height:6.5%;overflow:unset">
+            <p> <span style="font-size:30px;cursor:pointer;z-index:5" onclick="openNav()">&#9776;</span> </p>
         </div>
+        <br />
+        @RenderBody()
+        <br />
+        <hr />
+        <div style="float:none">
+            <center>
+                <p>Copyright © @DateTime.Now.Year . All rights reserved. by Groupe KILANI.</p>
+            </center>
+        </div>
+    </div>
 
-        <script>
-            function openNav() {
-                document.getElementById("mySidenav").style.width = "20%";
-                document.getElementById("main").style.marginLeft = "20%";
-            }
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "20%";
+            document.getElementById("main").style.marginLeft = "20%";
+        }
 
-            function closeNav() {
-                document.getElementById("mySidenav").style.width = "0";
-                document.getElementById("main").style.marginLeft = "0";
-            }
-        </script>
-        <script>
-            var dropdown = document.getElementsByClassName("dropdown-btn");
-            var i;
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+        }
+    </script>
+    <script>
+        var dropdown = document.getElementsByClassName("dropdown-btn");
+        var i;
 
-            for (i = 0; i < dropdown.length; i++) {
-                dropdown[i].addEventListener("click", function () {
-                    this.classList.toggle("active");
-                    var dropdownContent = this.nextElementSibling;
-                    if (dropdownContent.style.display === "block") {
-                        dropdownContent.style.display = "none";
+        for (i = 0; i < dropdown.length; i++) {
+            dropdown[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var dropdownContent = this.nextElementSibling;
+                if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none";
 
-                    } else {
-                        dropdownContent.style.display = "block";
-                    }
-                });
-            }
-        </script>
+                } else {
+                    dropdownContent.style.display = "block";
+                }
+            });
+        }
+    </script>
 
 
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+   
+
 </body>
 </html>

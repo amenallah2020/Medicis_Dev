@@ -1,0 +1,210 @@
+﻿@model RHEVENT.Models.E_QCM
+
+@{
+    ViewBag.Title = "Modification de QCM";
+}
+@{
+    ViewBag.titre_page = "E-learning";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+<h2 class="text" style="color:cornflowerblue">
+    <span class="glyphicon   glyphicon-expand"> </span>
+    Gestion des évaluations - QCM
+</h2>
+
+<h3 class="text" style="color:cornflowerblue">Modification de QCM</h3>
+@*<br /><br />*@
+<hr />
+
+
+<style>
+    .width-textarea {
+        max-width: 95%;
+        width: 95%;
+        border: ridge;
+        border-width: thin;
+    }
+</style>
+
+<body>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    @using (Html.BeginForm(new { codeEvl = @ViewBag.codeEval }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-horizontal">
+
+                <div class="container-fluid" style="border: 1px dashed hidden ; height:400px; background-color:white">
+                    <div class="col-lg-3">
+                        <h4 style=" font-size:16px large; color:forestgreen">Question</h4>
+                    </div>
+
+                    <div>
+                        @Html.TextAreaFor(model => model.Question, new { @class = " form-control width-textarea " })
+                        @* @Html.EditorFor(model => model.Question, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.ValidationMessageFor(model => model.Question, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="col-lg-3">
+                        <h4 style=" font-size:16px large; color:forestgreen">Réponses</h4>
+                    </div>
+
+                    <div class="col-lg-12">
+                        @Html.LabelFor(model => model.Reponse1, htmlAttributes: new { @class = "control-label " })
+
+                        &nbsp; &nbsp;
+                        @Html.RadioButton("EtatRep1", "Faux", true)<text style="font-size:14px"> Faux </text>
+                        @Html.RadioButton("EtatRep1", "Vrai")<text style="font-size:14px"> Vrai </text>
+
+                    </div>
+                    <div>
+                        @Html.TextAreaFor(model => model.Reponse1, new { @class = " form-control width-textarea " })
+                        @* @Html.EditorFor(model => model.Question, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.ValidationMessageFor(model => model.Reponse1, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    @*<div class="col-lg-12">*@
+                        @*<br />*@
+                        @*<b>
+                            <label asp-for="EtatRep1" class="control-label">Réponse 1 </label>
+                        </b>
+
+                        <br />
+                        @Html.RadioButton("EtatRep1", "Faux", true)<text style="font-size:14px"> Faux </text>
+                        @Html.RadioButton("EtatRep1", "Vrai")<text style="font-size:14px"> Vrai </text>
+
+                    </div>*@
+
+
+                    <div class="col-lg-12">
+                        <br />   @Html.LabelFor(model => model.Reponse2, htmlAttributes: new { @class = "control-label " })
+
+                        &nbsp;&nbsp;
+                        @Html.RadioButton("EtatRep2", "Faux", true)<text style="font-size:14px"> Faux </text>
+                        @Html.RadioButton("EtatRep2", "Vrai")<text style="font-size:14px"> Vrai </text>
+
+                    </div>
+                    <div>
+                        @Html.TextAreaFor(model => model.Reponse2, new { @class = " form-control width-textarea " })
+                        @* @Html.EditorFor(model => model.Question, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.ValidationMessageFor(model => model.Reponse2, "", new { @class = "text-danger" })
+
+                    </div>
+
+
+                    @*<div class="col-lg-12">*@
+                        @*<br />*@
+                        @*<b>
+                            <label asp-for="EtatRep2" class="control-label">Réponse 2 </label>
+                        </b>
+
+                        <br />
+                        @Html.RadioButton("EtatRep2", "Faux", true)<text style="font-size:14px"> Faux </text>
+                        @Html.RadioButton("EtatRep2", "Vrai")<text style="font-size:14px"> Vrai </text>
+
+                    </div>*@
+
+
+                    <div class="col-lg-12">
+                        @Html.LabelFor(model => model.Reponse3, htmlAttributes: new { @class = "control-label " })
+
+
+                        &nbsp;&nbsp;
+                        @Html.RadioButton("EtatRep3", "Faux", true)<text style="font-size:14px"> Faux </text>
+                        @Html.RadioButton("EtatRep3", "Vrai")<text style="font-size:14px"> Vrai </text>
+
+                    </div>
+                    <div>
+                        @Html.TextAreaFor(model => model.Reponse3, new { @class = " form-control width-textarea " })
+                        @* @Html.EditorFor(model => model.Question, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.ValidationMessageFor(model => model.Reponse3, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    @*<div class="col-lg-12">*@
+                        @*<br />*@
+                        @*<b>
+                            <label asp-for="EtatRep3" class="control-label">Réponse 3 </label>
+                        </b>
+
+                        <br />
+                        @Html.RadioButton("EtatRep3", "Faux", true)<text style="font-size:14px"> Faux </text>
+                        @Html.RadioButton("EtatRep3", "Vrai")<text style="font-size:14px"> Vrai </text>
+
+                    </div>*@
+
+
+                    <div class="col-lg-12">
+                        @Html.LabelFor(model => model.Reponse4, htmlAttributes: new { @class = "control-label " })
+
+                        &nbsp;&nbsp;
+                        @Html.RadioButton("EtatRep4", "Faux", true)<text style="font-size:14px"> Faux </text>
+                        @Html.RadioButton("EtatRep4", "Vrai")<text style="font-size:14px"> Vrai </text>
+
+                    </div>
+                    <div>
+                        @Html.TextAreaFor(model => model.Reponse4, new { @class = " form-control width-textarea " })
+                        @* @Html.EditorFor(model => model.Question, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.ValidationMessageFor(model => model.Reponse4, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    @*<div class="col-lg-12">*@
+                        @*<br />*@
+                        @*<b>
+                            <label asp-for="EtatRep4" class="control-label">Réponse 4 </label>
+                        </b>
+
+                        <br />
+                        @Html.RadioButton("EtatRep4", "Faux", true)<text style="font-size:14px"> Faux </text>
+                        @Html.RadioButton("EtatRep4", "Vrai")<text style="font-size:14px"> Vrai </text>
+
+                    </div>*@
+
+
+                    <div class="col-lg-12">
+                        <h4 style=" font-size:16px large; color:forestgreen">Coefficient</h4>
+                    </div>
+
+                    <div class="col-lg-12">
+                        @Html.EditorFor(model => model.Coeff, new { htmlAttributes = new { @class = "form-control col-lg-12", @Value = 1 } })
+                        @Html.ValidationMessageFor(model => model.Coeff, "", new { @class = "text-danger" })
+                    </div>
+
+                    @*<input type="text" id="coeff" name="coeff" class="form-control" required /> <br />*@
+
+
+                    <div class="col-lg-12">
+
+                        <br />  <input type="submit" value="Modifier" class="btn btn-success" />
+
+                    </div>
+
+
+                    <div class="col-lg-12">
+                        <br />@Html.ActionLink("Retour à la liste", "Index", new { codeEval = @ViewBag.codeEval })
+                    </div>
+                </div>
+
+                 
+            </div>
+        </div>
+    }
+
+    </div>
+
+</body>
+</html>
