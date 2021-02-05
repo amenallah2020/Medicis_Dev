@@ -17,19 +17,7 @@ namespace RHEVENT.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         private SqlConnection con;
 
-        public JsonResult IsLaboNameExist(string LaboName, int? Id)
-        {
-            var validateName = db.DA_Labo.FirstOrDefault
-                                (x => x.Laboratoire == LaboName && x.Id != Id);
-            if (validateName != null)
-            {
-                return Json(false, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json(true, JsonRequestBehavior.AllowGet);
-            }
-        }
+        
 
         [HttpPost]
         public ActionResult Addlaboo(DA_Labo obj)
@@ -48,6 +36,7 @@ namespace RHEVENT.Controllers
             connection();
             SqlCommand com = new SqlCommand("AddLabo", con);
             com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@Code", obj.Code);
             com.Parameters.AddWithValue("@Laboratoire", obj.Laboratoire);
             com.Parameters.AddWithValue("@Adresse", obj.Adresse);
             com.Parameters.AddWithValue("@Tel", obj.Tel);
@@ -84,19 +73,38 @@ namespace RHEVENT.Controllers
         {
             return View();
         }
-
+        public JsonResult IsLaboNameExist(string LaboName, int? Id)
+        {
+            var validateName = db.DA_Labo.FirstOrDefault
+                                (x => x.Laboratoire == LaboName && x.Id != Id);
+            if (validateName != null)
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+        }
         // POST: DA_Labo/Create
         // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Laboratoire,Adresse,Tel,Mobile")] DA_Labo dA_Labo)
+        public ActionResult Create([Bind(Include = "Id,Code,Laboratoire,Adresse,Tel,Mobile")] DA_Labo dA_Labo)
         {
             bool IsLaboNameExist = db.DA_Labo.Any
         (x => x.Laboratoire == dA_Labo.Laboratoire && x.Id != dA_Labo.Id);
             if (IsLaboNameExist == true)
             {
                 ModelState.AddModelError("Laboratoire", "Ce laboratoire existe déja");
+            }
+
+            bool IsLaboNameExist1 = db.DA_Labo.Any
+       (x => x.Code == dA_Labo.Code && x.Id != dA_Labo.Id);
+            if (IsLaboNameExist == true)
+            {
+                ModelState.AddModelError("Code", "Ce code existe déja");
             }
 
             if (ModelState.IsValid)
@@ -129,7 +137,7 @@ namespace RHEVENT.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Laboratoire,Adresse,Tel,Mobile")] DA_Labo dA_Labo)
+        public ActionResult Edit([Bind(Include = "Id,Code,Laboratoire,Adresse,Tel,Mobile")] DA_Labo dA_Labo)
         {
             if (ModelState.IsValid)
             {

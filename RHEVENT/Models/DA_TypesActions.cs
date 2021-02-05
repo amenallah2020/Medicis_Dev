@@ -15,16 +15,26 @@ namespace RHEVENT.Models
 
         [Display(Name = "Type d'action")]
         [Required]
-        [Index("Ix_TypeAction", Order = 1, IsUnique = true)]
-        [StringLength(50)]
+        //[Index("Ix_TypeAction", Order = 1, IsUnique = true)]
+        [StringLength(100)]
         public string TypeAction { get; set; }
 
+        [Required]
+        [Display(Name = "Type d'achat")]
+        [StringLength(100)]
+        public string TypeActhat { get; set; }
+
+        
+
+
+        [NotMapped]
+        public List<DA_TypesAchats> listesachats { get; set; }
 
         IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             List<ValidationResult> validationResult = new List<ValidationResult>();
-            var validateName = db.DA_TypesActions.FirstOrDefault(x => x.TypeAction == TypeAction && x.Id != Id);
+            var validateName = db.DA_TypesActions.FirstOrDefault(x => x.TypeAction == TypeAction && x.TypeActhat == TypeActhat && x.Id != Id);
             if (validateName != null)
             {
                 ValidationResult errorMessage = new ValidationResult

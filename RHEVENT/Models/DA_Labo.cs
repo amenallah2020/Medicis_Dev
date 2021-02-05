@@ -12,6 +12,11 @@ namespace RHEVENT.Models
     {
         [key]
         public int Id { get; set; }
+
+        [Display(Name = "Code")]
+        [Required]
+        public string Code { get; set; }
+
         [Display(Name = "Laboratoire")]
         [Required]
         public string Laboratoire { get; set; }

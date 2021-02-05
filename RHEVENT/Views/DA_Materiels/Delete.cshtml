@@ -12,11 +12,11 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Code)
+            @Html.DisplayNameFor(model => model.Type)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Code)
+            @Html.DisplayFor(model => model.Type)
         </dd>
 
         <dt>
@@ -28,13 +28,19 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Version)
+            @Html.DisplayNameFor(model => model.PlafondBudget)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Version)
+            @Html.DisplayFor(model => model.PlafondBudget)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Code)
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.Code)
+        </dd>
     </dl>
 
     @using (Html.BeginForm()) {

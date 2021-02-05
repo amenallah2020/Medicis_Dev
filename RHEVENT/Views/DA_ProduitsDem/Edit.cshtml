@@ -1,0 +1,93 @@
+﻿@model RHEVENT.Models.DA_ProduitsDem
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Réference)
+    <table class="table table-borderless ">
+        @*<tr>
+
+            <td>
+                @Html.LabelFor(model => model.Réference)
+
+
+            </td>
+
+            <td colspan="3">
+                @Html.EditorFor(model => model.Réference, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Réference, "", new { @class = "text-danger" })
+            </td>
+        </tr>*@
+
+        <tr>
+
+            <td>
+
+
+                @Html.LabelFor(model => model.Laboratoire)
+            </td>
+
+            <td colspan="3">
+
+                @Html.DropDownListFor(model => model.Laboratoire, new SelectList(Model.listesLaboratoire, "Laboratoire", "Laboratoire"), "Selectionnez un laboratoire", new { @class = "width-textarea form-control" })
+
+                @*@Html.EditorFor(model => model.Laboratoire, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.ValidationMessageFor(model => model.Laboratoire, "", new { @class = "text-danger" })
+            </td>
+        </tr>
+        <tr>
+
+            <td>
+
+
+                @Html.LabelFor(model => model.Pourcentage)
+            </td>
+
+            <td colspan="3">
+                @Html.EditorFor(model => model.Pourcentage, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Pourcentage, "", new { @class = "text-danger" })
+            </td>
+        </tr>
+    </table>
+</div>
+    <div class="form-group">
+        @Html.HiddenFor(model => model.Id)
+        <label>Seléctionnez le(s) produit (s)</label>
+        @*@Html.DropDownListFor(model => model.Code, new MultiSelectList(Model.ProduitsCollection, "Id", "Désignation"), new { id = "normalDropDown"})*@
+
+        @Html.ListBoxFor(model => model.SelectedCodeArray, new MultiSelectList(Model.ProduitsCollection, "Désignation", "Désignation"), new { id = "multiSelectDropDown", multiple = "multiple" })
+
+        <br /><br />
+        <input type="submit" value="Enregistrer" class="btn btn-info" />
+    </div>
+
+
+
+}
+
+<div>
+    @Html.ActionLink("Retour à la Liste", "Create")
+</div>
+
+
+@section scripts{
+    <script src="~/Scripts/chosen.jquery.min.js"></script>
+    <script>
+            $(function () {
+                $("#multiSelectDropDown").chosen({
+                    width: "80%"
+                });
+            });
+    </script>
+}

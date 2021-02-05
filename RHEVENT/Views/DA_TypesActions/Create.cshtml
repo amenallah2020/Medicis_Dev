@@ -4,24 +4,42 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Nouveau Type d'Action</h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
-        <h4>DA_TypesActions</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.TypeAction, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TypeAction, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TypeAction, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<div class="form-horizontal">
 
+    <hr />
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    
+    <div class="form-group">
+        @Html.LabelFor(model => model.TypeAction, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="text" name="TypeActionn" class = "form-control" required/>
+            @Html.ValidationMessageFor(model => model.TypeAction, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.TypeActhat, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select name="TypeAchatt" class="form-control" required="">
+                <option value="" style="color:#ccc !important;">
+                    Selectionnez un type d'achat
+                </option>
+                @{
+                    foreach (var item in Model.listesachats)
+                    {
+                        <option value="@item.Id">@item.TypeAchat</option>
+                    }
+                }
+            </select>
+        </div>
+        </div>
+       
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />

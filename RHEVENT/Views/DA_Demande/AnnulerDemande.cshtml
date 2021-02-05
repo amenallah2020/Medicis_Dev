@@ -1,0 +1,39 @@
+﻿@model RHEVENT.Models.DA_Demande
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+<h2>
+    Suppression Demande d'action
+</h2>
+
+
+<h3>Voulez vous vraiment supprimer cette demande ?</h3>
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Réference)
+        </dt>
+
+        <dd>
+            @Session["reff"].ToString()
+        </dd>
+
+        
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Supprimer" class="btn btn-default" /> |
+            @Html.ActionLink("Retour", "demande")
+        </div>
+    }
+</div>
+

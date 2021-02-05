@@ -1,0 +1,11 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.titre_page = "Erreur";
+}
+
+<h1 class="text-danger">Erreur.</h1>
+<h2 class="text-danger">La date d'action doit etre superieure à celle de reception .</h2>
+
+<input type="submit" value="Retour" class="btn btn-outline-info btn btn-primary btn-sm" onclick="location.href='@Url.Action("Create","DA_Demande")'" />
+&nbsp;

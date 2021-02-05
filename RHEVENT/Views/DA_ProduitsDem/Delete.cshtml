@@ -1,0 +1,56 @@
+﻿@model RHEVENT.Models.DA_ProduitsDem
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+   
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Réference)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Réference)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Laboratoire)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Laboratoire)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pourcentage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pourcentage)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        @Html.ActionLink("Retour à la Liste", "Create")
+    </div>
+    }
+</div>

@@ -43,9 +43,11 @@ namespace RHEVENT.Controllers
         // GET: MesDemAjouts/Create
         public ActionResult Create()
         {
-            MesDemAjout dem = new MesDemAjout();
 
-           
+            MesDemAjout dem = new MesDemAjout();
+            dem.listesDemandes = db.DA_Demande.ToList<DA_Demande>();
+            ViewData.Model = dem;
+
             return View(dem);
         }
 

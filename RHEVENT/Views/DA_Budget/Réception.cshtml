@@ -1,0 +1,119 @@
+﻿@model RHEVENT.Models.DA_Budget
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Reception</h2>
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Article)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Article)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantité)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Quantité)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrixUnitaire)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrixUnitaire)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fournisseur)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fournisseur)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Date_Recp_Souh)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Date_Recp_Souh)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        
+    </dl>
+
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Date_Recp)
+        </dt>
+
+        <dd>
+            <input type="text" style="background-color:white" id="Date_recep" name="Date_recep" class="form-control" autocomplete="off" readonly="readonly" required="" />
+
+        </dd>
+    </dl>
+            
+            <div class="form-actions no-color">
+                <input type="submit" value="Enregistrer" class="btn btn-default" /> |
+                @Html.ActionLink(
+             linkText: "Retour",
+             actionName: "demande",
+             controllerName: "DA_Demande"
+             )
+            </div>
+            }
+    </div>
+
+@section Scripts
+{
+
+<script src="~/Scripts/jquery-ui.js"></script>
+    @*<script src="~/Scripts/jquery-1.10.2.js"></script>*@
+        <link href="~/css/jquery-ui.css" rel="stylesheet" />
+
+        <script>
+            $(document).ready(function () {
+                $("#Date_recep").datepicker({
+                    dateFormat: "dd-mm-yy",
+                    minDate: -30
+
+                });
+            });
+        </script>
+        }

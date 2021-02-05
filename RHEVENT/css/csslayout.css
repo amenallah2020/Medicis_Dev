@@ -9,7 +9,7 @@
     z-index: 2;
     top: 0;
     left: 0;
-    background-color:beige;
+    background-color: aliceblue;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
@@ -51,7 +51,7 @@
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: beige;
+    background-color: aliceblue ;
     overflow-x: hidden;
     /*transition: 0.5s;*/
     /*padding-top: 60px;*/
@@ -84,13 +84,13 @@
 }
 .dropdown-container {
     display: none;
-    background-color:aliceblue;
+    background-color: lightgrey;
     padding-left: 8px;
 }
 
 .dropdown-container1 {
     display: block;
-    background-color: aliceblue;
+    background-color: lightgrey;
     padding-left: 8px;
 }
 
@@ -108,4 +108,7 @@
     .sidenav a {
         font-size: 18px;
     }
+
+
+
 }

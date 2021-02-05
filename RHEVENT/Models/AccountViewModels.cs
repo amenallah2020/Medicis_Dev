@@ -134,6 +134,8 @@ namespace RHEVENT.Models
         public DateTime date_naissance { get; set; }
 
         public IEnumerable<System.Web.Mvc.SelectListItem> signataires { get; set; }
+        public IEnumerable<System.Web.Mvc.SelectListItem> fonctions { get; set; }
+
 
         public Role RoleName { get; set; }
     }

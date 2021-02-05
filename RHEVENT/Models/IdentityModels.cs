@@ -81,6 +81,8 @@ namespace RHEVENT.Models
 
         public IEnumerable<System.Web.Mvc.SelectListItem> signataires { get; set; }
 
+        public IEnumerable<System.Web.Mvc.SelectListItem> fonctions { get; set; }
+
         public Role RoleName  { get; set; }
 
 
@@ -198,6 +200,22 @@ namespace RHEVENT.Models
         public System.Data.Entity.DbSet<RHEVENT.Models.DA_ListesGammes> DA_ListesGammes { get; set; }
 
         public System.Data.Entity.DbSet<RHEVENT.Models.MesDemAjout> MesDemAjouts { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.DA_Materiels_Dem> DA_Materiels_Dem { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.DA_Produits> DA_Produits { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.DA_ProduitsDem> DA_ProduitsDem { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.DA_WorkflowTypAch> DA_WorkflowTypAch { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.RH.FonctionsUsers> FonctionsUsers { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.Dictionnaire> Dictionnaires { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.DA_CodesArticlesSage> DA_CodesArticlesSage { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.MotifsRejet> MotifsRejets { get; set; }
     }
 
 
