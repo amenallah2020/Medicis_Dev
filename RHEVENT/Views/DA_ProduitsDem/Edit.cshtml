@@ -66,7 +66,7 @@
         <label>Seléctionnez le(s) produit (s)</label>
         @*@Html.DropDownListFor(model => model.Code, new MultiSelectList(Model.ProduitsCollection, "Id", "Désignation"), new { id = "normalDropDown"})*@
 
-        @Html.ListBoxFor(model => model.SelectedCodeArray, new MultiSelectList(Model.ProduitsCollection, "Désignation", "Désignation"), new { id = "multiSelectDropDown", multiple = "multiple" })
+        @Html.ListBoxFor(model => model.SelectedCodeArray, new MultiSelectList(Model.ProduitsCollection, "Id", "Désignation"), new { id = "multiSelectDropDown", multiple = "multiple" })
 
         <br /><br />
         <input type="submit" value="Enregistrer" class="btn btn-info" />

@@ -46,6 +46,7 @@ namespace RHEVENT.Models
         [Display(Name = "Date Réception")]
         public string Date_Recp { get; set; }
 
+
         [Display(Name = "Type")]
         //[Required]
         public string Type { get; set; }
@@ -54,12 +55,12 @@ namespace RHEVENT.Models
         [Display(Name = "Plafond Budget")]
         public string PlafondBudget { get; set; }
 
+        [Display(Name = "Pourcentage Réception")]
+        public string PourRecep { get; set; }
 
-        //[Display(Name = "Plafond Budget")]
-        //[Required]
-        //public string PlafondBudget { get; set; }
+        [Display(Name = "Quantité Reçue")]
+        public string QteRecue { get; set; }
 
-        //public string AL { get; set; }
         [NotMapped]
         public List<DA_Budget> listesbudget { get; set; }
 

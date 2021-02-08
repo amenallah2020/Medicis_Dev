@@ -20,8 +20,11 @@ namespace RHEVENT.Models
         [Required]
         public float Pourcentage { get; set; }
 
-        [Display(Name = "Code Produit")]
+        [Display(Name = "Produits")]
         public string Code { get; set; }
+
+        [Display(Name = "Produits")]
+        public string Designation { get; set; }
 
         [Display(Name = "Montant")]
         public string Montant { get; set; }

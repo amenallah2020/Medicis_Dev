@@ -10,64 +10,64 @@
 
     <hr />
     <dl class="dl-horizontal">
-        <dt>
+        <dt style="width:200px">
             @Html.DisplayNameFor(model => model.Type)
         </dt>
 
-        <dd>
+        <dd style="margin-left:220px">
             @Html.DisplayFor(model => model.Type)
         </dd>
 
-        <dt>
+        <dt style="width:200px">
             @Html.DisplayNameFor(model => model.Article)
         </dt>
 
-        <dd>
+        <dd style="margin-left:220px">
             @Html.DisplayFor(model => model.Article)
         </dd>
-        <dt>
+        <dt style="width:200px">
             @Html.DisplayNameFor(model => model.Quantité)
         </dt>
-        <dd>
+        <dd style="margin-left:220px">
             @Html.DisplayFor(model => model.Quantité)
         </dd>
 
-        <dt>
+        <dt style="width:200px">
             @Html.DisplayNameFor(model => model.PrixUnitaire)
         </dt>
 
-        <dd>
+        <dd style="margin-left:220px">
             @Html.DisplayFor(model => model.PrixUnitaire)
         </dd>
 
-        <dt>
+        <dt style="width:200px">
             @Html.DisplayNameFor(model => model.Total)
         </dt>
 
-        <dd>
+        <dd style="margin-left:220px">
             @Html.DisplayFor(model => model.Total)
         </dd>
 
-        <dt>
+        <dt style="width:200px">
             @Html.DisplayNameFor(model => model.Fournisseur)
         </dt>
 
-        <dd>
+        <dd style="margin-left:220px">
             @Html.DisplayFor(model => model.Fournisseur)
         </dd>
-        <dt>
+        <dt style="width:200px">
             @Html.DisplayNameFor(model => model.Date_Recp_Souh)
         </dt>
-        <dd>
+        <dd style="margin-left:220px">
             @Html.DisplayFor(model => model.Date_Recp_Souh)
         </dd>
 
 
-        <dt>
+        <dt style="width:200px">
             @Html.DisplayNameFor(model => model.Description)
         </dt>
 
-        <dd>
+        <dd style="margin-left:220px">
             @Html.DisplayFor(model => model.Description)
         </dd>
         
@@ -79,14 +79,41 @@
     {
         @Html.AntiForgeryToken()
     <dl class="dl-horizontal">
-        <dt>
+        <dt style="width:200px">
             @Html.DisplayNameFor(model => model.Date_Recp)
         </dt>
 
-        <dd>
-            <input type="text" style="background-color:white" id="Date_recep" name="Date_recep" class="form-control" autocomplete="off" readonly="readonly" required="" />
+        <dd style="margin-left:220px">
+            <input type="text" style="background-color:white" value="@DateTime.Now.Date.ToString("dd-MM-yyyy")" id="Date_recep" name="Date_recep" class="form-control" autocomplete="off" readonly="readonly" required="" />
 
         </dd>
+        <dt style="width:200px;height:15px">
+           
+        </dt>
+
+        <dd style="margin-left:220px">
+            
+        </dd>
+        @if ((@Html.DisplayFor(model => model.Type)).ToString() == "Services")
+        {
+            <dt style="width:200px">
+                @Html.DisplayNameFor(model => model.PourRecep)
+            </dt>
+
+            <dd style="margin-left:220px">
+                <input type="number" min="0" max="100" value="100" step="1" oninput="this.value|=0" style="background-color:white" id="PourRecep" name="PourRecep" class="form-control" autocomplete="off" required="" />
+            </dd>
+        }
+        else if ((@Html.DisplayFor(model => model.Type)).ToString() == "Materiels")
+        {
+            <dt style="width:200px">
+                @Html.DisplayNameFor(model => model.QteRecue)
+            </dt>
+
+            <dd style="margin-left:220px">
+                <input type="number" min="0" step="1" value=@Html.DisplayFor(model => model.Quantité) oninput="this.value|=0" style="background-color:white" id="QteRecue" name="QteRecue" class="form-control" autocomplete="off" required="" />
+            </dd>
+        }
     </dl>
             
             <div class="form-actions no-color">

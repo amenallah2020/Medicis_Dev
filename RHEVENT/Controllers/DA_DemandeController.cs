@@ -105,7 +105,7 @@ namespace RHEVENT.Controllers
 
             if (nbrArticle == 0)
             {
-                return Content("<script language='javascript' type='text/javascript'>alert('Veuillez Verifier les pourcentages');window.location = '/DA_Budget/Create';</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('Veuillez Ajouter au moins un article à la demande');window.location = '/DA_Budget/Create';</script>");
             }
             else if(pourcentagedem != 100)
             {

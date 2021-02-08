@@ -37,7 +37,9 @@ namespace RHEVENT.Controllers
             }
             return View(dA_Materiels);
         }
-        public async Task <ActionResult> synchro()
+
+        //public async Task <ActionResult> synchro()
+        public ActionResult synchro()
         {
             string constr = "Data Source = 192.168.1.201\\SAGEX3; Initial Catalog = x3v6; user id = da; password = da$2021";
             SqlConnection con = new SqlConnection(constr);
@@ -95,6 +97,9 @@ namespace RHEVENT.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (dA_Materiels.PlafondBudget == null)
+                    dA_Materiels.PlafondBudget = 0.ToString();
+
                 db.DA_Materiels.Add(dA_Materiels);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -132,6 +137,9 @@ namespace RHEVENT.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (dA_Materiels.PlafondBudget == null)
+                    dA_Materiels.PlafondBudget = 0.ToString();
+
                 db.Entry(dA_Materiels).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -471,7 +471,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.dabudg.PrixUnitaire)
             </th>
-
+            <th>
+                @Html.DisplayNameFor(model => model.dabudg.PlafondBudget)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.dabudg.Total)
             </th>
@@ -483,15 +485,17 @@
             </th>
             @if (@Html.DisplayFor(model => model.dadem.Validee).ToString() == "1")
             {
-            <th>
-                @Html.DisplayNameFor(model => model.dabudg.Date_Recp)
-            </th>
-
-            @*
+                <th>
+                    @Html.DisplayNameFor(model => model.dabudg.Date_Recp)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.dabudg.PourRecep)
+                </th>
+                @*
             <th>
                 @Html.DisplayNameFor(model => model.dabudg.Description)
             </th>*@
-            <th></th>
+                <th></th>
             }
         </tr>
 
@@ -507,10 +511,24 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Quantité)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PrixUnitaire)
-            </td>
-
+            @if (item.PrixUnitaire > (float)Convert.ToDouble(item.PlafondBudget) && item.PlafondBudget != "0" )
+            {
+                <td style="background-color:burlywood">
+                    @Html.DisplayFor(modelItem => item.PrixUnitaire)
+                </td>
+                <td style="background-color:burlywood">
+                    @Html.DisplayFor(modelItem => item.PlafondBudget)
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrixUnitaire)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PlafondBudget)
+                </td>
+            }
             <td>
                 @Html.DisplayFor(modelItem => item.Total)
             </td>
@@ -526,43 +544,67 @@
 
             @if (@Html.DisplayFor(model => model.dadem.Validee).ToString() == "1")
             {
-            if(item.Date_Recp != null && Convert.ToDateTime(Session["daterecepdem"].ToString()) < Convert.ToDateTime((@Html.DisplayFor(modelItem => item.Date_Recp)).ToString()))
-            {
-            <td style="background-color:burlywood">
-                @Html.DisplayFor(modelItem => item.Date_Recp)
-            </td>
-            }
-            else
-            {
-            <td>
-                @Html.DisplayFor(modelItem => item.Date_Recp)
-            </td>
-            }
-
-
-            <td>
-                @if ((item.Date_Recp == null) && (@Html.DisplayFor(model => model.dadem.Validee).ToString() == "1"))
+                if (item.Date_Recp != null && Convert.ToDateTime(Session["daterecepdem"].ToString()) < Convert.ToDateTime((@Html.DisplayFor(modelItem => item.Date_Recp)).ToString()))
                 {
-                @Html.ActionLink(
-                linkText: "Réception",
-                actionName: "Réception",
-                controllerName: "DA_Budget",
-                routeValues: new
+                    <td style="background-color:burlywood">
+                        @Html.DisplayFor(modelItem => item.Date_Recp)
+                    </td>
+                }
+                else
                 {
-                id = item.Id
-                },
-                htmlAttributes: null
-                )}
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date_Recp)
+                    </td>
+                }
 
-                @*@Html.ActionLink(linkText: "Réception", actionName: "Réception", controllerName: "DA_Budget", new { id = item.Id })*@
-            </td>
+
+                    <td>
+                        @if ((item.Date_Recp != null) && (@Html.DisplayFor(model => model.dadem.Validee).ToString() == "1"))
+                        {
+                           
+                        <div>
+                            @Html.DisplayFor(modelItem => item.PourRecep)
+                            %
+                        </div>
+                            
+                        }
+                        
+                    </td>
+
+                    <td>
+                        @if ((item.Date_Recp == null) && (@Html.DisplayFor(model => model.dadem.Validee).ToString() == "1"))
+                        {
+                            @Html.ActionLink(
+                                       linkText: "Réception",
+                                       actionName: "Réception",
+                                       controllerName: "DA_Budget",
+                                       routeValues: new
+                                       {
+                                           id = item.Id
+                                       },
+                                       htmlAttributes: null
+                                       )}
+                        else
+                        {
+                            if (item.PourRecep == "100")
+                            {
+                                <label>Recue</label>
+                            }
+                            else
+                            {
+                                <label>Recue Partiellement</label>
+                            }
+                        }
+
+                    </td>
             }
+
             @*
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>*@
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>*@
         </tr>
         }
 
