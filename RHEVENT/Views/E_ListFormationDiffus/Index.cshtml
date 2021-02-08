@@ -22,7 +22,7 @@
    
 </head>
 <body>
-   
+
     <div class="container-fluid" style="border: 1px dashed silver ; height:100px; background-color:white">
 
         <form asp-action="Index" method="get" style="font-size:12px ; color:cadetblue">
@@ -36,7 +36,27 @@
                 <label>Objet</label>
                 <input style="width:160px; font-size:11px" class="form-control " type="search" placeholder="Objet" name="searchStringObjet" value="@ViewData["CurrentFilterObjet"]" /><br />
             </div>
-             
+
+            <div class="col-lg-3">
+                <label>Utilisateur</label>
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <select name="Usr" class="form-control">
+                            <option value="@Session["MatUsrr"].ToString()" style="color:#ccc !important;">
+                                @Session["Usrr"].ToString()
+                            </option>
+                            @{
+                                foreach (var item in @ViewBag.listUser)
+                                {
+                                    <option value="@item.matricule">@item.NomPrenom</option>
+                                }
+                            }
+                        </select>
+                        @*<input type="text" class="form-control" name="Laboratoire" />*@
+                    </div>
+                </div>
+            </div>
 
             <div class="col-lg-3">
 
@@ -135,9 +155,11 @@
 
     </table>
 
-
+    
     <div>
-        @Html.ActionLink("Retour", "Index", "EMenuFormateur")
+        <a class="btn  btn-danger   " role="button" href="@Url.Action("Exporter", "E_listFormationDiffus" , new {  Usr = @Session["MatUsrr"] , searchStringCodeF=  @ViewData["CurrentFilterCodeF"] , searchStringObjet = @ViewData["CurrentFilterObjet"] , Etat =  @ViewData["CurrentFilterEtat"]} )">Exporter</a>
+
+        &nbsp; @Html.ActionLink("Retour", "Index", "EMenuFormateur")
 
     </div>
 
