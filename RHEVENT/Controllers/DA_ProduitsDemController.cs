@@ -75,6 +75,7 @@ namespace RHEVENT.Controllers
                 pourcentagedem = pourcentagedem + pourcent;
             }
             ViewBag.pourcentagedem = pourcentagedem.ToString();
+            ViewBag.pourcentagerestant = (100-pourcentagedem).ToString();
             return View(produitsdemande);
         }
 
@@ -94,7 +95,15 @@ namespace RHEVENT.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(DA_ProduitsDem dA_ProduitsDem)
         {
-            dA_ProduitsDem.Code = string.Join(",", dA_ProduitsDem.SelectedCodeArray);
+            if(dA_ProduitsDem.SelectedCodeArray != null)
+            {
+                dA_ProduitsDem.Code = string.Join(",", dA_ProduitsDem.SelectedCodeArray);
+            }
+            else
+            {
+                dA_ProduitsDem.Code = "";
+            }
+            
             if (ModelState.IsValid)
             {
                 if (dA_ProduitsDem.Id == 0)
@@ -124,6 +133,7 @@ namespace RHEVENT.Controllers
                         pourcentagedem = pourcentagedem + pourcent;
                     }
                     ViewBag.pourcentagedem = pourcentagedem.ToString();
+                    ViewBag.pourcentagerestant = (100 - pourcentagedem).ToString();
                 }
                 else
                 {
@@ -161,7 +171,15 @@ namespace RHEVENT.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit( DA_ProduitsDem dA_ProduitsDem)
         {
-            dA_ProduitsDem.Code = string.Join(",", dA_ProduitsDem.SelectedCodeArray);
+            if (dA_ProduitsDem.SelectedCodeArray != null)
+            {
+                dA_ProduitsDem.Code = string.Join(",", dA_ProduitsDem.SelectedCodeArray);
+            }
+            else
+            {
+                dA_ProduitsDem.Code = "";
+            }
+            
 
             if (ModelState.IsValid)
             {
@@ -192,6 +210,7 @@ namespace RHEVENT.Controllers
                         pourcentagedem = pourcentagedem + pourcent;
                     }
                     ViewBag.pourcentagedem = pourcentagedem.ToString();
+                    ViewBag.pourcentagerestant = (100 - pourcentagedem).ToString();
 
                     db.Entry(dA_ProduitsDem).State = EntityState.Modified;
                 }

@@ -100,7 +100,7 @@
                   <div class="form-group">
                       @Html.LabelFor(model => model.fonction)
 
-                      @Html.EditorFor(model => model.fonction, new { htmlAttributes = new { @class = "form-control" } })
+                      @Html.DropDownListFor(model => model.fonction, Model.fonctions, new { @class = "form-control" })
                       @Html.ValidationMessageFor(model => model.fonction, "", new { @class = "text-danger" })
 
                   </div>

@@ -27,26 +27,26 @@
 
                     @using (Html.BeginForm("RejeterDemande", "DA_Demande", FormMethod.Post))
                     {
-                        @Html.AntiForgeryToken()
+                    @Html.AntiForgeryToken()
 
-                        <div class="form-horizontal">
+                    <div class="form-horizontal">
 
-                            @Html.LabelFor(model => model.dadem.MotifRejet)
-                            <select name="MotifRejet" class="form-control width-textarea">
-                                <option value="" style="color:#ccc !important;">
-                                    Selectionnez un motif de rejet
-                                </option>
-                                @{
-                                    foreach (var item in Model.listeMotifs)
-                                    {
-                                        <option value="@item.MotifRejet">@item.MotifRejet</option>
-                                    }
-                                }
-                            </select>
-                            <br />
-                            <input type="submit" value="Rejeter" class="btn btn-warning" />
+                        @Html.LabelFor(model => model.dadem.MotifRejet)
+                        <select name="MotifRejet" class="form-control width-textarea">
+                            <option value="" style="color:#ccc !important;">
+                                Selectionnez un motif de rejet
+                            </option>
+                            @{
+                            foreach (var item in Model.listeMotifs)
+                            {
+                            <option value="@item.MotifRejet">@item.MotifRejet</option>
+                            }
+                            }
+                        </select>
+                        <br />
+                        <input type="submit" value="Rejeter" class="btn btn-warning" />
 
-                        </div>
+                    </div>
                     }
                 </div>
 
@@ -66,59 +66,59 @@
 
                     @using (Html.BeginForm("CreateMat", "DA_Demande", FormMethod.Post))
                     {
-                        @Html.AntiForgeryToken()
+                    @Html.AntiForgeryToken()
 
-                        <div class="form-horizontal">
+                    <div class="form-horizontal">
 
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.damateriels.Code, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control" name="codee" />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.damateriels.Code, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="codee" />
 
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.damateriels.Désignation, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control" name="designationn" />
-                                </div>
-                            </div>
-
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.damateriels.Fournisseur, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-
-                                    <select name="fournisseurr" class="form-control">
-                                        <option value="" style="color:#ccc !important;">
-                                            Selectionnez un fournisseur
-                                        </option>
-                                        @{
-                                            foreach (var item in Model.listefournisseurs)
-                                            {
-                                                <option value="@item.Raison">@item.Raison</option>
-                                            }
-                                        }
-                                    </select>
-
-                                    @*<input type="text" class="form-control" name="fournisseurr" />*@
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.damateriels.Date_Recp_Souh, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    <input type="date" name="datesouh" value="@DateTime.Now.Date.ToString("yyyy-MM-dd")" class="form-control" />
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <input type="submit" value="Create" class="btn btn-default" />
-                                </div>
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.damateriels.Désignation, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="designationn" />
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.damateriels.Fournisseur, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+
+                                <select name="fournisseurr" class="form-control">
+                                    <option value="" style="color:#ccc !important;">
+                                        Selectionnez un fournisseur
+                                    </option>
+                                    @{
+                                    foreach (var item in Model.listefournisseurs)
+                                    {
+                                    <option value="@item.Raison">@item.Raison</option>
+                                    }
+                                    }
+                                </select>
+
+                                @*<input type="text" class="form-control" name="fournisseurr" />*@
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.damateriels.Date_Recp_Souh, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <input type="date" name="datesouh" value="@DateTime.Now.Date.ToString(" yyyy-MM-dd")" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Create" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
                     }
                 </div>
 
@@ -138,63 +138,63 @@
 
                     @using (Html.BeginForm("CreateBudget", "DA_Demande", FormMethod.Post))
                     {
-                        @Html.AntiForgeryToken()
+                    @Html.AntiForgeryToken()
 
-                        <div class="form-horizontal">
+                    <div class="form-horizontal">
 
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.dabudg.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control" name="Description" />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.dabudg.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="Description" />
 
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.dabudg.PrixUnitaire, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    <input type="number" class="form-control" name="PrixUnitaire" min="0" step="0.01" value="0" />
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.dabudg.Quantité, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    <input type="number" class="form-control" name="Quantité" />
-                                </div>
-                            </div>
-
-                            @*<div class="form-group">
-                                    @Html.LabelFor(model => model.dabudg.Total, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        <input type="text" class="form-control" name="Total" />
-                                    </div>
-                                </div>*@
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.dabudg.Fournisseur, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    <select name="Fournisseur" class="form-control">
-                                        <option value="" style="color:#ccc !important;">
-                                            Selectionnez un fournisseur
-                                        </option>
-                                        @{
-                                            foreach (var item in Model.listefournisseurs)
-                                            {
-                                                <option value="@item.Raison">@item.Raison</option>
-                                            }
-                                        }
-                                    </select>
-                                    @*<input type="text" class="form-control" name="Fournisseur" />*@
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <input type="submit" value="Create" class="btn btn-default" />
-                                </div>
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.dabudg.PrixUnitaire, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <input type="number" class="form-control" name="PrixUnitaire" min="0" step="0.01" value="0" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.dabudg.Quantité, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <input type="number" class="form-control" name="Quantité" />
+                            </div>
+                        </div>
+
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.dabudg.Total, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="Total" />
+                            </div>
+                        </div>*@
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.dabudg.Fournisseur, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <select name="Fournisseur" class="form-control">
+                                    <option value="" style="color:#ccc !important;">
+                                        Selectionnez un fournisseur
+                                    </option>
+                                    @{
+                                    foreach (var item in Model.listefournisseurs)
+                                    {
+                                    <option value="@item.Raison">@item.Raison</option>
+                                    }
+                                    }
+                                </select>
+                                @*<input type="text" class="form-control" name="Fournisseur" />*@
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Create" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
                     }
                 </div>
 
@@ -213,53 +213,53 @@
 
                     @using (Html.BeginForm("CreateProduit", "DA_Demande", FormMethod.Post))
                     {
-                        @Html.AntiForgeryToken()
+                    @Html.AntiForgeryToken()
 
-                        <div class="form-horizontal">
+                    <div class="form-horizontal">
 
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.dabproduits.Laboratoire, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    <select name="Laboratoire" class="form-control">
-                                        <option value="" style="color:#ccc !important;">
-                                            Selectionnez un Laboratoire
-                                        </option>
-                                        @{
-                                            foreach (var item in Model.listelabo)
-                                            {
-                                                <option value="@item.Laboratoire">@item.Laboratoire</option>
-                                            }
-                                        }
-                                    </select>
-                                    @*<input type="text" class="form-control" name="Laboratoire" />*@
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.dabproduits.Code, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @*@Html.ListBoxFor(model => model.dabproduits.SelectedCodeArray, new MultiSelectList(Model.dabproduits.ProduitsCollection, "Désignation", "Désignation"), new { id = "multiSelectDropDown", multiple = "multiple" })*@
-
-                                    <input type="text" class="form-control" name="Code" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.dabproduits.Pourcentage, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    <input type="number" class="form-control" name="Pourcentage" />
-                                </div>
-                            </div>
-
-
-
-
-
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <input type="submit" value="Create" class="btn btn-default" />
-                                </div>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.dabproduits.Laboratoire, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <select name="Laboratoire" class="form-control">
+                                    <option value="" style="color:#ccc !important;">
+                                        Selectionnez un Laboratoire
+                                    </option>
+                                    @{
+                                    foreach (var item in Model.listelabo)
+                                    {
+                                    <option value="@item.Laboratoire">@item.Laboratoire</option>
+                                    }
+                                    }
+                                </select>
+                                @*<input type="text" class="form-control" name="Laboratoire" />*@
                             </div>
                         </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.dabproduits.Code, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @*@Html.ListBoxFor(model => model.dabproduits.SelectedCodeArray, new MultiSelectList(Model.dabproduits.ProduitsCollection, "Désignation", "Désignation"), new { id = "multiSelectDropDown", multiple = "multiple" })*@
+
+                                <input type="text" class="form-control" name="Code" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.dabproduits.Pourcentage, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <input type="number" class="form-control" name="Pourcentage" />
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Create" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
                     }
                 </div>
 
@@ -270,166 +270,171 @@
     @*@using (Html.BeginForm("demande", "DA_Demande", FormMethod.Get))*@
     @using (Html.BeginForm())
     {
-        @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
 
-        <div class="form-horizontal">
+    <div class="form-horizontal">
 
 
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <center>
-                <h2>
-                    Demande d'action N°:
-                    <span style="color:crimson">@Session["reff"].ToString().Substring(0, 4)</span>
-                    <span style="color:cornflowerblue">@Session["reff"].ToString().Substring(4, 4)</span>
-                    <span style="color:crimson">@Session["reff"].ToString().Substring(8, 10)</span>
-                    <span style="color:cornflowerblue">@Session["reff"].ToString().Substring(18, 3)</span>
-                </h2>
-            </center>
-            <br />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <center>
+            <h2>
+                Demande d'action N°:
+                <span style="color:crimson">@Session["reff"].ToString().Substring(0, 4)</span>
+                <span style="color:cornflowerblue">@Session["reff"].ToString().Substring(4, 4)</span>
+                <span style="color:crimson">@Session["reff"].ToString().Substring(8, 10)</span>
+                <span style="color:cornflowerblue">@Session["reff"].ToString().Substring(18, 3)</span>
+            </h2>
+        </center>
+        <br />
+        
+        <table class="table table-borderless ">
+            <tr>
 
-            <table class="table table-borderless ">
-                <tr>
+                <td style="width:200px">
+                    @Html.LabelFor(model => model.dadem.TypeAchat)
+                </td>
 
-                    <td style="width:200px">
-                        @Html.LabelFor(model => model.dadem.TypeAchat)
-                    </td>
+                <td colspan="3">
+                    @Html.DisplayFor(model => model.dadem.TypeAchat, new { @class = "width-textarea" })
 
-                    <td colspan="3">
-                        @Html.DisplayFor(model => model.dadem.TypeAchat, new { @class = "width-textarea" })
+                </td>
+            </tr>
 
-                    </td>
-                </tr>
+            <tr>
 
-                <tr>
+                <td>
+                    @Html.LabelFor(model => model.dadem.TypeAction)
+                </td>
 
-                    <td>
-                        @Html.LabelFor(model => model.dadem.TypeAction)
-                    </td>
+                <td colspan="3">
+                    @Html.DisplayFor(model => model.dadem.TypeAction, new { @class = "width-textarea" })
 
-                    <td colspan="3">
-                        @Html.DisplayFor(model => model.dadem.TypeAction, new { @class = "width-textarea" })
+                </td>
+            </tr>
 
-                    </td>
-                </tr>
+            <tr>
 
-                <tr>
+                <td>
+                    @Html.LabelFor(model => model.dadem.Labo)
+                </td>
 
-                    <td>
-                        @Html.LabelFor(model => model.dadem.Labo)
-                    </td>
+                <td colspan="3">
+                    @Html.DisplayFor(model => model.dadem.Labo, new { @class = "width-textarea" })
 
-                    <td colspan="3">
-                        @Html.DisplayFor(model => model.dadem.Labo, new { @class = "width-textarea" })
+                </td>
+            </tr>
 
-                    </td>
-                </tr>
 
-                <tr>
-                    <td>
-                        @Html.LabelFor(model => model.dadem.Argumentaires)
-                    </td>
-                    <td colspan="3">
-                        @Html.DisplayFor(model => model.dadem.Argumentaires, new { @class = "width-textarea" })
-                    </td>
-                </tr>
-                <tr>
+            <tr>
 
-                    <td>
-                        @Html.LabelFor(model => model.dadem.Budget)
-                    </td>
+                <td>
+                    @Html.LabelFor(model => model.dadem.Budget)
+                </td>
 
-                    <td colspan="3">
-                        @Html.DisplayFor(model => model.dadem.Budget, new { @class = "width-textarea" })
+                <td colspan="3">
+                    @Html.DisplayFor(model => model.dadem.Budget, new { @class = "width-textarea" })
 
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.LabelFor(model => model.dadem.Date_reception)
-                    </td>
-
-                    <td>
-                        @Html.DisplayFor(model => model.dadem.Date_reception, new { htmlAttributes = new { @class = "form-control" } })
-                    </td>
-                    <td>
-                        @Html.LabelFor(model => model.dadem.Date_action)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.dadem.Date_action, new { htmlAttributes = new { @class = "form-control" } })
-                    </td>
-                </tr>
-
-            </table>
-
-        </div>
-    }
-    @*<br />
-        <table>
+                </td>
+            </tr>
             <tr>
                 <td>
-                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#myModal">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    </button>
-                </td>
-                <td style="width:10px"></td>
-                <td>
-                    <h2>Liste des matériels</h2>
+                    @Html.LabelFor(model => model.dadem.Date_reception)
                 </td>
 
+                <td>
+                    @Html.DisplayFor(model => model.dadem.Date_reception, new { htmlAttributes = new { @class = "form-control" } })
+                </td>
+                <td>
+                    @Html.LabelFor(model => model.dadem.Date_action)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.dadem.Date_action, new { htmlAttributes = new { @class = "form-control" } })
+                </td>
             </tr>
+            @if(@Html.DisplayFor(model => model.dadem.Argumentaires).ToString() != "")
+            {
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.dadem.Argumentaires)
+                </td>
+                <td colspan="3">
+                    @Html.DisplayFor(model => model.dadem.Argumentaires, new { @class = "width-textarea" })
+                </td>
+            </tr>
+            }
         </table>
 
+    </div>
+    }
+    @*<br />
+    <table>
+        <tr>
+            <td>
+                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#myModal">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </button>
+            </td>
+            <td style="width:10px"></td>
+            <td>
+                <h2>Liste des matériels</h2>
+            </td>
 
-        <br />
-        <table class="table">
-            <tr>
-
-                <th>
-                    @Html.DisplayNameFor(model => model.damateriels.Code)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.damateriels.Désignation)
-                </th>
-
-                <th>
-                    @Html.DisplayNameFor(model => model.damateriels.Fournisseur)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.damateriels.Date_Recp_Souh)
-                </th>
-
-            </tr>
-
-            @foreach (var item in Model.listemateriels)
-            {
-                <tr>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Code)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Désignation)
-                    </td>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Fournisseur)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Date_Recp_Souh)
-                    </td>*@
+        </tr>
+    </table>
 
 
-    @*<td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-        </td>*@
+    <br />
+    <table class="table">
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.damateriels.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.damateriels.Désignation)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.damateriels.Fournisseur)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.damateriels.Date_Recp_Souh)
+            </th>
+
+        </tr>
+
+        @foreach (var item in Model.listemateriels)
+        {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Désignation)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Fournisseur)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date_Recp_Souh)
+            </td>*@
 
 
-    @*</tr>
-            }
+            @*
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>*@
 
-        </table>*@
+
+            @*
+        </tr>
+        }
+
+    </table>*@
 
 
     <br />
@@ -437,8 +442,8 @@
         <tr>
             <td>
                 @*<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal1">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    </button>*@
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </button>*@
             </td>
             <td style="width:10px"></td>
             <td>
@@ -478,71 +483,87 @@
             </th>
             @if (@Html.DisplayFor(model => model.dadem.Validee).ToString() == "1")
             {
-                <th>
-                    @Html.DisplayNameFor(model => model.dabudg.Date_Recp)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dabudg.Date_Recp)
+            </th>
 
-                @*<th>
-                        @Html.DisplayNameFor(model => model.dabudg.Description)
-                    </th>*@
-                <th></th>
+            @*
+            <th>
+                @Html.DisplayNameFor(model => model.dabudg.Description)
+            </th>*@
+            <th></th>
             }
         </tr>
 
         @foreach (var item in Model.listesbudget)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Type)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Article)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantité)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PrixUnitaire)
-                </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Article)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantité)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrixUnitaire)
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Total)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fournisseur)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Date_Recp_Souh)
-                </td>
-                @if (@Html.DisplayFor(model => model.dadem.Validee).ToString() == "1")
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fournisseur)
+            </td>
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Date_Recp_Souh)
+            </td>
+
+
+            @if (@Html.DisplayFor(model => model.dadem.Validee).ToString() == "1")
+            {
+            if(item.Date_Recp != null && Convert.ToDateTime(Session["daterecepdem"].ToString()) < Convert.ToDateTime((@Html.DisplayFor(modelItem => item.Date_Recp)).ToString()))
+            {
+            <td style="background-color:burlywood">
+                @Html.DisplayFor(modelItem => item.Date_Recp)
+            </td>
+            }
+            else
+            {
+            <td>
+                @Html.DisplayFor(modelItem => item.Date_Recp)
+            </td>
+            }
+
+
+            <td>
+                @if ((item.Date_Recp == null) && (@Html.DisplayFor(model => model.dadem.Validee).ToString() == "1"))
                 {
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Date_Recp)
-                    </td>
+                @Html.ActionLink(
+                linkText: "Réception",
+                actionName: "Réception",
+                controllerName: "DA_Budget",
+                routeValues: new
+                {
+                id = item.Id
+                },
+                htmlAttributes: null
+                )}
 
-                    <td>
-                        @if ((item.Date_Recp == null) && (@Html.DisplayFor(model => model.dadem.Validee).ToString() == "1"))
-                        {
-                            @Html.ActionLink(
-                      linkText: "Réception",
-                      actionName: "Réception",
-                      controllerName: "DA_Budget",
-                      routeValues: new
-                      {
-                          id = item.Id
-                      },
-                      htmlAttributes: null
-                      )}
-
-                        @*@Html.ActionLink(linkText: "Réception", actionName: "Réception", controllerName: "DA_Budget", new { id = item.Id })*@
-                    </td>
-                }
-                @*<td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                    </td>*@
-            </tr>
+                @*@Html.ActionLink(linkText: "Réception", actionName: "Réception", controllerName: "DA_Budget", new { id = item.Id })*@
+            </td>
+            }
+            @*
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>*@
+        </tr>
         }
 
     </table>
@@ -552,8 +573,8 @@
         <tr>
             <td>
                 @*<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal2">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    </button>*@
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </button>*@
             </td>
             <td style="width:10px"></td>
             <td>
@@ -567,9 +588,10 @@
     <table class="table table-bordered table-responsive border-primary" style="font-size:12px">
         <tr style="background-color:aliceblue;text-align:center;vertical-align:central">
 
-            @*<th>
-                    @Html.DisplayNameFor(model => model.dabproduits.Réference)
-                </th>*@
+            @*
+            <th>
+                @Html.DisplayNameFor(model => model.dabproduits.Réference)
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.dabproduits.Laboratoire)
             </th>
@@ -582,148 +604,161 @@
             <th>
                 @Html.DisplayNameFor(model => model.dabproduits.Montant)
             </th>
-            @*<th></th>*@
+            @*
+            <th></th>*@
         </tr>
 
         @foreach (var item in Model.listeproduits)
         {
-            <tr>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.Réference)
-                    </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.Laboratoire)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Code)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Pourcentage)  %
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Montant)
-                </td>
-                @*<td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                    </td>*@
-            </tr>
+        <tr>
+            @*
+            <td>
+                @Html.DisplayFor(modelItem => item.Réference)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Laboratoire)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pourcentage)  %
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Montant)
+            </td>
+            @*
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>*@
+        </tr>
         }
     </table>
 
     @*<br /><br />
 
-        @if ((Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) != -1) && (Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) != 0) && (@Html.DisplayFor(model => model.dadem.Validee).ToString() == "0") && (@Html.DisplayFor(model => model.dadem.Demandeur).ToString() != ViewBag.demandeurr))
+    @if ((Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) != -1) && (Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) != 0) && (@Html.DisplayFor(model => model.dadem.Validee).ToString() == "0") && (@Html.DisplayFor(model => model.dadem.Demandeur).ToString() != ViewBag.demandeurr))
+    {
+    using (Html.BeginForm("RejeterDemande", "DA_Demande", FormMethod.Post))
+    {
+    @Html.LabelFor(model => model.dadem.MotifRejet)
+    <select name="MotifRejet" class="form-control width-textarea">
+        <option value="" style="color:#ccc !important;">
+            Selectionnez un motif de rejet
+        </option>
+        @{
+        foreach (var item in Model.listeMotifs)
         {
-            using (Html.BeginForm("RejeterDemande", "DA_Demande", FormMethod.Post))
-            {
-                @Html.LabelFor(model => model.dadem.MotifRejet)
-                <select name="MotifRejet" class="form-control width-textarea">
-                    <option value="" style="color:#ccc !important;">
-                        Selectionnez un motif de rejet
-                    </option>
-                    @{
-                        foreach (var item in Model.listeMotifs)
-                        {
-                            <option value="@item.MotifRejet">@item.MotifRejet</option>
-                        }
-                    }
-                </select>
-
-
-            }
+        <option value="@item.MotifRejet">@item.MotifRejet</option>
         }
-        else if (((@Html.DisplayFor(model => model.dadem.Demandeur).ToString()) != ViewBag.demandeurr) && (Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) < ViewBag.numero))
-        {
-            using (Html.BeginForm("RejeterDemande", "DA_Demande", FormMethod.Post))
-            {
-                @Html.LabelFor(model => model.dadem.MotifRejet)
-                <select name="MotifRejet" class="form-control width-textarea">
-                    <option value="" style="color:#ccc !important;">
-                        Selectionnez un motif de rejet
-                    </option>
-                    @{
-                        foreach (var item in Model.listeMotifs)
-                        {
-                            <option value="@item.MotifRejet">@item.MotifRejet</option>
-                        }
-                    }
-                </select>
+        }
+    </select>
 
-            }
-        }*@
+
+    }
+    }
+    else if (((@Html.DisplayFor(model => model.dadem.Demandeur).ToString()) != ViewBag.demandeurr) && (Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) < ViewBag.numero))
+    {
+    using (Html.BeginForm("RejeterDemande", "DA_Demande", FormMethod.Post))
+    {
+    @Html.LabelFor(model => model.dadem.MotifRejet)
+    <select name="MotifRejet" class="form-control width-textarea">
+        <option value="" style="color:#ccc !important;">
+            Selectionnez un motif de rejet
+        </option>
+        @{
+        foreach (var item in Model.listeMotifs)
+        {
+        <option value="@item.MotifRejet">@item.MotifRejet</option>
+        }
+        }
+    </select>
+
+    }
+    }*@
 
     <br /><br />
-    @if (@Html.DisplayFor(model => model.dadem.MotifRejet).ToString() != null)
+    @if((@Html.DisplayFor(model => model.dadem.MotifRejet).ToString() != null)&&((@Html.DisplayFor(model => model.dadem.Etat).ToString()== "-1" && @Html.DisplayFor(model => model.dadem.Statut).ToString() == "-1" && @Html.DisplayFor(model => model.dadem.AvecSans).ToString() == "99")||(@Html.DisplayFor(model => model.dadem.Etat).ToString()== "100" && @Html.DisplayFor(model => model.dadem.Statut).ToString()== "100")))
+
     {
-        @Html.LabelFor(model => model.dadem.MotifRejet)  
-        <br />
-        @Html.DisplayFor(model => model.dadem.MotifRejet).ToString()
+    <table>
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.dadem.MotifRejet)
+            </td>
+            <td style="width:15px"></td>
+            <td>
+                @Html.DisplayFor(model => model.dadem.MotifRejet).ToString()
+            </td>
+        </tr>
+    </table>
+
     }
     <br /><br />
     <table>
         @if (@Html.DisplayFor(model => model.dadem.Validee).ToString() == "0")
         {
-            <tr>
-                <td style="width:90%"></td>
-                <td>
-                    @if ((Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) != -1) && (Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) != 0) && ((@Html.DisplayFor(model => model.dadem.Demandeur).ToString()) != ViewBag.demandeurr) && (Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) < ViewBag.numero))
-                    {
-                        using (Html.BeginForm("ValiderDemande", "DA_Demande", FormMethod.Post))
-                        {
-                            <input type="submit" value="Valider" class="btn btn-success" />
-                        }
-                    }
-                    else if (((@Html.DisplayFor(model => model.dadem.Demandeur).ToString()) != ViewBag.demandeurr) && (Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) < ViewBag.numero))
-                    {
-                        using (Html.BeginForm("ValiderDemande", "DA_Demande", FormMethod.Post))
-                        {
-                            <input type="submit" value="Valider" class="btn btn-success" />
-                        }
-                    }
-                    else if ((Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) == -1) && ((@Html.DisplayFor(model => model.dadem.Demandeur).ToString()) == ViewBag.demandeurr))
-                    {
-                        using (Html.BeginForm("ValiderDemande", "DA_Demande", FormMethod.Post))
-                        {
-                            <input type="submit" value="Valider" class="btn btn-success" />
-                        }
-                    }
-                </td>
-                <td style="width:2%"></td>
-                <td>
-                    @if ((Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) != -1) && (Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) != 0) && ((@Html.DisplayFor(model => model.dadem.Demandeur).ToString()) != ViewBag.demandeurr) && (Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) < ViewBag.numero))
-                    {
-                        using (Html.BeginForm("RejeterDemande", "DA_Demande", FormMethod.Post))
-                        {
+        <tr>
+            <td style="width:90%"></td>
+            <td>
+                @if ((Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) != -1) && (Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) != 0) && ((@Html.DisplayFor(model => model.dadem.Demandeur).ToString()) != ViewBag.demandeurr) && (Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) < ViewBag.numero))
+                {
+                using (Html.BeginForm("ValiderDemande", "DA_Demande", FormMethod.Post))
+                {
+                <input type="submit" value="Valider" class="btn btn-success" />
+                }
+                }
+                else if (((@Html.DisplayFor(model => model.dadem.Demandeur).ToString()) != ViewBag.demandeurr) && (Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) < ViewBag.numero))
+                {
+                using (Html.BeginForm("ValiderDemande", "DA_Demande", FormMethod.Post))
+                {
+                <input type="submit" value="Valider" class="btn btn-success" />
+                }
+                }
+                else if ((Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) == -1) && ((@Html.DisplayFor(model => model.dadem.Demandeur).ToString()) == ViewBag.demandeurr))
+                {
+                using (Html.BeginForm("ValiderDemande", "DA_Demande", FormMethod.Post))
+                {
+                <input type="submit" value="Valider" class="btn btn-success" />
+                }
+                }
+            </td>
+            <td style="width:2%"></td>
+            <td>
+                @if ((Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) != -1) && (Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) != 0) && ((@Html.DisplayFor(model => model.dadem.Demandeur).ToString()) != ViewBag.demandeurr) && (Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) < ViewBag.numero))
+                {
+                using (Html.BeginForm("RejeterDemande", "DA_Demande", FormMethod.Post))
+                {
 
-                            <button type="button" class="btn btn-warning " data-toggle="modal" data-target="#myModalrejet">
-                                Rejeter
-                            </button>
-                        }
-                    }
-                    else if (((@Html.DisplayFor(model => model.dadem.Demandeur).ToString()) != ViewBag.demandeurr) && (Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) < ViewBag.numero))
-                    {
-                        using (Html.BeginForm("RejeterDemande", "DA_Demande", FormMethod.Post))
-                        {
-                            <button type="button" class="btn btn-warning " data-toggle="modal" data-target="#myModalrejet">
-                                Rejeter
-                            </button>
-                        }
-                    }
+                <button type="button" class="btn btn-warning " data-toggle="modal" data-target="#myModalrejet">
+                    Rejeter
+                </button>
+                }
+                }
+                else if (((@Html.DisplayFor(model => model.dadem.Demandeur).ToString()) != ViewBag.demandeurr) && (Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) < ViewBag.numero))
+                {
+                using (Html.BeginForm("RejeterDemande", "DA_Demande", FormMethod.Post))
+                {
+                <button type="button" class="btn btn-warning " data-toggle="modal" data-target="#myModalrejet">
+                    Rejeter
+                </button>
+                }
+                }
 
-                    @if (((Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) == -1) || (Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) == 0)) && ((@Html.DisplayFor(model => model.dadem.Demandeur).ToString()) == ViewBag.demandeurr))
-                    {
-                        using (Html.BeginForm("AnnulerDemande", "DA_Demande", FormMethod.Get))
-                        {
+                @if (((Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) == -1) || (Convert.ToInt32(@Html.DisplayFor(model => model.dadem.Statut).ToString()) == 0)) && ((@Html.DisplayFor(model => model.dadem.Demandeur).ToString()) == ViewBag.demandeurr))
+                {
+                using (Html.BeginForm("AnnulerDemande", "DA_Demande", FormMethod.Get))
+                {
 
-                            <input type="submit" value="Annuler" class="btn btn-danger" onclick="location.href='@Url.Action("demande","DA_Demande", new {id = Session["reff"].ToString()})'" />
+                <input type="submit" value="Annuler" class="btn btn-danger" onclick="location.href='@Url.Action(" demande","DA_Demande", new {id=Session["reff"].ToString()})'" />
 
-                        }
-                    }
+                }
+                }
 
-                </td>
-            </tr>
+            </td>
+        </tr>
         }
     </table>
 
@@ -736,5 +771,6 @@
     @section Scripts
                 {
         @Scripts.Render("~/bundles/jqueryval")
+
 
     }

@@ -25,30 +25,30 @@ namespace RHEVENT.Models
             // Ajouter les revendications personnalisées de l’utilisateur ici
             return userIdentity;
         }
-         
+
 
         [Required(ErrorMessage = "Nom requis")]
         [Display(Name = "Nom")]
-      //  [RegularExpression(@"^[a-zA-Z]{3,30}$",ErrorMessage ="Nom invalide")]
+        //  [RegularExpression(@"^[a-zA-Z]{3,30}$",ErrorMessage ="Nom invalide")]
         public string nom { get; set; }
 
-        [Required(ErrorMessage ="Prénom requis")]
-        [Display(Name = "Prénom")]   
-    //    [RegularExpression(@"^[a-zA-Z]{3,30}$", ErrorMessage = "Prénom invalide")]
+        [Required(ErrorMessage = "Prénom requis")]
+        [Display(Name = "Prénom")]
+        //    [RegularExpression(@"^[a-zA-Z]{3,30}$", ErrorMessage = "Prénom invalide")]
         public string prenom { get; set; }
 
         public string Etat { get; set; }
 
         public string Statut { get; set; }
 
-        [Required(ErrorMessage ="matricule requis")]
-        [RegularExpression(@"^[0-9]{4}$",ErrorMessage ="Matricule invalide")]
+        [Required(ErrorMessage = "matricule requis")]
+        [RegularExpression(@"^[0-9]{4}$", ErrorMessage = "Matricule invalide")]
         [Display(Name = "Matricule")]
         public string matricule { get; set; }
 
-        
+
         [Required(ErrorMessage = "Téléphone requis")]
-        [Display (Name ="Téléphone")]
+        [Display(Name = "Téléphone")]
         [RegularExpression(@"^[0-9]{8}$",
           ErrorMessage = "Numéro de télephone invalide.")]
         [DataType(DataType.PhoneNumber)]
@@ -61,12 +61,12 @@ namespace RHEVENT.Models
         //Le site doit être seulement majuscule
 
         [Display(Name = "Site")]
-        public string site {get;set;}
+        public string site { get; set; }
 
         //Le service doit être seulement majuscule
 
         [Display(Name = "Service")]
-        public string service { get; set;}
+        public string service { get; set; }
         [Required(ErrorMessage = "Entrer la date de naissance ")]
         [Display(Name = "Date de naissance")]
         [DataType(DataType.Date)]
@@ -84,7 +84,11 @@ namespace RHEVENT.Models
 
         public IEnumerable<System.Web.Mvc.SelectListItem> signataires { get; set; }
 
-        public Role RoleName  { get; set; }
+       
+
+        public IEnumerable<System.Web.Mvc.SelectListItem> fonctions { get; set; }
+
+        public Role RoleName { get; set; }
 
 
         public float Solde_Conge { get; set; }
@@ -102,7 +106,7 @@ namespace RHEVENT.Models
 
     public class ApplicationRole : IdentityRole
     {
-        public ApplicationRole() :base() { }
+        public ApplicationRole() : base() { }
         public ApplicationRole(string roleName) : base(roleName) { }
     }
 
@@ -151,7 +155,7 @@ namespace RHEVENT.Models
         {
             return new ApplicationDbContext();
         }
-        public DbSet<Attestation> Attestations { get; set;}
+        public DbSet<Attestation> Attestations { get; set; }
 
         public System.Data.Entity.DbSet<RHEVENT.Models.ChangePasswordViewModelbyAdmin> ChangePasswordViewModelbyAdmins { get; set; }
 
@@ -186,7 +190,6 @@ namespace RHEVENT.Models
 
         public System.Data.Entity.DbSet<RHEVENT.Models.E_ListEvaluationDiffus> e_ListEvaluationDiffus { get; set; }
 
-
         public System.Data.Entity.DbSet<RHEVENT.Models.DA_Fournisseurs> DA_Fournisseurs { get; set; }
 
         public System.Data.Entity.DbSet<RHEVENT.Models.DA_Demande> DA_Demande { get; set; }
@@ -204,6 +207,22 @@ namespace RHEVENT.Models
         public System.Data.Entity.DbSet<RHEVENT.Models.DA_ListesGammes> DA_ListesGammes { get; set; }
 
         public System.Data.Entity.DbSet<RHEVENT.Models.MesDemAjout> MesDemAjouts { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.DA_Materiels_Dem> DA_Materiels_Dem { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.DA_Produits> DA_Produits { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.DA_ProduitsDem> DA_ProduitsDem { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.DA_WorkflowTypAch> DA_WorkflowTypAch { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.RH.FonctionsUsers> FonctionsUsers { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.Dictionnaire> Dictionnaires { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.DA_CodesArticlesSage> DA_CodesArticlesSage { get; set; }
+
+        public System.Data.Entity.DbSet<RHEVENT.Models.MotifsRejet> MotifsRejets { get; set; }
 
         public System.Data.Entity.DbSet<RHEVENT.Models.E_listImg> E_listImg { get; set; }
 
@@ -232,8 +251,8 @@ namespace RHEVENT.Models
 
     public class ApplicationRoleManager : RoleManager<ApplicationRole>
     {
-        public ApplicationRoleManager(IRoleStore<ApplicationRole,string> roleStore) : base(roleStore) { }
-        public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options,IOwinContext context)
+        public ApplicationRoleManager(IRoleStore<ApplicationRole, string> roleStore) : base(roleStore) { }
+        public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
         {
             var applicationRoleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(context.Get<ApplicationDbContext>()));
             return applicationRoleManager;

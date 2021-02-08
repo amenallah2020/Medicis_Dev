@@ -73,7 +73,7 @@ namespace RHEVENT.Controllers
 
                 e_Evaluation.Date_Creation = System.DateTime.Now;
 
-                e_Evaluation.Date_Modif = Convert.ToDateTime("01-01-0001");
+                e_Evaluation.Date_Modif = System.DateTime.Now;
 
 
                 string OldChaine = System.DateTime.Now.ToShortDateString();
@@ -102,11 +102,12 @@ namespace RHEVENT.Controllers
                     e_Evaluation.Code_Eval = "Eval_" + NewChaine + "_1" + (a + 1);
 
 
-                SqlCommand cmd = new SqlCommand("Insert into E_Evaluation (Code_Eval,CodeForm,Etat_Eval,Date_Creation,Matricule_Formateur,Objet_Eval,Pourc_Valid,Duree_Eval) values(@Code_Eval,@CodeForm,@Etat_Eval,@Date_Creation,@Matricule_Formateur,@Objet_Eval,@Pourc_Valid,@Duree_Eval)", con);
+                SqlCommand cmd = new SqlCommand("Insert into E_Evaluation (Code_Eval,CodeForm,Etat_Eval,Date_Creation,Date_Modif,Matricule_Formateur,Objet_Eval,Pourc_Valid,Duree_Eval) values(@Code_Eval,@CodeForm,@Etat_Eval,@Date_Creation,@Date_Modif,@Matricule_Formateur,@Objet_Eval,@Pourc_Valid,@Duree_Eval)", con);
 
                 cmd.Parameters.AddWithValue("@Code_Eval", e_Evaluation.Code_Eval);
                 cmd.Parameters.AddWithValue("@Etat_Eval", e_Evaluation.Etat_Eval);
                 cmd.Parameters.AddWithValue("@Date_Creation", e_Evaluation.Date_Creation);
+                cmd.Parameters.AddWithValue("@Date_Modif", e_Evaluation.Date_Modif);
                 cmd.Parameters.AddWithValue("@Matricule_Formateur", e_Evaluation.Matricule_Formateur);
                 cmd.Parameters.AddWithValue("@Objet_Eval", e_Evaluation.Objet_Eval);
                 cmd.Parameters.AddWithValue("@Pourc_Valid", e_Evaluation.Pourc_Valid);

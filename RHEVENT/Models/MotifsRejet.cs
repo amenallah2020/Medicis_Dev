@@ -31,8 +31,7 @@ namespace RHEVENT.Models
             ApplicationDbContext db = new ApplicationDbContext();
             List<ValidationResult> validationResult = new List<ValidationResult>();
             var validateName = db.MotifsRejets.FirstOrDefault(x => x.MotifRejet == MotifRejet && x.Id != Id);
-            //var validateName = db.DA_TypesAchats.FirstOrDefault(x => x.TypeAchat == MotifRejet && x.Id != Id);
-
+            
             if (validateName != null)
             {
                 ValidationResult errorMessage = new ValidationResult

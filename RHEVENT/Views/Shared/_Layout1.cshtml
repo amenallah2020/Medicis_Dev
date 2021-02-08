@@ -1,23 +1,45 @@
 ﻿<!DOCTYPE html>
 <html lang="fr">
-<html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta charset="utf-8" />
+    
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="~/css/csslayout.css" rel="stylesheet" type="text/css" />
     <link href="~/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-
+    <link href="~/Content/Chosen/chosen.min.css" rel="stylesheet" />
 
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        li {
+            float: left;
+        }
+
+            li a {
+                display: block;
+                color: black;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+    </style>
 </head>
 
 
 @*<body onload="openNav()">*@
 <body>
-   
+    @*<div id="counter" style="visibility:hidden"></div>
+        <div id="loggedout" style="display:none"></div>*@
+
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
@@ -35,7 +57,7 @@
                 {
 
                     if ((ViewContext.RouteData.Values["controller"].ToString() == "ApplicationUsers") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "Role"))
+                    (ViewContext.RouteData.Values["controller"].ToString() == "Role"))
                     {
                         <button class="dropdown-btn active">
                             Administration
@@ -44,6 +66,8 @@
                         <div class="dropdown-container1">
                             <a href="@Url.Action("Index", "Role")">Liste des roles</a>
                             <a href="@Url.Action("Index", "ApplicationUsers")">Liste des utilisateurs</a>
+                            <a href="@Url.Action("Index", "FonctionsUsers")"><span class="role user">Liste des fonctions</span></a>
+
                         </div>
                     }
                     else
@@ -55,6 +79,8 @@
                         <div class="dropdown-container">
                             <a href="@Url.Action("Index", "Role")">Liste des roles</a>
                             <a href="@Url.Action("Index", "ApplicationUsers")">Liste des utilisateurs</a>
+                            <a href="@Url.Action("Index", "FonctionsUsers")"><span class="role user">Liste des fonctions</span></a>
+
                         </div>
                     }
 
@@ -159,11 +185,11 @@
 
 
                     if ((ViewContext.RouteData.Values["controller"].ToString() == "EMenuFormateur") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "E_Formation") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "E_ListFormationDiffus") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "E_GrpByUsr") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "E_listeUsr") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "E_listFormationDiffus"))
+                    (ViewContext.RouteData.Values["controller"].ToString() == "E_Formation") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "E_ListFormationDiffus") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "E_GrpByUsr") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "E_listeUsr") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "E_listFormationDiffus"))
                     {
                         <button class="dropdown-btn active">
                             E-learning
@@ -182,7 +208,6 @@
                             {
                                 <a href="@Url.Action("Index", "EMenuFormUser")">Mes formations </a>
                             }
-
                             @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Employer")))
 
                             {
@@ -210,7 +235,6 @@
                             {
                                 <a href="@Url.Action("Index", "EMenuFormUser")">Mes formations </a>
                             }
-
                             @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Employer")))
 
                             {
@@ -223,17 +247,23 @@
 
 
                 }
-                if (User.IsInRole("DA") || User.IsInRole("Admin_Medicis"))
+                if (User.IsInRole("DA") || User.IsInRole("DA_N1") || User.IsInRole("DA_DGA") || User.IsInRole("DA_Demandeur") || User.IsInRole("Admin_Medicis"))
                 {
 
 
                     if ((ViewContext.RouteData.Values["controller"].ToString() == "DA_Demande") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "DA_TypesAchats") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "DA_TypesActions") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "DA_ListesGammes") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "DA_Labo") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "DA_Fournisseurs") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "DA_Materiels"))
+                    (ViewContext.RouteData.Values["controller"].ToString() == "DA_TypesAchats") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "DA_TypesActions") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "DA_ListesGammes") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "DA_Labo") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "DA_Fournisseurs") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "DA_Materiels") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "DA_Budget") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "DA_Materiels_Dem") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "DA_Produits") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "DA_ProduitsDem") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "DA_WorkflowTypAch") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "MotifsRejets"))
                     {
                         //onclick = "location.href='@Url.Action("Create","DA_Demande")'"
                         <button class="dropdown-btn active">
@@ -243,17 +273,35 @@
                         <div class="dropdown-container1">
 
                             <a href="@Url.Action("Create", "DA_Demande")">Ajouter Demande</a>
-                            <a href="@Url.Action("DemandesAll", "DA_Demande")">Toutes les Demandes</a>
-                            <a href="@Url.Action("MesDemandes", "DA_Demande")">Mes Demandes</a>
-                            <a href="@Url.Action("DemendesEnAttente", "DA_Demande")">Demandes En Attente</a>
+                            @*<a href="@Url.Action("DemandesAll", "DA_Demande")">Demandes Traitées</a>*@
+                            @if (Session["nb1"] != null && Session["nb1"].ToString() != "0")
+                            {
+                            <a href="@Url.Action("MesDemandes", "DA_Demande")">Mes Demandes <span style="color:red">(@Session["nb1"].ToString())</span></a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("MesDemandes", "DA_Demande")">Mes Demandes</a>
+                            }
+                            
+                            @*<a href="@Url.Action("DemendesEnAttente1", "DA_Demande")">Approubation N+1</a>*@
+                            @if (Session["nb"] != null && Session["nb"].ToString() != "0")
+                            {
+                                <a href="@Url.Action("DemendesEnAttente", "DA_Demande")">Demandes à Approuver <span style="color:red">(@Session["nb"].ToString())</span></a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("DemendesEnAttente", "DA_Demande")">Demandes à Approuver</a>
+                            }
                             <a href="@Url.Action("Index", "DA_TypesAchats")">Types d'achats</a>
                             <a href="@Url.Action("Index", "DA_TypesActions")">Types d'actions</a>
-                            <a href="@Url.Action("Index", "DA_ListesGammes")">Liste des Gammes</a>
+                            @*<a href="@Url.Action("Index", "DA_ListesGammes")">Liste des Gammes</a>*@
 
                             <div class="dropdown-divider"></div>
                             <a href="@Url.Action("Index", "DA_Labo")">Liste Loboratoires</a>
                             <a href="@Url.Action("Index", "DA_Fournisseurs")">Liste Fournisseurs</a>
-                            <a href="@Url.Action("Index", "DA_Materiels")">Liste Matériels</a>
+                            <a href="@Url.Action("Index", "DA_Materiels")">Liste Articles</a>
+                            <a href="@Url.Action("Index", "DA_Produits")">Liste Produits</a>
+                            <a href="@Url.Action("Index", "MotifsRejets")">Motifs de Rejet</a>
                         </div>
 
                     }
@@ -265,17 +313,19 @@
                         </button>
                         <div class="dropdown-container">
                             <a href="@Url.Action("Create", "DA_Demande")">Ajouter Demande</a>
-                            <a href="@Url.Action("DemandesAll", "DA_Demande")">Toutes les Demandes</a>
+                            @*<a href="@Url.Action("DemandesAll", "DA_Demande")">Demandes Traitées</a>*@
                             <a href="@Url.Action("MesDemandes", "DA_Demande")">Mes Demandes</a>
-                            <a href="@Url.Action("DemendesEnAttente", "DA_Demande")">Demandes En Attente</a>
+                            @*<a href="@Url.Action("DemendesEnAttente1", "DA_Demande")">Approubation N+1</a>*@
+                            <a href="@Url.Action("DemendesEnAttente", "DA_Demande")">Demandes à Approuver</a>
                             <a href="@Url.Action("Index", "DA_TypesAchats")">Types d'achats</a>
                             <a href="@Url.Action("Index", "DA_TypesActions")">Types d'actions</a>
-                            <a href="@Url.Action("Index", "DA_ListesGammes")">Liste des Gammes</a>
 
                             <div class="dropdown-divider"></div>
                             <a href="@Url.Action("Index", "DA_Labo")">Liste Loboratoires</a>
                             <a href="@Url.Action("Index", "DA_Fournisseurs")">Liste Fournisseurs</a>
-                            <a href="@Url.Action("Index", "DA_Materiels")">Liste Matériels</a>
+                            <a href="@Url.Action("Index", "DA_Materiels")">Liste Articles</a>
+                            <a href="@Url.Action("Index", "DA_Produits")">Liste Produits</a>
+                            <a href="@Url.Action("Index", "MotifsRejets")">Motifs de Rejet</a>
                         </div>
                     }
 
@@ -288,34 +338,33 @@
         }
 
 
-
-
-
-
-
-        @*<button class="dropdown-btn">
-                About
-                <i class="fa-caret-down glyphicon glyphicon-arrow-down"></i>
-            </button>
-            <div class="dropdown-container">
-                <a href="#">Link 1</a>
-                <a href="#">Link 2</a>
-                <a href="#">Link 3</a>
-            </div>*@
-
-
     </div>
     <div id="main">
         <div class="menu" style="height:6.5%;overflow:unset">
-            <p> <span style="font-size:30px;cursor:pointer;z-index:5" onclick="openNav()">&#9776;</span> </p>
+            <div style="width:20%;float:left">
+                <span style="font-size:30px;cursor:pointer;z-index:5" onclick="openNav()">&#9776;</span>
+            </div>
+            <div style="width:80%;float:left">
+
+                <ul>
+                    @*<li style="float:right"><a class="active" href="#">@ViewBag.nom_prenom</a></li>*@
+
+                    <li style="float:right"><a href="@Url.Action("LogOut","Account")">Déconnexion</a></li>
+                    <li style="float:right"><a href="@Url.Action("ChangePasswordByUser", "ApplicationUsers")">Mon compte</a></li>
+                    <li style="float:right"><a href="#">@Session["userconnecté"].ToString()</a></li>
+
+                </ul>
+            </div>
         </div>
         <br />
+
         @RenderBody()
         <br />
         <hr />
         <div style="float:none">
             <center>
-                <p>Copyright © @DateTime.Now.Year . All rights reserved. by Groupe KILANI.</p>
+                <p>Copyright © @DateTime.Now.Year - All rights reserved. by <a href="https://www.kilanigroupe.com/fr" style="color:blue" target="_blank">KILANI GROUPE</a>.</p>
+                @*<p>Copyright © @DateTime.Now.Year TERIAK. All rights reserved. by <a href="http://www.teriak.com/Fr/" style="color:blue" target="_blank">TERIAK</a>.</p>*@
             </center>
         </div>
     </div>
@@ -352,8 +401,42 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-   
+    <script src="~/Scripts/chosen.jquery.min.js"></script>
 
+    @*<script>
+            var initCountdownValue = 10;
+            var inactivityCountdown = initCountdownValue;
+            $(document).ready(function () {
+
+                $(document).delegate("#Login", "click", function (e) {
+                    location.reload();
+                });
+
+                function Logout() {
+                    window.location.href = "../Account/Login";
+                }
+
+                var intervalid = window.setInterval(function Redirect() {
+                    inactivityCountdown--;
+                    $("#counter").text(inactivityCountdown.toString());
+                    if (inactivityCountdown < 1) {
+                        clearInterval(intervalid);
+                        Logout();
+                    }
+                }, 1 * 1000);
+
+                document.onmousemove = function () {
+                    inactivityCountdown = initCountdownValue;
+                };
+                document.onkeypress = function () {
+                    inactivityCountdown = initCountdownValue;
+                };
+
+
+            });
+        </script>*@
+
+
+    @RenderSection("scripts", required: false)
 </body>
 </html>

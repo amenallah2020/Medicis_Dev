@@ -7,7 +7,7 @@ using System.Web;
 
 namespace RHEVENT.Models
 {
-    public class DA_Demande
+    public class DA_Demande : IValidatableObject
     {
         [Key]
         public int Id { get; set; }
@@ -107,6 +107,27 @@ namespace RHEVENT.Models
         public IEnumerable<System.Web.Mvc.SelectListItem> TypesAchats { get; set; }
         public IEnumerable<System.Web.Mvc.SelectListItem> TypesActions { get; set; }
 
+
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<ValidationResult> validationResult = new List<ValidationResult>();
+            var validateName = Date_action > Date_reception;
+            if (validateName != true)
+            {
+                ValidationResult errorMessage = new ValidationResult
+                ("La date d'action doit etre superieure à celle de reception.", new[] { "Date_action" });
+                validationResult.Add(errorMessage);
+                return validationResult;
+            }
+            
+            else
+            {
+                return validationResult;
+            }
+
+
+        }
     }
  
 }

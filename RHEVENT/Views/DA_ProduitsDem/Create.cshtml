@@ -81,8 +81,8 @@
                                         @Html.LabelFor(model => model.Pourcentage)
                                     </td>
 
-                                    <td colspan = "3" >
-                                        @Html.EditorFor(model => model.Pourcentage, new { htmlAttributes = new { @class = "form-control" } })
+                                    <td colspan="3">
+                                        @Html.EditorFor(model => model.Pourcentage, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @max = "100", @step = "1", @Value = @ViewBag.pourcentagerestant, @oninput = "this.value|=0" } })                                        
                                         @Html.ValidationMessageFor(model => model.Pourcentage, "", new { @class = "text-danger" })
                                     </td>
                                 </tr>

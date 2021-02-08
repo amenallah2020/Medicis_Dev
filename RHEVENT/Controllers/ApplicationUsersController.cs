@@ -129,16 +129,30 @@ namespace RHEVENT.Controllers
                 Text = x.nom + " " + x.prenom + "  " + x.service
             }).Distinct().OrderBy(sign=>sign.Text);
 
-     
-           /* if (signataires.Count() == 0)
-            { signataires.Add(new SelectListItem() { Text = "  ", Value = " " }); }*/
+            List<SelectListItem> list11 = new List<SelectListItem>();
+            var fonctions = db.FonctionsUsers.ToList().Select(x => new SelectListItem
+            {
+                Value = x.Fonction,
+                Text = x.Fonction
+            }).Distinct().OrderBy(sign => sign.Text);
+
+            /* if (signataires.Count() == 0)
+             { signataires.Add(new SelectListItem() { Text = "  ", Value = " " }); }*/
             RegisterViewModel app = new RegisterViewModel();
             app.signataires = signataires;
-             if (signataires.Count() == 0)
+            app.fonctions = fonctions;
+            if (signataires.Count() == 0)
             {
                 List<SelectListItem> listevide = new List<SelectListItem>();
                 listevide.Add(new SelectListItem { Text = "admin", Value = "admin" });
                 app.signataires = listevide;
+                return View(app);
+            }
+            if (fonctions.Count() == 0)
+            {
+                List<SelectListItem> listevide1 = new List<SelectListItem>();
+                listevide1.Add(new SelectListItem { Text = "Admin", Value = "Admin" });
+                app.fonctions = listevide1;
                 return View(app);
             }
             return View(app);
@@ -229,9 +243,17 @@ namespace RHEVENT.Controllers
                 Text = x.nom+" "+x.prenom+" "+x.service
             }).Distinct().OrderBy(sign => sign.Text);
 
-            applicationUser.signataires = signataires;
+            List<SelectListItem> list11 = new List<SelectListItem>();
+            var fonctions = db.FonctionsUsers.ToList().Select(x => new SelectListItem
+            {
+                Value = x.Fonction,
+                Text = x.Fonction
+            }).Distinct().OrderBy(sign => sign.Text);
 
-           
+
+            applicationUser.signataires = signataires;
+            applicationUser.fonctions = fonctions;
+
             ViewBag.list_signataires = signataires;
             return View(applicationUser);
         }

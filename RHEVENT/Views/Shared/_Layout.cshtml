@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="fr">
-<head> 
+<head>
     <!-- Required meta tags-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -47,7 +47,7 @@
 
 </head>
 
- 
+
 <body class="animsition">
 
     <div class="page-wrapper">
@@ -56,7 +56,7 @@
             <div class="header-mobile__bar">
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
-                        <a class="logo" href="index.html">
+                        <a class="logo" href="@Url.Action("Index", "Home" )">
 
                             <img src="~/Content/images/icon/MEDICIS.png" width="32" height="32" class="img-responsive" />
                         </a>
@@ -95,7 +95,9 @@
                                         <li>
                                             <a href="@Url.Action("Index", "ApplicationUsers")"><span class="role user">Liste des utilisateurs</span></a>
                                         </li>
-
+                                        <li>
+                                            <a href="@Url.Action("Index", "FonctionsUsers")"><span class="role user">Liste des fonctions</span></a>
+                                        </li>
                                     </ul>
                                 </li>
 
@@ -284,7 +286,7 @@
         <!-- MENU SIDEBAR-->
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
-                <a href="#">
+                <a href="@Url.Action("Index", "Home" )">
 
                     <img src="~/Content/images/icon/MEDICIS.png" width="132" height="64" class="img-responsive" />
                 </a>
@@ -299,11 +301,11 @@
 
                             if (User.IsInRole("Admin_Medicis") || User.IsInRole("RH") || User.IsInRole("Elearning") || User.IsInRole("DA"))
                             {
-                                <li class="has-sub">
+                                @*<li class="has-sub">
                                     <a class="js-arrow" href="@Url.Action("Index", "Home")">
                                         <i class="fas fa-home"></i>Accueil
                                     </a>
-                                </li>
+                                </li>*@
 
                                 if (User.IsInRole("Admin_Medicis"))
                                 {
@@ -318,7 +320,9 @@
                                             <li>
                                                 <a href="@Url.Action("Index", "ApplicationUsers")"><span class="role user">Liste des utilisateurs</span></a>
                                             </li>
-
+                                            <li>
+                                                <a href="@Url.Action("Index", "FonctionsUsers")"><span class="role user">Liste des fonctions</span></a>
+                                            </li>
                                         </ul>
                                     </li>
                                 }
@@ -387,33 +391,29 @@
                                         </a>
 
                                         <ul class="navbar-mobile-sub__list list-unstyled js-sub-list ">
-                                            @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Formateur")))
-                                            {
-                                                <li>
-                                                    <a href="@Url.Action("Index", "EMenuFormateur")"><span class="role user">Gestion des formations</span></a>
-                                                </li>
+                                                @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Formateur")))
+                                                {
+                                                    <li>
+                                                        <a href="@Url.Action("Index", "EMenuFormateur")"><span class="role user">Gestion des formations</span></a>
+                                                    </li>
 
-                                                <li>
-                                                    <a href="@Url.Action("Group", "E_GrpByUsr")"><span class="role user" style="font-size:13px">Gestion grp de diffusion</span></a>
-                                                </li>
+                                                    <li>
+                                                        <a href="@Url.Action("Group", "E_GrpByUsr")"><span class="role user" style="font-size:13px">Gestion grp de diffusion</span></a>
+                                                    </li>
 
-                                                <li>
-                                                    <a href="@Url.Action("Index", "EMenuEvaluation")"><span class="role user">Gestion des evaluations</span></a>
-                                                </li>
-                                            }
+                                                    <li>
+                                                        <a href="@Url.Action("Group", "E_GrpByUsr")"><span class="role user">Gestion des evaluations</span></a>
+                                                    </li>
+                                                }
 
-                                            @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Employer")))
+                                                @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Employer")))
 
-                                            {
-                                                <li>
-                                                    <a href="@Url.Action("Index", "EMenuFormUser")"><span class="role user">Mes formations</span></a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="@Url.Action("Index", "EMenuEvaluationUser")"><span class="role user">Mes évaluations</span></a>
-                                                </li>
-                                            }
-                                        </ul>
+                                                {
+                                                    <li>
+                                                        <a href="@Url.Action("Group", "E_GrpByUsr")"><span class="role user">Mes formations</span></a>
+                                                    </li>
+                                                }
+                                            </ul>
 
                                     </li>
 
@@ -751,7 +751,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="copyright">
-                                    <p>Copyright ©  @DateTime.Now.Year . All rights reserved. by Groupe KILANI.</p>
+                                    <p>Copyright © @DateTime.Now.Year - All rights reserved. by <a href="https://www.kilanigroupe.com/fr" style="color:blue" target="_blank">KILANI GROUPE</a>.</p>
+
+                                    @*<p>Copyright © 2020 TERIAK. All rights reserved. by <a href="http://www.teriak.com/Fr/">TERIAK</a>.</p>*@
                                 </div>
                             </div>
                         </div>

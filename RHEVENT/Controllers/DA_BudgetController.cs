@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
@@ -45,30 +46,47 @@ namespace RHEVENT.Controllers
             SqlConnection con = new SqlConnection(constr);
 
             con.Open();
-
-            SqlDataAdapter da7 = new SqlDataAdapter("SELECT Date_reception FROM DA_Demande where Réference ='" + Session["reff"].ToString() + "'", con);
-            DataTable dt7 = new DataTable();
-            da7.Fill(dt7);
-            DateTime daterecep =Convert.ToDateTime(dt7.Rows[0][0].ToString());
+            string url = "/DA_Budget/Réception/"+id;
+            //SqlDataAdapter da7 = new SqlDataAdapter("SELECT Date_reception FROM DA_Demande where Réference ='" + Session["reff"].ToString() + "'", con);
+            //DataTable dt7 = new DataTable();
+            //da7.Fill(dt7);
+            //DateTime daterecep =Convert.ToDateTime(dt7.Rows[0][0].ToString());
             DateTime daterecepligne = Convert.ToDateTime("2021-01-01");
             if (datereception == "")
             {
                 //return RedirectToAction("demande", "DA_Demande");
-                return Content("<script language='javascript' type='text/javascript'>alert('Date de reception non Valide ');window.location = '/DA_Demande/demande';</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('Date de reception non Valide ');window.location = '"+url+"';</script>");
             }
             else
             {
                 daterecepligne = Convert.ToDateTime(datereception);
 
-                if (daterecepligne > daterecep)
-                {
-                    //return RedirectToAction("demande", "DA_Demande");
-                    return Content("<script language='javascript' type='text/javascript'>alert('La date de reception par ligne doit etre inferieure à celle de reception souhaitée pour la demande');window.location = '/DA_Demande/demande';</script>");
-                }
-                else
+                //    if (daterecepligne > daterecep)
+                //    {
+                //        //return RedirectToAction("demande", "DA_Demande");
+                //        return Content("<script language='javascript' type='text/javascript'>alert('La date de reception par ligne doit etre inferieure à celle de reception souhaitée pour la demande');window.location = '/DA_Demande/demande';</script>");
+                //    }
+                //    else
+                //    {
+
+                try
                 {
                     db.Entry(dA_Budget).State = EntityState.Modified;
                     db.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                    {
+                        foreach (var validationError in entityValidationErrors.ValidationErrors)
+                        {
+                            Response.Write("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
+                            Response.Redirect(validationError.ErrorMessage);
+
+                        }
+                    }
+                }
+               
 
                     string test = "1";
                     SqlDataAdapter da = new SqlDataAdapter("SELECT Date_Recp FROM DA_Budget where Réference ='" + Session["reff"].ToString() + "'", con);
@@ -98,7 +116,7 @@ namespace RHEVENT.Controllers
                     con.Close();
 
                     return RedirectToAction("demande", "DA_Demande");
-                }
+                //}
             }
 
         }
@@ -115,7 +133,7 @@ namespace RHEVENT.Controllers
             budgett.listesbudget = list.ToList();
 
             return View(budgett);
-            //return View(db.DA_Budget.ToList());
+            //return View(db.<c.ToList());
         }
         public ActionResult Budget_Dem(string id, string statut, string dem)
         {
@@ -144,12 +162,13 @@ namespace RHEVENT.Controllers
         // GET: DA_Budget/Create
         public ActionResult Create()
         {
+            //Session["checkboxx"] = "0";
             string reference = Session["reff"].ToString();
             if (reference != null)
             {
                 var list = (from m in db.DA_Budget
                             where m.Réference == reference
-                            orderby m.Fournisseur
+                            orderby m.Date_Recp_Souh
                             select m);
 
                 var listmateriels = (from m in db.DA_Materiels
@@ -182,7 +201,7 @@ namespace RHEVENT.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Réference,Article,Quantité,PrixUnitaire,Total,Fournisseur,Date_Recp_Souh,Description,Type")] DA_Budget dA_Budget,string typeArticle)
+        public ActionResult Create([Bind(Include = "Id,Réference,Article,Quantité,PrixUnitaire,Total,Fournisseur,Date_Recp_Souh,Description,Type,PlafondBudget")] DA_Budget dA_Budget,string typeArticle)
         {
             dA_Budget.Type = typeArticle;
             dA_Budget.Réference = Session["reff"].ToString();
@@ -192,11 +211,23 @@ namespace RHEVENT.Controllers
             string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
             SqlConnection con = new SqlConnection(constr);
 
+            
             con.Open();
-
             SqlDataAdapter da7 = new SqlDataAdapter("SELECT Date_reception FROM DA_Demande where Réference ='" + Session["reff"].ToString() + "'", con);
             DataTable dt7 = new DataTable();
             da7.Fill(dt7);
+
+            SqlDataAdapter da71 = new SqlDataAdapter("SELECT PlafondBudget FROM DA_Materiels where Désignation  ='" + dA_Budget.Article + "'", con);
+            DataTable dt71 = new DataTable();
+            da71.Fill(dt71);
+            string budgetplaf = " ";
+
+            if(dt71.Rows.Count > 0)
+            {
+                budgetplaf = dt71.Rows[0][0].ToString();
+            }
+            dA_Budget.PlafondBudget = budgetplaf;
+
             con.Close();
             DateTime daterecep = Convert.ToDateTime(dt7.Rows[0][0].ToString());
             DateTime daterecepligne = Convert.ToDateTime("2021-01-01");
@@ -205,15 +236,18 @@ namespace RHEVENT.Controllers
             
                 daterecepligne = Convert.ToDateTime(datereception);
 
-                if (daterecepligne > daterecep)
-                {
-                    //return RedirectToAction("demande", "DA_Demande");
-                    return Content("<script language='javascript' type='text/javascript'>alert('La date de reception par ligne doit etre inferieure à celle de reception souhaitée pour la demande');window.location = '/DA_Budget/Create';</script>");
-                }
-                else
-                {
-                    
-                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+
+            //if (daterecepligne > daterecep)
+            //{
+            //    //ModelState.AddModelError("", "La date de reception par ligne doit etre inferieure à celle de reception souhaitée pour la demande");
+            //    //return RedirectToAction("demande", "DA_Demande");
+            //    return Content("<script language='javascript' type='text/javascript'>alert('La date de reception par ligne doit etre inferieure à celle de reception souhaitée pour la demande');window.location = '/DA_Budget/Create';</script>");
+            //}
+            //else
+            if (daterecepligne <= daterecep)
+            {
+
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
 
                     if (ModelState.IsValid)
                     {
@@ -253,6 +287,29 @@ namespace RHEVENT.Controllers
                     }
                 }
 
+
+            string reference = Session["reff"].ToString();
+            var list = (from m in db.DA_Budget
+                        where m.Réference == reference
+                        orderby m.Fournisseur
+                        select m);
+
+            var listmateriels = (from m in db.DA_Materiels
+                                 where m.Type.Equals("Matériels")
+                                 orderby m.Désignation
+                                 select m);
+
+            var listservices = (from m in db.DA_Materiels
+                                where m.Type.Equals("Services")
+                                orderby m.Désignation
+                                select m);
+
+
+
+            dA_Budget.listesfournisseurs = db.DA_Fournisseurs.OrderBy(obj => obj.Raison).ToList<DA_Fournisseurs>();
+            dA_Budget.listesbudget = list.ToList();
+            dA_Budget.listeMateriels = listmateriels.ToList();
+            dA_Budget.listeServices = listservices.ToList();
             return View(dA_Budget);
         }
 
@@ -397,5 +454,7 @@ namespace RHEVENT.Controllers
             }
             base.Dispose(disposing);
         }
+
+       
     }
 }

@@ -110,16 +110,16 @@
                     </td>
 
                     <td>
-                        <input type="text" style="background-color:white" id="Date_reception" name="Date_reception" class="form-control" autocomplete="off" readonly="readonly" />
-                        @*@Html.EditorFor(model => model.Date_reception, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @*<input type="text" style="background-color:white" id="Date_reception" name="Date_reception" class="form-control" autocomplete="off" readonly="readonly" />*@
+                        @Html.EditorFor(model => model.Date_reception, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Date_reception, "", new { @class = "text-danger" })
                     </td>
                     <td style="width:100px">
                         @Html.LabelFor(model => model.Date_action)
                     </td>
                     <td>
-                        <input type="text" style="background-color:white" id="Date_action" name="Date_action" class="form-control" autocomplete="off" readonly="readonly" />
-                        @*@Html.EditorFor(model => model.Date_action, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @*<input type="text" style="background-color:white" id="Date_action" name="Date_action" class="form-control" autocomplete="off" readonly="readonly" />*@
+                        @Html.EditorFor(model => model.Date_action, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Date_action, "", new { @class = "text-danger" })
                     </td>
                 </tr>
@@ -153,7 +153,7 @@
     <script src="~/Scripts/jquery-ui.js"></script>
     @*<script src="~/Scripts/jquery-1.10.2.js"></script>*@
     <link href="~/css/jquery-ui.css" rel="stylesheet" />
-    <script>
+    @*<script>
 
         $(document).ready(function () {
             $("#Date_reception").datepicker({
@@ -173,7 +173,7 @@
 
             });
         });
-    </script>
+    </script>*@
 
     
 }

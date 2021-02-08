@@ -13,6 +13,15 @@
 
 }
 
+<head>
+    <style>
+        .container {
+            width: 90%;
+            height: 80%;
+        }
+    </style>
+</head>
+
 <h2 class="text" style="color:cornflowerblue">
     <span class="glyphicon   glyphicon-expand"> </span>
     Consultation de formation
@@ -110,7 +119,7 @@
 
 
 
-<div class="container" style="border-radius:10px;border-width:thin;width:1080px;height:600px;">
+<div class="container" style="border-radius:10px;border-width:thin; border: 2px solid black">
 
 
     @*<form action="Consult">
@@ -145,27 +154,27 @@
             <h4 class="modal-title" id="ConsultTitle"> Consulter formation</h4>
         </div>*@
 
-      
+
     <div class="modal-body">
         @*, new { codeEvl = @ViewBag.codeEval, codeForm = @ViewBag.codeFor }*@
 
-         
-            @Html.AntiForgeryToken()
+
+        @Html.AntiForgeryToken()
 
 
-            @for (int i = 0; i < Convert.ToInt16(Session["nbdiap"].ToString()); i++)
-            {
-                <div class="mySlides">
-                    <div class="numbertext">@(i + 1) / @Convert.ToInt16(Session["nbdiap"].ToString())</div>
+        @for (int i = 0; i < Convert.ToInt16(Session["nbdiap"].ToString()); i++)
+        {
+            <div class="mySlides">
+                <div class="numbertext">@(i + 1) / @Convert.ToInt16(Session["nbdiap"].ToString())</div>
 
-                    @*  <img src="~/SlideImages/F_30122020_01/Diapositive1.PNG" style="width:100%">*@
-                    <img src="@TempData[i.ToString()]" style="width:100%">
+                @*  <img src="~/SlideImages/F_30122020_01/Diapositive1.PNG" style="width:100%">*@
+                <img src="@TempData[i.ToString()]" style="width:100%">
 
-                    @*<img src="~/SlideImages/F_23122020_09/Diapositive2.PNG" ">*@
-                </div>
-                 
+                @*<img src="~/SlideImages/F_23122020_09/Diapositive2.PNG" ">*@
+            </div>
 
-            }
+
+        }
 
         @*}*@
 
@@ -187,7 +196,7 @@
 <br />
 
 <div class="btn au-btn--green" style="color:white">
-    @Html.ActionLink("Retour à la liste ", "ResultatFormation","E_Formation" )
+    @Html.ActionLink("Retour à la liste ", "ResultatFormation", "E_Formation")
 </div>
 
 
@@ -198,14 +207,14 @@
 
     <script>
 
-      
+
         var slideIndex = 1;
         showSlides(slideIndex);
 
         function plusSlides(n) {
             showSlides(slideIndex += n);
         }
- 
+
 
         function showSlides(n) {
             var i;

@@ -247,7 +247,7 @@
     <tr style="text-align:center;vertical-align:central">
         <td width="170px">
             @*@Html.ActionLink(item.Réference, "Edit", new { id = item.Id }, new { @class = "edit" })*@
-            @Html.ActionLink(item.Réference, "demande_dem", "DA_Demande", new { id = item.Réference }, new { @class = "edit" })
+            @Html.ActionLink(item.Réference, "demande_dem", "DA_Demande", new { id = item.Réference, statut = item.Statut, dem = item.Demandeur }, new { @class = "edit" })
 
             @*@Html.DisplayFor(modelItem => item.Réference)*@
         </td>
@@ -349,4 +349,3 @@
     }
 
 </table>
-

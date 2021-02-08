@@ -35,7 +35,6 @@ namespace RHEVENT.Models
 
 
         [Display(Name = "Plafond Budget")]
-        [Required]
         public string PlafondBudget { get; set; }
 
 

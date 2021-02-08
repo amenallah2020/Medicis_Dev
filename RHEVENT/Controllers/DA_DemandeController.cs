@@ -70,13 +70,15 @@ namespace RHEVENT.Controllers
         }
 
         // GET: DA_Demande
-       
-       
-        public ActionResult demande_dem(string id)
+
+        public ActionResult demande_dem(string id, string statut, string dem)
         {
             Session["reff"] = id;
+            Session["statut"] = statut;
+            Session["demandeure"] = dem;
             return RedirectToAction("demande");
         }
+       
         public ActionResult demande(/*string id*/)
         {
             string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
@@ -85,8 +87,14 @@ namespace RHEVENT.Controllers
             SqlDataAdapter da5 = new SqlDataAdapter("SELECT Pourcentage FROM DA_ProduitsDem where Réference = '" + Session["reff"].ToString() + "'", con);
             DataTable dt5 = new DataTable();
             da5.Fill(dt5);
+
+            SqlDataAdapter da51 = new SqlDataAdapter("SELECT count(Id) FROM DA_Budget where Réference = '" + Session["reff"].ToString() + "'", con);
+            DataTable dt51 = new DataTable();
+            da51.Fill(dt51);
+
             con.Close();
             float pourcentagedem = 0;
+            int nbrArticle = Convert.ToInt32(dt51.Rows[0][0].ToString());
 
             for (int i = 0; i < dt5.Rows.Count; i++)
             {
@@ -94,11 +102,14 @@ namespace RHEVENT.Controllers
                 pourcentagedem = pourcentagedem + pourcent;
             }
             ViewBag.pourcentagedem = pourcentagedem.ToString();
-            if (pourcentagedem != 100)
+
+            if (nbrArticle == 0)
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('Veuillez Verifier les pourcentages');window.location = '/DA_Budget/Create';</script>");
+            }
+            else if(pourcentagedem != 100)
             {
                 return Content("<script language='javascript' type='text/javascript'>alert('Veuillez Verifier les pourcentages');window.location = '/DA_ProduitsDem/Create';</script>");
-
-                //return RedirectToAction("Create", "DA_ProduitsDem");
             }
             else
             {
@@ -131,7 +142,17 @@ namespace RHEVENT.Controllers
                     DA_Demandee demandee = new DA_Demandee();
 
                     con.Open();
-                    SqlDataAdapter da = new SqlDataAdapter("SELECT Id,TypeAchat FROM DA_Demande where Réference = '" + reference + "'", con);
+
+                    SqlDataAdapter da7 = new SqlDataAdapter("SELECT Date_reception FROM DA_Demande where Réference ='" + Session["reff"].ToString() + "'", con);
+                    DataTable dt7 = new DataTable();
+                    da7.Fill(dt7);
+                    con.Close();
+                    DateTime daterecep = Convert.ToDateTime(dt7.Rows[0][0].ToString());
+                    Session["daterecepdem"] = daterecep.ToString();
+                    
+
+
+                        SqlDataAdapter da = new SqlDataAdapter("SELECT Id,TypeAchat FROM DA_Demande where Réference = '" + reference + "'", con);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
 
@@ -197,7 +218,22 @@ namespace RHEVENT.Controllers
             //dem.TypeAchat = dem.listesachats[0].TypeAchat.ToString();
             ViewData.Model = dem;
 
-            //return View(list.ToList());
+            string fonctionn = user.fonction;
+            string matriculee = user.matricule;
+
+            string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+            SqlConnection con = new SqlConnection(constr);
+            con.Open();
+            SqlDataAdapter da55 = new SqlDataAdapter("SELECT count(Id) FROM DA_Demande where (Validee = '0') and ((etat_prochain = '" + fonctionn + "') or (Statut = '0' and matrsign = '" + matriculee + "'))", con);
+            SqlDataAdapter da555 = new SqlDataAdapter("SELECT count(Id) FROM DA_Demande where (Validee = '0') and (Etat = '-1') and (Demandeur = '" + demandeurr + "')", con);
+
+            DataTable dt55 = new DataTable();
+            da55.Fill(dt55);
+            DataTable dt555 = new DataTable();
+            da555.Fill(dt555);
+            con.Close();
+            Session["nb"] = dt55.Rows[0][0].ToString();
+            Session["nb1"] = dt555.Rows[0][0].ToString();
             return View(dem);
         }
 
@@ -371,6 +407,7 @@ namespace RHEVENT.Controllers
                         ((m.etat_prochain == fonctionn) || ((m.Statut == "0") && (m.matrsign == matriculee)))
                         orderby m.Date_demande descending
                         select m)/*.Take(20)*/;
+           
 
             DA_Demande dem = new DA_Demande();
 
@@ -380,6 +417,24 @@ namespace RHEVENT.Controllers
             dem.listesDemandes = list.ToList();
             dem.Date_demande = DateTime.Now;
             ViewData.Model = dem;
+
+            
+           
+
+            string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+            SqlConnection con = new SqlConnection(constr);
+            con.Open();
+            
+            SqlDataAdapter da55 = new SqlDataAdapter("SELECT count(Id) FROM DA_Demande where (Validee = '0') and ((etat_prochain = '" + fonctionn + "') or (Statut = '0' and matrsign = '" + matriculee + "'))", con);
+            SqlDataAdapter da555 = new SqlDataAdapter("SELECT count(Id) FROM DA_Demande where (Validee = '0') and (Etat = '-1') and (Demandeur = '" + demandeurr + "')", con);
+
+            DataTable dt55 = new DataTable();
+            da55.Fill(dt55);
+            DataTable dt555 = new DataTable();
+            da555.Fill(dt555);
+            con.Close();
+            Session["nb"] = dt55.Rows[0][0].ToString();
+            Session["nb1"] = dt555.Rows[0][0].ToString();
             return View(dem);
         }
 
@@ -444,18 +499,21 @@ namespace RHEVENT.Controllers
 
             string fonctionn = user.fonction;
             string matriculee = user.matricule;
-            
-            
-            //string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
-            //SqlConnection con = new SqlConnection(constr);
-            //con.Open();
-            ////SqlDataAdapter da = new SqlDataAdapter("SELECT count(Id) FROM DA_Demande where Validee = '0' and (etat_prochain = '"+fonctionn+"' or (Statut = '0' and matrsign = '"+matriculee+"')))",con)
-            //SqlDataAdapter da55 = new SqlDataAdapter("SELECT count(Id) FROM DA_Demande where (Validee = '0') and ((etat_prochain = '" + fonctionn + "') or (Statut = '0' and matrsign = '" + matriculee + "')))", con);
-            
-            //DataTable dt55 = new DataTable();
-            //da55.Fill(dt55);
-            //con.Close();
-            //Session["nb"] = dt55.Rows[0][0].ToString();
+
+
+            string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+            SqlConnection con = new SqlConnection(constr);
+            con.Open();
+            SqlDataAdapter da55 = new SqlDataAdapter("SELECT count(Id) FROM DA_Demande where (Validee = '0') and ((etat_prochain = '" + fonctionn + "') or (Statut = '0' and matrsign = '" + matriculee + "'))", con);
+            SqlDataAdapter da555 = new SqlDataAdapter("SELECT count(Id) FROM DA_Demande where (Validee = '0') and (Etat = '-1') and (Demandeur = '"+demandeurr+"')", con);
+
+            DataTable dt55 = new DataTable();
+            da55.Fill(dt55);
+            DataTable dt555 = new DataTable();
+            da555.Fill(dt555);
+            con.Close();
+            Session["nb"] = dt55.Rows[0][0].ToString();
+            Session["nb1"] = dt555.Rows[0][0].ToString();
             return View(dem);
 
         }
@@ -465,14 +523,15 @@ namespace RHEVENT.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(DA_Demande dA_Demande,DateTime Date_reception, DateTime Date_action)
+        public ActionResult Create(DA_Demande dA_Demande/*,DateTime Date_reception, DateTime Date_action*/)
         {
-            if (Date_action < Date_reception)
-            {
-                return View("Errordatedemande");
-                //return Content("<script language='javascript' type='text/javascript'>alert('La date d'action doit etre superieure à celle de reception');window.location = '/DA_Demande/Create';</script>");
-            }
-            else
+            //if (Date_action < Date_reception)
+            //{
+            //    return View("Errordatedemande");
+            //    //return Content("<script language='javascript' type='text/javascript'>alert('La date d'action doit etre superieure à celle de reception');window.location = '/DA_Demande/Create';</script>");
+            //}
+            //else
+            if (dA_Demande.Date_action > dA_Demande.Date_reception)
             {
                 string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
                 SqlConnection con = new SqlConnection(constr);
@@ -533,8 +592,8 @@ namespace RHEVENT.Controllers
                     dA_Demande.Date_demande = DateTime.Now.Date;
                     dA_Demande.matrsign = user.signataire;
 
-                    dA_Demande.Date_reception = Date_reception;
-                    dA_Demande.Date_action = Date_action;
+                    //dA_Demande.Date_reception = Date_reception;
+                    //dA_Demande.Date_action = Date_action;
                     Session["statut"] = "-1";
                     db.DA_Demande.Add(dA_Demande);
                     try
@@ -555,12 +614,19 @@ namespace RHEVENT.Controllers
                     }
 
                 }
-                var list1 = (from m in db.DA_TypesAchats
-                             orderby m.TypeAchat
-                             select m);
-                ViewBag.liste1 = list1.ToList();
+               
             }
-                return View(dA_Demande);
+            dA_Demande.listesLabo = db.DA_Labo.OrderBy(obj => obj.Laboratoire).ToList<DA_Labo>();
+            dA_Demande.listesachats = db.DA_TypesAchats.OrderBy(obj => obj.TypeAchat).ToList<DA_TypesAchats>();
+            dA_Demande.listesactions = db.DA_TypesActions.OrderBy(obj => obj.TypeAction).ToList<DA_TypesActions>();
+            dA_Demande.Date_demande = DateTime.Now;
+            
+            var list1 = (from m in db.DA_TypesAchats
+                         orderby m.TypeAchat
+                         select m);
+            ViewBag.liste1 = list1.ToList();
+
+            return View(dA_Demande);
             
         }
 

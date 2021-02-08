@@ -61,7 +61,7 @@
             <div class="header-mobile__bar">
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
-                        <a class="logo" href="index.html">
+                        <a class="logo" href="@Url.Action("Index", "Home" )">
 
                             <img src="~/Content/images/icon/MEDICIS.png" width="32" height="32" class="img-responsive" />
                         </a>
@@ -87,7 +87,7 @@
         <!-- MENU SIDEBAR-->
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
-                <a href="#">
+                <a href="@Url.Action("Index", "Home" )">
 
                     <img src="~/Content/images/icon/MEDICIS.png" width="132" height="64" class="img-responsive" />
                 </a>
@@ -101,11 +101,11 @@
                         {
                             if (User.IsInRole("Admin_Medicis") || User.IsInRole("RH") || User.IsInRole("ELearning") || User.IsInRole("DA"))
                             {
-                                <li class="has-sub">
-                                    <a class="js-arrow" href="@Url.Action("Index", "Home")">
-                                        <i class="fas fa-home"></i>Accueil
-                                    </a>
-                                </li>
+                                @*<li class="has-sub">
+                    <a class="js-arrow" href="@Url.Action("Index", "Home")">
+                        <i class="fas fa-home"></i>Accueil
+                    </a>
+                </li>*@
 
                                 if (User.IsInRole("Admin_Medicis"))
                                 {
@@ -120,14 +120,16 @@
                                             <li>
                                                 <a href="@Url.Action("Index", "ApplicationUsers")"><span class="role user">Liste des utilisateurs</span></a>
                                             </li>
-
+                                            <li>
+                                                <a href="@Url.Action("Index", "FonctionsUsers")"><span class="role user">Liste des fonctions</span></a>
+                                            </li>
                                         </ul>
                                     </li>
                                 }
 
                             }
 
-                             if (User.IsInRole("RH") || User.IsInRole("Admin_Medicis"))
+                            if (User.IsInRole("RH") || User.IsInRole("Admin_Medicis"))
                             {
                                 <li class="has-sub">
                                     <a class="js-arrow" href="#">
@@ -136,7 +138,7 @@
 
                                     <ul class="navbar-mobile-sub__list list-unstyled js-sub-list ">
 
-                                         @if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || User.IsInRole("Admin_Medicis"))
+                                        @if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || User.IsInRole("Admin_Medicis"))
                                         {
 
                                             <li>
@@ -179,18 +181,18 @@
                                             </li>
 
                                         }
-                                        </ul> 
-                                    </li>
+                                    </ul>
+                                </li>
 
-                             } 
+                            }
 
-                                         if (User.IsInRole("Admin_Medicis") || User.IsInRole("Elearning"))
-                                        {
+                            if (User.IsInRole("Admin_Medicis") || User.IsInRole("Elearning"))
+                            {
                                 <li>
                                     <a class="js-arrow" href="#">
-                                       @* <a class="js-arrow" href="@Url.Action("Index", "EMenuFormateur")">*@
-                                            <i class="glyphicon glyphicon-globe"></i>E-learning
-                                        </a>
+                                        @* <a class="js-arrow" href="@Url.Action("Index", "EMenuFormateur")">*@
+                                        <i class="glyphicon glyphicon-globe"></i>E-learning
+                                    </a>
 
                                     <ul class="navbar-mobile-sub__list list-unstyled js-sub-list ">
 
@@ -220,23 +222,24 @@
                                                 <a href="@Url.Action("Index", "EMenuEvaluationUser")"><span class="role user">Mes évaluations</span></a>
                                             </li>
                                         }
-                                    </ul> 
-</li>
+                                    </ul>
+                                </li>
 
                             }
 
                             // if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
                             //{
-                                            <li>
-                                                <a class="js-arrow" href="@Url.Action("Create", "DA_Demande" )">
-                                                    <i class="glyphicon glyphicon-bell"></i>Demandes d'actions
-                                                </a>
-
-
-                                            </li>
+                            if (User.IsInRole("DA") || User.IsInRole("Admin_Medicis"))
+                            {
+                                <li>
+                                    <a class="js-arrow" href="@Url.Action("Create", "DA_Demande")">
+                                        <i class="glyphicon glyphicon-bell"></i>Demande d'actions
+                                    </a>
+                                </li>
+                            }
                             //}
                         }
-                   </ul>
+                    </ul>
                         
                 </nav>
             </div>
@@ -318,7 +321,7 @@
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
                         <div class="row">
-                           
+
                         </div>
                         <div class="row">
                             <div class="col-lg-12" id="template_site">
@@ -331,72 +334,107 @@
                                             </strong>
                                         </h4>
                                     </div>
-                                    <div class="card-body" style="overflow-x:auto">
 
 
+                                    <div class="card-deck" style="overflow-x:auto;height:400px;align-content:center;align-items:center;align-self:center">
 
                                         @if (Request.IsAuthenticated)
                                         {
+                                            <center>
+                                                <table>
+                                                    <tr>
+                                                        @if (User.IsInRole("Admin_Medicis"))
+                                                        {
+                                                            <td>
+                                                                <div style="margin-left:7%">
+                                                                    <center>
+                                                                        <a href="@Url.Action("Index", "E_MenuAdmMedicis" )">
+                                                                            <img class="card-img-top img-circle" src="~/Content/images/AD4.png" style="width:200px;border-width:0px" />
+                                                                        </a>
+                                                                        <div>
+                                                                            <h4>Administration</h4>
+                                                                        </div>
+                                                                    </center>
+                                                                </div>
+                                                            </td>
+                                                        }
 
-                                            if (User.IsInRole("Admin_Medicis") || User.IsInRole("RH") || User.IsInRole("ELearning") || User.IsInRole("DA"))
-                                            {
+                                                        @if (User.IsInRole("RH") || User.IsInRole("Admin_Medicis"))
+                                                        {
+                                                            <td>
+                                                                <div style="margin-left:7%">
+                                                                    <center>
+                                                                        <a href="@Url.Action("Index", "E_MenuRH" )">
+                                                                            <img class="card-img-top img-circle" src="~/Content/images/RH2.png" style="width:200px;border-width:0px" />
+                                                                        </a>
+                                                                        <div>
+                                                                            <h4>RH EVENTS</h4>
+                                                                        </div>
+                                                                    </center>
+                                                                </div>
+                                                            </td>
+                                                        }
 
+                                                        @if (User.IsInRole("Admin_Medicis") || User.IsInRole("Elearning"))
+                                                        {
+                                                            <td>
+                                                                <div style="margin-left:7%">
+                                                                    <center>
+                                                                        <a href="@Url.Action("Index", "E_MenuElearning" )">
+                                                                            <img class="card-img-top img-circle" src="~/Content/images/el2.jpg" style="width:200px;border-width:0px" />
+                                                                        </a>
+                                                                        <div>
+                                                                            <h4>E-learning</h4>
+                                                                        </div>
+                                                                    </center>
+                                                                </div>
+                                                            </td>
+                                                        }
 
-                                                <div onclick="location.href='@Url.Action("Index", "Home" )'" style="width:100px; height:100px" class="btn btn-link">  <img src="~/Content/images/Menu2.jpg" style="width:100px;border-width:0px; " class="img-circle" /> Accueil<br /></div><br />
-
-
-                                            }
-
-                                            if (User.IsInRole("Admin_Medicis"))
-                                            { 
-
-                                                <div onclick="location.href='@Url.Action("Index", "E_MenuAdmMedicis" )'" style="width:100px; height:100px" class="btn btn-link">  <img src="~/Content/images/AD4.png" style="width:100px;border-width:0px; " class="img-circle" /> Administration<br /></div> <br />
-                                                 
-                                            }
-
-
-                                            if (User.IsInRole("RH") || User.IsInRole("Admin_Medicis"))
-                                            {
-
-                                                <div onclick="location.href='@Url.Action("Index", "E_MenuRH" )'" style="width:100px; height:100px" class="btn btn-link">  <img src="~/Content/images/RH2.png" style="width:100px;border-width:0px;" class="img-circle" /> Ressource humaine<br /></div><br />
-
-                                            }
-
-                                            if (User.IsInRole("Admin_Medicis") || User.IsInRole("Elearning"))
-                                            {
-
-                                                <div onclick="location.href='@Url.Action("Index", "E_MenuElearning" )'" style="width:100px; height:100px" class="btn btn-link">  <img src="~/Content/images/el2.jpg" style="width:100px;border-width:0px;" class="img-circle" /> E-learning<br /></div><br />
-
-                                            }
-
-                                            if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
-                                            {
-
-                                                <div onclick="location.href='@Url.Action("SlideUsr", "E_formation" )'" style="width:100px; height:100px" class="btn btn-link">  <img src="~/Content/images/DA2.png" style="width:100px;border-width:0px;" class="img-circle" /> Demande d'action<br /></div>
-
-                                            }
-
+                                                        @if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
+                                                        {
+                                                            <td>
+                                                                <div style="margin-left:7%">
+                                                                    <center>
+                                                                        <a href="@Url.Action("Create", "DA_Demande" )">
+                                                                            <img class="card-img-top img-circle" src="~/Content/images/DA2.png" style="width:200px;border-width:0px" />
+                                                                        </a>
+                                                                        <div>
+                                                                            <h4>Demande d'action</h4>
+                                                                        </div>
+                                                                    </center>
+                                                                </div>
+                                                            </td>
+                                                        }
+                                                    </tr>
+                                                </table>
+                                            </center>
 
                                         }
+
                                     </div>
 
-                                    
-
                                 </div>
-                            </div>
 
+
+
+                            </div>
                         </div>
 
+                    </div>
 
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="copyright">
-                                    <p>Copyright © @System.DateTime.Now.Year. All rights reserved. by Groupe KILANI
-</div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="copyright">
+                                <p>Copyright © @DateTime.Now.Year - All rights reserved. by <a href="https://www.kilanigroupe.com/fr" style="color:blue" target="_blank">KILANI GROUPE</a>.</p>
+
+                                @*<p>Copyright © 2020 TERIAK. All rights reserved. by <a href="http://www.teriak.com/Fr/">TERIAK</a>.</p>*@
                             </div>
                         </div>
                     </div>
+                </div>
 
 
 

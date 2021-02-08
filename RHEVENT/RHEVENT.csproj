@@ -277,13 +277,20 @@
     <Compile Include="App_Start\RouteConfig2.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\DA_BudgetController.cs" />
+    <Compile Include="Controllers\DA_CodesArticlesSageController.cs" />
     <Compile Include="Controllers\DA_DemandeController.cs" />
     <Compile Include="Controllers\DA_FournisseursController.cs" />
     <Compile Include="Controllers\DA_LaboController.cs" />
     <Compile Include="Controllers\DA_ListesGammesController.cs" />
     <Compile Include="Controllers\DA_MaterielsController.cs" />
+    <Compile Include="Controllers\DA_Materiels_DemController.cs" />
+    <Compile Include="Controllers\DA_ProduitsController.cs" />
+    <Compile Include="Controllers\DA_ProduitsDemController.cs" />
+    <Compile Include="Controllers\DA_TypesAchats11Controller.cs" />
     <Compile Include="Controllers\DA_TypesAchatsController.cs" />
     <Compile Include="Controllers\DA_TypesActionsController.cs" />
+    <Compile Include="Controllers\DA_WorkflowTypAchController.cs" />
+    <Compile Include="Controllers\DictionnairesController.cs" />
     <Compile Include="Controllers\EMenuEvaluationUserController.cs" />
     <Compile Include="Controllers\EMenuEvaluationController.cs" />
     <Compile Include="Controllers\E_MenuElearning.cs" />
@@ -304,6 +311,8 @@
     <Compile Include="Controllers\E_ListFormationDiffusController.cs" />
     <Compile Include="Controllers\E_QCMController.cs" />
     <Compile Include="Controllers\MesDemAjoutsController.cs" />
+    <Compile Include="Controllers\MotifsRejetsController.cs" />
+    <Compile Include="Controllers\RH\FonctionsUsersController.cs" />
     <Compile Include="Controllers\RH\RhCongeMenuController.cs" />
     <Compile Include="Controllers\RH\RhAutorisationMenuController.cs" />
     <Compile Include="Controllers\RH\RhAttestationMenuController.cs" />
@@ -326,18 +335,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202102040951018_m1.cs" />
-    <Compile Include="Migrations\202102040951018_m1.Designer.cs">
-      <DependentUpon>202102040951018_m1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DA_Budget.cs" />
+    <Compile Include="Models\DA_CodesArticlesSage.cs" />
     <Compile Include="Models\DA_Demande.cs" />
+    <Compile Include="Models\DA_Demandee.cs" />
     <Compile Include="Models\DA_Fournisseurs.cs" />
     <Compile Include="Models\DA_Labo.cs" />
     <Compile Include="Models\DA_Materiels.cs" />
+    <Compile Include="Models\DA_Materiels_Dem.cs" />
+    <Compile Include="Models\DA_Produits.cs" />
+    <Compile Include="Models\DA_ProduitsDem.cs" />
     <Compile Include="Models\DA_TypesAchats.cs" />
+    <Compile Include="Models\DA_WorkflowTypAch.cs" />
+    <Compile Include="Models\Dictionnaire.cs" />
     <Compile Include="Models\E_DiffEval.cs" />
     <Compile Include="Models\E_ListEvaluationDiffus_Historiq.cs" />
     <Compile Include="Models\E_ResultatFormation_Historiq.cs" />
@@ -359,12 +371,14 @@
     <Compile Include="Models\E_ModelView.cs" />
     <Compile Include="Models\DA_ListesGammes.cs" />
     <Compile Include="Models\MesDemAjout.cs" />
+    <Compile Include="Models\MotifsRejet.cs" />
     <Compile Include="Models\RH\Attestation.cs" />
     <Compile Include="Models\RH\Autorisation.cs" />
     <Compile Include="Models\RH\AutorisationViewModels.cs" />
     <Compile Include="Models\RH\Calendrier_Direction.cs" />
     <Compile Include="Models\RH\Commande.cs" />
     <Compile Include="Models\RH\CommandeL.cs" />
+    <Compile Include="Models\RH\FonctionsUsers.cs" />
     <Compile Include="Models\RH\Serveur.cs" />
     <Compile Include="Models\RH\medicament.cs" />
     <Compile Include="Models\RH\Conge.cs" />
@@ -1152,6 +1166,48 @@
     <Content Include="Views\E_MenuAdmMedicis\Index.cshtml" />
     <Content Include="Views\E_MenuRH\Index.cshtml" />
     <Content Include="Views\E_MenuElearning\Index.cshtml" />
+    <Content Include="Views\FonctionsUsers\Create.cshtml" />
+    <Content Include="Views\FonctionsUsers\Delete.cshtml" />
+    <Content Include="Views\FonctionsUsers\Details.cshtml" />
+    <Content Include="Views\FonctionsUsers\Edit.cshtml" />
+    <Content Include="Views\FonctionsUsers\Index.cshtml" />
+    <Content Include="Views\DA_CodesArticlesSage\Create.cshtml" />
+    <Content Include="Views\DA_CodesArticlesSage\Delete.cshtml" />
+    <Content Include="Views\DA_CodesArticlesSage\Details.cshtml" />
+    <Content Include="Views\DA_CodesArticlesSage\Edit.cshtml" />
+    <Content Include="Views\DA_CodesArticlesSage\Index.cshtml" />
+    <Content Include="Views\DA_Materiels_Dem\Create.cshtml" />
+    <Content Include="Views\DA_Materiels_Dem\Delete.cshtml" />
+    <Content Include="Views\DA_Materiels_Dem\Details.cshtml" />
+    <Content Include="Views\DA_Materiels_Dem\Edit.cshtml" />
+    <Content Include="Views\DA_Materiels_Dem\Index.cshtml" />
+    <Content Include="Views\DA_Materiels_Dem\Materiels_Dem.cshtml" />
+    <Content Include="Views\DA_ProduitsDem\Create.cshtml" />
+    <Content Include="Views\DA_ProduitsDem\Delete.cshtml" />
+    <Content Include="Views\DA_ProduitsDem\Details.cshtml" />
+    <Content Include="Views\DA_ProduitsDem\Edit.cshtml" />
+    <Content Include="Views\DA_ProduitsDem\Index.cshtml" />
+    <Content Include="Views\DA_ProduitsDem\Produits_Dem.cshtml" />
+    <Content Include="Views\DA_Produits\Create.cshtml" />
+    <Content Include="Views\DA_Produits\Delete.cshtml" />
+    <Content Include="Views\DA_Produits\Details.cshtml" />
+    <Content Include="Views\DA_Produits\Edit.cshtml" />
+    <Content Include="Views\DA_Produits\Index.cshtml" />
+    <Content Include="Views\DA_WorkflowTypAch\Create.cshtml" />
+    <Content Include="Views\DA_WorkflowTypAch\Delete.cshtml" />
+    <Content Include="Views\DA_WorkflowTypAch\Details.cshtml" />
+    <Content Include="Views\DA_WorkflowTypAch\Edit.cshtml" />
+    <Content Include="Views\DA_WorkflowTypAch\Index.cshtml" />
+    <Content Include="Views\Dictionnaires\Create.cshtml" />
+    <Content Include="Views\Dictionnaires\Delete.cshtml" />
+    <Content Include="Views\Dictionnaires\Details.cshtml" />
+    <Content Include="Views\Dictionnaires\Edit.cshtml" />
+    <Content Include="Views\Dictionnaires\Index.cshtml" />
+    <Content Include="Views\MotifsRejets\Create.cshtml" />
+    <Content Include="Views\MotifsRejets\Delete.cshtml" />
+    <Content Include="Views\MotifsRejets\Details.cshtml" />
+    <Content Include="Views\MotifsRejets\Edit.cshtml" />
+    <Content Include="Views\MotifsRejets\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\images_accueil\" />
@@ -1163,11 +1219,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202102040951018_m1.resx">
-      <DependentUpon>202102040951018_m1.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

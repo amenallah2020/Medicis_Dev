@@ -1,17 +1,22 @@
 ﻿@{
+
     if (ViewContext.RouteData.Values["action"].ToString() == "Consult" &&
     ViewContext.RouteData.Values["controller"].ToString() == "E_QCM")
     {
         Layout = "~/Views/Shared/_LayoutEval.cshtml";
     }
-    else if((ViewContext.RouteData.Values["controller"].ToString() == "DA_Demande") ||
+    else if ((ViewContext.RouteData.Values["controller"].ToString() == "DA_Demande") ||
 (ViewContext.RouteData.Values["controller"].ToString() == "DA_TypesAchats") ||
 (ViewContext.RouteData.Values["controller"].ToString() == "DA_TypesActions") ||
 (ViewContext.RouteData.Values["controller"].ToString() == "DA_ListesGammes") ||
 (ViewContext.RouteData.Values["controller"].ToString() == "DA_Labo") ||
 (ViewContext.RouteData.Values["controller"].ToString() == "DA_Fournisseurs") ||
 (ViewContext.RouteData.Values["controller"].ToString() == "DA_Materiels") ||
-
+(ViewContext.RouteData.Values["controller"].ToString() == "DA_Budget") ||
+(ViewContext.RouteData.Values["controller"].ToString() == "DA_Materiels_Dem") ||
+(ViewContext.RouteData.Values["controller"].ToString() == "DA_Produits") ||
+(ViewContext.RouteData.Values["controller"].ToString() == "DA_ProduitsDem") ||
+(ViewContext.RouteData.Values["controller"].ToString() == "DA_WorkflowTypAch") ||
 (ViewContext.RouteData.Values["controller"].ToString() == "EMenuEvaluationUser") ||
 (ViewContext.RouteData.Values["controller"].ToString() == "E_EvalRealiseeUser") ||
 (ViewContext.RouteData.Values["controller"].ToString() == "EMenuFormateur") ||
@@ -31,15 +36,17 @@
 (ViewContext.RouteData.Values["controller"].ToString() == "E_GrpByUsr") ||
 (ViewContext.RouteData.Values["controller"].ToString() == "E_listeUsr") ||
 (ViewContext.RouteData.Values["controller"].ToString() == "E_listFormationDiffus"))
-{
-        Layout = "~/Views/Shared/_Layout1.cshtml";
+    {
+        
+            Layout = "~/Views/Shared/_Layout1.cshtml";
+        }
 
+
+
+    else
+    {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+        }
+
+        // Layout = "~/Views/Shared/_Layout2.cshtml";
     }
-
-else
-{
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
-
-    // Layout = "~/Views/Shared/_Layout2.cshtml";
-}

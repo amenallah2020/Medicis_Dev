@@ -21,6 +21,9 @@ namespace RHEVENT.Controllers
             ViewBag.nom_prenom = user.nom + " " + user.prenom;
             ViewBag.email = user.Email;
 
+            string demandeurr = user.nom + " " + user.prenom;
+            Session["userconnecté"] = demandeurr;
+
             Session["auth"] = "authenticated";
 
             if (user.EmailConfirmed == false )
