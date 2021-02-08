@@ -11,6 +11,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using OfficeOpenXml;
 using RHEVENT.Models;
 
 namespace RHEVENT.Controllers
@@ -646,6 +647,186 @@ namespace RHEVENT.Controllers
             }
 
             return View(e_QCM);
+        }
+
+        public ActionResult Exporter(string id, string searchStringCodeF, string searchStringObjet, string searchStringUsr, string Etat)
+        {
+
+            string pp = Session["Cdf"].ToString();
+
+            ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+
+            string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+            SqlConnection con = new SqlConnection(constr);
+            con.Open();
+
+            
+
+            ViewData["CurrentFilterCodeF"] = searchStringCodeF;
+            ViewData["CurrentFilterUsr"] = searchStringUsr;
+            ViewData["CurrentFilterObjet"] = searchStringObjet;
+            ViewData["CurrentFilterEtat"] = Etat;
+
+            List<E_ResultFormation> list = new List<E_ResultFormation>();
+
+
+            if (!String.IsNullOrEmpty(searchStringCodeF) || !String.IsNullOrEmpty(searchStringUsr) || !String.IsNullOrEmpty(searchStringObjet) || (Etat != null))
+            {
+                var r = (from m in db.e_ListFormationDiffus
+                         join nn in db.E_ResultFormation on m.Code_formt equals nn.Code_Formation
+                         join p in db.E_Formation on m.Code_formt equals p.Code
+                         where m.MatFormateur == user.matricule && m.Code_formt == id
+                         select new { m.Code_formt, m.Objet, m.Mat_usr, m.Nom_usr, m.deadline, m.DateDiffus, Etat = (nn.Resultat == "Complete" ? "Complete" : "Incomplete") }).Distinct();
+
+
+
+                E_FormationController.searchTermCodeF = "searchStringCodeF";
+                E_FormationController.ValTermCodeF = searchStringCodeF;
+
+                E_FormationController.searchTermUsr = "searchStringUsr";
+                E_FormationController.ValTermUsr = searchStringUsr;
+
+                E_FormationController.searchTermObjet = "searchStringObjet";
+                E_FormationController.ValTermObjet = searchStringObjet;
+
+                if (!String.IsNullOrEmpty(searchStringCodeF))
+                    r = r.Where(s => s.Code_formt.ToLower().Contains(searchStringCodeF.ToLower()));
+
+                if (!String.IsNullOrEmpty(searchStringObjet))
+                    r = r.Where(s => s.Objet.ToLower().Contains(searchStringCodeF.ToLower()));
+
+                if (!String.IsNullOrEmpty(searchStringUsr))
+                    r = r.Where(s => s.Nom_usr.ToLower().Contains(searchStringUsr.ToLower()));
+
+                if (!String.IsNullOrEmpty(Etat))
+                    r = r.Where(s => s.Etat == Etat);
+
+
+                foreach (var ee in r)
+                {
+                    E_ResultFormation e_ResultFormation = new E_ResultFormation();
+
+                    e_ResultFormation.Code_Formation = ee.Code_formt;
+
+                    e_ResultFormation.ObjForm = ee.Objet;
+
+                    e_ResultFormation.MatUser = ee.Mat_usr;
+
+                    e_ResultFormation.Usr = ee.Nom_usr;
+
+                    if (ee.DateDiffus.ToString() != "")
+                    {
+                        e_ResultFormation.DateTerm = Convert.ToDateTime(ee.DateDiffus.ToString());
+                    }
+                    e_ResultFormation.DeadLine = Convert.ToDateTime(ee.DateDiffus.ToString());
+
+                    e_ResultFormation.Etat = ee.Etat;
+
+                    list.Add(e_ResultFormation);
+
+                }
+
+                ExcelPackage pck2 = new ExcelPackage();
+
+                ExcelWorksheet ws2 = pck2.Workbook.Worksheets.Add("Statistique de formation");
+                ws2.Cells["A1"].Value = "Formation";
+                ws2.Cells["B1"].Value = "Objet formation";
+                ws2.Cells["C1"].Value = "Utilisateur";
+                ws2.Cells["D1"].Value = "Date formation";
+                ws2.Cells["E1"].Value = "Date limite";
+                ws2.Cells["F1"].Value = "Etat";
+
+                int rowStart2 = 2;
+                int jour2 = 0;
+
+                foreach (var item in list)
+                {
+                    //   jour++;
+                    ws2.Cells[String.Format("A{0}", rowStart2)].Value = item.Code_Formation;
+                    ws2.Cells[String.Format("B{0}", rowStart2)].Value = item.ObjForm;
+                    ws2.Cells[String.Format("C{0}", rowStart2)].Value = item.Usr;
+                    ws2.Cells[String.Format("D{0}", rowStart2)].Value = item.DateTerm.ToString();
+                    ws2.Cells[String.Format("E{0}", rowStart2)].Value = item.DeadLine.ToString();
+                    ws2.Cells[String.Format("F{0}", rowStart2)].Value = item.Etat;
+                    rowStart2++;
+                }
+
+                //  return RedirectToAction(jour + "");
+                ws2.Cells["A:AZ"].AutoFitColumns();
+                Response.Clear();
+                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                Response.AddHeader("Content-disposition", "attachment:filename=" + "Etatattestations.xlsx");
+                Response.BinaryWrite(pck2.GetAsByteArray());
+                Response.End();
+                return View();
+                
+            }
+
+            DataTable dt = new DataTable();
+
+            SqlDataAdapter da;
+            da = new SqlDataAdapter(" select distinct  E_ListFormationDiffus.Code_formt, E_ListFormationDiffus.Objet ObjForm, E_ListFormationDiffus.Mat_usr, E_ListFormationDiffus.Nom_usr, E_ListFormationDiffus.deadline, E_ResultFormation.DateTerm , case when(E_ResultFormation.Resultat = 'Complete') then 'Complete' else 'Incomplete' end as Etat from E_ListFormationDiffus left join E_ResultFormation on E_ResultFormation.Code_Formation = E_ListFormationDiffus.Code_formt inner join E_Formation on E_Formation.Code = E_ListFormationDiffus.Code_formt where E_Formation.Matricule_Formateur = " + user.matricule + " and E_ListFormationDiffus.Code_formt = '" + id + "' ", con);
+            da.Fill(dt);
+
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                E_ResultFormation e_ResultFormation = new E_ResultFormation();
+
+                e_ResultFormation.Code_Formation = dt.Rows[i]["Code_formt"].ToString();
+
+                e_ResultFormation.ObjForm = dt.Rows[i]["ObjForm"].ToString();
+
+                e_ResultFormation.MatUser = dt.Rows[i]["Mat_usr"].ToString();
+
+                e_ResultFormation.Usr = dt.Rows[i]["Nom_usr"].ToString();
+
+                if (dt.Rows[i]["DateTerm"].ToString() != "")
+                {
+                    e_ResultFormation.DateTerm = Convert.ToDateTime(dt.Rows[i]["DateTerm"].ToString());
+                }
+                e_ResultFormation.DeadLine = Convert.ToDateTime(dt.Rows[i]["DeadLine"].ToString());
+
+                e_ResultFormation.Etat = dt.Rows[i]["Etat"].ToString();
+
+                list.Add(e_ResultFormation);
+
+            }
+
+
+            ExcelPackage pck = new ExcelPackage();
+
+            ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Statistique de formation");
+            ws.Cells["A1"].Value = "Formation";
+            ws.Cells["B1"].Value = "Objet formation";
+            ws.Cells["C1"].Value = "Utilisateur";
+            ws.Cells["D1"].Value = "Date formation";
+            ws.Cells["E1"].Value = "Date limite";
+            ws.Cells["F1"].Value = "Etat";
+
+            int rowStart = 2;
+            int jour = 0;
+
+            foreach (var item in list)
+            {
+                //   jour++;
+                ws.Cells[String.Format("A{0}", rowStart)].Value = item.Code_Formation;
+                ws.Cells[String.Format("B{0}", rowStart)].Value = item.ObjForm;
+                ws.Cells[String.Format("C{0}", rowStart)].Value = item.Usr;
+                ws.Cells[String.Format("D{0}", rowStart)].Value = item.DateTerm.ToShortDateString();
+                ws.Cells[String.Format("E{0}", rowStart)].Value = item.DeadLine.ToShortDateString();
+                ws.Cells[String.Format("F{0}", rowStart)].Value = item.Etat;
+                rowStart++;
+            }
+
+            //  return RedirectToAction(jour + "");
+            ws.Cells["A:AZ"].AutoFitColumns();
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("Content-disposition", "attachment:filename=" + "Etatattestations.xlsx");
+            Response.BinaryWrite(pck.GetAsByteArray());
+            Response.End();
+            return View();
         }
 
 
@@ -1439,6 +1620,10 @@ namespace RHEVENT.Controllers
             ViewData["CurrentFilterCodeF"] = searchStringCodeF;
             ViewData["CurrentFilterUsr"] = searchStringUsr;
             ViewData["CurrentFilterObjet"] = searchStringObjet;
+
+            ViewData["CurrentFilterEtat"] = Etat;
+
+            Session["Cdf"] = id;
 
             List<E_ResultFormation> list = new List<E_ResultFormation>();
 

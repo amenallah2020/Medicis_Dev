@@ -62,7 +62,7 @@ namespace RHEVENT.Controllers
 
                 if (count != 0)
                 { 
-                    ViewBag.Bloq = "La formation " + codeF + " est déjà diffusée à " + dt3.Rows[j]["NomPrenom"].ToString() + " de groupe " + dt3.Rows[j]["Code_grp"].ToString() + " !";
+                    ViewBag.Bloq = "La diffusion a été annulée : la formation " + codeF + " est déjà diffusée à " + dt3.Rows[j]["NomPrenom"].ToString() + " de groupe " + dt3.Rows[j]["Code_grp"].ToString() + " !";
 
                     return RedirectToAction("Index", "E_GrpByUsr", new { id = codeF, bloq = @ViewBag.Bloq });
                 }
