@@ -1,0 +1,90 @@
+﻿@model IEnumerable<RHEVENT.Models.DA_LaboUser>
+@*@model RHEVENT.Models.DA_LaboUser*@
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Utilisateur : @ViewBag.userr</h3>
+
+<br /><br />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <table class="table table-striped table-bordered " style="font-size:14px">
+
+
+            <tr>
+                <th style="width:7%;">
+                    <input type="checkbox" id="checkBoxAll" />  Tous
+                </th>
+                <th style="color:blue">
+                    @Html.DisplayNameFor(model => model.Laboratoire)
+                </th>
+
+
+            </tr>
+
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+            <tr>
+                @*<td style="color:black; font-size:12px" align=center>
+                    @Html.CheckBoxFor(modelItem => item.Etat)
+                </td>*@
+                
+                @if (item.Etat == 1)
+        {
+            <td style="color:black; font-size:12px" align=center>
+                <input type="checkbox" name="Laboo" class="chkCheckBoxId" checked  value="@item.Laboratoire"/>
+            </td>
+        }
+        else
+
+        {
+            <td style="color:black; font-size:12px" align=center>
+                <input type="checkbox" name="Laboo" class="chkCheckBoxId"  value="@item.Laboratoire"/>
+            </td>
+        }
+
+                <td style="color:black; font-size:12px">
+                    @Html.DisplayFor(modelItem => item.Laboratoire)
+                </td>
+            </tr>
+                }
+
+            }
+        </table>
+
+        <br /><br />
+        <div class="form-group">
+            <div class=" col-md-10">
+                <input type="submit" value="Enregistrer" class="btn btn-success" />
+                @Html.ActionLink(
+            linkText: "Retour",
+            actionName: "Index",
+            controllerName: "ApplicationUsers"
+            )
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#checkBoxAll').click(function () {
+                if ($(this).is(":checked", true))
+                    $('.chkCheckBoxId').prop('checked', true);
+                else
+                    $('.chkCheckBoxId').prop('checked', false);
+            });
+        });
+    </script>
+}

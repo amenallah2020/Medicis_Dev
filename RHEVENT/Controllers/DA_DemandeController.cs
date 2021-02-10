@@ -24,61 +24,82 @@ namespace RHEVENT.Controllers
         public ActionResult DemandesAll()
         {
             ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
-            string fonctionn = user.fonction;
             string matriculee = user.matricule;
-            string demandeurr = user.nom + " " + user.prenom;
-            ViewBag.demandeurr = demandeurr;
-            Session["userconnecté"] = demandeurr;
 
-            string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
-            SqlConnection con = new SqlConnection(constr);
-            con.Open();
-            SqlDataAdapter da = new SqlDataAdapter("SELECT TypeAchat,Statut,Id FROM DA_Demande ", con);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
+            var list = (from m in db.DA_Demande
+                        join n in db.DA_DemUsersTraitees
+                        on m.Réference equals n.Reference
+                        where n.Matricule == matriculee
+                        orderby m.Date_action descending
+                        select m);
+
 
             DA_Demande dem = new DA_Demande();
-            List<DA_Demande> listee = new List<DA_Demande>();
+            dem.listesDemandes = list.ToList();
 
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                string typeachat = dt.Rows[i][0].ToString();
-                int Statut =Convert.ToInt32(dt.Rows[i][1].ToString());
-                int id = Convert.ToInt32(dt.Rows[i][2].ToString());
-
-                SqlDataAdapter da1 = new SqlDataAdapter("SELECT Num FROM DA_WorkflowTypAch where Id_type =(SELECT Id FROM DA_TypesAchats where TypeAchat ='" + typeachat + "') and Intervenant='" + fonctionn + "' ", con);
-                DataTable dt1 = new DataTable();
-                da1.Fill(dt1);
-                int numer = 999;
-                if (dt1.Rows.Count > 0)
-                {
-                    numer = Convert.ToInt32(dt1.Rows[0][0].ToString());
-                }
-                
-                con.Close();
-
-                if(Statut >= numer)
-                {
-                    DA_Demande dA_Demande = db.DA_Demande.Find(id);
-                    listee.Add(dA_Demande);
-                }
-                
-                dem.listesDemandes = listee.ToList();
-                
-            }
             return View(dem);
+
+            
         }
 
         // GET: DA_Demande
 
-        public ActionResult demande_dem(string id, string statut, string dem)
+        public ActionResult demande_dem(string id, string statut, string dem,string labor)
         {
             Session["reff"] = id;
             Session["statut"] = statut;
             Session["demandeure"] = dem;
+            Session["labbb"] = labor;
             return RedirectToAction("demande");
         }
-       
+
+        public ActionResult demande_dem1(string id,int rowid)
+        {
+            Session["reff"] = id;
+            Session["idd"] = rowid;
+            return RedirectToAction("demandeTraitee");
+        }
+
+        public ActionResult demandeTraitee()
+        {
+
+            ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+            string demandeurr = user.nom + " " + user.prenom;
+            ViewBag.demandeurr = demandeurr;
+            Session["userconnecté"] = demandeurr;
+
+            string reference = Session["reff"].ToString();
+            if (Session["reff"] != null)
+            {
+
+
+                var list1 = (from m in db.DA_Budget
+                             where m.Réference == reference
+                             orderby m.Fournisseur
+                             select m);
+                var list2 = (from m in db.DA_ProduitsDem
+                             where m.Réference == reference
+                             orderby m.Laboratoire
+                             select m);
+
+
+                DA_Demandee demandee = new DA_Demandee();
+
+                DA_Demande dem = db.DA_Demande.Find(Session["idd"]);
+
+
+                demandee.listesbudget = list1.ToList();
+                demandee.listeproduits = list2.ToList();
+
+                demandee.dadem = dem;
+
+                return View(demandee);
+            }
+            return RedirectToAction("DemandesAll");
+        }
+        
+
+
         public ActionResult demande(/*string id*/)
         {
             string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
@@ -485,17 +506,25 @@ namespace RHEVENT.Controllers
             ViewBag.demandeurr = demandeurr;
             Session["userconnecté"] = demandeurr;
 
+            var listlabs = (from m in db.DA_LaboUser
+                         where m.Matricule ==user.matricule && m.Etat==1
+                         orderby m.Laboratoire
+                         select m);
+
+
             DA_Demande dem = new DA_Demande();
-            dem.listesLabo = db.DA_Labo.OrderBy(obj => obj.Laboratoire).ToList<DA_Labo>();
+            //dem.listesLabo = db.DA_Labo.OrderBy(obj => obj.Laboratoire).ToList<DA_Labo>();
+            //dem.listesLabo1 = listlabs.ToList();
             dem.listesachats = db.DA_TypesAchats.OrderBy(obj => obj.TypeAchat).ToList<DA_TypesAchats>();
             dem.listesactions = db.DA_TypesActions.OrderBy(obj => obj.TypeAction).ToList<DA_TypesActions>();
             dem.Date_demande = DateTime.Now;
-            ViewData.Model = dem;
+            //ViewData.Model = dem;
 
             var list1 = (from m in db.DA_TypesAchats
                          orderby m.TypeAchat
                          select m);
             ViewBag.liste1 = list1.ToList();
+            ViewBag.listlabs = listlabs.ToList();
 
             string fonctionn = user.fonction;
             string matriculee = user.matricule;
@@ -594,12 +623,16 @@ namespace RHEVENT.Controllers
 
                     //dA_Demande.Date_reception = Date_reception;
                     //dA_Demande.Date_action = Date_action;
-                    Session["statut"] = "-1";
+                   
                     db.DA_Demande.Add(dA_Demande);
                     try
                     {
                         db.SaveChanges();
                         Session["reff"] = derniere_ref;
+                        Session["labbb"] = dA_Demande.Labo;
+                        Session["statut"] = "-1";
+                        Session["demandeure"] = user.nom + " " + user.prenom;
+                        Session["userconnecté"] = user.nom + " " + user.prenom;
                         return RedirectToAction("Create", "DA_Budget");
                     }
                     catch (DbEntityValidationException ex)
@@ -625,6 +658,13 @@ namespace RHEVENT.Controllers
                          orderby m.TypeAchat
                          select m);
             ViewBag.liste1 = list1.ToList();
+
+            ApplicationUser user1 = db.Users.Find(User.Identity.GetUserId());
+            var listlabs = (from m in db.DA_LaboUser
+                            where m.Matricule == user1.matricule && m.Etat == 1
+                            orderby m.Laboratoire
+                            select m);
+            ViewBag.listlabs = listlabs.ToList();
 
             return View(dA_Demande);
             
@@ -723,6 +763,11 @@ namespace RHEVENT.Controllers
             }
             else
             {
+                ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+                DA_DemUsersTraitees demusertrait = new DA_DemUsersTraitees();
+                demusertrait.Matricule = user.matricule;
+                demusertrait.Reference = Session["reff"].ToString();
+
                 con.Open();
                 SqlDataAdapter da = new SqlDataAdapter("SELECT Statut,TypeAchat,Validee FROM DA_Demande where Réference ='" + Session["reff"].ToString() + "'", con);
                 DataTable dt = new DataTable();
@@ -743,6 +788,9 @@ namespace RHEVENT.Controllers
                         con.Open();
                         cmd.ExecuteNonQuery();
                         con.Close();
+
+                        db.DA_DemUsersTraitees.Add(demusertrait);
+                        db.SaveChanges();
                         return RedirectToAction("MesDemandes");
                     }
                     else if (Statutt == "0")
@@ -756,6 +804,9 @@ namespace RHEVENT.Controllers
                         con.Open();
                         cmd.ExecuteNonQuery();
                         con.Close();
+
+                        db.DA_DemUsersTraitees.Add(demusertrait);
+                        db.SaveChanges();
                         return RedirectToAction("DemendesEnAttente");
                     }
                     else
@@ -793,9 +844,12 @@ namespace RHEVENT.Controllers
                             cmd1.ExecuteNonQuery();
                             con.Close();
                         }
+                        db.DA_DemUsersTraitees.Add(demusertrait);
+                        db.SaveChanges();
                         return RedirectToAction("DemendesEnAttente");
                     }
                     
+
                 }
                 else
                 {
@@ -837,6 +891,11 @@ namespace RHEVENT.Controllers
             }
             else
             {
+                ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+                DA_DemUsersTraitees demusertrait = new DA_DemUsersTraitees();
+                demusertrait.Matricule = user.matricule;
+                demusertrait.Reference = Session["reff"].ToString();
+
                 string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
                 SqlConnection con = new SqlConnection(constr);
                 con.Open();
@@ -854,7 +913,10 @@ namespace RHEVENT.Controllers
                     SqlCommand cmd1 = new SqlCommand("update DA_Demande set Statut = '-1',Etat='-1',etat_prochain='0',AvecSans='99',MotifRejet='" + MotifRejet + "' where  Réference='" + Session["reff"].ToString() + "'", con);
                     cmd1.ExecuteNonQuery();
                 }
-                
+
+
+                db.DA_DemUsersTraitees.Add(demusertrait);
+                db.SaveChanges();
                 con.Close();
                 return RedirectToAction("DemendesEnAttente");
             }

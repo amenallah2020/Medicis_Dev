@@ -250,7 +250,7 @@
     <tr style="text-align:center;vertical-align:central">
         <td width="170px">
             @*@Html.ActionLink(item.Réference, "Edit", new { id = item.Id }, new { @class = "edit" })*@
-            @Html.ActionLink(item.Réference, "demande_dem", "DA_Demande", new { id = item.Réference, statut = item.Statut, dem = item.Demandeur }, new { @class = "edit" })
+            @Html.ActionLink(item.Réference, "demande_dem", "DA_Demande", new { id = item.Réference, statut = item.Statut, dem = item.Demandeur, labor = item.Labo }, new { @class = "edit" })
 
             @*@Html.DisplayFor(modelItem => item.Réference)*@
         </td>
@@ -341,8 +341,8 @@
             @*<input type="submit" value="      " class="details" onclick="location.href='@Url.Action("Details","DA_Demande", new { id = item.Id })'" />*@
             @* <input type="submit" value="      " class="supp" onclick="location.href='@Url.Action("Delete","DA_Demande", new { id = item.Id })'" />*@
             @*<input type="submit" title="Matériels" value="      " class="materiels" name="@item.Réference" onclick="location.href='@Url.Action("Materiels_Dem","DA_Materiels_Dem", new { id = item.Réference })'" />*@
-            <input type="submit" title="Détails Budget" value="      " class="budget" name="@item.Réference" onclick="location.href='@Url.Action("Budget_Dem","DA_Budget", new { id = item.Réference, statut=item.Statut, dem=item.Demandeur })'" />
-            <input type="submit" title="Labo & Produits" value="      " class="labo" name="@item.Réference" onclick="location.href='@Url.Action("Produits_Dem","DA_ProduitsDem", new { id = item.Réference, statut=item.Statut, dem=item.Demandeur })'" />
+            <input type="submit" title="Détails Budget" value="      " class="budget" name="@item.Réference" onclick="location.href='@Url.Action("Budget_Dem","DA_Budget", new { id = item.Réference, statut=item.Statut, dem=item.Demandeur,labor=item.Labo })'" />
+            <input type="submit" title="Labo & Produits" value="      " class="labo" name="@item.Réference" onclick="location.href='@Url.Action("Produits_Dem","DA_ProduitsDem", new { id = item.Réference, statut=item.Statut, dem=item.Demandeur,labor=item.Labo })'" />
             @*<input type="submit" title="Détails Demande" value="      " class="details" name="@item.Réference" onclick="location.href='@Url.Action("demande_dem","DA_Demande", new { id = item.Réference })'" />*@
 
 

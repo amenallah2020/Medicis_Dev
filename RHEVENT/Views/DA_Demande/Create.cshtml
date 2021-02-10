@@ -61,7 +61,8 @@
                     </td>
 
                     <td colspan="3">
-                        @Html.DropDownListFor(model => model.Labo, new SelectList(Model.listesLabo, "Laboratoire", "Laboratoire"), "Selectionnez un laboratoire", new { @class = "width-textarea form-control" })
+                        @*@Html.DropDownListFor(model => model.Labo, new SelectList(Model.listesLabo, "Laboratoire", "Laboratoire"), "Selectionnez un laboratoire", new { @class = "width-textarea form-control" })*@
+                        @Html.DropDownListFor(model => model.Labo, new SelectList(@ViewBag.listlabs, "Laboratoire", "Laboratoire"), "Selectionnez un laboratoire", new { @class = "width-textarea form-control" })
                         @Html.ValidationMessageFor(model => model.Labo, "", new { @class = "text-danger" })
                     </td>
                 </tr>

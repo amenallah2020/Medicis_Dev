@@ -33,6 +33,9 @@ namespace RHEVENT.Models
         public IEnumerable<DA_Produits> ProduitsCollection { get; set; }
 
         [NotMapped]
+        public IEnumerable<DA_Produits> ProduitsCollection1 { get; set; }
+
+        [NotMapped]
         public List<DA_Labo> listesLaboratoire { get; set; }
 
         [NotMapped]

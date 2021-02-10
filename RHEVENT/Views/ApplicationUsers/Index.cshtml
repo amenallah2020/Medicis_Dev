@@ -19,17 +19,18 @@
 </p>
 <div class="col-lg-12">
     <font size="2">
-        <table class="table" style="text-align:center">
+        <table class="table table-bordered border-primary"" style="text-align:center">
             <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.matricule)
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.nom)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.prenom)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.matricule)
-                </th>
+
 
                 <th>
                     @Html.DisplayNameFor(model => model.Email)
@@ -40,32 +41,39 @@
 
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.nom)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.prenom)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.matricule)
-                    </td>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-
-                    <td>
-                        <span class="badge badge-danger" style="color:blue;background-color:bisque"> @Html.ActionLink("Modifier", "Edit", new { id = item.Id }) </span>|
-                        <span class="badge badge-danger" style="color:blue;background-color:aliceblue"> @Html.ActionLink("Détails", "Details", new { id = item.Id }) </span> |
-                        <span class="badge badge-danger" style="color:blue;background-color:bisque"> @Html.ActionLink("Supprimer", "Delete", new { id = item.Id })</span> |
-                        <span class="badge badge-danger" style="color:blue;background-color:aliceblue">  @Html.ActionLink("Mot de passe", "ChangePassword", new { id = item.Id }) </span>|
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.matricule)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.prenom)
+                </td>
 
 
-                        <span class="badge badge-danger" style="color:blue;background-color:bisque"> @Html.ActionLink("Gérer le rôle", "ManageUserRoles", new { id = item.Id }) </span>
-                        @*<span class="badge badge-light" style="color:blue"> @Html.ActionLink("Role", "RoleIndex", new { id = item.Id })</span>*@
-                    </td>
-                </tr>
+                <td align="left">
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+
+                <td>
+                    <span class="badge badge-danger" style="color:blue;background-color:bisque"> @Html.ActionLink("Modifier", "Edit", new { id = item.Id }) </span>|
+                    <span class="badge badge-danger" style="color:blue;background-color:aliceblue"> @Html.ActionLink("Détails", "Details", new { id = item.Id }) </span> |
+                    <span class="badge badge-danger" style="color:blue;background-color:bisque"> @Html.ActionLink("Supprimer", "Delete", new { id = item.Id })</span> |
+                    <span class="badge badge-danger" style="color:blue;background-color:aliceblue">  @Html.ActionLink("Mot de passe", "ChangePassword", new { id = item.Id }) </span>|
+
+
+                    <span class="badge badge-danger" style="color:blue;background-color:bisque"> @Html.ActionLink("Gérer le rôle", "ManageUserRoles", new { id = item.Id }) </span>
+                    <span class="badge badge-danger" style="color:blue;background-color:aliceblue">
+                        @Html.ActionLink("Liste Labo", "LaboUser", "DA_Labo", new { matricule = item.matricule, nomprenom = item.NomPrenom }, null)
+                    </span>
+
+
+
+                    @*<span class="badge badge-light" style="color:blue"> @Html.ActionLink("Role", "RoleIndex", new { id = item.Id })</span>*@
+                </td>
+            </tr>
             }
 
         </table>

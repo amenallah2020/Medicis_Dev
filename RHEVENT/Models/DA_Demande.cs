@@ -82,6 +82,9 @@ namespace RHEVENT.Models
         public List<DA_Labo> listesLabo { get; set; }
 
         [NotMapped]
+        public List<DA_LaboUser> listesLabo1 { get; set; }
+
+        [NotMapped]
         public List<MotifsRejet> listeMotifs { get; set; }
 
 

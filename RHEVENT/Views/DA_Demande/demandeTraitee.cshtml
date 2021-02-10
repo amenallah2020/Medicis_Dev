@@ -1,0 +1,329 @@
+﻿@model RHEVENT.Models.DA_Demandee
+
+@{
+    ViewBag.Title = "Demande d'action";
+}
+
+<head>
+    <style>
+        .width-textarea {
+            max-width: 95%;
+            width: 95%;
+            border: solid;
+            border-width: thin;
+        }
+    </style>
+</head>
+<div style="margin-left:5%;margin-right:5%">
+
+    
+    @using (Html.BeginForm())
+    {
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <center>
+            <h2>
+                Demande d'action N°:
+                <span style="color:crimson">@Session["reff"].ToString().Substring(0, 4)</span>
+                <span style="color:cornflowerblue">@Session["reff"].ToString().Substring(4, 4)</span>
+                <span style="color:crimson">@Session["reff"].ToString().Substring(8, 10)</span>
+                <span style="color:cornflowerblue">@Session["reff"].ToString().Substring(18, 3)</span>
+            </h2>
+        </center>
+        <br />
+        
+        <table class="table table-borderless ">
+            <tr>
+
+                <td style="width:200px">
+                    @Html.LabelFor(model => model.dadem.TypeAchat)
+                </td>
+
+                <td colspan="3">
+                    @Html.DisplayFor(model => model.dadem.TypeAchat, new { @class = "width-textarea" })
+
+                </td>
+            </tr>
+
+            <tr>
+
+                <td>
+                    @Html.LabelFor(model => model.dadem.TypeAction)
+                </td>
+
+                <td colspan="3">
+                    @Html.DisplayFor(model => model.dadem.TypeAction, new { @class = "width-textarea" })
+
+                </td>
+            </tr>
+
+            <tr>
+
+                <td>
+                    @Html.LabelFor(model => model.dadem.Labo)
+                </td>
+
+                <td colspan="3">
+                    @Html.DisplayFor(model => model.dadem.Labo, new { @class = "width-textarea" })
+
+                </td>
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    @Html.LabelFor(model => model.dadem.Budget)
+                </td>
+
+                <td colspan="3">
+                    @Html.DisplayFor(model => model.dadem.Budget, new { @class = "width-textarea" })
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.dadem.Date_reception)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.dadem.Date_reception, new { htmlAttributes = new { @class = "form-control" } })
+                </td>
+                <td>
+                    @Html.LabelFor(model => model.dadem.Date_action)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.dadem.Date_action, new { htmlAttributes = new { @class = "form-control" } })
+                </td>
+            </tr>
+
+            <tr>
+
+                <td>
+                    @Html.LabelFor(model => model.dadem.Demandeur)
+                </td>
+
+                <td colspan="3">
+                    @Html.DisplayFor(model => model.dadem.Demandeur, new { @class = "width-textarea" })
+
+                </td>
+            </tr>
+            @if (@Html.DisplayFor(model => model.dadem.Argumentaires).ToString() != "")
+            {
+                <tr>
+                    <td>
+                        @Html.LabelFor(model => model.dadem.Argumentaires)
+                    </td>
+                    <td colspan="3">
+                        @Html.DisplayFor(model => model.dadem.Argumentaires, new { @class = "width-textarea" })
+                    </td>
+                </tr>
+            }
+        </table>
+
+    </div>
+    }
+   
+    <br />
+    <table>
+        <tr>
+            <td>
+               
+            </td>
+            <td style="width:10px"></td>
+            <td>
+                <h2>Détails Budget</h2>
+            </td>
+
+        </tr>
+    </table>
+
+    <br />
+
+    <table class="table table-bordered table-responsive border-primary" style="font-size:12px">
+        <tr style="background-color:aliceblue;text-align:center;vertical-align:central">
+
+            <th>
+                @Html.DisplayNameFor(model => model.dabudg.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dabudg.Article)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dabudg.Quantité)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.dabudg.PrixUnitaire)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dabudg.PlafondBudget)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dabudg.Total)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dabudg.Fournisseur)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dabudg.Date_Recp_Souh)
+            </th>
+            @if (@Html.DisplayFor(model => model.dadem.Validee).ToString() == "1")
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.dabudg.Date_Recp)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.dabudg.PourRecep)
+                </th>
+               
+               
+            }
+        </tr>
+
+        @foreach (var item in Model.listesbudget)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Article)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantité)
+            </td>
+            
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrixUnitaire)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PlafondBudget)
+                </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fournisseur)
+            </td>
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Date_Recp_Souh)
+            </td>
+
+
+            @if (@Html.DisplayFor(model => model.dadem.Validee).ToString() == "1")
+            {
+               
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date_Recp)
+                    </td>
+                
+                    <td>
+                       
+                        <div>
+                            @Html.DisplayFor(modelItem => item.PourRecep)
+                            %
+                        </div>
+                            
+                        
+                        
+                    </td>
+
+                   
+            }
+
+        </tr>
+        }
+
+    </table>
+
+    <br />
+    <table>
+        <tr>
+            <td>
+               
+            </td>
+            <td style="width:10px"></td>
+            <td>
+                <h2>Liste des Produits</h2>
+            </td>
+
+        </tr>
+    </table>
+
+    <br />
+    <table class="table table-bordered table-responsive border-primary" style="font-size:12px">
+        <tr style="background-color:aliceblue;text-align:center;vertical-align:central">
+
+           
+            <th>
+                @Html.DisplayNameFor(model => model.dabproduits.Laboratoire)
+            </th>
+            <th>
+                Produits
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dabproduits.Pourcentage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dabproduits.Montant)
+            </th>
+            
+        </tr>
+
+        @foreach (var item in Model.listeproduits)
+        {
+        <tr>
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.Laboratoire)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pourcentage)  %
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Montant)
+            </td>
+           
+        </tr>
+        }
+    </table>
+
+    
+
+    <br /><br />
+    @if ((@Html.DisplayFor(model => model.dadem.Etat)).ToString() == "100" && (@Html.DisplayFor(model => model.dadem.Statut)).ToString() == "100")
+    {
+    <table>
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.dadem.MotifRejet)
+            </td>
+            <td style="width:15px"></td>
+            <td>
+                @Html.DisplayFor(model => model.dadem.MotifRejet).ToString()
+            </td>
+        </tr>
+    </table>
+    }
+
+</div>
+
+
+
+    @section Scripts
+                {
+        @Scripts.Render("~/bundles/jqueryval")
+
+
+    }

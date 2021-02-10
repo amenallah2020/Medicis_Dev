@@ -246,6 +246,8 @@ namespace RHEVENT.Models
 
         public System.Data.Entity.DbSet<RHEVENT.Models.Serveur> Serveur { get; set; }
 
+        public System.Data.Entity.DbSet<RHEVENT.Models.DA_LaboUser> DA_LaboUser { get; set; }
+        public System.Data.Entity.DbSet<RHEVENT.Models.DA_DemUsersTraitees> DA_DemUsersTraitees { get; set; }
     }
 
 

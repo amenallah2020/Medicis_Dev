@@ -146,11 +146,12 @@ namespace RHEVENT.Controllers
             return View(budgett);
             //return View(db.<c.ToList());
         }
-        public ActionResult Budget_Dem(string id, string statut, string dem)
+        public ActionResult Budget_Dem(string id, string statut, string dem,string labor)
         {
             Session["reff"] = id;
             Session["statut"] = statut;
             Session["demandeure"] = dem;
+            Session["labbb"] = labor;
             return RedirectToAction("Create");
         }
        

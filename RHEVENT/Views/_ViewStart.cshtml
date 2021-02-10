@@ -35,18 +35,19 @@
 (ViewContext.RouteData.Values["controller"].ToString() == "E_listEvaluationDiffus") ||
 (ViewContext.RouteData.Values["controller"].ToString() == "E_GrpByUsr") ||
 (ViewContext.RouteData.Values["controller"].ToString() == "E_listeUsr") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "E_listFormationDiffus"))
+(ViewContext.RouteData.Values["controller"].ToString() == "E_listFormationDiffus") ||
+(ViewContext.RouteData.Values["controller"].ToString() == "E_MenuElearning"))
     {
-        
-            Layout = "~/Views/Shared/_Layout1.cshtml";
-        }
+
+        Layout = "~/Views/Shared/_Layout1.cshtml";
+    }
 
 
 
     else
     {
-            Layout = "~/Views/Shared/_Layout.cshtml";
-        }
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
 
-        // Layout = "~/Views/Shared/_Layout2.cshtml";
+    // Layout = "~/Views/Shared/_Layout2.cshtml";
     }

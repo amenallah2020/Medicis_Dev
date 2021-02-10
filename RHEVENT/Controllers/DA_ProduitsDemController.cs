@@ -49,6 +49,17 @@ namespace RHEVENT.Controllers
                         orderby m.Laboratoire
                         select m);
 
+            string labbb = Session["labbb"].ToString();
+            var listproduits = (from m in db.DA_Produits
+                                where m.Laboratoire == labbb
+                                orderby m.Désignation
+                                select m);
+
+
+            var listproduits1 = (from m in db.DA_Produits
+                                orderby m.Désignation
+                                select m);
+
             DA_ProduitsDem produitsdemande = new DA_ProduitsDem();
            
             if (Id != 0)
@@ -56,7 +67,8 @@ namespace RHEVENT.Controllers
                 produitsdemande = db.DA_ProduitsDem.Where(x => x.Id == Id).FirstOrDefault();
                 produitsdemande.SelectedCodeArray = produitsdemande.Code.Split(',').ToArray();
             }
-            produitsdemande.ProduitsCollection = db.DA_Produits.ToList();
+            produitsdemande.ProduitsCollection = listproduits.ToList();
+            produitsdemande.ProduitsCollection1 = listproduits1.ToList();
             produitsdemande.listesProduitsDem = list.ToList();
             produitsdemande.listesLaboratoire = db.DA_Labo.OrderBy(obj => obj.Laboratoire).ToList<DA_Labo>();
 
@@ -79,11 +91,12 @@ namespace RHEVENT.Controllers
             return View(produitsdemande);
         }
 
-        public ActionResult Produits_Dem(string id, string statut, string dem)
+        public ActionResult Produits_Dem(string id, string statut, string dem,string labor)
         {
             Session["reff"] = id;
             Session["statut"] = statut;
             Session["demandeure"] = dem;
+            Session["labbb"] = labor;
             return RedirectToAction("Create");
         }
 
@@ -158,7 +171,20 @@ namespace RHEVENT.Controllers
                 produitsdemande = db.DA_ProduitsDem.Where(x => x.Id == id).FirstOrDefault();
                 produitsdemande.SelectedCodeArray = produitsdemande.Code.Split(',').ToArray();
             }
-            produitsdemande.ProduitsCollection = db.DA_Produits.ToList();
+
+            string labbb = Session["labbb"].ToString();
+            var listproduits = (from m in db.DA_Produits
+                                where m.Laboratoire == labbb
+                                orderby m.Désignation
+                                select m);
+
+            var listproduits1 = (from m in db.DA_Produits
+                                 orderby m.Désignation
+                                 select m);
+
+            produitsdemande.ProduitsCollection = listproduits.ToList();
+            produitsdemande.ProduitsCollection1 = listproduits1.ToList();
+
             produitsdemande.listesLaboratoire = db.DA_Labo.OrderBy(obj => obj.Laboratoire).ToList<DA_Labo>();
 
             return View(produitsdemande);

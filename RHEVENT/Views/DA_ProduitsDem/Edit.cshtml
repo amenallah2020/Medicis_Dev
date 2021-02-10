@@ -10,67 +10,87 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
+    <div class="form-horizontal">
 
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.Réference)
-    <table class="table table-borderless ">
-        @*<tr>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Réference)
+        <table class="table table-borderless ">
+            @*<tr>
 
-            <td>
-                @Html.LabelFor(model => model.Réference)
-
-
-            </td>
-
-            <td colspan="3">
-                @Html.EditorFor(model => model.Réference, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Réference, "", new { @class = "text-danger" })
-            </td>
-        </tr>*@
-
-        <tr>
-
-            <td>
+                    <td>
+                        @Html.LabelFor(model => model.Réference)
 
 
-                @Html.LabelFor(model => model.Laboratoire)
-            </td>
+                    </td>
 
-            <td colspan="3">
+                    <td colspan="3">
+                        @Html.EditorFor(model => model.Réference, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Réference, "", new { @class = "text-danger" })
+                    </td>
+                </tr>*@
 
-                @Html.DropDownListFor(model => model.Laboratoire, new SelectList(Model.listesLaboratoire, "Laboratoire", "Laboratoire"), "Selectionnez un laboratoire", new { @class = "width-textarea form-control" })
+            <tr>
 
-                @*@Html.EditorFor(model => model.Laboratoire, new { htmlAttributes = new { @class = "form-control" } })*@
-                @Html.ValidationMessageFor(model => model.Laboratoire, "", new { @class = "text-danger" })
-            </td>
-        </tr>
-        <tr>
-
-            <td>
+                <td>
 
 
-                @Html.LabelFor(model => model.Pourcentage)
-            </td>
+                    @Html.LabelFor(model => model.Laboratoire)
+                </td>
+                @if (Session["labbb"] != null && Session["labbb"].ToString() == "INSTITUTIONNEL")
+                {
+                    <td colspan="3">
+                        @Html.DropDownListFor(model => model.Laboratoire, new SelectList(Model.listesLaboratoire, "Laboratoire", "Laboratoire"), "Selectionnez un laboratoire", new { @class = "width-textarea form-control" })
+                        @Html.ValidationMessageFor(model => model.Laboratoire, "", new { @class = "text-danger" })
+                    </td>
+                }
+                else if (Session["labbb"] != null)
+                {
+                    <td colspan="3">
 
-            <td colspan="3">
-                @Html.EditorFor(model => model.Pourcentage, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Pourcentage, "", new { @class = "text-danger" })
-            </td>
-        </tr>
-    </table>
-</div>
-    <div class="form-group">
-        @Html.HiddenFor(model => model.Id)
-        <label>Seléctionnez le(s) produit (s)</label>
-        @*@Html.DropDownListFor(model => model.Code, new MultiSelectList(Model.ProduitsCollection, "Id", "Désignation"), new { id = "normalDropDown"})*@
+                        @Html.EditorFor(model => model.Laboratoire, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = Session["labbb"].ToString() } })
+                        @Html.ValidationMessageFor(model => model.Laboratoire, "", new { @class = "text-danger" })
+                    </td>
+                }
+            </tr>
+            <tr>
 
-        @Html.ListBoxFor(model => model.SelectedCodeArray, new MultiSelectList(Model.ProduitsCollection, "Id", "Désignation"), new { id = "multiSelectDropDown", multiple = "multiple" })
+                <td>
 
-        <br /><br />
-        <input type="submit" value="Enregistrer" class="btn btn-info" />
+
+                    @Html.LabelFor(model => model.Pourcentage)
+                </td>
+
+                <td colspan="3">
+                    @Html.EditorFor(model => model.Pourcentage, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @max = "100", @step = "1", @oninput = "this.value|=0" } })
+                    @Html.ValidationMessageFor(model => model.Pourcentage, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+        </table>
     </div>
+    if (Session["labbb"] != null && Session["labbb"].ToString() == "INSTITUTIONNEL")
+    {
+        <div class="form-group">
+            @Html.HiddenFor(model => model.Id)
+            <label>Seléctionnez le(s) produit(s)</label>
+            @*@Html.DropDownListFor(model => model.Code, new MultiSelectList(Model.ProduitsCollection, "Désignation", "Désignation"), new { id = "normalDropDown"})*@
+            @Html.ListBoxFor(model => model.SelectedCodeArray, new MultiSelectList(Model.ProduitsCollection1, "Désignation", "Désignation"), new { id = "multiSelectDropDown", multiple = "multiple" })
+
+            <br /><br />
+            <input type="submit" value="Enregistrer" class="btn btn-info" />
+        </div>
+    }
+    else if (Session["labbb"] != null)
+    {
+        <div class="form-group">
+            @Html.HiddenFor(model => model.Id)
+            <label>Seléctionnez le(s) produit(s)</label>
+            @Html.ListBoxFor(model => model.SelectedCodeArray, new MultiSelectList(Model.ProduitsCollection, "Désignation", "Désignation"), new { id = "multiSelectDropDown", multiple = "multiple" })
+
+            <br /><br />
+            <input type="submit" value="Enregistrer" class="btn btn-info" />
+        </div>
+    }
 
 
 
@@ -84,10 +104,10 @@
 @section scripts{
     <script src="~/Scripts/chosen.jquery.min.js"></script>
     <script>
-            $(function () {
-                $("#multiSelectDropDown").chosen({
-                    width: "80%"
-                });
+        $(function () {
+            $("#multiSelectDropDown").chosen({
+                width: "80%"
             });
+        });
     </script>
 }

@@ -1,26 +1,45 @@
 ﻿<!DOCTYPE html>
 <html lang="fr">
-<html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta charset="utf-8" />
+
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="~/css/csslayout.css" rel="stylesheet" type="text/css" />
     <link href="~/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-
+    <link href="~/Content/Chosen/chosen.min.css" rel="stylesheet" />
 
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        li {
+            float: left;
+        }
+
+            li a {
+                display: block;
+                color: black;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+    </style>
 </head>
 
 
 @*<body onload="openNav()">*@
 <body>
-   
-        <div id="counter" style="visibility:hidden"></div>
-        <div id="loggedout" style="display:none"></div>
-     
+    @*<div id="counter" style="visibility:hidden"></div>
+        <div id="loggedout" style="display:none"></div>*@
+
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
@@ -34,140 +53,31 @@
                     <span class="fa-caret-down glyphicon glyphicon-align-left" aria-hidden="true"></span>
 
                 </button>
-                if (User.IsInRole("Admin_Medicis"))
+
+
+
+
+
+                if ((ViewContext.RouteData.Values["controller"].ToString() == "EMenuFormateur") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "E_Formation") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "E_ListFormationDiffus") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "E_GrpByUsr") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "E_listeUsr") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "E_listFormationDiffus") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "EMenuEvaluation") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "E_Evaluation") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "E_ListEvaluationDiffus") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "E_listEvaluationDiffus") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "EMenuFormUser") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "EMenuUser") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "EMenuEvaluationUser") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "EMenuEvalUser") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "E_EvalRealiseeUser") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "E_MenuElearning"))
                 {
-
-                    if ((ViewContext.RouteData.Values["controller"].ToString() == "ApplicationUsers") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "Role"))
+                    if (User.IsInRole("Admin_Medicis") || User.IsInRole("Elearning"))
                     {
-                        <button class="dropdown-btn active">
-                            Administration
-                            <i class="fa-caret-down glyphicon glyphicon-arrow-down"></i>
-                        </button>
-                        <div class="dropdown-container1">
-                            <a href="@Url.Action("Index", "Role")">Liste des roles</a>
-                            <a href="@Url.Action("Index", "ApplicationUsers")">Liste des utilisateurs</a>
-                        </div>
-                    }
-                    else
-                    {
-                        <button class="dropdown-btn">
-                            Administration
-                            <i class="fa-caret-down glyphicon glyphicon-arrow-down"></i>
-                        </button>
-                        <div class="dropdown-container">
-                            <a href="@Url.Action("Index", "Role")">Liste des roles</a>
-                            <a href="@Url.Action("Index", "ApplicationUsers")">Liste des utilisateurs</a>
-                        </div>
-                    }
 
-
-                }
-
-                if (User.IsInRole("RH") || User.IsInRole("Admin_Medicis"))
-                {
-
-                    if ((ViewContext.RouteData.Values["controller"].ToString() == "AdministrationRH") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "Demande") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "ExportEtat") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "Conge") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "Autorisation") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "Calendar") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "Calendrier_Direction") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "RhCongeMenu") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "RhAutorisationMenu") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "RhAttestationMenu"))
-                    {
-                        <button class="dropdown-btn active">
-                            RH
-                            <i class="fa-caret-down glyphicon glyphicon-play"></i>
-                        </button>
-                        <div class="dropdown-container1">
-                            @if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || User.IsInRole("Admin_Medicis"))
-                            {
-                                <a href="@Url.Action("Index", "AdministrationRH")">Administration RH</a>
-                            }
-
-                            @if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || (User.IsInRole("RH") && User.IsInRole("RH_Employer")) || (User.IsInRole("RH") && User.IsInRole("RH_Superieur_Hiéarchique")) || (User.IsInRole("RH") && User.IsInRole("RH_Directeur")) || User.IsInRole("Admin_Medicis"))
-                            {
-                                <a href="@Url.Action("Index", "RhAttestationMenu")">Attestaions</a>
-                            }
-
-                            @if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || (User.IsInRole("RH") && User.IsInRole("RH_Employer")) || (User.IsInRole("RH") && User.IsInRole("RH_Superieur_Hiéarchique")) || (User.IsInRole("RH") && User.IsInRole("RH_Directeur")) || User.IsInRole("Admin_Medicis"))
-                            {
-                                <a href="@Url.Action("Index", "RhAutorisationMenu")">Autorisation</a>
-                            }
-
-                            @if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || (User.IsInRole("RH") && User.IsInRole("RH_Employer")) || (User.IsInRole("RH") && User.IsInRole("RH_Superieur_Hiéarchique")) || (User.IsInRole("RH") && User.IsInRole("RH_Directeur")) || User.IsInRole("Admin_Medicis"))
-                            {
-                                <a href="@Url.Action("Index", "RhCongeMenu")">Congés</a>
-                            }
-
-                            @if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || (User.IsInRole("RH") && User.IsInRole("RH_Employer")) || (User.IsInRole("RH") && User.IsInRole("RH_Superieur_Hiéarchique")) || (User.IsInRole("RH") && User.IsInRole("RH_Directeur")) || User.IsInRole("Admin_Medicis"))
-                            {
-                                <a href="@Url.Action("Index", "Calendar")">Calendrier de service</a>
-                            }
-
-                            @if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || (User.IsInRole("RH") && User.IsInRole("RH_Directeur")) || User.IsInRole("Admin_Medicis"))
-                            {
-                                <a href="@Url.Action("CalendrierDirection", "Calendar")">Calendrier de direction</a>
-                            }
-
-                        </div>
-                    }
-                    else
-                    {
-                        <button class="dropdown-btn">
-                            RH
-                            <i class="fa-caret-down glyphicon glyphicon-play"></i>
-                        </button>
-                        <div class="dropdown-container">
-                            @if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || User.IsInRole("Admin_Medicis"))
-                            {
-                                <a href="@Url.Action("Index", "AdministrationRH")">Administration RH</a>
-                            }
-
-                            @if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || (User.IsInRole("RH") && User.IsInRole("RH_Employer")) || (User.IsInRole("RH") && User.IsInRole("RH_Superieur_Hiéarchique")) || (User.IsInRole("RH") && User.IsInRole("RH_Directeur")) || User.IsInRole("Admin_Medicis"))
-                            {
-                                <a href="@Url.Action("Index", "RhAttestationMenu")">Attestaions</a>
-                            }
-
-                            @if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || (User.IsInRole("RH") && User.IsInRole("RH_Employer")) || (User.IsInRole("RH") && User.IsInRole("RH_Superieur_Hiéarchique")) || (User.IsInRole("RH") && User.IsInRole("RH_Directeur")) || User.IsInRole("Admin_Medicis"))
-                            {
-                                <a href="@Url.Action("Index", "RhAutorisationMenu")">Autorisation</a>
-                            }
-
-                            @if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || (User.IsInRole("RH") && User.IsInRole("RH_Employer")) || (User.IsInRole("RH") && User.IsInRole("RH_Superieur_Hiéarchique")) || (User.IsInRole("RH") && User.IsInRole("RH_Directeur")) || User.IsInRole("Admin_Medicis"))
-                            {
-                                <a href="@Url.Action("Index", "RhCongeMenu")">Congés</a>
-                            }
-
-                            @if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || (User.IsInRole("RH") && User.IsInRole("RH_Employer")) || (User.IsInRole("RH") && User.IsInRole("RH_Superieur_Hiéarchique")) || (User.IsInRole("RH") && User.IsInRole("RH_Directeur")) || User.IsInRole("Admin_Medicis"))
-                            {
-                                <a href="@Url.Action("Index", "Calendar")">Calendrier de service</a>
-                            }
-
-                            @if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || (User.IsInRole("RH") && User.IsInRole("RH_Directeur")) || User.IsInRole("Admin_Medicis"))
-                            {
-                                <a href="@Url.Action("CalendrierDirection", "Calendar")">Calendrier de direction</a>
-                            }
-
-                        </div>
-                    }
-
-
-                }
-                if (User.IsInRole("Admin_Medicis") || User.IsInRole("Elearning"))
-                {
-
-
-                    if ((ViewContext.RouteData.Values["controller"].ToString() == "EMenuFormateur") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "E_Formation") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "E_ListFormationDiffus") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "E_GrpByUsr") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "E_listeUsr") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "E_listFormationDiffus"))
-                    {
                         <button class="dropdown-btn active">
                             E-learning
                             <i class="fa-caret-down glyphicon glyphicon-align-left"></i>
@@ -185,7 +95,6 @@
                             {
                                 <a href="@Url.Action("Index", "EMenuFormUser")">Mes formations </a>
                             }
-
                             @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Employer")))
 
                             {
@@ -193,119 +102,77 @@
                             }
 
                         </div>
+
                     }
-                    else
-                    {
-                        <button class="dropdown-btn">
-                            E-learning
-                            <i class="fa-caret-down glyphicon glyphicon-align-left"></i>
-                        </button>
-
-                        <div class="dropdown-container">
-                            @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Formateur")))
-                            {
-                                <a href="@Url.Action("Index", "EMenuFormateur")">Gestion des formations </a>
-                                <a href="@Url.Action("Group", "E_GrpByUsr")">Gestion grp de diffusion </a>
-                                <a href="@Url.Action("Index", "EMenuEvaluation")">Gestion des évaluations </a>
-                            }
-                            @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Employer")))
-
-                            {
-                                <a href="@Url.Action("Index", "EMenuFormUser")">Mes formations </a>
-                            }
-
-                            @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Employer")))
-
-                            {
-                                <a href="@Url.Action("Index", "EMenuEvaluationUser")">Mes évaluations </a>
-                            }
-
-                        </div>
-                    }
-
-
 
                 }
-                if (User.IsInRole("DA") || User.IsInRole("Admin_Medicis"))
+
+
+                if ((ViewContext.RouteData.Values["controller"].ToString() == "DA_Demande") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "DA_TypesAchats") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "DA_TypesActions") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "DA_ListesGammes") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "DA_Labo") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "DA_Fournisseurs") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "DA_Materiels") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "DA_Budget") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "DA_Materiels_Dem") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "DA_Produits") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "DA_ProduitsDem") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "DA_WorkflowTypAch") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "MotifsRejets"))
                 {
 
+                    <button class="dropdown-btn active">
+                        Demandes d'Action
+                        <i class="fa-caret-down glyphicon glyphicon-arrow-down"></i>
+                    </button>
 
-                    if ((ViewContext.RouteData.Values["controller"].ToString() == "DA_Demande") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "DA_TypesAchats") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "DA_TypesActions") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "DA_ListesGammes") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "DA_Labo") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "DA_Fournisseurs") ||
-(ViewContext.RouteData.Values["controller"].ToString() == "DA_Materiels"))
-                    {
-                        //onclick = "location.href='@Url.Action("Create","DA_Demande")'"
-                        <button class="dropdown-btn active">
-                            Demandes d'Action
-                            <i class="fa-caret-down glyphicon glyphicon-arrow-down"></i>
-                        </button>
-                        <div class="dropdown-container1">
+                    <div class="dropdown-container1">
 
-                            <a href="@Url.Action("Create", "DA_Demande")">Ajouter Demande</a>
-                            <a href="@Url.Action("DemandesAll", "DA_Demande")">Toutes les Demandes</a>
+                        <a href="@Url.Action("Create", "DA_Demande")">Ajouter Demande</a>
+
+                        @if (Session["nb1"] != null && Session["nb1"].ToString() != "0")
+                        {
+                            <a href="@Url.Action("MesDemandes", "DA_Demande")">Mes Demandes <span style="color:red">(@Session["nb1"].ToString())</span></a>
+                        }
+                        else
+                        {
                             <a href="@Url.Action("MesDemandes", "DA_Demande")">Mes Demandes</a>
-                            <a href="@Url.Action("DemendesEnAttente", "DA_Demande")">Demandes En Attente</a>
-                            <a href="@Url.Action("Index", "DA_TypesAchats")">Types d'achats</a>
-                            <a href="@Url.Action("Index", "DA_TypesActions")">Types d'actions</a>
-                            <a href="@Url.Action("Index", "DA_ListesGammes")">Liste des Gammes</a>
+                        }
 
-                            <div class="dropdown-divider"></div>
-                            <a href="@Url.Action("Index", "DA_Labo")">Liste Loboratoires</a>
-                            <a href="@Url.Action("Index", "DA_Fournisseurs")">Liste Fournisseurs</a>
-                            <a href="@Url.Action("Index", "DA_Materiels")">Liste Matériels</a>
-                        </div>
 
-                    }
-                    else
-                    {
-                        <button class="dropdown-btn">
-                            Demandes d'Action
-                            <i class="fa-caret-down glyphicon glyphicon-arrow-down"></i>
-                        </button>
-                        <div class="dropdown-container">
-                            <a href="@Url.Action("Create", "DA_Demande")">Ajouter Demande</a>
-                            <a href="@Url.Action("DemandesAll", "DA_Demande")">Toutes les Demandes</a>
-                            <a href="@Url.Action("MesDemandes", "DA_Demande")">Mes Demandes</a>
-                            <a href="@Url.Action("DemendesEnAttente", "DA_Demande")">Demandes En Attente</a>
-                            <a href="@Url.Action("Index", "DA_TypesAchats")">Types d'achats</a>
-                            <a href="@Url.Action("Index", "DA_TypesActions")">Types d'actions</a>
-                            <a href="@Url.Action("Index", "DA_ListesGammes")">Liste des Gammes</a>
+                        @if (Session["nb"] != null && Session["nb"].ToString() != "0")
+                        {
+                            <a href="@Url.Action("DemendesEnAttente", "DA_Demande")">Demandes à Approuver <span style="color:red">(@Session["nb"].ToString())</span></a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("DemendesEnAttente", "DA_Demande")">Demandes à Approuver</a>
+                        }
 
-                            <div class="dropdown-divider"></div>
-                            <a href="@Url.Action("Index", "DA_Labo")">Liste Loboratoires</a>
-                            <a href="@Url.Action("Index", "DA_Fournisseurs")">Liste Fournisseurs</a>
-                            <a href="@Url.Action("Index", "DA_Materiels")">Liste Matériels</a>
-                        </div>
-                    }
+
+                        @if (User.IsInRole("DA_Admin") || (User.IsInRole("DA") && User.IsInRole("Elearning_Admin")))
+                        {
+
+                        }
+                        <a href="@Url.Action("Index", "DA_TypesAchats")">Types d'achats</a>
+                        <a href="@Url.Action("Index", "DA_TypesActions")">Types d'actions</a>
+
+
+                        <div class="dropdown-divider"></div>
+                        <a href="@Url.Action("Index", "DA_Labo")">Liste Loboratoires</a>
+                        <a href="@Url.Action("Index", "DA_Fournisseurs")">Liste Fournisseurs</a>
+                        <a href="@Url.Action("Index", "DA_Materiels")">Liste Articles</a>
+                        <a href="@Url.Action("Index", "DA_Produits")">Liste Produits</a>
+                        <a href="@Url.Action("Index", "MotifsRejets")">Motifs de Rejet</a>
+                    </div>
 
                 }
-
-
 
             }
 
         }
-
-
-
-
-
-
-
-        @*<button class="dropdown-btn">
-                About
-                <i class="fa-caret-down glyphicon glyphicon-arrow-down"></i>
-            </button>
-            <div class="dropdown-container">
-                <a href="#">Link 1</a>
-                <a href="#">Link 2</a>
-                <a href="#">Link 3</a>
-            </div>*@
-
 
     </div>
     <div id="main">

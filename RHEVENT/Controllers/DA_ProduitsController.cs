@@ -38,6 +38,10 @@ namespace RHEVENT.Controllers
         // GET: DA_Produits/Create
         public ActionResult Create()
         {
+            var listlabos = (from m in db.DA_Labo
+                         orderby m.Laboratoire
+                         select m);
+            ViewBag.listlabos = listlabos.ToList();
             return View();
         }
 
@@ -46,7 +50,7 @@ namespace RHEVENT.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Code,Désignation")] DA_Produits dA_Produits)
+        public ActionResult Create([Bind(Include = "Id,Code,Désignation,Laboratoire")] DA_Produits dA_Produits)
         {
             if (ModelState.IsValid)
             {
@@ -54,7 +58,10 @@ namespace RHEVENT.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            var listlabos = (from m in db.DA_Labo
+                             orderby m.Laboratoire
+                             select m);
+            ViewBag.listlabos = listlabos.ToList();
             return View(dA_Produits);
         }
 
@@ -65,6 +72,11 @@ namespace RHEVENT.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            var listlabos = (from m in db.DA_Labo
+                             orderby m.Laboratoire
+                             select m);
+            ViewBag.listlabos = listlabos.ToList();
+
             DA_Produits dA_Produits = db.DA_Produits.Find(id);
             if (dA_Produits == null)
             {
@@ -78,7 +90,7 @@ namespace RHEVENT.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Code,Désignation")] DA_Produits dA_Produits)
+        public ActionResult Edit([Bind(Include = "Id,Code,Désignation,Laboratoire")] DA_Produits dA_Produits)
         {
             if (ModelState.IsValid)
             {
@@ -86,6 +98,10 @@ namespace RHEVENT.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            var listlabos = (from m in db.DA_Labo
+                             orderby m.Laboratoire
+                             select m);
+            ViewBag.listlabos = listlabos.ToList();
             return View(dA_Produits);
         }
 

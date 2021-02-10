@@ -3,30 +3,28 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations.Schema;
-
 namespace RHEVENT.Models
 {
-    public class DA_Labo
+    public class DA_LaboUser
     {
         [key]
         public int Id { get; set; }
-
-        [Display(Name = "Code")]
+        
+        [Display(Name = "Matricule")]
         [Required]
-        public string Code { get; set; }
+        [StringLength(10)]
+        public string Matricule { get; set; }
 
+        
         [Display(Name = "Laboratoire")]
-        //[Required]
+        [StringLength(100)]
         public string Laboratoire { get; set; }
 
-        //public string Adresse { get; set; }
+        [Display(Name = "Etat")]
+        public int Etat { get; set; }
 
-        //public string Tel { get; set; }
+        //public List<DA_LaboUser> listeLabo { get; set; }
 
-        //public string Mobile { get; set; }
-
-        //public bool Laboo { get; set; }
     }
 }

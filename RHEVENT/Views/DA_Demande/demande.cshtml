@@ -351,16 +351,28 @@
                     @Html.DisplayFor(model => model.dadem.Date_action, new { htmlAttributes = new { @class = "form-control" } })
                 </td>
             </tr>
-            @if(@Html.DisplayFor(model => model.dadem.Argumentaires).ToString() != "")
-            {
+
             <tr>
+
                 <td>
-                    @Html.LabelFor(model => model.dadem.Argumentaires)
+                    @Html.LabelFor(model => model.dadem.Demandeur)
                 </td>
+
                 <td colspan="3">
-                    @Html.DisplayFor(model => model.dadem.Argumentaires, new { @class = "width-textarea" })
+                    @Html.DisplayFor(model => model.dadem.Demandeur, new { @class = "width-textarea" })
+
                 </td>
             </tr>
+            @if (@Html.DisplayFor(model => model.dadem.Argumentaires).ToString() != "")
+            {
+                <tr>
+                    <td>
+                        @Html.LabelFor(model => model.dadem.Argumentaires)
+                    </td>
+                    <td colspan="3">
+                        @Html.DisplayFor(model => model.dadem.Argumentaires, new { @class = "width-textarea" })
+                    </td>
+                </tr>
             }
         </table>
 

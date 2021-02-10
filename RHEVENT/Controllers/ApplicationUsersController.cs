@@ -68,7 +68,7 @@ namespace RHEVENT.Controllers
            /* ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
             ViewBag.nom_prenom = user.nom + " " + user.prenom;
             ViewBag.email = user.Email;*/
-            return View(db.Users.ToList());
+            return View(db.Users.OrderBy(m=>m.matricule).ToList());
  
         }
 
