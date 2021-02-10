@@ -244,6 +244,9 @@ namespace RHEVENT.Models
 
         public System.Data.Entity.DbSet<RHEVENT.Models.E_ResultFormation_Historiq> E_ResultFormation_Historiq { get; set; }
 
+        public System.Data.Entity.DbSet<RHEVENT.Models.E_ResultQCMParSlide> E_ResultQCMParSlide { get; set; }
+
+
         public System.Data.Entity.DbSet<RHEVENT.Models.Serveur> Serveur { get; set; }
 
         public System.Data.Entity.DbSet<RHEVENT.Models.DA_LaboUser> DA_LaboUser { get; set; }

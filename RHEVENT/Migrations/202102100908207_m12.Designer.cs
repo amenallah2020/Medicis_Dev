@@ -7,13 +7,13 @@ namespace RHEVENT.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class mm4 : IMigrationMetadata
+    public sealed partial class m12 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(mm4));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(m12));
         
         string IMigrationMetadata.Id
         {
-            get { return "202102090240020_mm4"; }
+            get { return "202102100908207_m12"; }
         }
         
         string IMigrationMetadata.Source

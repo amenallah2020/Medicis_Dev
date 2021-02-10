@@ -335,21 +335,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202102082233485_mm1.cs" />
-    <Compile Include="Migrations\202102082233485_mm1.Designer.cs">
-      <DependentUpon>202102082233485_mm1.cs</DependentUpon>
+    <Compile Include="Migrations\202102100908207_m12.cs" />
+    <Compile Include="Migrations\202102100908207_m12.Designer.cs">
+      <DependentUpon>202102100908207_m12.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202102082336463_mm2.cs" />
-    <Compile Include="Migrations\202102082336463_mm2.Designer.cs">
-      <DependentUpon>202102082336463_mm2.cs</DependentUpon>
+    <Compile Include="Migrations\202102101327467_m123.cs" />
+    <Compile Include="Migrations\202102101327467_m123.Designer.cs">
+      <DependentUpon>202102101327467_m123.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202102090030507_mm3.cs" />
-    <Compile Include="Migrations\202102090030507_mm3.Designer.cs">
-      <DependentUpon>202102090030507_mm3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102090240020_mm4.cs" />
-    <Compile Include="Migrations\202102090240020_mm4.Designer.cs">
-      <DependentUpon>202102090240020_mm4.cs</DependentUpon>
+    <Compile Include="Migrations\202102101332041_m1232.cs" />
+    <Compile Include="Migrations\202102101332041_m1232.Designer.cs">
+      <DependentUpon>202102101332041_m1232.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -373,6 +369,7 @@
     <Compile Include="Models\E_ListEvaluationDiffus_Historiq.cs" />
     <Compile Include="Models\E_ResultatFormation_Historiq.cs" />
     <Compile Include="Models\E_ResultatFormation.cs" />
+    <Compile Include="Models\E_ResultQCMParSlide.cs" />
     <Compile Include="Models\E_ResultQCM_Historiq.cs" />
     <Compile Include="Models\E_SlideUsr.cs" />
     <Compile Include="Models\E_ResultQCM.cs" />
@@ -448,6 +445,7 @@
     <Content Include="Content\fullcalendar_lib\fullcalendar.min.js" />
     <Content Include="Content\fullcalendar_lib\jquery-ui.custom.min.js" />
     <Content Include="Content\fullcalendar_lib\moment.min.js" />
+    <Content Include="Content\images\Achat.jpg" />
     <Content Include="Content\images\AD3.jpg" />
     <Content Include="Content\images\AD4.png" />
     <Content Include="Content\images\Adm1.png" />
@@ -461,6 +459,7 @@
     <Content Include="Content\images\edit.png" />
     <Content Include="Content\images\el2.jpg" />
     <Content Include="Content\images\Elearn.png" />
+    <Content Include="Content\images\Elrn.jpg" />
     <Content Include="Content\images\eval.png" />
     <Content Include="Content\images\faux.png" />
     <Content Include="Content\images\Form.png" />
@@ -488,7 +487,10 @@
     <Content Include="Content\images\moins.jfif" />
     <Content Include="Content\images\RH1.png" />
     <Content Include="Content\images\RH2.png" />
+    <Content Include="Content\images\rhf.jpg" />
     <Content Include="Content\images\time-icon.png" />
+    <Content Include="Content\images\u11.png" />
+    <Content Include="Content\images\usradm.jpg" />
     <Content Include="Content\images\vrai.jpg" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -1241,6 +1243,8 @@
     <Content Include="Views\DA_Labo\LaboUser.cshtml" />
     <Content Include="Views\DA_Labo\EditLaboUser.cshtml" />
     <Content Include="Views\DA_Demande\demandeTraitee.cshtml" />
+    <Content Include="Views\E_QCM\ConsultParSlide.cshtml" />
+    <Content Include="Views\E_QCM\ResultQCMParSlide.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\images_accueil\" />
@@ -1254,17 +1258,14 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202102082233485_mm1.resx">
-      <DependentUpon>202102082233485_mm1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202102100908207_m12.resx">
+      <DependentUpon>202102100908207_m12.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102082336463_mm2.resx">
-      <DependentUpon>202102082336463_mm2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202102101327467_m123.resx">
+      <DependentUpon>202102101327467_m123.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102090030507_mm3.resx">
-      <DependentUpon>202102090030507_mm3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102090240020_mm4.resx">
-      <DependentUpon>202102090240020_mm4.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202102101332041_m1232.resx">
+      <DependentUpon>202102101332041_m1232.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
