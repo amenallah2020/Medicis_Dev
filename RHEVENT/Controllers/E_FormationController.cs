@@ -652,7 +652,7 @@ namespace RHEVENT.Controllers
         public ActionResult Exporter(string id, string searchStringCodeF, string searchStringObjet, string searchStringUsr, string Etat)
         {
 
-            string pp = Session["Cdf"].ToString();
+            //string pp = Session["Cdf"].ToString();
 
             ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
 
@@ -745,8 +745,8 @@ namespace RHEVENT.Controllers
                     ws2.Cells[String.Format("A{0}", rowStart2)].Value = item.Code_Formation;
                     ws2.Cells[String.Format("B{0}", rowStart2)].Value = item.ObjForm;
                     ws2.Cells[String.Format("C{0}", rowStart2)].Value = item.Usr;
-                    ws2.Cells[String.Format("D{0}", rowStart2)].Value = item.DateTerm.ToString();
-                    ws2.Cells[String.Format("E{0}", rowStart2)].Value = item.DeadLine.ToString();
+                    ws2.Cells[String.Format("D{0}", rowStart2)].Value = item.DateTerm.ToShortDateString();
+                    ws2.Cells[String.Format("E{0}", rowStart2)].Value = item.DeadLine.ToShortDateString();
                     ws2.Cells[String.Format("F{0}", rowStart2)].Value = item.Etat;
                     rowStart2++;
                 }

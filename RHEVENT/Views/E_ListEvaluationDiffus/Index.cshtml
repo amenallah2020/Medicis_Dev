@@ -48,6 +48,27 @@
 
 
             <div class="col-lg-3">
+                <label>Utilisateur</label>
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <select name="Usr" class="form-control">
+                            <option value="@Session["MatUsrrEv"].ToString()" style="color:#ccc !important;">
+                                @Session["UsrrEv"].ToString()
+                            </option>
+                            @{
+                                foreach (var item in @ViewBag.listUser)
+                                {
+                                    <option value="@item.matricule">@item.NomPrenom</option>
+                                }
+                            }
+                        </select>
+                        @*<input type="text" class="form-control" name="Laboratoire" />*@
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
 
                 <br /><input type="submit" value="Recherche " class="btn btn-success" />
                 @*<a class="btn btn-danger" asp-action="Index"> Retour à la liste</a>*@
@@ -144,6 +165,14 @@
         }
 
     </table>
+
+
+    <div>
+        <a class="btn  btn-danger   " role="button" href="@Url.Action("Exporter", "E_listEvaluationDiffus" , new {  Usr = @Session["MatUsrrEv"] , searchStringCodeE=  @ViewData["CurrentFilterCodeE"] , searchStringObjet = @ViewData["CurrentFilterObjet"] , Etat =  @ViewData["CurrentFilterEtat"]} )">Exporter</a>
+
+        &nbsp; @Html.ActionLink("Retour", "Index", "EMenuEvaluation")
+
+    </div>
 
 </body>
 </html>
