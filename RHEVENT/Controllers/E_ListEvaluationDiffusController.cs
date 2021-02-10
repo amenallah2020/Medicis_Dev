@@ -399,7 +399,7 @@ namespace RHEVENT.Controllers
             //da.Fill(dt);
 
             SqlDataAdapter da;
-            da = new SqlDataAdapter(" SELECT  distinct top(20)   dbo.[E_ListEvaluationDiffus].[Code_eval] ,f.Objet_Eval Objet , f.Date_Creation,  CONVERT(nvarchar, dbo.[E_ListEvaluationDiffus].DateDiffus, 103) DateDiffus, null, null, null FROM[dbo].[E_ListEvaluationDiffus] inner join  dbo.E_Evaluation f on f.Code_Eval =  [E_ListEvaluationDiffus].Code_eval where[E_ListEvaluationDiffus].MatFormateur = '" + user.matricule + "' order  by f.Date_Creation desc", con);
+            da = new SqlDataAdapter(" SELECT  distinct  dbo.[E_ListEvaluationDiffus].[Code_eval] ,f.Objet_Eval Objet , f.Date_Creation,  CONVERT(nvarchar, dbo.[E_ListEvaluationDiffus].DateDiffus, 103) DateDiffus, null, null, null FROM[dbo].[E_ListEvaluationDiffus] inner join  dbo.E_Evaluation f on f.Code_Eval =  [E_ListEvaluationDiffus].Code_eval where[E_ListEvaluationDiffus].MatFormateur = '" + user.matricule + "' order  by f.Date_Creation desc", con);
             da.Fill(dt);
 
 
