@@ -32,24 +32,35 @@
 
                     <td colspan="3">
 
-
-                        @*@Html.DropDownListFor(model => model.TypeAchat, Model.TypesAchats, "Selectionnez le type d'achat pour cette demande", new { @class = "width-textarea form-control" })*@
-                        @Html.DropDownListFor(model => model.TypeAchat, new SelectList(@ViewBag.liste1, "TypeAchat", "TypeAchat"), "Selectionnez le type d'achat pour cette demande", new { @class = "width-textarea form-control", id = "typeachat" })
-                        @*@Html.DropDownListFor(model => model.TypeAchat, new SelectList(Model.listesachats, "TypeAchat", "TypeAchat"), "Selectionnez le type d'achat pour cette demande", new { @class = "width-textarea form-control" })*@
+                        @Html.DropDownListFor(model => model.TypeAchat, new SelectList(@ViewBag.liste1, "TypeAchat", "TypeAchat"), "Selectionnez le type d'achat pour cette demande", new { Id = "AchatId", @class = "width-textarea form-control" })
                         @Html.ValidationMessageFor(model => model.TypeAchat, "", new { @class = "text-danger" })
+
                     </td>
+
+                    @*<td colspan="3">
+
+                            @Html.DropDownListFor(model => model.TypeAchat,  @ViewBag.liste1 as SelectList , "Selectionnez le type d'achat pour cette demande", new { id = "AchatId", @class = "width-textarea form-control" })
+                            @Html.ValidationMessageFor(model => model.TypeAchat, "", new { @class = "text-danger" })
+
+                        </td>*@
                 </tr>
-               
+
                 <tr>
 
                     <td>
                         @Html.LabelFor(model => model.TypeAction)
                     </td>
 
+                    @*<td colspan="3">
+
+                            @Html.DropDownListFor(model => model.TypeAction, new SelectList(Model.listesactions, "TypeAction", "TypeAction"), "Selectionnez le type d'évenement de cette demande", new { @class = "width-textarea form-control", @id = "IdActtion" })
+                            @Html.ValidationMessageFor(model => model.TypeAction, "", new { @class = "text-danger" })
+                        </td>*@
+
                     <td colspan="3">
-                       
-                        @Html.DropDownListFor(model => model.TypeAction, new SelectList(Model.listesactions, "TypeAction", "TypeAction"), "Selectionnez le type d'évenement de cette demande", new { @class = "width-textarea form-control", id = "typeacttion" })
-                        @Html.ValidationMessageFor(model => model.TypeAction, "", new { @class = "text-danger" })
+
+                        <select id="ActionId" class="form-control"></select>
+
                     </td>
                 </tr>
 
@@ -149,31 +160,53 @@
 
 @section Scripts
 {
-    
+
     <script src="~/Scripts/jquery-ui.js"></script>
     @*<script src="~/Scripts/jquery-1.10.2.js"></script>*@
     <link href="~/css/jquery-ui.css" rel="stylesheet" />
     @*<script>
 
-        $(document).ready(function () {
-            $("#Date_reception").datepicker({
-                dateFormat: "dd-mm-yy",
-                minDate: -0,
+            $(document).ready(function () {
+                $("#Date_reception").datepicker({
+                    dateFormat: "dd-mm-yy",
+                    minDate: -0,
 
 
+                });
             });
-        });
-    </script>
+        </script>
 
-    <script>
-        $(document).ready(function () {
-            $("#Date_action").datepicker({
-                dateFormat: "dd-mm-yy",
-                minDate: -0
+        <script>
+            $(document).ready(function () {
+                $("#Date_action").datepicker({
+                    dateFormat: "dd-mm-yy",
+                    minDate: -0
 
+                });
             });
-        });
-    </script>*@
+        </script>*@
 
-    
+
 }
+
+@*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
+
+<script src="~/vendor/lightbox2/dist/js/lightbox-plus-jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script>
+    $(function () {
+
+        $("#AchatId").change(function () {
+
+            $.get("DA_Demande/getActionByAchat", { ID: $("#AchatId".val()}, function (data) {
+
+                $.each(data, function (index, row) {
+                    $("#ActionId").append("<option value = '" + row.Id + "'>" + row.TypeAction + "</option>")
+                });
+
+            })
+        });
+    });
+</script>
+ 

@@ -194,7 +194,7 @@ namespace RHEVENT.Controllers
 
 
             SqlDataAdapter da;
-            da = new SqlDataAdapter(" SELECT  distinct   [Code_formt] ,[E_ListFormationDiffus].Objet ,  Mat_usr , Nom_usr ,case E_ResultFormation.Etat when 'Complete' then 'Complete' else 'Incomplete' end Etat ,   E_ResultFormation.DateTerm ,  E_ResultFormation.DeadLine  FROM[dbo].[E_ListFormationDiffus]  inner join  dbo.E_Formation f on f.Code = [E_ListFormationDiffus].Code_formt   left outer join E_ResultFormation on E_ResultFormation.Code_Formation = [E_ListFormationDiffus].Code_formt where E_ListFormationDiffus.MatFormateur =  '" + user.matricule + "' ", con);
+            da = new SqlDataAdapter(" SELECT  distinct  [Code_formt] ,[E_ListFormationDiffus].Objet ,  Mat_usr , Nom_usr ,case E_ResultFormation.Etat when 'Complete' then 'Complete' else 'Incomplete' end Etat ,   E_ResultFormation.DateTerm ,  E_ResultFormation.DeadLine  FROM[dbo].[E_ListFormationDiffus]  inner join  dbo.E_Formation f on f.Code = [E_ListFormationDiffus].Code_formt   left outer join E_ResultFormation on E_ResultFormation.Code_Formation = [E_ListFormationDiffus].Code_formt where E_ListFormationDiffus.MatFormateur =  '" + user.matricule + "' ", con);
             da.Fill(dt);
 
 
@@ -375,7 +375,7 @@ namespace RHEVENT.Controllers
 
 
                 SqlDataAdapter da;
-            da = new SqlDataAdapter(" SELECT  distinct   [Code_formt] ,[E_ListFormationDiffus].Objet , f.Date_Creation, CONVERT(nvarchar, DateDiffus, 103) DateDiffus, Mat_usr, null, null FROM[dbo].[E_ListFormationDiffus] inner join  dbo.E_Formation f on f.Code = [E_ListFormationDiffus].Code_formt  where E_ListFormationDiffus.MatFormateur =  '" + user.matricule + "' order  by f.Date_Creation desc", con);
+            da = new SqlDataAdapter(" SELECT  distinct  top(20)  [Code_formt] ,[E_ListFormationDiffus].Objet , f.Date_Creation, CONVERT(nvarchar, DateDiffus, 103) DateDiffus,    null, null FROM[dbo].[E_ListFormationDiffus] inner join  dbo.E_Formation f on f.Code = [E_ListFormationDiffus].Code_formt  where E_ListFormationDiffus.MatFormateur =  '" + user.matricule + "' order  by f.Date_Creation desc", con);
             da.Fill(dt);
 
 

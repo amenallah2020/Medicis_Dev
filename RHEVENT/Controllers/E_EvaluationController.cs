@@ -9,6 +9,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using OfficeOpenXml;
 using RHEVENT.Models;
 
 namespace RHEVENT.Controllers
@@ -20,6 +21,10 @@ namespace RHEVENT.Controllers
         public static string searchTermCodeE = string.Empty;
 
         public static string ValTermCodeE = string.Empty;
+
+        public static string searchTermUsr = string.Empty;
+
+        public static string ValTermUsr = string.Empty;
 
         public static string searchTermObjet = string.Empty;
 
@@ -62,9 +67,11 @@ namespace RHEVENT.Controllers
                 return View(list.ToList());
         }
 
-        public ActionResult Statistique(string id,string searchStringUsr, string Result)
+
+        public ActionResult Exporter(string id, string searchStringUsr, string Result)
         {
             ViewData["CurrentFilterUsr"] = searchStringUsr;
+            ViewData["CurrentFilterResult"] = Result;
 
             ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
 
@@ -73,13 +80,246 @@ namespace RHEVENT.Controllers
             con.Open();
 
 
+            List<E_ResultQCM> list = new List<E_ResultQCM>();
+
+            if (!String.IsNullOrEmpty(searchStringUsr) || (Result != null))
+            {
+                var r = ((from m in db.E_ResultQCM
+                          join nn in db.E_Evaluation on m.Code_EvalByQCM equals nn.Code_Eval
+                          where nn.Matricule_Formateur == user.matricule && m.Code_EvalByQCM == id
+                          select new { nn.Code_Eval, nn.Objet_Eval, m.CodeForm, m.ObjForm, m.Usr, nn.Date_Creation, m.DeadLine, m.Score, m.Resultat }).Distinct())
+                         .Union(from m in db.E_ResultQCM_Historiq
+                                join nn in db.E_Evaluation on m.Code_EvalByQCM equals nn.Code_Eval
+                                where nn.Matricule_Formateur == user.matricule && m.Code_EvalByQCM == id
+                                select new { nn.Code_Eval, nn.Objet_Eval, m.CodeForm, m.ObjForm, m.Usr, nn.Date_Creation, m.DeadLine, m.Score, m.Resultat }).Distinct().ToList();
+
+
+
+                E_EvaluationController.searchTermUsr = "searchStringUsr";
+                E_EvaluationController.ValTermUsr = searchStringUsr;
+
+                if (!String.IsNullOrEmpty(searchStringUsr))
+                    r = r.Where(s => s.Usr.ToLower().Contains(searchStringUsr.ToLower())).ToList();
+
+                if (!String.IsNullOrEmpty(Result))
+                    r = r.Where(s => s.Resultat.Equals(Result)).ToList();
+
+                foreach (var ee in r)
+                {
+                    E_ResultQCM e_ResultQCM = new E_ResultQCM();
+
+                    e_ResultQCM.Code_EvalByQCM = ee.Code_Eval;
+
+                    e_ResultQCM.ObjEval = ee.Objet_Eval;
+
+                    e_ResultQCM.CodeForm = ee.CodeForm;
+
+                    e_ResultQCM.ObjForm = ee.ObjForm;
+
+                    e_ResultQCM.Usr = ee.Usr;
+
+                    e_ResultQCM.DateEval = Convert.ToDateTime(ee.Date_Creation);
+
+                    e_ResultQCM.DeadLine = Convert.ToDateTime(ee.DeadLine);
+
+                    e_ResultQCM.Score = Convert.ToInt32(ee.Score);
+
+                    e_ResultQCM.Resultat = ee.Resultat;
+
+                    list.Add(e_ResultQCM);
+                }
+
+                ExcelPackage pck2 = new ExcelPackage();
+
+                ExcelWorksheet ws2 = pck2.Workbook.Worksheets.Add("Statistique d'évaluation");
+                ws2.Cells["A1"].Value = "Evaluation";
+                ws2.Cells["B1"].Value = "Objet évaluation";
+                ws2.Cells["C1"].Value = "Formation";
+                ws2.Cells["D1"].Value = "Objet formation";
+                ws2.Cells["E1"].Value = "Utilisateur";
+                ws2.Cells["F1"].Value = "Date évaluation";
+                ws2.Cells["J1"].Value = "Date limite";
+                ws2.Cells["H1"].Value = "Score";
+                ws2.Cells["I1"].Value = "Résultat";
+
+                int rowStart2 = 2;
+                int jour2 = 0;
+
+                foreach (var item in list)
+                {
+                    //   jour++;
+                    ws2.Cells[String.Format("A{0}", rowStart2)].Value = item.Code_EvalByQCM;
+                    ws2.Cells[String.Format("B{0}", rowStart2)].Value = item.ObjEval;
+                    ws2.Cells[String.Format("C{0}", rowStart2)].Value = item.CodeForm;
+                    ws2.Cells[String.Format("D{0}", rowStart2)].Value = item.ObjForm;
+                    ws2.Cells[String.Format("E{0}", rowStart2)].Value = item.Usr;
+                    ws2.Cells[String.Format("F{0}", rowStart2)].Value = item.DateEval.ToShortDateString();
+                    ws2.Cells[String.Format("J{0}", rowStart2)].Value = item.DeadLine.ToShortDateString();
+                    ws2.Cells[String.Format("H{0}", rowStart2)].Value = item.Score+" %";
+                    ws2.Cells[String.Format("I{0}", rowStart2)].Value = item.Resultat;
+                    rowStart2++;
+                }
+
+                //  return RedirectToAction(jour + "");
+                ws2.Cells["A:AZ"].AutoFitColumns();
+                Response.Clear();
+                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                Response.AddHeader("Content-disposition", "attachment:filename=" + "Etatattestations.xlsx");
+                Response.BinaryWrite(pck2.GetAsByteArray());
+                Response.End();
+                return View();
+            }
+
             DataTable dt = new DataTable();
 
             SqlDataAdapter da;
-            da = new SqlDataAdapter("select distinct Code_Eval, E_Evaluation.Objet_Eval , E_ResultQCM.CodeForm,  ObjForm, Usr, Date_Creation, DeadLine , Score, Resultat   from E_ResultQCM  inner join E_Evaluation on E_Evaluation.Code_Eval = E_ResultQCM.Code_EvalByQCM where E_Evaluation.Matricule_Formateur = 0001 and Code_Eval =  '" + id + "' union select distinct Code_Eval, E_Evaluation.Objet_Eval , [E_ResultQCM_Historiq].CodeForm,  ObjForm, Usr, Date_Creation, DeadLine , Score, Resultat   from[E_ResultQCM_Historiq] inner join E_Evaluation on E_Evaluation.Code_Eval = [E_ResultQCM_Historiq].Code_EvalByQCM  where E_Evaluation.Matricule_Formateur = 0001 and Code_Eval = '" + id + "'   ", con);
+            da = new SqlDataAdapter("select distinct Code_Eval, E_Evaluation.Objet_Eval , E_ResultQCM.CodeForm,  ObjForm, Usr, Date_Creation, DeadLine , Score, Resultat   from E_ResultQCM  inner join E_Evaluation on E_Evaluation.Code_Eval = E_ResultQCM.Code_EvalByQCM where E_Evaluation.Matricule_Formateur = " + user.matricule + " and Code_Eval =  '" + id + "' union select distinct Code_Eval, E_Evaluation.Objet_Eval , [E_ResultQCM_Historiq].CodeForm,  ObjForm, Usr, Date_Creation, DeadLine , Score, Resultat   from[E_ResultQCM_Historiq] inner join E_Evaluation on E_Evaluation.Code_Eval = [E_ResultQCM_Historiq].Code_EvalByQCM  where E_Evaluation.Matricule_Formateur = " + user.matricule + " and Code_Eval = '" + id + "'   ", con);
             da.Fill(dt);
 
+
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                E_ResultQCM e_ResultQCM = new E_ResultQCM();
+
+                e_ResultQCM.Code_EvalByQCM = dt.Rows[i]["Code_Eval"].ToString();
+
+                e_ResultQCM.ObjEval = dt.Rows[i]["Objet_Eval"].ToString();
+
+                e_ResultQCM.CodeForm = dt.Rows[i]["CodeForm"].ToString();
+
+                e_ResultQCM.ObjForm = dt.Rows[i]["ObjForm"].ToString();
+
+                e_ResultQCM.Usr = dt.Rows[i]["Usr"].ToString();
+
+                e_ResultQCM.DateEval = Convert.ToDateTime(dt.Rows[i]["Date_Creation"].ToString());
+
+                e_ResultQCM.DeadLine = Convert.ToDateTime(dt.Rows[i]["DeadLine"].ToString());
+
+                e_ResultQCM.Score = Convert.ToInt32(dt.Rows[i]["Score"].ToString());
+
+                e_ResultQCM.Resultat = dt.Rows[i]["Resultat"].ToString();
+
+                list.Add(e_ResultQCM);
+
+            }
+
+
+            ExcelPackage pck = new ExcelPackage();
+
+            ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Statistique d'évaluation");
+            ws.Cells["A1"].Value = "Evaluation";
+            ws.Cells["B1"].Value = "Objet évaluation";
+            ws.Cells["C1"].Value = "Formation";
+            ws.Cells["D1"].Value = "Objet formation";
+            ws.Cells["E1"].Value = "Utilisateur";
+            ws.Cells["F1"].Value = "Date évaluation";
+            ws.Cells["J1"].Value = "Date limite";
+            ws.Cells["H1"].Value = "Score";
+            ws.Cells["I1"].Value = "Résultat";
+
+            int rowStart = 2;
+            int jour = 0;
+
+            foreach (var item in list)
+            {
+                //   jour++;
+                ws.Cells[String.Format("A{0}", rowStart)].Value = item.Code_EvalByQCM;
+                ws.Cells[String.Format("B{0}", rowStart)].Value = item.ObjEval;
+                ws.Cells[String.Format("C{0}", rowStart)].Value = item.CodeForm;
+                ws.Cells[String.Format("D{0}", rowStart)].Value = item.ObjForm;
+                ws.Cells[String.Format("E{0}", rowStart)].Value = item.Usr;
+                ws.Cells[String.Format("F{0}", rowStart)].Value = item.DateEval.ToShortDateString();
+                ws.Cells[String.Format("J{0}", rowStart)].Value = item.DeadLine.ToShortDateString();
+                ws.Cells[String.Format("H{0}", rowStart)].Value = item.Score + " %"; ;
+                ws.Cells[String.Format("I{0}", rowStart)].Value = item.Resultat;
+                rowStart++;
+            }
+
+            //  return RedirectToAction(jour + "");
+            ws.Cells["A:AZ"].AutoFitColumns();
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("Content-disposition", "attachment:filename=" + "Etatattestations.xlsx");
+            Response.BinaryWrite(pck.GetAsByteArray());
+            Response.End();
+            return View();
+        }
+
+
+        public ActionResult Statistique(string id,string searchStringUsr, string Result)
+        {
+            ViewData["CurrentFilterUsr"] = searchStringUsr;
+            ViewData["CurrentFilterResult"] = Result;
+
+            Session["Cde"] = id;
+
+            ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+
+            string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+            SqlConnection con = new SqlConnection(constr);
+            con.Open();
+
+
             List<E_ResultQCM> list = new List<E_ResultQCM>();
+
+            if (!String.IsNullOrEmpty(searchStringUsr) || (Result != null))
+            {
+                var r = ((from m in db.E_ResultQCM
+                          join nn in db.E_Evaluation on m.Code_EvalByQCM equals nn.Code_Eval
+                          where nn.Matricule_Formateur == user.matricule && m.Code_EvalByQCM == id
+                          select new { nn.Code_Eval, nn.Objet_Eval, m.CodeForm, m.ObjForm, m.Usr, nn.Date_Creation, m.DeadLine, m.Score, m.Resultat }).Distinct())
+                         .Union(from m in db.E_ResultQCM_Historiq
+                                join nn in db.E_Evaluation on m.Code_EvalByQCM equals nn.Code_Eval
+                                where nn.Matricule_Formateur == user.matricule && m.Code_EvalByQCM == id
+                                select new { nn.Code_Eval, nn.Objet_Eval, m.CodeForm, m.ObjForm, m.Usr, nn.Date_Creation, m.DeadLine, m.Score, m.Resultat }).Distinct().ToList();
+
+
+
+                E_EvaluationController.searchTermUsr = "searchStringUsr";
+                E_EvaluationController.ValTermUsr = searchStringUsr;
+
+                if (!String.IsNullOrEmpty(searchStringUsr))
+                    r = r.Where(s => s.Usr.ToLower().Contains(searchStringUsr.ToLower())).ToList();
+
+                if (!String.IsNullOrEmpty(Result))
+                    r = r.Where(s => s.Resultat.Equals(Result)).ToList();
+
+                foreach (var ee in r)
+                {
+                    E_ResultQCM e_ResultQCM = new E_ResultQCM();
+
+                    e_ResultQCM.Code_EvalByQCM = ee.Code_Eval;
+
+                    e_ResultQCM.ObjEval = ee.Objet_Eval;
+
+                    e_ResultQCM.CodeForm = ee.CodeForm;
+
+                    e_ResultQCM.ObjForm = ee.ObjForm;
+
+                    e_ResultQCM.Usr = ee.Usr;
+
+                    e_ResultQCM.DateEval = Convert.ToDateTime(ee.Date_Creation);
+
+                    e_ResultQCM.DeadLine = Convert.ToDateTime(ee.DeadLine);
+
+                    e_ResultQCM.Score = Convert.ToInt32(ee.Score);
+
+                    e_ResultQCM.Resultat = ee.Resultat;
+
+                    list.Add(e_ResultQCM);
+                }
+
+                return View(list);
+            }
+
+            DataTable dt = new DataTable();
+
+            SqlDataAdapter da;
+            da = new SqlDataAdapter("select distinct Code_Eval, E_Evaluation.Objet_Eval , E_ResultQCM.CodeForm,  ObjForm, Usr, Date_Creation, DeadLine , Score, Resultat   from E_ResultQCM  inner join E_Evaluation on E_Evaluation.Code_Eval = E_ResultQCM.Code_EvalByQCM where E_Evaluation.Matricule_Formateur = "+user.matricule+" and Code_Eval =  '" + id + "' union select distinct Code_Eval, E_Evaluation.Objet_Eval , [E_ResultQCM_Historiq].CodeForm,  ObjForm, Usr, Date_Creation, DeadLine , Score, Resultat   from[E_ResultQCM_Historiq] inner join E_Evaluation on E_Evaluation.Code_Eval = [E_ResultQCM_Historiq].Code_EvalByQCM  where E_Evaluation.Matricule_Formateur = "+user.matricule+" and Code_Eval = '" + id + "'   ", con);
+            da.Fill(dt);
+
+            
 
             for (int i=0; i< dt.Rows.Count; i++)
             {

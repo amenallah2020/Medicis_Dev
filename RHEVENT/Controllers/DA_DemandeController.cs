@@ -517,13 +517,39 @@ namespace RHEVENT.Controllers
             return View(dem);
 
         }
-        
+
+
+
+
+        public JsonResult getActionByAchat(int ID)
+        {
+
+            DA_TypesAchats achat = (from m in db.DA_TypesAchats
+                                    where m.Id == ID
+                                    select m).Single();
+
+
+            var action = from m in db.DA_TypesActions
+                         where m.TypeActhat == achat.TypeAchat
+                         select m;
+
+            List<DA_TypesActions> list = action.ToList();
+
+
+            db.Configuration.ProxyCreationEnabled = false;
+
+            //return Json(new SelectList(list, "Id", "TypeAction") , JsonRequestBehavior.AllowGet);
+
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
+
         // POST: DA_Demande/Create
         // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(DA_Demande dA_Demande/*,DateTime Date_reception, DateTime Date_action*/)
+        public ActionResult Create(DA_Demande dA_Demande , string id /*,DateTime Date_reception, DateTime Date_action*/)
         {
             //if (Date_action < Date_reception)
             //{
@@ -531,6 +557,10 @@ namespace RHEVENT.Controllers
             //    //return Content("<script language='javascript' type='text/javascript'>alert('La date d'action doit etre superieure à celle de reception');window.location = '/DA_Demande/Create';</script>");
             //}
             //else
+
+
+            
+
             if (dA_Demande.Date_action > dA_Demande.Date_reception)
             {
                 string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
