@@ -24,155 +24,156 @@
 
 
     @*@foreach (var item in Model)
-    {*@
+        {*@
 
-        <div class="col-lg-12" style="color:blue; font-size:14px">
-            <strong>  @Html.DisplayNameFor(model => model.Question) :  @Html.DisplayFor(modelItem => Model.Question)</strong>
+    <div class="col-lg-12" style="color:blue; font-size:14px">
+        <strong>  @Html.DisplayNameFor(model => model.Question) :  @Html.DisplayFor(modelItem => Model.Question)</strong>
+    </div>
+
+
+    @if ((Model.Reponse1 == Model.Reponse1User && Model.EtatRep1 == "Vrai") || (Model.Reponse1 == Model.Reponse2User && Model.EtatRep1 == "Vrai") || (Model.Reponse1 == Model.Reponse3User && Model.EtatRep1 == "Vrai") || (Model.Reponse1 == Model.Reponse4User && Model.EtatRep1 == "Vrai"))
+    {
+        <div class="col-lg-12">
+            <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
+            <strong style="color:limegreen ; font-size:14px ; margin-left:12px">   @Html.DisplayFor(modelItem => Model.Reponse1)</strong>
+        </div>
+    }
+    else if (Model.EtatRep1 == "Vrai")
+    {
+        <div class="col-lg-12">
+            <img src="~/Content/images/vrai.jpg" style=" border-width:0px;" class="img-circle" />
+            <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => Model.Reponse1) </strong>  &nbsp; &nbsp; <strong style="color:red">@Session["Incomp1"].ToString()</strong> <br />
+        </div>
+    }
+    else if ((Model.Reponse1 == Model.Reponse1User && Model.EtatRep1 == "Faux") || (Model.Reponse1 == Model.Reponse2User && Model.EtatRep1 == "Faux") || (Model.Reponse1 == Model.Reponse3User && Model.EtatRep1 == "Faux") || (Model.Reponse1 == Model.Reponse4User && Model.EtatRep1 == "Faux"))
+    {
+        <div class="col-lg-12">
+            <img src="~/Content/images/faux.png" style="border-width:0px;" class="img-circle" />
+            <strong style="color:red ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => Model.Reponse1)</strong>
+        </div>
+    }
+    else
+    {
+        <div class="col-lg-12" style="color:black ; font-size:14px ; margin-left:30px">
+            @Html.DisplayFor(modelItem => Model.Reponse1)
+        </div>
+    }
+
+
+
+    @if ((Model.Reponse2 == Model.Reponse1User && Model.EtatRep2 == "Vrai") || (Model.Reponse2 == Model.Reponse2User && Model.EtatRep2 == "Vrai") || (Model.Reponse2 == Model.Reponse3User && Model.EtatRep2 == "Vrai") || (Model.Reponse2 == Model.Reponse4User && Model.EtatRep2 == "Vrai"))
+    {
+        <div class="col-lg-12">
+            <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
+            <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => Model.Reponse2)</strong>
+        </div>
+    }
+    else if (Model.EtatRep2 == "Vrai")
+    {
+        <div class="col-lg-12">
+            <img src="~/Content/images/vrai.jpg" style=" border-width:0px;" class="img-circle" />
+            <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => Model.Reponse2) </strong>  &nbsp;  &nbsp; <strong style="color:red">@Session["Incomp2"].ToString()</strong> <br />
+        </div>
+    }
+    else if ((Model.Reponse2 == Model.Reponse1User && Model.EtatRep2 == "Faux") || (Model.Reponse2 == Model.Reponse2User && Model.EtatRep2 == "Faux") || (Model.Reponse2 == Model.Reponse3User && Model.EtatRep2 == "Faux") || (Model.Reponse2 == Model.Reponse4User && Model.EtatRep2 == "Faux"))
+    {
+        <div class="col-lg-12">
+            <img src="~/Content/images/faux.png" style="border-width:0px;" class="img-circle" />
+            <strong style="color:red ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => Model.Reponse2)</strong>
+        </div>
+    }
+    else
+    {
+        <div class="col-lg-12" style="color:black ; font-size:14px ; margin-left:30px">
+            @Html.DisplayFor(modelItem => Model.Reponse2)
+        </div>
+    }
+
+
+
+
+    @if ((Model.Reponse3 == Model.Reponse1User && Model.EtatRep3 == "Vrai") || (Model.Reponse3 == Model.Reponse2User && Model.EtatRep3 == "Vrai") || (Model.Reponse3 == Model.Reponse3User && Model.EtatRep3 == "Vrai") || (Model.Reponse3 == Model.Reponse4User && Model.EtatRep3 == "Vrai"))
+    {
+        <div class="col-lg-12">
+            <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
+            <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => Model.Reponse3)</strong>
+        </div>
+    }
+    else if (Model.EtatRep3 == "Vrai")
+    {
+        <div class="col-lg-12">
+            <img src="~/Content/images/vrai.jpg" style=" border-width:0px;" class="img-circle" />
+            <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => Model.Reponse3) </strong>  &nbsp;  &nbsp; <strong style="color:red">@Session["Incomp3"].ToString()</strong> <br />
+        </div>
+    }
+    else if ((Model.Reponse3 == Model.Reponse1User && Model.EtatRep3 == "Faux") || (Model.Reponse3 == Model.Reponse2User && Model.EtatRep3 == "Faux") || (Model.Reponse3 == Model.Reponse3User && Model.EtatRep3 == "Faux") || (Model.Reponse3 == Model.Reponse4User && Model.EtatRep3 == "Faux"))
+    {
+        <div class="col-lg-12">
+            <img src="~/Content/images/faux.png" style="border-width:0px;" class="img-circle" />
+            <strong style="color:red ; font-size:14px ; margin-left:12px">@Html.DisplayFor(modelItem => Model.Reponse3)</strong>
+        </div>
+    }
+    else if (Model.Reponse3.ToString() == "")
+    {
+        <div class="col-lg-12" style="visibility:hidden">
+            <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
+            <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => Model.Reponse3)</strong>
+        </div>
+    }
+    else
+    {
+        <div class="col-lg-12" style="color:black ; font-size:14px ; margin-left:30px">
+            @Html.DisplayFor(modelItem => Model.Reponse3)
         </div>
 
-
-        @if (Model.Reponse1 == Model.ReponseUser && Model.EtatRep1 == "Vrai")
-        {
-
-            <div class="col-lg-12">
-                <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
-                <strong style="color:limegreen ; font-size:14px ; margin-left:12px">   @Html.DisplayFor(modelItem => Model.Reponse1)</strong>
-            </div>
-        }
-
-        @if (Model.Reponse1 == Model.ReponseUser && Model.EtatRep1 == "Faux")
-        {
-            <div class="col-lg-12">
-                <img src="~/Content/images/faux.png" style="border-width:0px;" class="img-circle" />
-                <strong style="color:red ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => Model.Reponse1)</strong>
-            </div>
-        }
-
-        @if (Model.Reponse1 != Model.ReponseUser)
-        {
-            <div class="col-lg-12" style="color:black ; font-size:14px ; margin-left:30px">
-                @Html.DisplayFor(modelItem => Model.Reponse1)
-            </div>
-        }
-
-        @if (Model.Reponse1 != Model.ReponseUser && Model.EtatRep1 == "Vrai")
-        {
-            <div class="col-lg-12">
-                <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
-                <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => Model.Reponse1) <br /> </strong>
-            </div>
-        }
+    }
 
 
-        @if (Model.Reponse2 == Model.ReponseUser && Model.EtatRep2 == "Vrai")
-        {
-            <div class="col-lg-12">
-                <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
-                <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => Model.Reponse2)</strong>
-            </div>
-        }
+    @if ((Model.Reponse4 == Model.Reponse1User && Model.EtatRep4 == "Vrai") || (Model.Reponse4 == Model.Reponse2User && Model.EtatRep4 == "Vrai") || (Model.Reponse4 == Model.Reponse3User && Model.EtatRep4 == "Vrai") || (Model.Reponse4 == Model.Reponse4User && Model.EtatRep4 == "Vrai"))
+    {
+        <div class="col-lg-12">
+            <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
+            <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => Model.Reponse4)</strong>
+        </div>
+    }
 
-        @if (Model.Reponse2 == Model.ReponseUser && Model.EtatRep2 == "Faux")
-        {
-            <div class="col-lg-12">
-                <img src="~/Content/images/faux.png" style="border-width:0px;" class="img-circle" />
-                <strong style="color:red ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => Model.Reponse2)</strong>
-            </div>
-        }
+    else if (Model.EtatRep4 == "Vrai")
+    {
+        <div class="col-lg-12">
+            <img src="~/Content/images/vrai.jpg" style=" border-width:0px;" class="img-circle" />
+            <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => Model.Reponse4) </strong>  &nbsp; &nbsp; <strong style="color:red">@Session["Incomp4"].ToString()</strong> <br />
+        </div>
+    }
 
-        @if (Model.Reponse2 != Model.ReponseUser)
-        {
-            <div class="col-lg-12" style="color:black ; font-size:14px ; margin-left:30px">
-                @Html.DisplayFor(modelItem => Model.Reponse2)
-            </div>
-        }
+    else if ((Model.Reponse4 == Model.Reponse1User && Model.EtatRep4 == "Faux") || (Model.Reponse4 == Model.Reponse2User && Model.EtatRep4 == "Faux") || (Model.Reponse4 == Model.Reponse3User && Model.EtatRep4 == "Faux") || (Model.Reponse4 == Model.Reponse4User && Model.EtatRep4 == "Faux"))
+    {
+        <div class="col-lg-12">
+            <img src="~/Content/images/faux.png" style=" border-width:0px;" class="img-circle" />
+            <strong style="color:red ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => Model.Reponse4)</strong>
+        </div>
+    }
 
-        @if (Model.Reponse2 != Model.ReponseUser && Model.EtatRep2 == "Vrai")
-        {
-            <div class="col-lg-12">
-                <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
-                <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => Model.Reponse2) <br /></strong>
-            </div>
-        }
+    else if (Model.Reponse4.ToString() == "")
+    {
+        <div class="col-lg-12" style="visibility:hidden">
+            <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
+            <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => Model.Reponse4)</strong>
+        </div>
+    }
 
-        @if (Model.Reponse3.ToString() == "")
-        {
-            <div class="col-lg-12" style="visibility:hidden">
-                <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
-                <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => Model.Reponse3)</strong>
-            </div>
-        }
+    else
+    {
+        <div class="col-lg-12" style="color:black ; font-size:14px ; margin-left:30px">
+            @Html.DisplayFor(modelItem => Model.Reponse4)  <br />
+        </div>
+    }
 
-        @if (Model.Reponse3 == Model.ReponseUser && Model.EtatRep3 == "Vrai")
-        {
-            <div class="col-lg-12">
-                <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
-                <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => Model.Reponse3)</strong>
-            </div>
-        }
 
-        @if (Model.Reponse3 == Model.ReponseUser && Model.EtatRep3 == "Faux")
-        {
-            <div class="col-lg-12">
-                <img src="~/Content/images/faux.png" style="border-width:0px;" class="img-circle" />
-                <strong style="color:red ; font-size:14px ; margin-left:12px">@Html.DisplayFor(modelItem => Model.Reponse3)</strong>
-            </div>
-        }
 
-        @if (Model.Reponse3 != Model.ReponseUser && Model.Reponse3 != null)
-        {
-            <div class="col-lg-12" style="color:black ; font-size:14px ; margin-left:30px">
-                @Html.DisplayFor(modelItem => Model.Reponse3)
-            </div>
-        }
-        
-    @if (Model.Reponse3 != Model.ReponseUser && Model.EtatRep3 == "Vrai")
-        {
-            <div class="col-lg-12">
-                <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
-                <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => Model.Reponse3) <br /></strong>
-            </div>
-        }
 
-        @if (Model.Reponse4.ToString() == "")
-        {
-            <div class="col-lg-12" style="visibility:hidden">
-                <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
-                <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => Model.Reponse4)</strong>
-            </div>
-        }
 
-        @if (Model.Reponse4 == Model.ReponseUser && Model.EtatRep4 == "Vrai")
-        {
-            <div class="col-lg-12">
-                <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
-                <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => Model.Reponse4)</strong>
-            </div>
-        }
 
-        @if (Model.Reponse4 == Model.ReponseUser && Model.EtatRep4 == "Faux")
-        {
-            <div class="col-lg-12">
-                <img src="~/Content/images/faux.png" style=" border-width:0px;" class="img-circle" />
-                <strong style="color:red ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => Model.Reponse4)</strong>
-            </div>
-        }
-
-        @if (Model.Reponse4 != Model.ReponseUser && Model.Reponse4 != null)
-        {
-            <div class="col-lg-12" style="color:black ; font-size:14px ; margin-left:30px">
-                @Html.DisplayFor(modelItem => Model.Reponse4)  <br />
-            </div>
-        }
-
-        @if (Model.Reponse4 != Model.ReponseUser && Model.EtatRep4 == "Vrai")
-        {
-            <div class="col-lg-12">
-                <img src="~/Content/images/vrai.jpg" style=" border-width:0px;" class="img-circle" />
-                <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => Model.Reponse4) <br /></strong>
-            </div>
-        }
-        <br /> <br />
+    <br /> <br />
     @*}*@
 
 
@@ -193,13 +194,13 @@
     <div class="col-lg-12  ">
         <br /> <br />
         <button class="btn btn-danger" style="color:white ; background-color:gold"> @Html.ActionLink("Suivant", "ConsultParSlide", "E_QCM", new { id = @ViewBag.CodeEval, SNQ = @Session["SNQ"].ToString() }, null)</button>
-         
+
     </div>
     @*<div class="col-lg-12  ">
-        <br /> <br />
-        <button class="btn btn-danger" style="color:white ; background-color:gold"> @Html.ActionLink("Terminer", "Terminer", "E_QCM", new { codeEval = @ViewBag.CodeEval, score = @ViewBag.Score, valide = @ViewBag.Valid }, null)</button>
+            <br /> <br />
+            <button class="btn btn-danger" style="color:white ; background-color:gold"> @Html.ActionLink("Terminer", "Terminer", "E_QCM", new { codeEval = @ViewBag.CodeEval, score = @ViewBag.Score, valide = @ViewBag.Valid }, null)</button>
 
 
-    </div>*@
+        </div>*@
 </body>
 </html>

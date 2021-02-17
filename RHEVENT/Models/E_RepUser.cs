@@ -24,6 +24,8 @@ namespace RHEVENT.Models
 
         public int NumQ { get; set; }
 
+        public int Ordre { get; set; }
+
 
         [Display(Name = "Date création")]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]

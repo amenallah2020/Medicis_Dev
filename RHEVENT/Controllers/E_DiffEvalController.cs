@@ -48,6 +48,20 @@ namespace RHEVENT.Controllers
             da3.Fill(dt3);
 
 
+            var verifQCM = from m in db.E_QCM
+                           where m.Code_EvalByQCM == codeEval
+                           select m;
+
+
+            if (verifQCM.Count() ==0)
+            {
+                ViewBag.Bloq = "La diffusion a été annulée : L'évaluation est sans QCM !";
+
+                return RedirectToAction("Index", "E_DiffEval", new { codeEval = codeEval, bloq = @ViewBag.Bloq });
+
+            }
+
+
             for (int j = 0; j < dt3.Rows.Count; j++)
             {
                 DataTable dt2 = new DataTable();

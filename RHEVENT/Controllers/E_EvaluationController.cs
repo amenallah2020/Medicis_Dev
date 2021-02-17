@@ -394,7 +394,7 @@ namespace RHEVENT.Controllers
 
                 e_Evaluation.Date_Creation = System.DateTime.Now;
 
-                e_Evaluation.Date_Modif = Convert.ToDateTime("01-01-0001");
+                //e_Evaluation.Date_Modif = Convert.ToDateTime("01-01-0001");
 
                    
                 string OldChaine = System.DateTime.Now.ToShortDateString();

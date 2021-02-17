@@ -40,7 +40,35 @@ namespace RHEVENT.Controllers
             string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
             SqlConnection con = new SqlConnection(constr);
             con.Open();
+
              
+          
+            DataTable dt35 = new DataTable(); 
+            SqlDataAdapter da35;
+            da35 = new SqlDataAdapter("select top(1) * from E_Formation where Code = '" + codeF + "' ", con);
+            da35.Fill(dt35);
+
+
+           for (int p=0; p< dt35.Rows.Count; p++)
+            { 
+                if ( dt35.Rows[p]["CodeEval"].ToString()  != null)
+                {
+                    string ce = dt35.Rows[p]["CodeEval"].ToString(); 
+
+                    DataTable dtq = new DataTable();
+                    SqlDataAdapter daq;
+                    daq = new SqlDataAdapter("select top(1) * from E_QCM where Code_EvalByQCM = '" + ce + "' ", con);
+                    daq.Fill(dtq);
+                     
+                    if (dtq.Rows.Count == 0)
+                    {
+                        ViewBag.Bloq = "La diffusion a été annulée : L'évaluation est sans QCM !";
+
+                        return RedirectToAction("Index", "E_GrpByUsr", new { id = codeF, bloq = @ViewBag.Bloq });
+                    }
+                }
+            }
+
             DataTable dt3 = new DataTable();
 
             SqlDataAdapter da3;
@@ -48,6 +76,7 @@ namespace RHEVENT.Controllers
             da3.Fill(dt3);
              
            
+
            for (int j=0; j< dt3.Rows.Count; j++)
             {
                 DataTable dt2 = new DataTable();
