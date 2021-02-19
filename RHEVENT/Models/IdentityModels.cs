@@ -246,6 +246,8 @@ namespace RHEVENT.Models
 
         public System.Data.Entity.DbSet<RHEVENT.Models.E_ResultQCMParSlide> E_ResultQCMParSlide { get; set; }
 
+        public System.Data.Entity.DbSet<RHEVENT.Models.E_DeadLlineEvalUsr> E_DeadLlineEvalUsr { get; set; }
+
 
         public System.Data.Entity.DbSet<RHEVENT.Models.Serveur> Serveur { get; set; }
 

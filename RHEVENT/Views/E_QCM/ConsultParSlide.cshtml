@@ -11,6 +11,16 @@
 
 }
 
+
+@{ 
+    double dd = Convert.ToDouble(ViewBag.timeexpire);
+
+    var endTime = DateTime.UtcNow.AddSeconds(dd);
+
+    var timeRemaining = TimeSpan.FromTicks(endTime.Ticks - DateTime.UtcNow.Ticks).TotalSeconds.ToString("#");
+  }
+
+
 <h2 class="text" style="color:cornflowerblue">
     <span class="glyphicon   glyphicon-expand"> </span>
     Evaluation
@@ -19,7 +29,7 @@
 <br />
 
 
-<style>
+@*<style>
 
     #the-final-countdown {
         background: #333;
@@ -48,7 +58,7 @@
         margin-top: 0px;
         color: blue;
     }
-</style>
+</style>*@
 
 <body>
 
@@ -59,9 +69,11 @@
     @*<p id="demo"></p>*@
 
 
-
     @using (Html.BeginForm("ConsultParSlide", "E_QCM", new { sld = Html.DisplayFor(model => model.NumQ) }, method: FormMethod.Get))
     {
+        <strong style="color:blue; font-size:20px; margin-left:80%"> <span name="time" id="time">   </span>  </strong>
+
+        @*<div> <span id="minRemaining"></span>: <span id="secRemaining"></span> </div>*@
 
         <div hidden>
             @(TempData["Question"] = Html.DisplayFor(model => model.Question) );
@@ -335,6 +347,8 @@
 
                                         <input type="submit" id="next" name="next" value="Suivant" class="btn btn-info ">
                                     </div>
+
+
                                 </div>
                             }
                         }
@@ -360,15 +374,7 @@
         @*</form>*@
     }
 
-    <div id="counter" style="visibility:hidden"></div>
-    <div id="loggedout" style="display:none"></div>
-
-
-
-
-
-
-
+     @*  *@
 
 </body>
 
@@ -446,10 +452,49 @@
     }
 </script>
 
-
-
 <script>
-    // Set the date we're counting down to
+    function startTimer(duration, display) {
+        var start = Date.now(),
+            diff,
+            minutes,
+            seconds;
+        function timer() {
+            // get the number of seconds that have elapsed since
+            // startTimer() was called
+            diff = duration - (((Date.now() - start) / 1000) | 0);
+
+            // does the same job as parseInt truncates the float
+            minutes = (diff / 60) | 0;
+            seconds = (diff % 60) | 0;
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = minutes + ":" + seconds;
+
+            if (diff <= 0) {
+                // add one second so that the count down starts at the full duration
+                // example 05:00 not 04:59
+                start = Date.now() + 1000;
+            }
+        };
+        // we don't want to wait a full second before the timer starts
+        timer();
+        setInterval(timer, 1000);
+
+    }
+
+    window.onload = function () {
+        var fiveMinutes =  Number(@Session["MinF"].ToString()),
+            display = document.querySelector('#time');
+        startTimer(fiveMinutes, display);
+
+    };
+</script>
+
+
+@*<script>
+     /* Set the date we're counting down to*/
      var dr = @ViewBag.Duree ;
 
     //var dd = 'Feb 12, 2021 15:37:25';
@@ -495,7 +540,7 @@
             document.getElementById("demo").innerHTML = "EXPIRED";
         }
     }, 1000);
-</script>
+</script>*@
 
 @*<script>
         setInterval(function time() {
@@ -513,4 +558,41 @@
             jQuery('#the-final-countdown p').html(hours + ':' + min + ':' + sec)
         }, 1000);
     </script>*@
+ 
+@*<script>
 
+    var remSeconds = @timeRemaining;
+
+    var secondsCounter = remSeconds % 60;
+
+    function formatNumber(number) {
+        if (number < 10) return '0' + number;
+        else '' + number;
+    }
+
+    function startTick() {
+
+        document.getElementById('secRemaining').innerText = formatNumber(secondsCounter);
+        document.getElementById('minRemaining').innerText = formatNumber(parseInt(remSeconds/60));
+
+        var _tick = setInterval(function () {
+
+            if (remSeconds > 0) {
+                remSeconds = remSeconds - 1;
+                secondsCounter = secondsCounter - 1;
+                document.getElementById('secRemaining').innerText = formatNumber(secondsCounter);
+                document.getElementById('minRemaining').innerText = formatNumber(parseInt(remSeconds / 60));
+
+                if (secondsCounter == 0)
+                    secondsCounter = 60;
+            }
+            else {
+                alert('Expirer');
+                clearInterval(_tick);
+            }
+        }, 1000);
+         
+
+    }
+    startTick();
+</script>*@

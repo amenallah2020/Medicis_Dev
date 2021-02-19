@@ -95,10 +95,11 @@ namespace RHEVENT.Controllers
         }
 
         [HttpGet]
-        public ActionResult ConsultParSlide(string id, string Reponse1, string Reponse2, string Reponse3, string Reponse4, string next, string Previous, string sld, string Terminer, string SNQ)
+        public ActionResult ConsultParSlide(string id,string counter, string Reponse1, string Reponse2, string Reponse3, string Reponse4, string next, string Previous, string sld, string Terminer, string SNQ)
         {
             string ooid = id.Substring(0, 16);
 
+            Session["Evl"] = ooid;
 
             ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
 
@@ -160,7 +161,7 @@ namespace RHEVENT.Controllers
 
             ViewBag.Duree = dr;
 
-            SqlCommand command4 = new SqlCommand("select DATEDIFF(SECOND, '0:00:00', CONVERT(VARCHAR(8),GETDATE(),108) )- DATEDIFF(SECOND, '0:00:00', Duree_Eval ) diff,  DATEDIFF(SECOND, '0:00:00', CONVERT(VARCHAR(8),GETDATE(),108) ) today ,    DATEDIFF(SECOND, '0:00:00', Duree_Eval ) sec from E_Evaluation where Code_Eval='" + ooid + "'    ", con);
+            SqlCommand command4 = new SqlCommand("select  DATEDIFF(MINUTE, '0:00:00', Duree_Eval ) min ,  DATEDIFF(SECOND, '0:00:00', CONVERT(VARCHAR(8),GETDATE(),108) )- DATEDIFF(SECOND, '0:00:00', Duree_Eval ) diff,  DATEDIFF(SECOND, '0:00:00', CONVERT(VARCHAR(8),GETDATE(),108) ) today ,    DATEDIFF(SECOND, '0:00:00', Duree_Eval ) sec from E_Evaluation where Code_Eval='" + ooid + "'    ", con);
             SqlDataAdapter da4 = new SqlDataAdapter(command4);
             DataTable dt4 = new DataTable();
             dt4.Clear();
@@ -169,8 +170,17 @@ namespace RHEVENT.Controllers
             for (int h = 0; h < dt4.Rows.Count; h++)
             {
                 Session["distance"] = Convert.ToInt32(dt4.Rows[i]["diff"].ToString());
+
+                Session["MinF"] = Convert.ToInt32(dt4.Rows[i]["sec"].ToString());
             }
 
+
+            E_Evaluation ddd = (from m in db.E_Evaluation
+                                where m.Code_Eval == ooid
+                               select m).Single();
+
+
+            Session["MM"] = dd.Duree_Eval;
 
             SqlCommand command3 = new SqlCommand("select DATEDIFF(SECOND, '0:00:00', Duree_Eval ) sec from E_Evaluation where Code_Eval='" + ooid + "'    ", con);
             SqlDataAdapter da3 = new SqlDataAdapter(command3);
@@ -178,19 +188,26 @@ namespace RHEVENT.Controllers
             dt3.Clear();
             da3.Fill(dt3);
 
-            if (i < dt.Rows.Count)
-            {
-                Session["min"] = dt3.Rows[i]["sec"].ToString();
+            //if (Session["min"] == null)
+            //{
+            //    if (i < dt.Rows.Count)
+            //    {
+            //        Session["min"] = dt3.Rows[i]["sec"].ToString();
 
-                Session["Evl"] = id;
+            //        ViewBag.timeexpire = Session["Min"].ToString();
+            //        Session["Evl"] = id;
 
 
-                int SecEval = Convert.ToInt32(dt3.Rows[i]["sec"].ToString()); ;
+            //        int SecEval = Convert.ToInt32(dt3.Rows[i]["sec"].ToString()); ;
 
+            //    }
 
-
-            }
-
+            //}
+            //else
+            //{
+            //    double dddd = Convert.ToDouble(Session["Min"].ToString());
+            //    ViewBag.timeexpire = dddd;
+            //}
             //Session["min"] = 10;
 
 
@@ -413,6 +430,18 @@ namespace RHEVENT.Controllers
             {
                 if (next == "Suivant")
                 {
+                    E_DeadLlineEvalUsr zz = (from m in db.E_DeadLlineEvalUsr
+                                            where m.Code_eval == ooid && m.MatUser == user.matricule
+                                            select m).Single();
+
+                     
+
+                    TimeSpan diff =   (zz.Deadline - DateTime.Now);
+
+                    int   sssa = (int)( diff.TotalSeconds);
+
+                    Session["MinF"] = sssa;
+
                     var verif = from m in db.E_RepUser
                                 where m.Code_eval == ooid && m.NumQ == (slid + 1)
                                 select m;
@@ -645,7 +674,7 @@ namespace RHEVENT.Controllers
                     }
 
 
-                    return RedirectToAction("ResultQCMParSlide", "E_QCM", new { codeEval = Eval, Slide = slid });
+                    return RedirectToAction("ResultQCMParSlide", "E_QCM", new { codeEval = Eval, Slide = slid , sessionminf = Session["MinF"].ToString() });
 
                 }
             }
@@ -665,8 +694,25 @@ namespace RHEVENT.Controllers
 
             if (dt444.Rows.Count < ss.Count())
             {
+
+                
+
                 if (SNQ != null)
                 {
+
+                    E_DeadLlineEvalUsr zz = (from m in db.E_DeadLlineEvalUsr
+                                             where m.Code_eval == ooid && m.MatUser == user.matricule
+                                             select m).Single();
+
+
+
+                    TimeSpan diff = (zz.Deadline - DateTime.Now);
+
+                    int sssa = (int)(diff.TotalSeconds) ;
+
+                    Session["MinF"] = sssa;
+
+
                     SqlCommand command8 = new SqlCommand("SELECT Code_QCM, Question, Reponse1, Reponse2,Reponse3, Reponse4 , NumQ from E_QCM where Code_EvalByQCM='" + ooid + "' and  NumQ = " + SNQ + "   ", con);
                     SqlDataAdapter da8 = new SqlDataAdapter(command8);
                     DataTable dt8 = new DataTable();
@@ -697,6 +743,28 @@ namespace RHEVENT.Controllers
 
                 else
                 {
+
+                    SqlCommand command33 = new SqlCommand("select DATEDIFF(SECOND, '0:00:00', Duree_Eval ) sec from E_Evaluation where Code_Eval='" + ooid + "'    ", con);
+                    SqlDataAdapter da33 = new SqlDataAdapter(command33);
+                    DataTable dt33 = new DataTable();
+                    dt33.Clear();
+                    da33.Fill(dt33);
+
+                    for (int z = 0; z < dt33.Rows.Count; z++)
+                    {
+
+                        DateTime date =  System.DateTime.Now.AddSeconds(Convert.ToInt32(dt3.Rows[z]["sec"].ToString()));
+
+                        SqlCommand cmd = new SqlCommand("Insert into E_DeadLlineEvalUsr (Code_eval,MatUser,Deadline) values (@Code_eval,@MatUser,@Deadline) ", con);
+
+                        cmd.Parameters.AddWithValue("@Code_eval", ooid);
+                        cmd.Parameters.AddWithValue("@MatUser", user.matricule);
+                        cmd.Parameters.AddWithValue("@Deadline", date);
+                        cmd.ExecuteNonQuery();
+
+
+                    }
+
                     //if (i < dt.Rows.Count)
                     //{
                     e_QCM.Code_QCM = Convert.ToString(dt.Rows[i]["Code_QCM"]);
@@ -719,6 +787,10 @@ namespace RHEVENT.Controllers
                     return View(e_QCM);
                     //}
                 }
+
+
+               
+                
             }
 
             else if (dt444.Rows.Count == ss.Count())
@@ -1445,8 +1517,27 @@ namespace RHEVENT.Controllers
             return RedirectToAction("Index", "EMenuEvalUser");
         }
 
-        public ActionResult ResultQCMParSlide(string codeEval, string Slide , string Terminer)
+        public ActionResult ResultQCMParSlide(string codeEval, string Slide , string Terminer , string sessionminf)
         {
+            Session["MinF"] = sessionminf;
+
+            string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+            SqlConnection con = new SqlConnection(constr);
+            con.Open();
+
+
+           // SqlCommand command3 = new SqlCommand("select DATEDIFF(SECOND, '0:00:00', Duree_Eval ) sec from E_Evaluation where Code_Eval='" + codeEval + "'    ", con);
+           // SqlDataAdapter da3 = new SqlDataAdapter(command3);
+           // DataTable dt3 = new DataTable();
+           // dt3.Clear();
+           // da3.Fill(dt3);
+
+           //for (int i=0; i< dt3.Rows.Count; i++)
+           // {
+           //     Session["min"] = dt3.Rows[i]["sec"].ToString();
+                 
+           // }
+
 
             if (Session["Evl"] != null)
             {
@@ -1463,9 +1554,7 @@ namespace RHEVENT.Controllers
 
             int cptTotal = 0;
 
-            string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
-            SqlConnection con = new SqlConnection(constr);
-            con.Open();
+          
 
             DataTable dt = new DataTable();
 
@@ -1769,22 +1858,22 @@ namespace RHEVENT.Controllers
                 {
                     if (s1 != u1)
                     {
-                        Session["Incomp1"] = "Incomplète";
+                        Session["Incomp1"] = "Non coché";
                     }
 
                     if (s2 != u2)
                     {
-                        Session["Incomp2"] = "Incomplète";
+                        Session["Incomp2"] = "Non coché";
                     }
 
                     if (s3 != u3)
                     {
-                        Session["Incomp3"] = "Incomplète";
+                        Session["Incomp3"] = "Non coché";
                     }
 
                     if (s4 != u4)
                     {
-                        Session["Incomp4"] = "Incomplète";
+                        Session["Incomp4"] = "Non coché";
                     }
 
                 }

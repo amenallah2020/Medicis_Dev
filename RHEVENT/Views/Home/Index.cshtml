@@ -55,6 +55,9 @@
 
 <body class="animsition">
 
+   
+
+
     <div class="page-wrapper">
         <!-- HEADER MOBILE-->
         <header class="header-mobile d-block d-lg-none">
@@ -75,10 +78,7 @@
             </div>
             <nav class="navbar-mobile">
                 <div class="container-fluid">
-                    <ul class="navbar-mobile__list list-unstyled">
-                      
-                         
-                    </ul>
+                    <ul class="navbar-mobile__list list-unstyled"></ul>
 
                 </div>
             </nav>
@@ -102,10 +102,10 @@
                             if (User.IsInRole("Admin_Medicis") || User.IsInRole("RH") || User.IsInRole("ELearning") || User.IsInRole("DA"))
                             {
                                 <li class="has-sub">
-                    <a class="js-arrow" href="@Url.Action("Index", "Home")">
-                        <i class="fas fa-home"></i>Accueil
-                    </a>
-                </li>
+                                    <a class="js-arrow" href="@Url.Action("Index", "Home")">
+                                        <i class="fas fa-home"></i>Accueil
+                                    </a>
+                                </li>
 
                                 if (User.IsInRole("Admin_Medicis"))
                                 {
@@ -240,7 +240,7 @@
                             //}
                         }
                     </ul>
-                        
+
                 </nav>
             </div>
         </aside>
@@ -337,7 +337,8 @@
 
 
                                     <div class="card-deck" style="overflow-x:auto;height:400px;align-content:center;align-items:center;align-self:center">
-
+                                       
+                                    
                                         @if (Request.IsAuthenticated)
                                         {
                                             <center>
@@ -349,14 +350,14 @@
                                                                 <div style="margin-left:7%">
                                                                     <center>
                                                                         @*<a href="@Url.Action("Index", "E_MenuAdmMedicis" )">
-            <img class="card-img-top img-circle" src="~/Content/images/AD4.png" style="width:200px;border-width:0px" />
-        </a>*@
+                                            <img class="card-img-top img-circle" src="~/Content/images/AD4.png" style="width:200px;border-width:0px" />
+                                        </a>*@
 
                                                                         <a href="@Url.Action("Index", "E_MenuAdmMedicis" )">
                                                                             <img class="card-img-top img-circle" src="~/Content/images/AD4.png" style="width:200px;border-width:0px" />
                                                                         </a>
 
-                                                                      
+
                                                                         <div>
                                                                             <h4 style="color:blue">Administration</h4>
                                                                         </div>
@@ -445,11 +446,11 @@
 
 
 
-                </div>
             </div>
-            <!-- END MAIN CONTENT-->
-            <!-- END PAGE CONTAINER-->
         </div>
+        <!-- END MAIN CONTENT-->
+        <!-- END PAGE CONTAINER-->
+    </div>
     </div>
 
 
@@ -483,16 +484,16 @@
     @Scripts.Render("~/bundles/Script-calendar")
 
     @*<script>
-    //session end
-    var sessionTimeoutWarning = @Session.Timeout;
+        //session end
+        var sessionTimeoutWarning = @Session.Timeout;
 
-    var sTimeout = parseInt(sessionTimeoutWarning) * 60 * 5000;
-    setTimeout('SessionEnd()', sTimeout);
+        var sTimeout = parseInt(sessionTimeoutWarning) * 60 * 5000;
+        setTimeout('SessionEnd()', sTimeout);
 
-    function SessionEnd() {
-        window.location = "/RH/Account/LogOut";
-    }
-    </script>*@
+        function SessionEnd() {
+            window.location = "/RH/Account/LogOut";
+        }
+        </script>*@
 
 
 

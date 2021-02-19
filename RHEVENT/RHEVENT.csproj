@@ -355,6 +355,18 @@
     <Compile Include="Migrations\202102121257468_m7745.Designer.cs">
       <DependentUpon>202102121257468_m7745.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202102190740345_m112.cs" />
+    <Compile Include="Migrations\202102190740345_m112.Designer.cs">
+      <DependentUpon>202102190740345_m112.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102190813417_m113.cs" />
+    <Compile Include="Migrations\202102190813417_m113.Designer.cs">
+      <DependentUpon>202102190813417_m113.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102190818482_m1134.cs" />
+    <Compile Include="Migrations\202102190818482_m1134.Designer.cs">
+      <DependentUpon>202102190818482_m1134.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationUserViewModel.cs" />
@@ -375,6 +387,7 @@
     <Compile Include="Models\Dictionnaire.cs" />
     <Compile Include="Models\E_DiffEval.cs" />
     <Compile Include="Models\E_ListEvaluationDiffus_Historiq.cs" />
+    <Compile Include="Models\E_DeadlineEvalUsr.cs" />
     <Compile Include="Models\E_ResultatFormation_Historiq.cs" />
     <Compile Include="Models\E_ResultatFormation.cs" />
     <Compile Include="Models\E_ResultQCMParSlide.cs" />
@@ -553,6 +566,7 @@
     <Content Include="css\theme.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery-1.10.2.js" />
     <Content Include="Site.js" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -1253,6 +1267,7 @@
     <Content Include="Views\DA_Demande\demandeTraitee.cshtml" />
     <Content Include="Views\E_QCM\ConsultParSlide.cshtml" />
     <Content Include="Views\E_QCM\ResultQCMParSlide.cshtml" />
+    <Content Include="Views\E_listeUsr\DiffUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\images_accueil\" />
@@ -1280,6 +1295,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202102121257468_m7745.resx">
       <DependentUpon>202102121257468_m7745.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102190740345_m112.resx">
+      <DependentUpon>202102190740345_m112.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102190813417_m113.resx">
+      <DependentUpon>202102190813417_m113.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102190818482_m1134.resx">
+      <DependentUpon>202102190818482_m1134.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

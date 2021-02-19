@@ -5,6 +5,16 @@
     {
         Layout = "~/Views/Shared/_LayoutEval.cshtml";
     }
+    else if (ViewContext.RouteData.Values["action"].ToString() == "ConsultParSlide" &&
+   ViewContext.RouteData.Values["controller"].ToString() == "E_QCM")
+    {
+        Layout = "~/Views/Shared/_LayoutEval.cshtml";
+    }
+    else if (ViewContext.RouteData.Values["action"].ToString() == "ResultQCMParSlide" &&
+  ViewContext.RouteData.Values["controller"].ToString() == "E_QCM")
+    {
+        Layout = "~/Views/Shared/_LayoutEval.cshtml";
+    }
     else if ((ViewContext.RouteData.Values["controller"].ToString() == "DA_Demande") ||
 (ViewContext.RouteData.Values["controller"].ToString() == "DA_TypesAchats") ||
 (ViewContext.RouteData.Values["controller"].ToString() == "DA_TypesActions") ||

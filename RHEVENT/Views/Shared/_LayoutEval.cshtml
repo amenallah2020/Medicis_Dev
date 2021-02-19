@@ -37,9 +37,9 @@
 
 @*<body onload="openNav()">*@
 <body>
-    @*<div id="counter" style="visibility:hidden"></div>
-        <div id="loggedout" style="display:none"></div>*@
+ 
 
+   
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
@@ -181,10 +181,16 @@
         </div>
         <br />
         @RenderBody()
+
         <br />
         <hr />
         <div style="float:none">
             <center>
+                @*<strong style="color:blue; font-size:20px; margin-left:80%"> <span name="time" id="time">   </span>  </strong>*@
+
+                <div id="counter" style="visibility:hidden"></div>
+                <div id="loggedout" style="display:none"></div>
+
                 <p>Copyright © @DateTime.Now.Year . All rights reserved. by Groupe KILANI.</p>
             </center>
         </div>
@@ -224,7 +230,7 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script>
-        var initCountdownValue =  @Session["min"];
+        var initCountdownValue =  @Session["MinF"].ToString();
         var inactivityCountdown = initCountdownValue;
         $(document).ready(function () {
 
@@ -233,7 +239,7 @@
             });
 
             function Logout() {
-                window.location.href = "../ResultQCM/@Session["Evl"]";
+                window.location.href = "/E_QCM/ResultQCM/@Session["Evl"]";
             }
 
             var intervalid = window.setInterval(function Redirect() {
@@ -256,6 +262,46 @@
         });
     </script>
 
+
+    @*<script>
+    function startTimer(duration, display) {
+        var start = Date.now(),
+            diff,
+            minutes,
+            seconds;
+        function timer() {
+            // get the number of seconds that have elapsed since
+            // startTimer() was called
+            diff = duration - (((Date.now() - start) / 1000) | 0);
+
+            // does the same job as parseInt truncates the float
+            minutes = (diff / 60) | 0;
+            seconds = (diff % 60) | 0;
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = minutes + ":" + seconds;
+
+            if (diff <= 0) {
+                // add one second so that the count down starts at the full duration
+                // example 05:00 not 04:59
+                start = Date.now() + 1000;
+            }
+        };
+        // we don't want to wait a full second before the timer starts
+        timer();
+        setInterval(timer, 1000);
+
+    }
+
+    window.onload = function () {
+        var fiveMinutes = 60 * Number(@Session["MinF"].ToString()),
+            display = document.querySelector('#time');
+        startTimer(fiveMinutes, display);
+
+    };
+    </script>*@
 
 </body>
 </html>
