@@ -28,12 +28,22 @@ namespace RHEVENT.Controllers
         [HttpPost]  
         public ActionResult Diff(FormCollection formCollection, string id,DateTime dateLim)
         {
+            string codeEval = id;
+
+            if (formCollection["grpId"] == null)
+            {
+                ViewBag.Bloq = "La diffusion a été annulée : Il faut séléctionner au moin un groupe !";
+
+                return RedirectToAction("Index", "E_DiffEval", new { codeEval = codeEval, bloq = @ViewBag.Bloq });
+
+            }
+
             string[] ids = formCollection["grpId"].Split(new char[]{','});
 
             var grp = db.E_GrpByUsr.Find(int.Parse(ids[0]));
 
 
-            string codeEval = id;
+          
 
             ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
 
@@ -177,8 +187,11 @@ namespace RHEVENT.Controllers
 
 
         public ActionResult Group()
-        { 
+        {
+            ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+
             var list = from m in db.E_GrpByUsr
+                       where m.Matricule_Usr == user.matricule
                        select m;
 
             return View(list.ToList());
@@ -224,7 +237,10 @@ namespace RHEVENT.Controllers
 
             }
 
-            var list = from m in db.E_GrpByUsr 
+            ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+
+            var list = from m in db.E_GrpByUsr
+                       where m.Matricule_Usr == user.matricule
                        select m;
 
             return View(list.ToList());
