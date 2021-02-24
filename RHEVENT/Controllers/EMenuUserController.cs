@@ -38,7 +38,7 @@ namespace RHEVENT.Controllers
             
                 //SqlCommand command1 = new SqlCommand(" select distinct Code_formt from [E_ListFormationDiffus] left join E_ResultFormation on E_ResultFormation.code_formation = [E_ListFormationDiffus].Code_formt where Mat_usr  where Mat_usr = '" + user.matricule + "'  and   ( not [E_ListFormationDiffus].Code_formt in (select code_formation from E_ResultFormation))", con);
 
-            SqlCommand command1 = new SqlCommand(" select distinct Code_formt , Objet from [E_ListFormationDiffus] left join E_ResultFormation on E_ResultFormation.code_formation = [E_ListFormationDiffus].Code_formt where Mat_usr = '" + user.matricule + "' and   ( not [E_ListFormationDiffus].Code_formt in (select code_formation from E_ResultFormation))", con);
+            SqlCommand command1 = new SqlCommand(" select distinct Code_formt , Objet from [E_ListFormationDiffus] left join E_ResultFormation on E_ResultFormation.code_formation = [E_ListFormationDiffus].Code_formt where Mat_usr = '" + user.matricule + "' and   ( not [E_ListFormationDiffus].Code_formt in (select code_formation from E_ResultFormation where MatUser='" + user.matricule + "'))", con);
 
 
             SqlDataAdapter da1 = new SqlDataAdapter(command1);

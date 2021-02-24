@@ -128,7 +128,7 @@ namespace RHEVENT.Controllers
                     DataTable dt2 = new DataTable();
                     da2.Fill(dt2);
                     float budgett = (float)Convert.ToDouble(dt2.Rows[0][0]);
-                    dA_ProduitsDem.Montant = (budgett * (dA_ProduitsDem.Pourcentage/100)).ToString();
+                    dA_ProduitsDem.Montant = Math.Round((budgett * (dA_ProduitsDem.Pourcentage/100)), 3).ToString();
                     
                     dA_ProduitsDem.Réference = Session["reff"].ToString();
                     db.DA_ProduitsDem.Add(dA_ProduitsDem);
@@ -222,7 +222,8 @@ namespace RHEVENT.Controllers
                     DataTable dt2 = new DataTable();
                     da2.Fill(dt2);
                     float budgett = (float)Convert.ToDouble(dt2.Rows[0][0]);
-                    dA_ProduitsDem.Montant = (budgett * (dA_ProduitsDem.Pourcentage / 100)).ToString();
+                    //dA_ProduitsDem.Montant = (budgett * (dA_ProduitsDem.Pourcentage / 100)).ToString();
+                    dA_ProduitsDem.Montant = Math.Round((budgett * (dA_ProduitsDem.Pourcentage / 100)), 3).ToString();
 
                     SqlDataAdapter da5 = new SqlDataAdapter("SELECT Pourcentage FROM DA_ProduitsDem where Réference = '" + Session["reff"].ToString() + "'", con);
                     DataTable dt5 = new DataTable();

@@ -16,6 +16,8 @@ namespace RHEVENT.Models
 
         public string Demandeur { get; set; }
 
+        public string MatriculeDem { get; set; }
+
         public string Gamme { get; set; }
 
         [Display(Name = "Objet de la manifestation")]
@@ -37,7 +39,7 @@ namespace RHEVENT.Models
         public string Argumentaires { get; set; }
 
         [Display(Name = "Budget demandé")]
-        public float Budget { get; set; }
+        public string Budget { get; set; }
         public string Statut { get; set; }
         public string etat_prochain { get; set; }
         public string Validee { get; set; }
@@ -116,7 +118,16 @@ namespace RHEVENT.Models
             ApplicationDbContext db = new ApplicationDbContext();
             List<ValidationResult> validationResult = new List<ValidationResult>();
             var validateName = Date_action > Date_reception;
-            if (validateName != true)
+            var validateName1 = Labo != null;
+
+            if (validateName1 != true)
+            {
+                ValidationResult errorMessage = new ValidationResult
+                ("Vous devez selectionnez un labo.", new[] { "Labo" });
+                validationResult.Add(errorMessage);
+                return validationResult;
+            }
+            else if (validateName != true)
             {
                 ValidationResult errorMessage = new ValidationResult
                 ("La date d'action doit etre superieure à celle de reception.", new[] { "Date_action" });

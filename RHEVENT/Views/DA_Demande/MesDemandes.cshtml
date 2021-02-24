@@ -24,6 +24,7 @@
             background-color: transparent;
             border: unset;
         }
+
         .labo {
             width: auto;
             background-image: url(../Content/images/p5.png);
@@ -32,15 +33,17 @@
             background-color: transparent;
             border: unset;
         }
+
         .materiels {
             width: auto;
             background-image: url(../Content/images/mat4.png);
-            background-color:transparent;
+            background-color: transparent;
             cursor: pointer;
             background-repeat: no-repeat;
             background-color: transparent;
             border: unset;
         }
+
         .details {
             background-image: url(../Content/images/detail.jfif);
             cursor: pointer;
@@ -63,166 +66,160 @@
     </style>
 </head>
 @*<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-    Ajouter Demande
-</button>*@
+        Ajouter Demande
+    </button>*@
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-url='@Url.Action("ContactForm","Home")'>
-    <div class="modal-dialog" role="document" style="width:60%">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Demanade d'Action</h4>
+@*<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-url='@Url.Action("ContactForm","Home")'>
+        <div class="modal-dialog" role="document" style="width:60%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Demanade d'Action</h4>
+                </div>
+                <div class="modal-body">
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+
+
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <table class="table table-borderless ">
+                                <tr>
+
+                                    <td>
+                                        @Html.LabelFor(model => model.TypeAchat)
+                                    </td>
+
+                                    <td colspan="3">
+                                        @Html.DropDownListFor(model => model.TypeAchat, new SelectList(Model.listesachats, "TypeAchat", "TypeAchat"), "Selectionnez le type d'achat pour cette demande", new { @class = "width-textarea form-control" })
+                                        @Html.ValidationMessageFor(model => model.TypeAchat, "", new { @class = "text-danger" })
+                                    </td>
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+                                        @Html.LabelFor(model => model.TypeAction)
+                                    </td>
+
+                                    <td colspan="3">
+                                        @Html.DropDownListFor(model => model.TypeAction, new SelectList(Model.listesactions, "TypeAction", "TypeAction"), "Selectionnez le type d'évenement de cette demande", new { @class = "width-textarea form-control" })
+                                        @Html.ValidationMessageFor(model => model.TypeAction, "", new { @class = "text-danger" })
+                                    </td>
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+                                        @Html.LabelFor(model => model.Labo)
+                                    </td>
+
+                                    <td colspan="3">
+                                        @Html.DropDownListFor(model => model.Labo, new SelectList(Model.listesLabo, "Laboratoire", "Laboratoire"), "Selectionnez un laboratoire", new { @class = "width-textarea form-control" })
+                                        @Html.ValidationMessageFor(model => model.Labo, "", new { @class = "text-danger" })
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>
+                                        @Html.LabelFor(model => model.Objet)
+                                    </td>
+                                    <td colspan="3">
+                                        @Html.TextBoxFor(model => model.Objet, new { @class = "width-textarea" })
+                                        @Html.ValidationMessageFor(model => model.Objet, "", new { @class = "text-danger" })
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.LabelFor(model => model.Argumentaires)
+                                    </td>
+                                    <td colspan="3">
+                                        @Html.TextAreaFor(model => model.Argumentaires, new { @class = "width-textarea" })
+                                        @Html.ValidationMessageFor(model => model.Argumentaires, "", new { @class = "text-danger" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.LabelFor(model => model.Budget)
+                                    </td>
+
+                                    <td>
+                                        @Html.EditorFor(model => model.Budget, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Budget, "", new { @class = "text-danger" })
+                                    </td>
+                                    <td>
+                                        @Html.LabelFor(model => model.Date_demande)
+                                    </td>
+                                    <td>
+                                        @Html.EditorFor(model => model.Date_demande, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Date_demande, "", new { @class = "text-danger" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.LabelFor(model => model.Date_reception)
+                                    </td>
+
+                                    <td>
+                                        @Html.EditorFor(model => model.Date_reception, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Date_reception, "", new { @class = "text-danger" })
+                                    </td>
+                                    <td>
+                                        @Html.LabelFor(model => model.Date_action)
+                                    </td>
+                                    <td>
+                                        @Html.EditorFor(model => model.Date_action, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Date_action, "", new { @class = "text-danger" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.ActionLink("Mes demandes", "MesDemandes")
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <input type="submit" value="Enregistrer" class="btn btn-info" />
+                                    </td>
+
+
+                                </tr>
+                            </table>
+
+                        </div>
+                    }
+                </div>
+
             </div>
-            <div class="modal-body">
-
-                @using (Html.BeginForm())
-                {
-                    @Html.AntiForgeryToken()
-
-                    <div class="form-horizontal">
-
-
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <table class="table table-borderless ">
-                            <tr>
-
-                                <td>
-                                    @Html.LabelFor(model => model.TypeAchat)
-                                </td>
-
-                                <td colspan="3">
-                                    @Html.DropDownListFor(model => model.TypeAchat, new SelectList(Model.listesachats, "TypeAchat", "TypeAchat"), "Selectionnez le type d'achat pour cette demande", new { @class = "width-textarea form-control" })
-                                    @Html.ValidationMessageFor(model => model.TypeAchat, "", new { @class = "text-danger" })
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td>
-                                    @Html.LabelFor(model => model.TypeAction)
-                                </td>
-
-                                <td colspan="3">
-                                    @Html.DropDownListFor(model => model.TypeAction, new SelectList(Model.listesactions, "TypeAction", "TypeAction"), "Selectionnez le type d'évenement de cette demande", new { @class = "width-textarea form-control" })
-                                    @Html.ValidationMessageFor(model => model.TypeAction, "", new { @class = "text-danger" })
-                                </td>
-                            </tr>
-
-                            <tr>
-
-                                <td>
-                                    @Html.LabelFor(model => model.Labo)
-                                </td>
-
-                                <td colspan="3">
-                                    @Html.DropDownListFor(model => model.Labo, new SelectList(Model.listesLabo, "Laboratoire", "Laboratoire"), "Selectionnez un laboratoire", new { @class = "width-textarea form-control" })
-                                    @Html.ValidationMessageFor(model => model.Labo, "", new { @class = "text-danger" })
-                                </td>
-                            </tr>
-
-
-                            <tr>
-                                <td>
-                                    @Html.LabelFor(model => model.Objet)
-                                </td>
-                                <td colspan="3">
-                                    @Html.TextBoxFor(model => model.Objet, new { @class = "width-textarea" })
-                                    @Html.ValidationMessageFor(model => model.Objet, "", new { @class = "text-danger" })
-                                </td>
-
-
-                            </tr>
-                            <tr>
-                                <td>
-                                    @Html.LabelFor(model => model.Argumentaires)
-                                </td>
-                                <td colspan="3">
-                                    @Html.TextAreaFor(model => model.Argumentaires, new { @class = "width-textarea" })
-                                    @Html.ValidationMessageFor(model => model.Argumentaires, "", new { @class = "text-danger" })
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    @Html.LabelFor(model => model.Budget)
-                                </td>
-
-                                <td>
-                                    @Html.EditorFor(model => model.Budget, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Budget, "", new { @class = "text-danger" })
-                                </td>
-                                <td>
-                                    @Html.LabelFor(model => model.Date_demande)
-                                </td>
-                                <td>
-                                    @Html.EditorFor(model => model.Date_demande, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Date_demande, "", new { @class = "text-danger" })
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    @Html.LabelFor(model => model.Date_reception)
-                                </td>
-
-                                <td>
-                                    @Html.EditorFor(model => model.Date_reception, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Date_reception, "", new { @class = "text-danger" })
-                                </td>
-                                <td>
-                                    @Html.LabelFor(model => model.Date_action)
-                                </td>
-                                <td>
-                                    @Html.EditorFor(model => model.Date_action, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Date_action, "", new { @class = "text-danger" })
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    @Html.ActionLink("Mes demandes", "MesDemandes")
-                                </td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <input type="submit" value="Enregistrer" class="btn btn-info" />
-                                </td>
-
-
-                            </tr>
-                        </table>
-
-                    </div>
-                }
-            </div>
-            @*<div class="modal-footer">
-
-
-                    @Html.ActionLink("Mes demandes", "MesDemandes")
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <input type="submit" value="Enregistrer" class="btn btn-info" />
-                </div>*@
         </div>
-    </div>
-</div>
+    </div>*@
 @*<br /> <br />*@
-
+<h2>Mes Demandes</h2>
 <table class="table table-bordered table-responsive border-primary" style="font-size:12px">
     <tr style="background-color:aliceblue;text-align:center;vertical-align:central">
         <th>
             @Html.DisplayNameFor(model => model.Réference)
         </th>
         @*<th>
-            @Html.DisplayNameFor(model => model.Demandeur)
-        </th>*@
+                @Html.DisplayNameFor(model => model.Demandeur)
+            </th>*@
 
         @*<th>
-            @Html.DisplayNameFor(model => model.Objet)
-        </th>*@
+                @Html.DisplayNameFor(model => model.Objet)
+            </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Labo)
         </th>
         @*<th>
-            @Html.DisplayNameFor(model => model.Argumentaires)
-        </th>*@
+                @Html.DisplayNameFor(model => model.Argumentaires)
+            </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Budget)
         </th>
@@ -244,108 +241,108 @@
     @foreach (var item in Model.listesDemandes)
     {
 
-    <tr style="text-align:center;vertical-align:central">
-        <td width="170px">
-            @*@Html.ActionLink(item.Réference, "Edit", new { id = item.Id }, new { @class = "edit" })*@
-            @Html.ActionLink(item.Réference, "demande_dem", "DA_Demande", new { id = item.Réference, statut = item.Statut, dem = item.Demandeur, labor = item.Labo }, new { @class = "edit" })
+        <tr style="text-align:center;vertical-align:central">
+            <td width="170px">
+                @*@Html.ActionLink(item.Réference, "Edit", new { id = item.Id }, new { @class = "edit" })*@
+                @Html.ActionLink(item.Réference, "demande_dem", "DA_Demande", new { id = item.Réference, statut = item.Statut, dem = item.Demandeur, labor = item.Labo }, new { @class = "edit" })
 
-            @*@Html.DisplayFor(modelItem => item.Réference)*@
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Demandeur)
-        </td>*@
-
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Objet)
-        </td>*@
-        <td style="text-align:left">
-            @Html.DisplayFor(modelItem => item.Labo)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Argumentaires)
-        </td>*@
-        <td>
-            @Html.DisplayFor(modelItem => item.Budget)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date_demande)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date_reception)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date_action)
-        </td>
-
-        @if (item.Etat == "-1" && item.Statut == "-1" && item.AvecSans == "99")
-        {
-            <td align="left" style="background-color:red">
-                <label>A corriger</label>
+                @*@Html.DisplayFor(modelItem => item.Réference)*@
             </td>
-        }
-        else if (item.Etat == "-1")
-        {
-        <td align="left" style="background-color:gray">
-            <label>Non Envoyée</label>
-        </td>
-        }
-        else if (item.Etat == "0")
-        {
-        <td align="left" style="background-color:blue;color:white">
-            <label>Envoyée</label>
-        </td>
-        }
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Demandeur)
+                </td>*@
 
-        else if (item.Etat == "100" && item.Statut == "100")
-        {
-        <td align="left" style="background-color:black;color:white">
-            <label>Demande Rejetée</label>
-        </td>
-        }
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Objet)
+                </td>*@
+            <td style="text-align:left">
+                @Html.DisplayFor(modelItem => item.Labo)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Argumentaires)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Budget)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date_demande)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date_reception)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date_action)
+            </td>
 
-        else if ((item.Validee == "1") && (item.Etat == "66"))
-        {
-        <td align="left" style="background-color:aqua">
-            <label>En attente de réception</label>
+            @if (item.Etat == "-1" && item.Statut == "-1" && item.AvecSans == "99")
+            {
+                <td align="left" style="background-color:red">
+                    <label>A corriger</label>
+                </td>
+            }
+            else if (item.Etat == "-1")
+            {
+                <td align="left" style="background-color:gray">
+                    <label>Non Envoyée</label>
+                </td>
+            }
+            else if (item.Etat == "0")
+            {
+                <td align="left" style="background-color:blue;color:white">
+                    <label>Envoyée</label>
+                </td>
+            }
 
-        </td>
-        }
-        else if ((item.Validee == "1") && (item.Etat == "77"))
-        {
-        <td align="left" style="background-color:orange">
-            <label>Réception Partielle</label>
-        </td>
-        }
-        else if ((item.Validee == "1") && (item.Etat == "88"))
-        {
-        <td align="left" style="background-color:forestgreen">
-            <label>Réception totale</label>
-        </td>
-        }
+            else if (item.Etat == "100" && item.Statut == "100")
+            {
+                <td align="left" style="background-color:black;color:white">
+                    <label>Demande Rejetée</label>
+                </td>
+            }
 
-        else
-        {
-        <td align="left">
-            Validée Par @Html.DisplayFor(modelItem => item.Etat)
-        </td>
-        }
+            else if ((item.Validee == "1") && (item.Etat == "66"))
+            {
+                <td align="left" style="background-color:aqua">
+                    <label>En attente de réception</label>
+
+                </td>
+            }
+            else if ((item.Validee == "1") && (item.Etat == "77"))
+            {
+                <td align="left" style="background-color:orange">
+                    <label>Réception Partielle</label>
+                </td>
+            }
+            else if ((item.Validee == "1") && (item.Etat == "88"))
+            {
+                <td align="left" style="background-color:forestgreen">
+                    <label>Réception totale</label>
+                </td>
+            }
+
+            else
+            {
+                <td align="left">
+                    Validée Par @Html.DisplayFor(modelItem => item.Etat)
+                </td>
+            }
 
 
-        <td width="160px">
-            @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+            <td width="160px">
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
 
-            @*<input type="submit" value="      " class="details" onclick="location.href='@Url.Action("Details","DA_Demande", new { id = item.Id })'" />*@
-            @* <input type="submit" value="      " class="supp" onclick="location.href='@Url.Action("Delete","DA_Demande", new { id = item.Id })'" />*@
-            @*<input type="submit" title="Matériels" value="      " class="materiels" name="@item.Réference" onclick="location.href='@Url.Action("Materiels_Dem","DA_Materiels_Dem", new { id = item.Réference })'" />*@
-            <input type="submit" title="Détails Budget" value="      " class="budget" name="@item.Réference" onclick="location.href='@Url.Action("Budget_Dem","DA_Budget", new { id = item.Réference, statut=item.Statut, dem=item.Demandeur,labor=item.Labo })'" />
-            <input type="submit" title="Labo & Produits" value="      " class="labo" name="@item.Réference" onclick="location.href='@Url.Action("Produits_Dem","DA_ProduitsDem", new { id = item.Réference, statut=item.Statut, dem=item.Demandeur,labor=item.Labo })'" />
-            @*<input type="submit" title="Détails Demande" value="      " class="details" name="@item.Réference" onclick="location.href='@Url.Action("demande_dem","DA_Demande", new { id = item.Réference })'" />*@
+                @*<input type="submit" value="      " class="details" onclick="location.href='@Url.Action("Details","DA_Demande", new { id = item.Id })'" />*@
+                @* <input type="submit" value="      " class="supp" onclick="location.href='@Url.Action("Delete","DA_Demande", new { id = item.Id })'" />*@
+                @*<input type="submit" title="Matériels" value="      " class="materiels" name="@item.Réference" onclick="location.href='@Url.Action("Materiels_Dem","DA_Materiels_Dem", new { id = item.Réference })'" />*@
+                <input type="submit" title="Détails Budget" value="Budget" class="btn btn-sm btn-info" name="@item.Réference" onclick="location.href='@Url.Action("Budget_Dem","DA_Budget", new { id = item.Réference, statut=item.Statut, dem=item.Demandeur,labor=item.Labo })'" />
+                <input type="submit" title="Labo & Produits" value="Produits" class="btn btn-sm btn-warning" name="@item.Réference" onclick="location.href='@Url.Action("Produits_Dem","DA_ProduitsDem", new { id = item.Réference, statut=item.Statut, dem=item.Demandeur,labor=item.Labo })'" />
+                @*<input type="submit" title="Détails Demande" value="      " class="details" name="@item.Réference" onclick="location.href='@Url.Action("demande_dem","DA_Demande", new { id = item.Réference })'" />*@
 
 
-        </td>
-    </tr>
+            </td>
+        </tr>
     }
 
 </table>

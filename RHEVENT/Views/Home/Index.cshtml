@@ -1,496 +1,410 @@
-﻿
-@{ Layout = null;}
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html>
 <head>
+    @{ Layout = null;}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E KILANI GROUP</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    @*<script>setInterval(function () { alert("Hello"); }, 3000);</script>*@
 
-    <!-- Required meta tags-->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="au theme template">
-    <meta name="author" content="Hau Nguyen">
-    <meta name="keywords" content="au theme template">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    @*<script>
+            setTimeout(function () {
+                window.location.reload(1);
+            }, 5000);  /*en millseconde*/
+        </script>*@
 
-    <!-- Title Page-->
-    <title>E-MEDICIS</title>
-    @Styles.Render("~/Content/css")
-    @Styles.Render("~/Content/jqueryui")
-    @Scripts.Render("~/bundles/modernizr")
-    <!-- Fontfaces CSS-->
-    <script src="~/Scripts/jquery.min.js"></script>
-    <link href="~/css/jquery.datetimepicker.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
-    <link href="~/Content/free_css_file/style_radio_button.css" rel="stylesheet" />
-    <link href="@Url.Content("~/css/font-face.css")" rel="stylesheet" media="all">
-    <link href="@Url.Content("~/vendor/font-awesome-4.7/css/font-awesome.min.css")" rel="stylesheet" media="all">
-    <link href="@Url.Content("~/vendor/font-awesome-5/css/fontawesome-all.min.css")" rel="stylesheet" media="all">
-    <link href="@Url.Content("~/vendor/mdi-font/css/material-design-iconic-font.min.css")" rel="stylesheet" media="all">
-    <!-- Bootstrap CSS-->
-    <link href="@Url.Content("~/vendor/bootstrap-4.1/bootstrap.min.css")" rel="stylesheet" media="all">
-    <!-- Vendor CSS-->
-    <link href="@Url.Content("~/vendor/animsition/animsition.min.css")" rel="stylesheet" media="all">
-    <link href="@Url.Content("~/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css")" rel="stylesheet" media="all">
-    <link href="@Url.Content("~/vendor/wow/animate.css")" rel="stylesheet" media="all">
-    <link href="@Url.Content("~/vendor/css-hamburgers/hamburgers.min.css")" rel="stylesheet" media="all">
-    <link href="@Url.Content("~/vendor/slick/slick.css")" rel="stylesheet" media="all">
-    <link href="@Url.Content("~/vendor/select2/select2.min.css")" rel="stylesheet" media="all">
-    <link href="@Url.Content("~/vendor/perfect-scrollbar/perfect-scrollbar.css")" rel="stylesheet" media="all">
-    <!-- Main CSS-->
-    <link href="@Url.Content("~/css/theme.css")" rel="stylesheet" media="all">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
-    <link href="~/Content/fullcalendar.css" rel="stylesheet" />
-    <script src="~/Scripts/fr.js"></script>
+    
+    @*<link href="~/assets/css/styles.css" rel="stylesheet" />
+    <link href="~/assets/countdown/jquery.countdown.css" rel="stylesheet" />
+    <script src="~/assets/countdown/jquery-1.7.1.min.js"></script>
+    <script src="~/assets/countdown/jquery.countdown.js"></script>
+    <script src="~/assets/js/script.js"></script>*@
+    <style>
 
-    <script src="~/Content/fullcalendar_lib/jquery-ui.custom.min.js"></script>
-    <script src="~/Content/fullcalendar_lib/fullcalendar.min.js"></script>
+        #mySidenav a {
+            position: absolute;
+            left: -10%;
+            transition: 0.5s;
+            padding: 15px;
+            width: 13%;
+            text-decoration: none;
+            font-size: 20px;
+            text-align: left;
+            color: white;
+            border-radius: 0 50px 50px 0;
+        }
 
+        #mySidenav1 a {
+            position: absolute;
+            padding: 10px;
+            width: 100%;
+            text-decoration: none;
+            font-size: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        #mySidenav a:hover {
+            left: 0;
+            border-radius: 0 50px 0 50px;
+        }
+
+        #about {
+            top: 0px;
+            background-color: #B6D8F0;
+        }
+
+        #blog {
+            top: 50px;
+            background-color: #2196F3;
+        }
+
+        #projects {
+            top: 110px;
+            background-color: #419C31;
+        }
+    </style>
 </head>
 
+<body>
+
+    @{ string name = ViewBag.nom_prenom;
+        name = name.ToUpper();}
+
+    <div id="mySidenav1" class="sidenav">
+        <a href="#" id="about">@name</a>
+        @*<div id="countdown"></div>*@
+    </div>
+
+    <div id="mySidenav" class="sidenav">
+        <a href="@Url.Action("LogOut", "Account")" id="blog">Déconnexion</a>
+        <a href="@Url.Action("ChangePasswordByUser", "ApplicationUsers")" id="projects">Mon compte</a>
+    </div>
+
+  
+   
+    <div style="margin-left:15%">
+        <center>
+            @if (Request.IsAuthenticated)
+            {
 
 
+                if (User.IsInRole("Admin_Medicis"))
+                {
 
-<body class="animsition">
+                    <div style="margin-top:5%;float:left">
 
-    <div class="page-wrapper">
-        <!-- HEADER MOBILE-->
-        <header class="header-mobile d-block d-lg-none">
-            <div class="header-mobile__bar">
-                <div class="container-fluid">
-                    <div class="header-mobile-inner">
-                        <a class="logo" href="@Url.Action("Index", "Home" )">
-
-                            <img src="~/Content/images/icon/MEDICIS.png" width="32" height="32" class="img-responsive" />
+                        <a href="@Url.Action("Index","E_MenuAdmMedicis")" >
+                            <img class="card-img-top img-circle" src="~/Content/images/AD4.png" style="width:130px;border-width:0px" />
                         </a>
-                        <button class="hamburger hamburger--slider" type="button">
-                            <span class="hamburger-box">
-                                <span class="hamburger-inner"></span>
-                            </span>
-                        </button>
+                        <div>
+                            <a href="@Url.Action("Index","E_MenuAdmMedicis")">
+                                <h4>Administration</h4>
+                            </a>
+                        </div>
+
                     </div>
-                </div>
-            </div>
-            <nav class="navbar-mobile">
-                <div class="container-fluid">
-                    <ul class="navbar-mobile__list list-unstyled">
-                      
-                         
-                    </ul>
 
-                </div>
-            </nav>
-        </header>
-        <!-- END HEADER MOBILE-->
-        <!-- MENU SIDEBAR-->
-        <aside class="menu-sidebar d-none d-lg-block">
-            <div class="logo">
-                <a href="@Url.Action("Index", "Home" )">
+                }
 
-                    <img src="~/Content/images/icon/MEDICIS.png" width="132" height="64" class="img-responsive" />
-                </a>
-            </div>
-            <div class="menu-sidebar__content js-scrollbar1">
-                <nav class="navbar-sidebar">
-                    <ul class="list-unstyled navbar__list">
+                if (User.IsInRole("RH") || User.IsInRole("Admin_Medicis"))
+                {
+                    <div style="margin-left:3%;margin-top:5%;float:left">
 
+                        <a href="@Url.Action("Index", "E_MenuRH" )">
+                            <img class="card-img-top img-circle" src="~/Content/images/rhe2.png" style="width:130px;border-width:0px" />
+                        </a>
+                        <div>
+                            <a href="@Url.Action("Index", "E_MenuRH" )">
+                                <h4>RH EVENTS</h4>
+                            </a>
+                            
+                        </div>
 
-                        @if (Request.IsAuthenticated)
-                        {
-                            if (User.IsInRole("Admin_Medicis") || User.IsInRole("RH") || User.IsInRole("ELearning") || User.IsInRole("DA"))
-                            {
-                                <li class="has-sub">
-                    <a class="js-arrow" href="@Url.Action("Index", "Home")">
-                        <i class="fas fa-home"></i>Accueil
+                    </div>
+
+                }
+
+                if (User.IsInRole("Admin_Medicis") || User.IsInRole("Elearning"))
+                {
+
+                    <div style="margin-left:3%;float:left;margin-top:5%;">
+
+                        <a href="@Url.Action("Index", "E_MenuElearning" )">
+                            <img class="card-img-top img-circle" src="~/Content/images/learn4.png" style="width:130px;border-width:0px" />
+                        </a>
+                        <div>
+                            <a href="@Url.Action("Index", "E_MenuElearning" )">
+                                <h4>E-learning</h4>                            </a>
+                            
+                        </div>
+
+                    </div>
+
+                }
+
+                if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
+                {
+
+                    <div style="margin-left:3%;float:left;margin-top:5%;">
+
+                        <a href="@Url.Action("Create", "DA_Demande" )">
+                            <img class="card-img-top img-circle" src="~/Content/images/Achat.jpg" style="width:130px;border-width:0px" />
+                        </a>
+                        <div>
+                            <a href="@Url.Action("Create", "DA_Demande" )">
+                                <h4>Demande d'action</h4>                            </a>
+                            
+                        </div>
+
+                    </div>
+
+                }
+
+                @*
+                if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
+                {
+
+                    <div style="margin-left:3%;float:left;margin-top:5%;">
+                        <a href="http://192.168.1.207/dc1/Accueil.aspx" target="_blank">
+
+                            <img class="card-img-top img-circle" src="~/Content/images/change1.jpg" style="width:130px;border-width:0px" />
+                        </a>
+                        <div>
+                            <h4>Dem Changement</h4>
+                        </div>
+
+                    </div>
+
+                }
+
+            if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
+            {
+
+                <div style="margin-left:3%;float:left;margin-top:5%;">
+                    <a href="http://192.168.1.207/dc1/Accueil.aspx" target="_blank">
+
+                        <img class="card-img-top img-circle" src="~/Content/images/change1.jpg" style="width:130px;border-width:0px" />
                     </a>
-                </li>
-
-                                if (User.IsInRole("Admin_Medicis"))
-                                {
-                                    <li class="has-sub">
-                                        <a class="js-arrow" href="#">
-                                            <i class="glyphicon glyphicon-lock"></i>Administration
-                                        </a>
-                                        <ul class="navbar-mobile-sub__list list-unstyled js-sub-list ">
-                                            <li>
-                                                <a href="@Url.Action("Index", "Role")"><span class="role user">Liste des roles</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("Index", "ApplicationUsers")"><span class="role user">Liste des utilisateurs</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("Index", "FonctionsUsers")"><span class="role user">Liste des fonctions</span></a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                }
-
-                            }
-
-                            if (User.IsInRole("RH") || User.IsInRole("Admin_Medicis"))
-                            {
-                                <li class="has-sub">
-                                    <a class="js-arrow" href="#">
-                                        <i class="glyphicon glyphicon-tasks"></i>RH
-                                    </a>
-
-                                    <ul class="navbar-mobile-sub__list list-unstyled js-sub-list ">
-
-                                        @if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || User.IsInRole("Admin_Medicis"))
-                                        {
-
-                                            <li>
-                                                <a href="@Url.Action("Index", "AdministrationRH")"><span class="role user">Administration RH</span></a>
-                                            </li>
-                                        }
-
-                                        @if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || (User.IsInRole("RH") && User.IsInRole("RH_Employer")) || (User.IsInRole("RH") && User.IsInRole("RH_Superieur_Hiéarchique")) || (User.IsInRole("RH") && User.IsInRole("RH_Directeur")) || User.IsInRole("Admin_Medicis"))
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("Index", "RhAttestationMenu")"><span class="role user">Attestaions</span></a>
-                                            </li>
-                                        }
-
-                                        @if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || (User.IsInRole("RH") && User.IsInRole("RH_Employer")) || (User.IsInRole("RH") && User.IsInRole("RH_Superieur_Hiéarchique")) || (User.IsInRole("RH") && User.IsInRole("RH_Directeur")) || User.IsInRole("Admin_Medicis"))
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("Index", "RhAutorisationMenu")"><span class="role user">Autorisations</span></a>
-                                            </li>
-                                        }
-
-                                        @if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || (User.IsInRole("RH") && User.IsInRole("RH_Employer")) || (User.IsInRole("RH") && User.IsInRole("RH_Superieur_Hiéarchique")) || (User.IsInRole("RH") && User.IsInRole("RH_Directeur")) || User.IsInRole("Admin_Medicis"))
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("Index", "RhCongeMenu")"><span class="role user">Congés</span></a>
-                                            </li>
-                                        }
-
-                                        @if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || (User.IsInRole("RH") && User.IsInRole("RH_Employer")) || (User.IsInRole("RH") && User.IsInRole("RH_Superieur_Hiéarchique")) || (User.IsInRole("RH") && User.IsInRole("RH_Directeur")) || User.IsInRole("Admin_Medicis"))
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("Index", "Calendar")"><span class="role user">  Calendrier de service </span></a>
-                                            </li>
-                                        }
-
-                                        @if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || (User.IsInRole("RH") && User.IsInRole("RH_Directeur")) || User.IsInRole("Admin_Medicis"))
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("CalendrierDirection", "Calendar")"><span class="role user">  Calendrier de direction </span></a>
-                                            </li>
-
-                                        }
-                                    </ul>
-                                </li>
-
-                            }
-
-                            if (User.IsInRole("Admin_Medicis") || User.IsInRole("Elearning"))
-                            {
-                                <li>
-                                    <a class="js-arrow" href="#">
-                                        @* <a class="js-arrow" href="@Url.Action("Index", "EMenuFormateur")">*@
-                                        <i class="glyphicon glyphicon-globe"></i>E-learning
-                                    </a>
-
-                                    <ul class="navbar-mobile-sub__list list-unstyled js-sub-list ">
-
-                                        @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Formateur")))
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("Index", "EMenuFormateur")"><span class="role user">Gestion des formations</span></a>
-                                            </li>
-
-                                            <li>
-                                                <a href="@Url.Action("Group", "E_GrpByUsr")"><span class="role user" style="font-size:13px">Gestion grp de diffusion</span></a>
-                                            </li>
-
-                                            <li>
-                                                <a href="@Url.Action("Index", "EMenuEvaluation")"><span class="role user">Gestion des evaluations</span></a>
-                                            </li>
-                                        }
-
-                                        @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Employer")))
-
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("Index", "EMenuFormUser")"><span class="role user">Mes formations</span></a>
-                                            </li>
-
-                                            <li>
-                                                <a href="@Url.Action("Index", "EMenuEvaluationUser")"><span class="role user">Mes évaluations</span></a>
-                                            </li>
-                                        }
-                                    </ul>
-                                </li>
-
-                            }
-
-                            // if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
-                            //{
-                            if (User.IsInRole("DA") || User.IsInRole("Admin_Medicis"))
-                            {
-                                <li>
-                                    <a class="js-arrow" href="@Url.Action("Create", "DA_Demande")">
-                                        <i class="glyphicon glyphicon-bell"></i>Demande d'actions
-                                    </a>
-                                </li>
-                            }
-                            //}
-                        }
-                    </ul>
-                        
-                </nav>
-            </div>
-        </aside>
-        <!-- END MENU SIDEBAR-->
-        <!-- PAGE CONTAINER-->
-        <div class="page-container">
-            <!-- HEADER DESKTOP-->
-            <header class="header-desktop">
-                <div class="section__content section__content--p30">
-                    <div class="container-fluid">
-                        <div class="header-wrap">
-                            <form class="form-header" action="" method="POST"></form>
-                            <div class="header-button">
-                                <div class="noti-wrap">
-                                    <div class="noti__item js-item-menu">
-
-                                    </div>
-                                    <div class="noti__item js-item-menu">
-
-                                    </div>
-                                    <div class="noti__item js-item-menu">
-
-
-                                    </div>
-                                </div>
-                                <div class="account-wrap">
-                                    <div class="account-item clearfix js-item-menu">
-                                        <div class="image">
-                                            <img src="@Url.Content("~/Content/images/icon/user.png")" alt="John Doe" />
-                                        </div>
-                                        <div class="content">
-                                            <a class="js-acc-btn" href="#">@ViewBag.nom_prenom</a>
-                                        </div>
-                                        <div class="account-dropdown js-dropdown">
-                                            <div class="info clearfix">
-                                                <div class="image">
-                                                    <a href="#">
-                                                        <img src="@Url.Content("~/Content/images/icon/user.png")" alt="John Doe" />
-                                                    </a>
-                                                </div>
-                                                <div class="content">
-                                                    <h5 class="name">
-                                                        <a href="#">@ViewBag.nom_prenom</a>
-                                                    </h5>
-                                                    <span class="email">@ViewBag.email</span>
-                                                </div>
-                                            </div>
-                                            <div class="account-dropdown__body">
-                                                <div class="account-dropdown__item">
-                                                    <a href="#">
-                                                        <i class="zmdi zmdi-account"></i>Mon compte
-                                                    </a>
-                                                </div>
-                                                <div class="account-dropdown__item">
-                                                    <a href="@Url.Action("ChangePasswordByUser", "ApplicationUsers")">
-                                                        <i class="zmdi zmdi-settings"></i>Modifier mot de passe
-                                                    </a>
-                                                </div>
-
-                                            </div>
-                                            <div class="account-dropdown__footer">
-                                                <a href="@Url.Action("LogOut","Account")">
-
-                                                    <i class="zmdi zmdi-power"></i>Déconnexion
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
-            <!-- END HEADER DESKTOP-->
-
-            <div class="main-content">
-                <div class="section__content section__content--p30">
-                    <div class="container-fluid">
-                        <div class="row">
-
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12" id="template_site">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h4>
-                                            <strong class="card-title">
-                                                @ViewBag.titre_page
-
-                                            </strong>
-                                        </h4>
-                                    </div>
-
-
-                                    <div class="card-deck" style="overflow-x:auto;height:400px;align-content:center;align-items:center;align-self:center">
-
-                                        @if (Request.IsAuthenticated)
-                                        {
-                                            <center>
-                                                <table>
-                                                    <tr>
-                                                        @if (User.IsInRole("Admin_Medicis"))
-                                                        {
-                                                            <td>
-                                                                <div style="margin-left:7%">
-                                                                    <center>
-                                                                        <a href="@Url.Action("Index", "E_MenuAdmMedicis" )">
-                                                                            <img class="card-img-top img-circle" src="~/Content/images/AD4.png" style="width:200px;border-width:0px" />
-                                                                        </a>
-                                                                        <div>
-                                                                            <h4>Administration</h4>
-                                                                        </div>
-                                                                    </center>
-                                                                </div>
-                                                            </td>
-                                                        }
-
-                                                        @if (User.IsInRole("RH") || User.IsInRole("Admin_Medicis"))
-                                                        {
-                                                            <td>
-                                                                <div style="margin-left:7%">
-                                                                    <center>
-                                                                        <a href="@Url.Action("Index", "E_MenuRH" )">
-                                                                            <img class="card-img-top img-circle" src="~/Content/images/RH2.png" style="width:200px;border-width:0px" />
-                                                                        </a>
-                                                                        <div>
-                                                                            <h4>RH EVENTS</h4>
-                                                                        </div>
-                                                                    </center>
-                                                                </div>
-                                                            </td>
-                                                        }
-
-                                                        @if (User.IsInRole("Admin_Medicis") || User.IsInRole("Elearning"))
-                                                        {
-                                                            <td>
-                                                                <div style="margin-left:7%">
-                                                                    <center>
-                                                                        <a href="@Url.Action("Index", "E_MenuElearning" )">
-                                                                            <img class="card-img-top img-circle" src="~/Content/images/el2.jpg" style="width:200px;border-width:0px" />
-                                                                        </a>
-                                                                        <div>
-                                                                            <h4>E-learning</h4>
-                                                                        </div>
-                                                                    </center>
-                                                                </div>
-                                                            </td>
-                                                        }
-
-                                                        @if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
-                                                        {
-                                                            <td>
-                                                                <div style="margin-left:7%">
-                                                                    <center>
-                                                                        <a href="@Url.Action("Create", "DA_Demande" )">
-                                                                            <img class="card-img-top img-circle" src="~/Content/images/DA2.png" style="width:200px;border-width:0px" />
-                                                                        </a>
-                                                                        <div>
-                                                                            <h4>Demande d'action</h4>
-                                                                        </div>
-                                                                    </center>
-                                                                </div>
-                                                            </td>
-                                                        }
-                                                    </tr>
-                                                </table>
-                                            </center>
-
-                                        }
-
-                                    </div>
-
-                                </div>
-
-
-
-                            </div>
-                        </div>
-
+                    <div>
+                        <h4>Dem Changement</h4>
                     </div>
 
+                </div>
 
+            }
+            if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
+            {
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="copyright">
-                                <p>Copyright © @DateTime.Now.Year - All rights reserved. by <a href="https://www.kilanigroupe.com/fr" style="color:blue" target="_blank">KILANI GROUPE</a>.</p>
+                <div style="margin-left:3%;float:left;margin-top:5%;">
+                    <a href="http://192.168.1.207/dc1/Accueil.aspx" target="_blank">
 
-                                @*<p>Copyright © 2020 TERIAK. All rights reserved. by <a href="http://www.teriak.com/Fr/">TERIAK</a>.</p>*@
-                            </div>
-                        </div>
+                        <img class="card-img-top img-circle" src="~/Content/images/change1.jpg" style="width:130px;border-width:0px" />
+                    </a>
+                    <div>
+                        <h4>Dem Changement</h4>
                     </div>
-                </div>
-
-
-
 
                 </div>
-            </div>
-            <!-- END MAIN CONTENT-->
-            <!-- END PAGE CONTAINER-->
-        </div>
+
+            }
+            if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
+            {
+
+                <div style="margin-left:3%;float:left;margin-top:5%;">
+                    <a href="http://192.168.1.207/dc1/Accueil.aspx" target="_blank">
+
+                        <img class="card-img-top img-circle" src="~/Content/images/change1.jpg" style="width:130px;border-width:0px" />
+                    </a>
+                    <div>
+                        <h4>Dem Changement</h4>
+                    </div>
+
+                </div>
+
+            }
+            if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
+            {
+
+                <div style="margin-left:3%;float:left;margin-top:5%;">
+                    <a href="http://192.168.1.207/dc1/Accueil.aspx" target="_blank">
+
+                        <img class="card-img-top img-circle" src="~/Content/images/change1.jpg" style="width:130px;border-width:0px" />
+                    </a>
+                    <div>
+                        <h4>Dem Changement</h4>
+                    </div>
+
+                </div>
+
+            }
+            if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
+            {
+
+                <div style="margin-left:3%;float:left;margin-top:5%;">
+                    <a href="http://192.168.1.207/dc1/Accueil.aspx" target="_blank">
+
+                        <img class="card-img-top img-circle" src="~/Content/images/change1.jpg" style="width:130px;border-width:0px" />
+                    </a>
+                    <div>
+                        <h4>Dem Changement</h4>
+                    </div>
+
+                </div>
+
+            }
+            if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
+            {
+
+                <div style="margin-left:3%;float:left;margin-top:5%;">
+                    <a href="http://192.168.1.207/dc1/Accueil.aspx" target="_blank">
+
+                        <img class="card-img-top img-circle" src="~/Content/images/change1.jpg" style="width:130px;border-width:0px" />
+                    </a>
+                    <div>
+                        <h4>Dem Changement</h4>
+                    </div>
+
+                </div>
+
+            }
+            if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
+            {
+
+                <div style="margin-left:3%;float:left;margin-top:5%;">
+                    <a href="http://192.168.1.207/dc1/Accueil.aspx" target="_blank">
+
+                        <img class="card-img-top img-circle" src="~/Content/images/change1.jpg" style="width:130px;border-width:0px" />
+                    </a>
+                    <div>
+                        <h4>Dem Changement</h4>
+                    </div>
+
+                </div>
+
+            }
+            if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
+            {
+
+                <div style="margin-left:3%;float:left;margin-top:5%;">
+                    <a href="http://192.168.1.207/dc1/Accueil.aspx" target="_blank">
+
+                        <img class="card-img-top img-circle" src="~/Content/images/change1.jpg" style="width:130px;border-width:0px" />
+                    </a>
+                    <div>
+                        <h4>Dem Changement</h4>
+                    </div>
+
+                </div>
+
+            }
+            if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
+            {
+
+                <div style="margin-left:3%;float:left;margin-top:5%;">
+                    <a href="http://192.168.1.207/dc1/Accueil.aspx" target="_blank">
+
+                        <img class="card-img-top img-circle" src="~/Content/images/change1.jpg" style="width:130px;border-width:0px" />
+                    </a>
+                    <div>
+                        <h4>Dem Changement</h4>
+                    </div>
+
+                </div>
+
+            }
+            if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
+            {
+
+                <div style="margin-left:3%;float:left;margin-top:5%;">
+                    <a href="http://192.168.1.207/dc1/Accueil.aspx" target="_blank">
+
+                        <img class="card-img-top img-circle" src="~/Content/images/change1.jpg" style="width:130px;border-width:0px" />
+                    </a>
+                    <div>
+                        <h4>Dem Changement</h4>
+                    </div>
+
+                </div>
+
+            }
+            if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
+            {
+
+                <div style="margin-left:3%;float:left;margin-top:5%;">
+                    <a href="http://192.168.1.207/dc1/Accueil.aspx" target="_blank">
+
+                        <img class="card-img-top img-circle" src="~/Content/images/change1.jpg" style="width:130px;border-width:0px" />
+                    </a>
+                    <div>
+                        <h4>Dem Changement</h4>
+                    </div>
+
+                </div>
+
+            }
+            if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
+            {
+
+                <div style="margin-left:3%;float:left;margin-top:5%;">
+                    <a href="http://192.168.1.207/dc1/Accueil.aspx" target="_blank">
+
+                        <img class="card-img-top img-circle" src="~/Content/images/change1.jpg" style="width:130px;border-width:0px" />
+                    </a>
+                    <div>
+                        <h4>Dem Changement</h4>
+                    </div>
+
+                </div>
+
+            }
+            if (User.IsInRole("Admin_Medicis") || User.IsInRole("DA"))
+            {
+
+                <div style="margin-left:3%;float:left;margin-top:5%;">
+                    <a href="http://192.168.1.207/dc1/Accueil.aspx" target="_blank">
+
+                        <img class="card-img-top img-circle" src="~/Content/images/change1.jpg" style="width:130px;border-width:0px" />
+                    </a>
+                    <div>
+                        <h4>Dem Changement</h4>
+                    </div>
+
+                </div>
+
+            }*@
+
+
+            }
+
+
+        </center>
     </div>
 
 
-    <!-- Jquery JS-->
-    <!-- Bootstrap JS-->
-    <script src="@Url.Content("~/vendor/bootstrap-4.1/popper.min.js")"></script>
-    <script src="@Url.Content("~/vendor/bootstrap-4.1/bootstrap.min.js")"></script>
-    <!-- Vendor JS       -->
-    <script src="@Url.Content("~/vendor/slick/slick.min.js")">
-    </script>
-    <script src="@Url.Content("~/vendor/wow/wow.min.js")"></script>
-    <script src="@Url.Content("~/vendor/animsition/animsition.min.js")"></script>
-    <script src="@Url.Content("~/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js")">
-    </script>
-    <script src="@Url.Content("~/vendor/counter-up/jquery.waypoints.min.js")"></script>
-    <script src="@Url.Content("~/vendor/counter-up/jquery.counterup.min.js")">
-    </script>
-    <script src="@Url.Content("~/vendor/circle-progress/circle-progress.min.js")"></script>
-    <script src="@Url.Content("~/vendor/perfect-scrollbar/perfect-scrollbar.js")"></script>
-    <script src="@Url.Content("~/vendor/chartjs/Chart.bundle.min.js")"></script>
-    <script src="@Url.Content("~/vendor/select2/select2.min.js")">
-    </script>
-    <!-- Main JS-->
-    <script src="@Url.Content("~/Scripts/main.js")"></script>
+    <div>
+
+        <center>
+            <div class="col-md-12" style="padding-top:5%">
+                <div class="copyright">
+                    <p>Copyright © @DateTime.Now.Year - All rights reserved. by <a href="https://www.kilanigroupe.com/fr" style="color:blue" target="_blank">KILANI GROUPE</a>.</p>
+                </div>
+            </div>
+        </center>
+    </div>
 
 
 
 
-
-
-    @Scripts.Render("~/bundles/Script-calendar")
-
-    @*<script>
-    //session end
-    var sessionTimeoutWarning = @Session.Timeout;
-
-    var sTimeout = parseInt(sessionTimeoutWarning) * 60 * 5000;
-    setTimeout('SessionEnd()', sTimeout);
-
-    function SessionEnd() {
-        window.location = "/RH/Account/LogOut";
-    }
-    </script>*@
-
-
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
 
 </body>
-
 </html>
-<!-- end document-->
+
+
+
+

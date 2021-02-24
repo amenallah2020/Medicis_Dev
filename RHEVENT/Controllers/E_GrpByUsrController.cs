@@ -113,7 +113,7 @@ namespace RHEVENT.Controllers
 
                 SqlCommand cmd = new SqlCommand("INSERT INTO E_ListFormationDiffus  ([Mat_usr]  ,[Nom_usr] ,[Code_grp]  ,[Code_formt], code_eval, DateDiffus, MatFormateur, Objet, deadline) " +
                     "SELECT  [Mat_usr]  ,[Nom_usr]   ,[Code_grp]   ,'" + id + "', '" + e_f.CodeEval +"' ,'"+System.DateTime.Now+"' , '"+user.matricule+"', '"+ dd+ "' , CONVERT(nvarchar, '" + dateLim + "',103)     FROM [E_listeUsr] " +
-                    "" +  "inner join[RH_MEDICIS].[dbo].E_GrpByUsr on[dbo].E_GrpByUsr.Code = [dbo].[E_listeUsr].Code_grp  " +
+                    "" +  "inner join E_GrpByUsr on E_GrpByUsr.Code = [dbo].[E_listeUsr].Code_grp  " +
                     "" +   "" +   "where  E_GrpByUsr.id = '" + g.Id + "' ", con);
 
               
@@ -138,7 +138,7 @@ namespace RHEVENT.Controllers
 
                         SqlCommand cmd3 = new SqlCommand("INSERT INTO E_ListEvaluationDiffus  ([Mat_usr]  ,[Nom_usr] ,[Code_grp]  ,[Code_eval],Code_Formation, DateDiffus, MatFormateur, Objet, deadline) " +
                           "SELECT  [Mat_usr]  ,[Nom_usr]   ,[Code_grp]   ,'" + o.CodeEval + "', '"+o.Code+"', '" + System.DateTime.Now + "' , '" + user.matricule + "', '" + objEvl + "' , CONVERT(nvarchar, '" + dateLim + "',103)     FROM [E_listeUsr] " +
-                          "" + "inner join[RH_MEDICIS].[dbo].E_GrpByUsr on[dbo].E_GrpByUsr.Code = [dbo].[E_listeUsr].Code_grp  " +
+                          "" + "inner join E_GrpByUsr on[dbo].E_GrpByUsr.Code = [dbo].[E_listeUsr].Code_grp  " +
                           "" + "" + "where  E_GrpByUsr.id = '" + g.Id + "' ", con);
                              
                             cmd3.ExecuteNonQuery();
@@ -156,7 +156,7 @@ namespace RHEVENT.Controllers
 
                 DataTable dt4 = new DataTable(); 
                 SqlDataAdapter da4;
-                da4 = new SqlDataAdapter("SELECT AspNetUsers.NomPrenom Nom_Dest, AspNetUsers.Email Email_Dest FROM [E_listeUsr]   inner join[RH_MEDICIS].[dbo].E_GrpByUsr on[dbo].E_GrpByUsr.Code = [dbo].[E_listeUsr].Code_grp   inner join AspNetUsers on AspNetUsers.matricule =[E_listeUsr].Mat_usr where  E_GrpByUsr.id  = '" + g.Id + "'   ", con);
+                da4 = new SqlDataAdapter("SELECT AspNetUsers.NomPrenom Nom_Dest, AspNetUsers.Email Email_Dest FROM [E_listeUsr]   inner join E_GrpByUsr on[dbo].E_GrpByUsr.Code = [dbo].[E_listeUsr].Code_grp   inner join AspNetUsers on AspNetUsers.matricule =[E_listeUsr].Mat_usr where  E_GrpByUsr.id  = '" + g.Id + "'   ", con);
                 da4.Fill(dt4);
                  
                 for (int j=0; j<dt4.Rows.Count; j++)
@@ -168,7 +168,7 @@ namespace RHEVENT.Controllers
                     Serveur serveur = (from m in db.Serveur
                                        select m).Single();
 
-                    string Message = "Bonjour"+ "\n" + "Vous avez une formation à réaliser." +"\n" + "Lien: "+ serveur.Serv + "/E_formation/SlideUsr?codeF="+ e_f.Code;
+                    string Message = "<HTML><Head></Head><Body>Bonjour<div><br/></div><div>" + "Vous avez une formation à réaliser.</div>" + "<div> Lien Formation :  " + "<a href=" + serveur.Serv + "/E_Formation/SlideUsr?codeF="+ e_f.Code +">" + e_f.Code+" : " + e_f.Objet+ "</a></div><div><br/><br/>Bien Cordialement</div></Body></HTML>";
 
                     SqlCommand cmd4 = new SqlCommand("Insert into Emails (Destinataire ,Email_Destinataire ,Sujet ,Message ,Current_User_Event ,Date_email ,Etat_Envoi) values (@Destinataire ,@Email_Destinataire ,@Sujet ,@Message ,@Current_User_Event ,@Date_email ,@Etat_Envoi)", con);
 
@@ -531,7 +531,7 @@ namespace RHEVENT.Controllers
                 con.Open();
 
 
-                SqlCommand cmd = new SqlCommand("INSERT INTO E_ListFormationDiffus  ([Mat_usr]  ,[Nom_usr] ,[Code_grp]  ,[Code_formt]) SELECT  [Mat_usr]  ,[Nom_usr]   ,[Code_grp]   ,[Code_formt] FROM [E_listeUsr] inner join[RH_MEDICIS].[dbo].E_GrpByUsr on[dbo].E_GrpByUsr.Code = [dbo].[E_listeUsr].Code_grp  where  E_GrpByUsr.id = '" + id + "' ", con);
+                SqlCommand cmd = new SqlCommand("INSERT INTO E_ListFormationDiffus  ([Mat_usr]  ,[Nom_usr] ,[Code_grp]  ,[Code_formt]) SELECT  [Mat_usr]  ,[Nom_usr]   ,[Code_grp]   ,[Code_formt] FROM [E_listeUsr] inner join E_GrpByUsr on[dbo].E_GrpByUsr.Code = [dbo].[E_listeUsr].Code_grp  where  E_GrpByUsr.id = '" + id + "' ", con);
                 cmd.ExecuteNonQuery();
 
 

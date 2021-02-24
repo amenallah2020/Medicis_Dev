@@ -523,7 +523,8 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Quantité)
             </td>
-            @if (item.PrixUnitaire > (float)Convert.ToDouble(item.PlafondBudget) && item.PlafondBudget != "0" )
+            @using System.Globalization;
+            @if (Convert.ToSingle(item.PrixUnitaire, CultureInfo.InvariantCulture) > (float)Convert.ToDouble(item.PlafondBudget) && item.PlafondBudget != "0" )
             {
                 <td style="background-color:burlywood">
                     @Html.DisplayFor(modelItem => item.PrixUnitaire)

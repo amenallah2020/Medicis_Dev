@@ -135,7 +135,8 @@
 </div>
 <div class="row">
 
-    @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("RH") && User.IsInRole("RH_Admin")))
+    @*@if (User.IsInRole("Admin_Medicis") || (User.IsInRole("RH") && User.IsInRole("RH_Admin")))*@
+    @if (User.IsInRole("Admin_Medicis"))
     {
         <div class="col-lg-3">
             <div class="card border border-info">
@@ -154,21 +155,21 @@
 
 
     @*@if (User.IsInRole("Admin_Medicis") || (User.IsInRole("RH") && User.IsInRole("RH_Admin")))
-    {
-        <div class="col-lg-3">
-            <div class="card border border-info">
-                <div class="card-header">
-                    <strong class="card-title">Supervision RH</strong>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">
-                        Module des états RH
-                    </p>
-                    <a class="btn btn-outline-info" role="button" href="@Url.Action("SupervisionRH", "AdministrationRH")">Supervision</a>
+        {
+            <div class="col-lg-3">
+                <div class="card border border-info">
+                    <div class="card-header">
+                        <strong class="card-title">Supervision RH</strong>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            Module des états RH
+                        </p>
+                        <a class="btn btn-outline-info" role="button" href="@Url.Action("SupervisionRH", "AdministrationRH")">Supervision</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    }*@
+        }*@
 
 
 
