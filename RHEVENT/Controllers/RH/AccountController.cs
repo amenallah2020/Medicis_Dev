@@ -10,9 +10,6 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using RHEVENT.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System.Configuration;
-using System.Data.SqlClient;
-using System.Data;
 
 namespace RHEVENT.Controllers
 {
@@ -93,56 +90,47 @@ namespace RHEVENT.Controllers
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
 
-            ApplicationUser UserQuery = (from m in db.Users
-                                         where m.matricule == model.matricule
-                                         select m).Single();
-
-
-
-
-            if (UserQuery.Statut != "Actif")
+            if (model.matricule == null)
             {
-                ModelState.AddModelError(string.Empty, "Session innactive");
+                ModelState.AddModelError(string.Empty, "Matricule ou mot de passe incomplète");
                 return View(model);
             }
 
+            if (model.Password == null)
+            {
+                ModelState.AddModelError(string.Empty, "Matricule ou mot de passe incomplète");
+                return View(model);
+            }
+
+            ApplicationUser UserQuery = ( from m in db.Users
+                                        where m.matricule == model.matricule
+                                        select m ).Single();
 
 
+
+            
+                if (UserQuery.Statut != "Actif")
+                { 
+                    ModelState.AddModelError(string.Empty, "Session innactive");
+                    return View(model);
+                }
+
+               
+             
 
             if (!ModelState.IsValid)
             {
-                return Content("<script language='javascript' type='text/javascript'>alert('Verifier vos identifiants');window.location = '/RH_MEDICIS/AccountController/Login';</script>");
-                //return View(model);
+                return View(model);
             }
 
             // Ceci ne comptabilise pas les échecs de connexion pour le verrouillage du compte
             // Pour que les échecs de mot de passe déclenchent le verrouillage du compte, utilisez shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.matricule, model.Password, model.RememberMe, shouldLockout: false);
-
-            switch (result)
+          
+               switch (result)
             {
                 case SignInStatus.Success:
-                    {
-                        ////string ordinateur = System.Environment.MachineName.ToString();
-                        //string ordinateur = System.Net.Dns.GetHostEntry(Request.ServerVariables["REMOTE_ADDR"]).HostName;
-
-                        //string con_str = ConfigurationManager.ConnectionStrings["DemandeChangement"].ToString();
-                        //SqlConnection conn = new SqlConnection(con_str);
-                        //conn.Open();
-
-                        //SqlCommand cmd1 = new SqlCommand("delete from FromPortail where ordinateur = '" + ordinateur + "'", conn);
-                        //cmd1.ExecuteNonQuery();
-
-                        //SqlCommand cmd = new SqlCommand("INSERT INTO FromPortail (ordinateur,email)" +
-                        //" values(@ordinateur,@email)", conn);
-
-                        //cmd.Parameters.AddWithValue("@ordinateur", ordinateur);
-                        //cmd.Parameters.AddWithValue("@email", UserQuery.Email);
-                        //cmd.ExecuteNonQuery();
-                        //conn.Close();
-
-                        Session["authenticated"] = "oui"; return RedirectToLocal(returnUrl);
-                    }
+                    { Session["authenticated"] = "oui"; return RedirectToLocal(returnUrl); }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

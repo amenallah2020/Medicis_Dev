@@ -20,7 +20,7 @@ namespace RHEVENT.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-
+         
         public static string searchTermCodeF = string.Empty;
 
         public static string ValTermCodeF = string.Empty;
@@ -505,8 +505,8 @@ namespace RHEVENT.Controllers
                 int o = qcm.Count();
 
                 if (o != 0)
-                {
-                    e_QCM.NumQ = o + 1;
+                {  
+                    e_QCM.NumQ = o + 1; 
                 }
                 else
                 {
@@ -660,7 +660,7 @@ namespace RHEVENT.Controllers
             SqlConnection con = new SqlConnection(constr);
             con.Open();
 
-
+            
 
             ViewData["CurrentFilterCodeF"] = searchStringCodeF;
             ViewData["CurrentFilterUsr"] = searchStringUsr;
@@ -672,13 +672,69 @@ namespace RHEVENT.Controllers
 
             if (!String.IsNullOrEmpty(searchStringCodeF) || !String.IsNullOrEmpty(searchStringUsr) || !String.IsNullOrEmpty(searchStringObjet) || (Etat != null))
             {
-                var r = (from m in db.e_ListFormationDiffus
-                         join nn in db.E_ResultFormation on m.Code_formt equals nn.Code_Formation
-                         join p in db.E_Formation on m.Code_formt equals p.Code
-                         where m.MatFormateur == user.matricule && m.Code_formt == id
-                         select new { m.Code_formt, m.Objet, m.Mat_usr, m.Nom_usr, m.deadline, m.DateDiffus, Etat = (nn.Resultat == "Complete" ? "Complete" : "Incomplete") }).Distinct();
+                //var r = (from m in db.e_ListFormationDiffus
+                //         join nn in db.E_ResultFormation on m.Code_formt equals nn.Code_Formation
+                //         join p in db.E_Formation on m.Code_formt equals p.Code
+                //         where m.MatFormateur == user.matricule && m.Code_formt == id
+                //         select new { m.Code_formt, m.Objet, m.Mat_usr, m.Nom_usr, m.deadline, m.DateDiffus, Etat = (nn.Resultat == "Complete" ? "Complete" : "Incomplete") }).Distinct();
 
 
+                DataTable dtz = new DataTable();
+
+                if (!String.IsNullOrEmpty(searchStringUsr))
+                {
+                    SqlDataAdapter daz;
+
+                    daz = new SqlDataAdapter("select distinct  E_ListFormationDiffus.Code_formt, E_ListFormationDiffus.Objet ObjForm, E_ListFormationDiffus.Mat_usr, E_ListFormationDiffus.Nom_usr , 'Incomplete' etat , convert(date, '') DateTerm , E_ListFormationDiffus.deadline , E_ListFormationDiffus.DateDiffus from E_ListFormationDiffus inner join E_Formation on E_Formation.Code = E_ListFormationDiffus.Code_formt left outer join E_ResultFormation on E_ResultFormation.Code_Formation =  E_ListFormationDiffus.Code_formt where E_Formation.Matricule_Formateur = " + user.matricule + " and E_ListFormationDiffus.Code_formt = '" + id + "'   and E_ListFormationDiffus.Mat_usr not in ( select distinct E_ResultFormation.MatUser from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + ") and E_ListFormationDiffus.Nom_usr like '%" + searchStringUsr + "%'   union  select distinct E_Formation.Code Code_formt, E_Formation.Objet ObjForm, E_ResultFormation.MatUser Mat_usr, E_ResultFormation.Usr Nom_usr, E_ResultFormation.Resultat etat , E_ResultFormation.DateTerm ,E_ResultFormation.DeadLine , convert(date,'') DateDiffus  from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + "  and E_ResultFormation.Usr  like '%" + searchStringUsr + "%' ", con);
+                    daz.Fill(dtz);
+                }
+                else if (!String.IsNullOrEmpty(Etat))
+                {
+                    if (Etat == "Incomplete")
+                    {
+                        SqlDataAdapter daz;
+
+                        daz = new SqlDataAdapter("select distinct  E_ListFormationDiffus.Code_formt, E_ListFormationDiffus.Objet ObjForm, E_ListFormationDiffus.Mat_usr, E_ListFormationDiffus.Nom_usr , 'Incomplete' etat , convert(date, '') DateTerm , E_ListFormationDiffus.deadline , E_ListFormationDiffus.DateDiffus from E_ListFormationDiffus inner join E_Formation on E_Formation.Code = E_ListFormationDiffus.Code_formt left outer join E_ResultFormation on E_ResultFormation.Code_Formation =  E_ListFormationDiffus.Code_formt where E_Formation.Matricule_Formateur = " + user.matricule + " and E_ListFormationDiffus.Code_formt = '" + id + "'   and E_ListFormationDiffus.Mat_usr not in ( select distinct E_ResultFormation.MatUser from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + ") and    DateTerm is  null   union  select distinct E_Formation.Code Code_formt, E_Formation.Objet ObjForm, E_ResultFormation.MatUser Mat_usr, E_ResultFormation.Usr Nom_usr, E_ResultFormation.Resultat etat , E_ResultFormation.DateTerm ,E_ResultFormation.DeadLine , convert(date,'') DateDiffus  from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + "   and DateTerm is  null ", con);
+                        daz.Fill(dtz);
+
+                    }
+                    else
+                    {
+                        SqlDataAdapter daz;
+
+                        daz = new SqlDataAdapter("select distinct  E_ListFormationDiffus.Code_formt, E_ListFormationDiffus.Objet ObjForm, E_ListFormationDiffus.Mat_usr, E_ListFormationDiffus.Nom_usr , 'Incomplete' etat , convert(date, '') DateTerm , E_ListFormationDiffus.deadline , E_ListFormationDiffus.DateDiffus from E_ListFormationDiffus inner join E_Formation on E_Formation.Code = E_ListFormationDiffus.Code_formt left outer join E_ResultFormation on E_ResultFormation.Code_Formation =  E_ListFormationDiffus.Code_formt where E_Formation.Matricule_Formateur = " + user.matricule + " and E_ListFormationDiffus.Code_formt = '" + id + "'   and E_ListFormationDiffus.Mat_usr not in ( select distinct E_ResultFormation.MatUser from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + ") and    DateTerm is not null   union  select distinct E_Formation.Code Code_formt, E_Formation.Objet ObjForm, E_ResultFormation.MatUser Mat_usr, E_ResultFormation.Usr Nom_usr, E_ResultFormation.Resultat etat , E_ResultFormation.DateTerm ,E_ResultFormation.DeadLine , convert(date,'') DateDiffus  from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + "   and DateTerm is not null ", con);
+                        daz.Fill(dtz);
+
+                    }
+
+                }
+                else if (!String.IsNullOrEmpty(searchStringUsr) && (!String.IsNullOrEmpty(Etat)))
+                {
+                    if (Etat == "Incomplete")
+                    {
+                        SqlDataAdapter daz;
+
+                        daz = new SqlDataAdapter("select distinct  E_ListFormationDiffus.Code_formt, E_ListFormationDiffus.Objet ObjForm, E_ListFormationDiffus.Mat_usr, E_ListFormationDiffus.Nom_usr , 'Incomplete' etat , convert(date, '') DateTerm , E_ListFormationDiffus.deadline , E_ListFormationDiffus.DateDiffus from E_ListFormationDiffus inner join E_Formation on E_Formation.Code = E_ListFormationDiffus.Code_formt left outer join E_ResultFormation on E_ResultFormation.Code_Formation =  E_ListFormationDiffus.Code_formt where E_Formation.Matricule_Formateur = " + user.matricule + " and E_ListFormationDiffus.Code_formt = '" + id + "'   and E_ListFormationDiffus.Mat_usr not in ( select distinct E_ResultFormation.MatUser from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + ") and    DateTerm is  null and E_ListFormationDiffus.Nom_usr like '%" + searchStringUsr + "%'   union  select distinct E_Formation.Code Code_formt, E_Formation.Objet ObjForm, E_ResultFormation.MatUser Mat_usr, E_ResultFormation.Usr Nom_usr, E_ResultFormation.Resultat etat , E_ResultFormation.DateTerm ,E_ResultFormation.DeadLine , convert(date,'') DateDiffus  from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + "   and DateTerm is  null and E_ResultFormation.Usr like '%" + searchStringUsr + "%' ", con);
+                        daz.Fill(dtz);
+
+                    }
+                    else
+                    {
+                        SqlDataAdapter daz;
+
+                        daz = new SqlDataAdapter("select distinct  E_ListFormationDiffus.Code_formt, E_ListFormationDiffus.Objet ObjForm, E_ListFormationDiffus.Mat_usr, E_ListFormationDiffus.Nom_usr , 'Incomplete' etat , convert(date, '') DateTerm , E_ListFormationDiffus.deadline , E_ListFormationDiffus.DateDiffus from E_ListFormationDiffus inner join E_Formation on E_Formation.Code = E_ListFormationDiffus.Code_formt left outer join E_ResultFormation on E_ResultFormation.Code_Formation =  E_ListFormationDiffus.Code_formt where E_Formation.Matricule_Formateur = " + user.matricule + " and E_ListFormationDiffus.Code_formt = '" + id + "'   and E_ListFormationDiffus.Mat_usr not in ( select distinct E_ResultFormation.MatUser from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + ") and    DateTerm is not  null and E_ListFormationDiffus.Nom_usr like '%" + searchStringUsr + "%'   union  select distinct E_Formation.Code Code_formt, E_Formation.Objet ObjForm, E_ResultFormation.MatUser Mat_usr, E_ResultFormation.Usr Nom_usr, E_ResultFormation.Resultat etat , E_ResultFormation.DateTerm ,E_ResultFormation.DeadLine , convert(date,'') DateDiffus  from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + "   and DateTerm is not null and E_ResultFormation.Usr like '%" + searchStringUsr + "%' ", con);
+                        daz.Fill(dtz);
+
+
+                    }
+                }
+                else
+                {
+                    SqlDataAdapter daz;
+
+                    daz = new SqlDataAdapter("select distinct  E_ListFormationDiffus.Code_formt, E_ListFormationDiffus.Objet ObjForm, E_ListFormationDiffus.Mat_usr, E_ListFormationDiffus.Nom_usr , 'Incomplete' etat , convert(date, '') DateTerm , E_ListFormationDiffus.deadline , E_ListFormationDiffus.DateDiffus from E_ListFormationDiffus inner join E_Formation on E_Formation.Code = E_ListFormationDiffus.Code_formt left outer join E_ResultFormation on E_ResultFormation.Code_Formation =  E_ListFormationDiffus.Code_formt where E_Formation.Matricule_Formateur = " + user.matricule + " and E_ListFormationDiffus.Code_formt = '" + id + "'   and E_ListFormationDiffus.Mat_usr not in ( select distinct E_ResultFormation.MatUser from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + ")  union  select distinct E_Formation.Code Code_formt, E_Formation.Objet ObjForm, E_ResultFormation.MatUser Mat_usr, E_ResultFormation.Usr Nom_usr, E_ResultFormation.Resultat etat , E_ResultFormation.DateTerm ,E_ResultFormation.DeadLine , convert(date,'') DateDiffus  from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + "   ", con);
+                    daz.Fill(dtz);
+                }
 
                 E_FormationController.searchTermCodeF = "searchStringCodeF";
                 E_FormationController.ValTermCodeF = searchStringCodeF;
@@ -689,38 +745,38 @@ namespace RHEVENT.Controllers
                 E_FormationController.searchTermObjet = "searchStringObjet";
                 E_FormationController.ValTermObjet = searchStringObjet;
 
-                if (!String.IsNullOrEmpty(searchStringCodeF))
-                    r = r.Where(s => s.Code_formt.ToLower().Contains(searchStringCodeF.ToLower()));
+                //if (!String.IsNullOrEmpty(searchStringCodeF))
+                //    r = r.Where(s => s.Code_formt.ToLower().Contains(searchStringCodeF.ToLower()));
 
-                if (!String.IsNullOrEmpty(searchStringObjet))
-                    r = r.Where(s => s.Objet.ToLower().Contains(searchStringCodeF.ToLower()));
+                //if (!String.IsNullOrEmpty(searchStringObjet))
+                //    r = r.Where(s => s.Objet.ToLower().Contains(searchStringCodeF.ToLower()));
 
-                if (!String.IsNullOrEmpty(searchStringUsr))
-                    r = r.Where(s => s.Nom_usr.ToLower().Contains(searchStringUsr.ToLower()));
+                //if (!String.IsNullOrEmpty(searchStringUsr))
+                //    r = r.Where(s => s.Nom_usr.ToLower().Contains(searchStringUsr.ToLower()));
 
-                if (!String.IsNullOrEmpty(Etat))
-                    r = r.Where(s => s.Etat == Etat);
+                //if (!String.IsNullOrEmpty(Etat))
+                //    r = r.Where(s => s.Etat == Etat);
 
 
-                foreach (var ee in r)
+                for(int q=0; q<dtz.Rows.Count; q++)
                 {
                     E_ResultFormation e_ResultFormation = new E_ResultFormation();
 
-                    e_ResultFormation.Code_Formation = ee.Code_formt;
+                    e_ResultFormation.Code_Formation = dtz.Rows[q]["Code_formt"].ToString()  ;
 
-                    e_ResultFormation.ObjForm = ee.Objet;
+                    e_ResultFormation.ObjForm = dtz.Rows[q]["ObjForm"].ToString() ;
 
-                    e_ResultFormation.MatUser = ee.Mat_usr;
+                    e_ResultFormation.MatUser = dtz.Rows[q]["Mat_usr"].ToString() ;
 
-                    e_ResultFormation.Usr = ee.Nom_usr;
+                    e_ResultFormation.Usr = dtz.Rows[q]["Nom_usr"].ToString()   ;
 
-                    if (ee.DateDiffus.ToString() != "")
+                    if (dtz.Rows[q]["DateDiffus"].ToString()  != "")
                     {
-                        e_ResultFormation.DateTerm = Convert.ToDateTime(ee.DateDiffus.ToString());
+                        e_ResultFormation.DateTerm = Convert.ToDateTime(dtz.Rows[q]["DateDiffus"].ToString());
                     }
-                    e_ResultFormation.DeadLine = Convert.ToDateTime(ee.DateDiffus.ToString());
+                    e_ResultFormation.DeadLine = Convert.ToDateTime(dtz.Rows[q]["DateDiffus"].ToString());
 
-                    e_ResultFormation.Etat = ee.Etat;
+                    e_ResultFormation.Etat = dtz.Rows[q]["Etat"].ToString() ;
 
                     list.Add(e_ResultFormation);
 
@@ -759,13 +815,17 @@ namespace RHEVENT.Controllers
                 Response.BinaryWrite(pck2.GetAsByteArray());
                 Response.End();
                 return View();
-
+                
             }
 
             DataTable dt = new DataTable();
 
+            //SqlDataAdapter da;
+            //da = new SqlDataAdapter(" select distinct  E_ListFormationDiffus.Code_formt, E_ListFormationDiffus.Objet ObjForm, E_ListFormationDiffus.Mat_usr, E_ListFormationDiffus.Nom_usr, E_ListFormationDiffus.deadline, E_ResultFormation.DateTerm , case when(E_ResultFormation.Resultat = 'Complete') then 'Complete' else 'Incomplete' end as Etat from E_ListFormationDiffus left join E_ResultFormation on E_ResultFormation.Code_Formation = E_ListFormationDiffus.Code_formt inner join E_Formation on E_Formation.Code = E_ListFormationDiffus.Code_formt where E_Formation.Matricule_Formateur = " + user.matricule + " and E_ListFormationDiffus.Code_formt = '" + id + "' ", con);
+            //da.Fill(dt);
+
             SqlDataAdapter da;
-            da = new SqlDataAdapter(" select distinct  E_ListFormationDiffus.Code_formt, E_ListFormationDiffus.Objet ObjForm, E_ListFormationDiffus.Mat_usr, E_ListFormationDiffus.Nom_usr, E_ListFormationDiffus.deadline, E_ResultFormation.DateTerm , case when(E_ResultFormation.Resultat = 'Complete') then 'Complete' else 'Incomplete' end as Etat from E_ListFormationDiffus left join E_ResultFormation on E_ResultFormation.Code_Formation = E_ListFormationDiffus.Code_formt inner join E_Formation on E_Formation.Code = E_ListFormationDiffus.Code_formt where E_Formation.Matricule_Formateur = " + user.matricule + " and E_ListFormationDiffus.Code_formt = '" + id + "' ", con);
+            da = new SqlDataAdapter("select distinct  E_ListFormationDiffus.Code_formt, E_ListFormationDiffus.Objet ObjForm, E_ListFormationDiffus.Mat_usr, E_ListFormationDiffus.Nom_usr , 'Incomplete' etat , convert(date, '') DateTerm , E_ListFormationDiffus.deadline from E_ListFormationDiffus inner join E_Formation on E_Formation.Code = E_ListFormationDiffus.Code_formt left outer join E_ResultFormation on E_ResultFormation.Code_Formation =  E_ListFormationDiffus.Code_formt where E_Formation.Matricule_Formateur = " + user.matricule + " and E_ListFormationDiffus.Code_formt = '" + id + "'   and E_ListFormationDiffus.Mat_usr not in ( select distinct E_ResultFormation.MatUser from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + ")  union  select distinct E_Formation.Code Code_formt, E_Formation.Objet ObjForm, E_ResultFormation.MatUser Mat_usr, E_ResultFormation.Usr Nom_usr, E_ResultFormation.Resultat etat , E_ResultFormation.DateTerm ,E_ResultFormation.DeadLine  from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + "   ", con);
             da.Fill(dt);
 
 
@@ -831,7 +891,7 @@ namespace RHEVENT.Controllers
 
 
         // GET: E_Formation
-        public ActionResult Index(string searchStringCodeF, string searchStringCodeE, string searchStringObjet)
+        public ActionResult Index(string searchStringCodeF , string searchStringCodeE , string searchStringObjet)
         {
             //, string searchStringDateC
             ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
@@ -852,15 +912,15 @@ namespace RHEVENT.Controllers
 
             List<E_Formation> list = new List<E_Formation>();
 
-            //|| searchStringDateC != null
+             //|| searchStringDateC != null
             if (!String.IsNullOrEmpty(searchStringCodeF) || !String.IsNullOrEmpty(searchStringCodeE) || !String.IsNullOrEmpty(searchStringObjet))
             {
                 var r = (from m in db.E_Formation
                          where m.Matricule_Formateur == user.matricule && m.Etat_Formation == "Active"
-                         select new { m.Code, m.CodeEval, m.Objet, m.Date_Creation, m.EtatDiff }).Distinct();
+                         select new { m.Code, m.CodeEval , m.Objet ,   m.Date_Creation , m.EtatDiff }).Distinct();
 
-
-
+             
+               
                 E_FormationController.searchTermCodeF = "searchStringCodeF";
                 E_FormationController.ValTermCodeF = searchStringCodeF;
 
@@ -871,7 +931,7 @@ namespace RHEVENT.Controllers
                 E_FormationController.ValTermObjet = searchStringObjet;
 
                 if (!String.IsNullOrEmpty(searchStringCodeF))
-                    r = r.Where(s => s.Code.ToLower().Contains(searchStringCodeF.ToLower()));
+                    r = r.Where(s => s.Code.ToLower(). Contains(searchStringCodeF.ToLower()));
 
 
                 if (!String.IsNullOrEmpty(searchStringCodeE))
@@ -899,7 +959,7 @@ namespace RHEVENT.Controllers
 
                     e.NumDiapo = 0;
 
-                    e.Date_Creation = ff.Date_Creation;
+                    e.Date_Creation = ff.Date_Creation ;
 
                     e.Objet = ff.Objet;
 
@@ -909,7 +969,7 @@ namespace RHEVENT.Controllers
 
                     e.Id = 0;
 
-                    e.EtatDiff = ff.EtatDiff;
+                    e.EtatDiff = ff.EtatDiff ;
 
                     list.Add(e);
                 }
@@ -928,7 +988,7 @@ namespace RHEVENT.Controllers
 
 
 
-
+          
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -938,7 +998,7 @@ namespace RHEVENT.Controllers
                 string dd = dt.Rows[i]["code"].ToString();
 
 
-
+                  
                 SqlDataAdapter da2;
                 da2 = new SqlDataAdapter(" SELECT  TOP (1) Date_Creation, Objet , Id  FROM [E_Formation] where   Code =  '" + dd + "'", con);
                 da2.Fill(dt2);
@@ -970,7 +1030,7 @@ namespace RHEVENT.Controllers
 
 
 
-
+        
             return View(list);
 
             //ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
@@ -1043,9 +1103,7 @@ namespace RHEVENT.Controllers
 
             string nom_formation = e_Formation.Code;
 
-
-
-            string folderName = Server.MapPath("..\\..\\SlideImages\\");
+            string folderName = Server.MapPath("\\SlideImages\\");
             string pathString = System.IO.Path.Combine(folderName, nom_formation);
             System.IO.Directory.CreateDirectory(pathString);
 
@@ -1061,7 +1119,7 @@ namespace RHEVENT.Controllers
                     {
                         i++;
                         string filename = Path.GetFileName(file.FileName);
-                        string fichier = "~/../SlideImages/" + nom_formation + "/" + filename;
+                        string fichier = "~/SlideImages/" + nom_formation + "/" + filename;
 
                         System.Drawing.Bitmap bmpPostedImage = new System.Drawing.Bitmap(file.InputStream);
                         System.Drawing.Image image = (System.Drawing.Image)bmpPostedImage;
@@ -1074,9 +1132,9 @@ namespace RHEVENT.Controllers
 
                         //file.SaveAs(Server.MapPath(fichier));
 
-                        //string chemin = "../../SlideImages/" + nom_formation + "/" + filename;
 
-                        string chemin = "/SlideImages/" + nom_formation + "/" + filename;
+
+                        string chemin = "../../SlideImages/" + nom_formation + "/" + filename;
                         SqlCommand cmd = new SqlCommand("Insert into E_Formation (Code,Objet,Etat_Formation,Date_Creation,Matricule_Formateur,ImageName,Numdiapo,Chemin, EtatF   ) values(@Code,@Objet,@Etat_Formation,@Date_Creation,@Matricule_Formateur,@ImageName,@Numdiapo,@Chemin, @EtatF )", con);
 
                         cmd.Parameters.AddWithValue("@Code", e_Formation.Code);
@@ -1131,17 +1189,11 @@ namespace RHEVENT.Controllers
         public ActionResult Consult(string id)
         {
             //E_Formation e = db.E_Formation.Find(id); 
-            if (Session["userconnecté"] == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
-            else
-            {
-                BindDataList1(id);
 
-                return View();
-            }
-            
+            BindDataList1(id);
+
+            return View();
+
             //string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
             //SqlConnection con = new SqlConnection(constr);
             //con.Open();
@@ -1328,298 +1380,294 @@ namespace RHEVENT.Controllers
         [HttpGet]
         public ActionResult SlideUsr(string sld, string codeF, string next, string Previous, string codeform)
         {
-            if (Session["userconnecté"] == null)
+
+            if (codeF != null)
+            codeF = codeF.Substring(0, 13);
+
+            ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+
+
+            var verifForm = from m in db.E_ResultFormation
+                        where m.Code_Formation == codeF && m.MatUser == user.matricule
+                        select m;
+
+            int vv = verifForm.Count();
+
+            if (vv != 0)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("ConsultUsr", "E_Formation", new { id = codeF });
             }
 
-            else
+
+
+
+            if (next != null)
+            {
+                if (next == "Suivant")
                 {
-                    if (codeF != null)
-                    codeF = codeF.Substring(0, 13);
-                ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
-                var verifForm = from m in db.E_ResultFormation
-                                where m.Code_Formation == codeF && m.MatUser == user.matricule
+                    var ff = from m in db.E_Formation
+                             where m.Code == codeform
+                             select m;
+
+                    int Total = ff.Count();
+
+                    ViewBag.count = Total;
+
+                    int dd = Convert.ToInt32(sld);
+
+                    int ss = Convert.ToInt32(sld) + 1;
+
+                    var verif = from m in db.E_SlideUsr
+                                where m.MatUsr == user.matricule && m.Code_Formation == codeform && m.numSlide == ss
                                 select m;
 
-                int vv = verifForm.Count();
-
-                if (vv != 0)
-                {
-                    return RedirectToAction("ConsultUsr", "E_Formation", new { id = codeF });
-                }
+                    var name = from m in db.E_Formation
+                               where m.Code == codeform && m.NumDiapo == ss
+                               select m;
 
 
+                    int v = verif.Count();
 
 
-                if (next != null)
-                {
-                    if (next == "Suivant")
+                    if (v == 0)
                     {
-                        var ff = from m in db.E_Formation
-                                 where m.Code == codeform
+                        E_SlideUsr e_SlideUsr = new E_SlideUsr();
+
+                        e_SlideUsr.Code_Formation = codeform;
+
+                        e_SlideUsr.MatUsr = user.matricule;
+
+                        e_SlideUsr.numSlide = Convert.ToInt32(ss);
+
+                        e_SlideUsr.TotalSlide = Total;
+
+                        e_SlideUsr.Date_Creation = System.DateTime.Now;
+
+                        foreach (E_Formation o in name)
+                        {
+                            e_SlideUsr.NameSlide = o.ImageName;
+                        }
+
+                        db.E_SlideUsr.Add(e_SlideUsr);
+
+
+                    }
+
+                    if (ss == Total)
+                    {
+
+                        var rr = from m in db.E_ResultFormation
+                                 where m.MatUser == user.matricule && m.Code_Formation == codeform
                                  select m;
 
-                        int Total = ff.Count();
+                        int cc = rr.Count();
 
-                        ViewBag.count = Total;
+                        E_ListFormationDiffus ef = ((from m in db.e_ListFormationDiffus
+                                                    where m.Code_formt == codeform
+                                                   select m).Take(1)).Single();
 
-                        int dd = Convert.ToInt32(sld);
-
-                        int ss = Convert.ToInt32(sld) + 1;
-
-                        var verif = from m in db.E_SlideUsr
-                                    where m.MatUsr == user.matricule && m.Code_Formation == codeform && m.numSlide == ss
-                                    select m;
-
-                        var name = from m in db.E_Formation
-                                   where m.Code == codeform && m.NumDiapo == ss
-                                   select m;
-
-
-                        int v = verif.Count();
-
-
-                        if (v == 0)
+                        if (cc == 0)
                         {
-                            E_SlideUsr e_SlideUsr = new E_SlideUsr();
+                            E_ResultFormation e_ResultFormation = new E_ResultFormation();
 
-                            e_SlideUsr.Code_Formation = codeform;
+                            e_ResultFormation.Code_Formation = codeform;
 
-                            e_SlideUsr.MatUsr = user.matricule;
+                            E_Formation f = ((from m in db.E_Formation
+                                              where m.Code == codeform
+                                              select m).Take(1)).Single();
 
-                            e_SlideUsr.numSlide = Convert.ToInt32(ss);
+                            e_ResultFormation.ObjForm = f.Objet;
 
-                            e_SlideUsr.TotalSlide = Total;
+                            e_ResultFormation.MatUser = user.matricule;
 
-                            e_SlideUsr.Date_Creation = System.DateTime.Now;
+                            e_ResultFormation.Usr = user.NomPrenom;
 
-                            foreach (E_Formation o in name)
-                            {
-                                e_SlideUsr.NameSlide = o.ImageName;
-                            }
+                            e_ResultFormation.Resultat = "Complete";
 
-                            db.E_SlideUsr.Add(e_SlideUsr);
+                            e_ResultFormation.DateTerm = System.DateTime.Now;
 
+                            e_ResultFormation.DeadLine = ef.deadline;
 
+                            db.E_ResultFormation.Add(e_ResultFormation);
                         }
 
-                        if (ss == Total)
-                        {
+                    }
 
-                            var rr = from m in db.E_ResultFormation
-                                     where m.MatUser == user.matricule && m.Code_Formation == codeform
-                                     select m;
+                    db.SaveChanges();
 
-                            int cc = rr.Count();
+                    E_Formation ee = (from m in db.E_Formation
+                                      where m.Code == codeform && m.NumDiapo == ss
+                                      select m).Single();
 
-                            E_ListFormationDiffus ef = ((from m in db.e_ListFormationDiffus
-                                                         where m.Code_formt == codeform
-                                                         select m).Take(1)).Single();
+                    return View(ee);
 
-                            if (cc == 0)
-                            {
-                                E_ResultFormation e_ResultFormation = new E_ResultFormation();
+                }
+            }
+            if (Previous != null)
+            {
+                if (Previous.ToString() == "Précédent")
+                {
 
-                                e_ResultFormation.Code_Formation = codeform;
+                    var ff = from m in db.E_Formation
+                             where m.Code == codeform
+                             select m;
 
-                                E_Formation f = ((from m in db.E_Formation
-                                                  where m.Code == codeform
-                                                  select m).Take(1)).Single();
+                    int Total = ff.Count();
 
-                                e_ResultFormation.ObjForm = f.Objet;
+                    ViewBag.count = Total;
 
-                                e_ResultFormation.MatUser = user.matricule;
+                    //int dd = Convert.ToInt32(sld);
 
-                                e_ResultFormation.Usr = user.NomPrenom;
+                    //var verif = from m in db.E_SlideUsr
+                    //            where m.MatUsr == user.matricule && m.Code_Formation == codeform && m.numSlide == dd
+                    //            select m;
 
-                                e_ResultFormation.Resultat = "Complete";
+                    //var name = from m in db.E_Formation
+                    //           where m.Code == codeform && m.NumDiapo == dd
+                    //           select m;
 
-                                e_ResultFormation.DateTerm = System.DateTime.Now;
 
-                                e_ResultFormation.DeadLine = ef.deadline;
+                    //int v = verif.Count();
 
-                                db.E_ResultFormation.Add(e_ResultFormation);
-                            }
+                    //if (v == 0)
+                    //{
+                    //    E_SlideUsr e_SlideUsr = new E_SlideUsr();
 
-                        }
+                    //    e_SlideUsr.Code_Formation = codeform;
 
-                        db.SaveChanges();
+                    //    e_SlideUsr.MatUsr = user.matricule;
 
+                    //    e_SlideUsr.numSlide = Convert.ToInt32(sld);
+
+                    //    e_SlideUsr.TotalSlide = Total;
+
+                    //    e_SlideUsr.Date_Creation = System.DateTime.Now;
+
+                    //    foreach (E_Formation o in name)
+                    //    {
+                    //        e_SlideUsr.NameSlide = o.ImageName;
+                    //    }
+
+                    //    db.E_SlideUsr.Add(e_SlideUsr);
+
+                    //    db.SaveChanges();
+                    //}
+
+                    int ss = Convert.ToInt32(sld) - 1;
+
+                    if (ss != 0)
+                    {
                         E_Formation ee = (from m in db.E_Formation
                                           where m.Code == codeform && m.NumDiapo == ss
                                           select m).Single();
 
                         return View(ee);
-
                     }
-                }
-                if (Previous != null)
-                {
-                    if (Previous.ToString() == "Précédent")
+                    else if (ss == 0)
                     {
-
-                        var ff = from m in db.E_Formation
+                        var zz = from m in db.E_Formation
                                  where m.Code == codeform
                                  select m;
 
-                        int Total = ff.Count();
+                        int count = zz.Count();
 
-                        ViewBag.count = Total;
+                        E_Formation ee = (from m in db.E_Formation
+                                          where m.Code == codeform && m.NumDiapo == count
+                                          select m).Single();
 
-                        //int dd = Convert.ToInt32(sld);
-
-                        //var verif = from m in db.E_SlideUsr
-                        //            where m.MatUsr == user.matricule && m.Code_Formation == codeform && m.numSlide == dd
-                        //            select m;
-
-                        //var name = from m in db.E_Formation
-                        //           where m.Code == codeform && m.NumDiapo == dd
-                        //           select m;
-
-
-                        //int v = verif.Count();
-
-                        //if (v == 0)
-                        //{
-                        //    E_SlideUsr e_SlideUsr = new E_SlideUsr();
-
-                        //    e_SlideUsr.Code_Formation = codeform;
-
-                        //    e_SlideUsr.MatUsr = user.matricule;
-
-                        //    e_SlideUsr.numSlide = Convert.ToInt32(sld);
-
-                        //    e_SlideUsr.TotalSlide = Total;
-
-                        //    e_SlideUsr.Date_Creation = System.DateTime.Now;
-
-                        //    foreach (E_Formation o in name)
-                        //    {
-                        //        e_SlideUsr.NameSlide = o.ImageName;
-                        //    }
-
-                        //    db.E_SlideUsr.Add(e_SlideUsr);
-
-                        //    db.SaveChanges();
-                        //}
-
-                        int ss = Convert.ToInt32(sld) - 1;
-
-                        if (ss != 0)
-                        {
-                            E_Formation ee = (from m in db.E_Formation
-                                              where m.Code == codeform && m.NumDiapo == ss
-                                              select m).Single();
-
-                            return View(ee);
-                        }
-                        else if (ss == 0)
-                        {
-                            var zz = from m in db.E_Formation
-                                     where m.Code == codeform
-                                     select m;
-
-                            int count = zz.Count();
-
-                            E_Formation ee = (from m in db.E_Formation
-                                              where m.Code == codeform && m.NumDiapo == count
-                                              select m).Single();
-
-                            return View(ee);
-
-                        }
+                        return View(ee);
 
                     }
 
                 }
 
-                int i = 0;
-
-                string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
-                SqlConnection con = new SqlConnection(constr);
-                con.Open();
-
-
-                SqlCommand command = new SqlCommand("SELECT *   FROM  [E_Formation] where Code = '" + codeF + "'    ", con);
-                SqlDataAdapter da = new SqlDataAdapter(command);
-                DataTable dt = new DataTable();
-                dt.Clear();
-                da.Fill(dt);
-
-                int tt = 0;
-                Session["nbdiap"] = tt = dt.Rows.Count;
-
-                E_Formation e = new E_Formation();
-
-                //var ll = from m in db.E_SlideUsr
-                //         where m.MatUser == user.matricule && m.CodeF == codeF
-                //         select m;
-
-                //int nbr = ll.Count(); 
-
-
-                //if (nbr < dt.Rows.Count)
-                //{
-                if (i < dt.Rows.Count)
-                {
-                    e.Code = Convert.ToString(dt.Rows[i]["Code"]);
-
-                    e.Objet = Convert.ToString(dt.Rows[i]["Objet"]);
-
-                    e.Etat_Formation = Convert.ToString(dt.Rows[i]["Etat_Formation"]);
-
-                    e.Date_Creation = Convert.ToDateTime(dt.Rows[i]["Date_Creation"]);
-
-                    e.Matricule_Formateur = Convert.ToString(dt.Rows[i]["Matricule_Formateur"]);
-
-                    e.ImageName = Convert.ToString(dt.Rows[i]["ImageName"]);
-
-                    e.NumDiapo = Convert.ToInt32(dt.Rows[i]["NumDiapo"]);
-
-                    e.Chemin = Convert.ToString(dt.Rows[i]["Chemin"]);
-
-                    e.EtatDiff = Convert.ToString(dt.Rows[i]["EtatDiff"]);
-
-                    e.CodeEval = Convert.ToString(dt.Rows[i]["CodeEval"]);
-
-                    ViewBag.count = dt.Rows.Count;
-
-
-                    E_SlideUsr e_SlideUsr = new E_SlideUsr();
-
-                    e_SlideUsr.Code_Formation = Convert.ToString(dt.Rows[i]["Code"]);
-
-                    e_SlideUsr.MatUsr = user.matricule;
-
-                    e_SlideUsr.numSlide = Convert.ToInt32(dt.Rows[i]["NumDiapo"]);
-
-                    e_SlideUsr.TotalSlide = tt;
-
-                    e_SlideUsr.Date_Creation = System.DateTime.Now;
-
-                    e_SlideUsr.NameSlide = Convert.ToString(dt.Rows[i]["ImageName"]);
-
-
-                    db.E_SlideUsr.Add(e_SlideUsr);
-
-                    db.SaveChanges();
-
-                    i++;
-
-                    return View(e);
-                }
-                //}
-
-                //else if (nbr == dt.Rows.Count)
-                //{
-                //    return RedirectToAction("ResultQCM", "E_QCM", new { codeEval = id });
-                //}
             }
-            
-            
-                return View();
+
+            int i = 0;
+
+            string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+            SqlConnection con = new SqlConnection(constr);
+            con.Open();
+
+
+            SqlCommand command = new SqlCommand("SELECT *   FROM  [E_Formation] where Code = '" + codeF + "'    ", con);
+            SqlDataAdapter da = new SqlDataAdapter(command);
+            DataTable dt = new DataTable();
+            dt.Clear();
+            da.Fill(dt);
+
+            int tt = 0;
+            Session["nbdiap"] = tt = dt.Rows.Count;
+
+            E_Formation e = new E_Formation();
+
+            //var ll = from m in db.E_SlideUsr
+            //         where m.MatUser == user.matricule && m.CodeF == codeF
+            //         select m;
+
+            //int nbr = ll.Count(); 
+
+
+            //if (nbr < dt.Rows.Count)
+            //{
+            if (i < dt.Rows.Count)
+            {
+                e.Code = Convert.ToString(dt.Rows[i]["Code"]);
+
+                e.Objet = Convert.ToString(dt.Rows[i]["Objet"]);
+
+                e.Etat_Formation = Convert.ToString(dt.Rows[i]["Etat_Formation"]);
+
+                e.Date_Creation = Convert.ToDateTime(dt.Rows[i]["Date_Creation"]);
+
+                e.Matricule_Formateur = Convert.ToString(dt.Rows[i]["Matricule_Formateur"]);
+
+                e.ImageName = Convert.ToString(dt.Rows[i]["ImageName"]);
+
+                e.NumDiapo = Convert.ToInt32(dt.Rows[i]["NumDiapo"]);
+
+                e.Chemin = Convert.ToString(dt.Rows[i]["Chemin"]);
+
+                e.EtatDiff = Convert.ToString(dt.Rows[i]["EtatDiff"]);
+
+                e.CodeEval = Convert.ToString(dt.Rows[i]["CodeEval"]);
+
+                ViewBag.count = dt.Rows.Count;
+
+
+                E_SlideUsr e_SlideUsr = new E_SlideUsr();
+
+                e_SlideUsr.Code_Formation = Convert.ToString(dt.Rows[i]["Code"]);
+
+                e_SlideUsr.MatUsr = user.matricule;
+
+                e_SlideUsr.numSlide = Convert.ToInt32(dt.Rows[i]["NumDiapo"]);
+
+                e_SlideUsr.TotalSlide = tt;
+
+                e_SlideUsr.Date_Creation = System.DateTime.Now;
+
+                e_SlideUsr.NameSlide = Convert.ToString(dt.Rows[i]["ImageName"]);
+
+
+                db.E_SlideUsr.Add(e_SlideUsr);
+
+                db.SaveChanges();
+
+                i++;
+
+                return View(e);
+            }
+            //}
+
+            //else if (nbr == dt.Rows.Count)
+            //{
+            //    return RedirectToAction("ResultQCM", "E_QCM", new { codeEval = id });
+            //}
+
+            return View();
         }
+
 
         public ActionResult Statistique(string id , string searchStringCodeF, string searchStringObjet, string searchStringUsr, string Etat)
         {
@@ -1642,14 +1690,97 @@ namespace RHEVENT.Controllers
 
             if (!String.IsNullOrEmpty(searchStringCodeF) || !String.IsNullOrEmpty(searchStringUsr) || !String.IsNullOrEmpty(searchStringObjet) || (Etat!=null))
             {
-                var r = (from m in db.e_ListFormationDiffus
-                         join nn in db.E_ResultFormation on m.Code_formt equals nn.Code_Formation
-                         join p in db.E_Formation on m.Code_formt equals p.Code
-                         where m.MatFormateur == user.matricule && m.Code_formt == id
-                         select new { m.Code_formt, m.Objet, m.Mat_usr, m.Nom_usr, m.deadline, m.DateDiffus, Etat = (nn.Resultat == "Complete" ? "Complete" : "Incomplete") }).Distinct();
+                //var r = (from m in db.e_ListFormationDiffus
+                //         join nn in db.E_ResultFormation on m.Code_formt equals nn.Code_Formation
+                //         join p in db.E_Formation on m.Code_formt equals p.Code
+                //         where m.MatFormateur == user.matricule && m.Code_formt == id
+                //         select new { m.Code_formt, m.Objet, m.Mat_usr, m.Nom_usr, m.deadline, m.DateDiffus, Etat = (nn.Resultat == "Complete" ? "Complete" : "Incomplete") }).Distinct();
+
+
+                //var r = ((from m in db.e_ListFormationDiffus
+                //           join p in db.E_Formation on m.Code_formt equals p.Code
+                //           join n in db.E_ResultFormation on m.Code_formt equals n.Code_Formation
+                //           where p.Code == id && m.MatFormateur == user.matricule
+                //           select new { Code_formt = m.Code_formt, ObjForm = m.Objet, m.Mat_usr, m.Nom_usr, etat = "Incomplete", DateTerm = Convert.ToDateTime("1900-01-01 00:00:00.000"), m.deadline, m.DateDiffus }).Distinct())
+
+                //         .Union(from m in db.E_ResultFormation
+                //                join nn in db.E_Formation on m.Code_Formation equals nn.Code
+                //                where nn.Code == id && nn.Matricule_Formateur == user.matricule
+                //                select new { Code_formt = nn.Code, ObjForm = nn.Objet, Mat_usr = m.MatUser, Nom_usr = m.Usr, etat = m.Resultat, m.DateTerm, deadline = m.DeadLine, DateDiffus = Convert.ToDateTime("1900-01-01 00:00:00.000") });
+
+                DataTable dtz = new DataTable();
+
+                if (!String.IsNullOrEmpty(searchStringUsr))
+                {
+                    SqlDataAdapter daz;
+                    
+                    daz = new SqlDataAdapter("select distinct  E_ListFormationDiffus.Code_formt, E_ListFormationDiffus.Objet ObjForm, E_ListFormationDiffus.Mat_usr, E_ListFormationDiffus.Nom_usr , 'Incomplete' etat , convert(date, '') DateTerm , E_ListFormationDiffus.deadline , E_ListFormationDiffus.DateDiffus from E_ListFormationDiffus inner join E_Formation on E_Formation.Code = E_ListFormationDiffus.Code_formt left outer join E_ResultFormation on E_ResultFormation.Code_Formation =  E_ListFormationDiffus.Code_formt where E_Formation.Matricule_Formateur = " + user.matricule + " and E_ListFormationDiffus.Code_formt = '" + id + "'   and E_ListFormationDiffus.Mat_usr not in ( select distinct E_ResultFormation.MatUser from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + ") and E_ListFormationDiffus.Nom_usr like '%"+searchStringUsr+"%'   union  select distinct E_Formation.Code Code_formt, E_Formation.Objet ObjForm, E_ResultFormation.MatUser Mat_usr, E_ResultFormation.Usr Nom_usr, E_ResultFormation.Resultat etat , E_ResultFormation.DateTerm ,E_ResultFormation.DeadLine , convert(date,'') DateDiffus  from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + "  and E_ResultFormation.Usr  like '%" + searchStringUsr + "%' ", con);
+                    daz.Fill(dtz);
+                }
+                else if (!String.IsNullOrEmpty(Etat))
+                {
+                    if (Etat == "Incomplete")
+                    {
+                        SqlDataAdapter daz;
+                       
+                        daz = new SqlDataAdapter("select distinct  E_ListFormationDiffus.Code_formt, E_ListFormationDiffus.Objet ObjForm, E_ListFormationDiffus.Mat_usr, E_ListFormationDiffus.Nom_usr , 'Incomplete' etat , convert(date, '') DateTerm , E_ListFormationDiffus.deadline , E_ListFormationDiffus.DateDiffus from E_ListFormationDiffus inner join E_Formation on E_Formation.Code = E_ListFormationDiffus.Code_formt left outer join E_ResultFormation on E_ResultFormation.Code_Formation =  E_ListFormationDiffus.Code_formt where E_Formation.Matricule_Formateur = " + user.matricule + " and E_ListFormationDiffus.Code_formt = '" + id + "'   and E_ListFormationDiffus.Mat_usr not in ( select distinct E_ResultFormation.MatUser from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + ") and    DateTerm is  null   union  select distinct E_Formation.Code Code_formt, E_Formation.Objet ObjForm, E_ResultFormation.MatUser Mat_usr, E_ResultFormation.Usr Nom_usr, E_ResultFormation.Resultat etat , E_ResultFormation.DateTerm ,E_ResultFormation.DeadLine , convert(date,'') DateDiffus  from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + "   and DateTerm is  null ", con);
+                        daz.Fill(dtz);
+
+                    }
+                    else
+                    {
+                        SqlDataAdapter daz;
+                       
+                        daz = new SqlDataAdapter("select distinct  E_ListFormationDiffus.Code_formt, E_ListFormationDiffus.Objet ObjForm, E_ListFormationDiffus.Mat_usr, E_ListFormationDiffus.Nom_usr , 'Incomplete' etat , convert(date, '') DateTerm , E_ListFormationDiffus.deadline , E_ListFormationDiffus.DateDiffus from E_ListFormationDiffus inner join E_Formation on E_Formation.Code = E_ListFormationDiffus.Code_formt left outer join E_ResultFormation on E_ResultFormation.Code_Formation =  E_ListFormationDiffus.Code_formt where E_Formation.Matricule_Formateur = " + user.matricule + " and E_ListFormationDiffus.Code_formt = '" + id + "'   and E_ListFormationDiffus.Mat_usr not in ( select distinct E_ResultFormation.MatUser from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + ") and    DateTerm is not null   union  select distinct E_Formation.Code Code_formt, E_Formation.Objet ObjForm, E_ResultFormation.MatUser Mat_usr, E_ResultFormation.Usr Nom_usr, E_ResultFormation.Resultat etat , E_ResultFormation.DateTerm ,E_ResultFormation.DeadLine , convert(date,'') DateDiffus  from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + "   and DateTerm is not null ", con);
+                        daz.Fill(dtz);
+
+                    }
+
+                }
+                else if (!String.IsNullOrEmpty(searchStringUsr) && (!String.IsNullOrEmpty(Etat)))
+                {
+                    if (Etat == "Incomplete")
+                    {
+                        SqlDataAdapter daz;
+                     
+                        daz = new SqlDataAdapter("select distinct  E_ListFormationDiffus.Code_formt, E_ListFormationDiffus.Objet ObjForm, E_ListFormationDiffus.Mat_usr, E_ListFormationDiffus.Nom_usr , 'Incomplete' etat , convert(date, '') DateTerm , E_ListFormationDiffus.deadline , E_ListFormationDiffus.DateDiffus from E_ListFormationDiffus inner join E_Formation on E_Formation.Code = E_ListFormationDiffus.Code_formt left outer join E_ResultFormation on E_ResultFormation.Code_Formation =  E_ListFormationDiffus.Code_formt where E_Formation.Matricule_Formateur = " + user.matricule + " and E_ListFormationDiffus.Code_formt = '" + id + "'   and E_ListFormationDiffus.Mat_usr not in ( select distinct E_ResultFormation.MatUser from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + ") and    DateTerm is  null and E_ListFormationDiffus.Nom_usr like '%" + searchStringUsr + "%'   union  select distinct E_Formation.Code Code_formt, E_Formation.Objet ObjForm, E_ResultFormation.MatUser Mat_usr, E_ResultFormation.Usr Nom_usr, E_ResultFormation.Resultat etat , E_ResultFormation.DateTerm ,E_ResultFormation.DeadLine , convert(date,'') DateDiffus  from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + "   and DateTerm is  null and E_ResultFormation.Usr like '%" + searchStringUsr + "%' ", con);
+                        daz.Fill(dtz);
+
+                    }
+                    else
+                    {
+                        SqlDataAdapter daz;
+                         
+                        daz = new SqlDataAdapter("select distinct  E_ListFormationDiffus.Code_formt, E_ListFormationDiffus.Objet ObjForm, E_ListFormationDiffus.Mat_usr, E_ListFormationDiffus.Nom_usr , 'Incomplete' etat , convert(date, '') DateTerm , E_ListFormationDiffus.deadline , E_ListFormationDiffus.DateDiffus from E_ListFormationDiffus inner join E_Formation on E_Formation.Code = E_ListFormationDiffus.Code_formt left outer join E_ResultFormation on E_ResultFormation.Code_Formation =  E_ListFormationDiffus.Code_formt where E_Formation.Matricule_Formateur = " + user.matricule + " and E_ListFormationDiffus.Code_formt = '" + id + "'   and E_ListFormationDiffus.Mat_usr not in ( select distinct E_ResultFormation.MatUser from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + ") and    DateTerm is not  null and E_ListFormationDiffus.Nom_usr like '%" + searchStringUsr + "%'   union  select distinct E_Formation.Code Code_formt, E_Formation.Objet ObjForm, E_ResultFormation.MatUser Mat_usr, E_ResultFormation.Usr Nom_usr, E_ResultFormation.Resultat etat , E_ResultFormation.DateTerm ,E_ResultFormation.DeadLine , convert(date,'') DateDiffus  from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + "   and DateTerm is not null and E_ResultFormation.Usr like '%" + searchStringUsr + "%' ", con);
+                        daz.Fill(dtz);
+
+
+                    }
+                }
+                else
+                {
+                    SqlDataAdapter daz;
+                   
+                    daz = new SqlDataAdapter("select distinct  E_ListFormationDiffus.Code_formt, E_ListFormationDiffus.Objet ObjForm, E_ListFormationDiffus.Mat_usr, E_ListFormationDiffus.Nom_usr , 'Incomplete' etat , convert(date, '') DateTerm , E_ListFormationDiffus.deadline , E_ListFormationDiffus.DateDiffus from E_ListFormationDiffus inner join E_Formation on E_Formation.Code = E_ListFormationDiffus.Code_formt left outer join E_ResultFormation on E_ResultFormation.Code_Formation =  E_ListFormationDiffus.Code_formt where E_Formation.Matricule_Formateur = " + user.matricule + " and E_ListFormationDiffus.Code_formt = '" + id + "'   and E_ListFormationDiffus.Mat_usr not in ( select distinct E_ResultFormation.MatUser from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + ")  union  select distinct E_Formation.Code Code_formt, E_Formation.Objet ObjForm, E_ResultFormation.MatUser Mat_usr, E_ResultFormation.Usr Nom_usr, E_ResultFormation.Resultat etat , E_ResultFormation.DateTerm ,E_ResultFormation.DeadLine , convert(date,'') DateDiffus  from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + "   ", con);
+                    daz.Fill(dtz);
+                }
 
 
 
+                //--select distinct  E_ListFormationDiffus.Code_formt, E_ListFormationDiffus.Objet ObjForm, E_ListFormationDiffus.Mat_usr,
+                //                --E_ListFormationDiffus.Nom_usr , 'Incomplete' etat , convert(date, '') DateTerm , E_ListFormationDiffus.deadline
+
+                //               -- from E_ListFormationDiffus inner join E_Formation on E_Formation.Code = E_ListFormationDiffus.Code_formt
+                //               --  left outer join E_ResultFormation on E_ResultFormation.Code_Formation = E_ListFormationDiffus.Code_formt
+
+                //               --  where E_Formation.Matricule_Formateur = 0001 and E_ListFormationDiffus.Code_formt = 'F_24022021_01'
+
+                //               --  and E_ListFormationDiffus.Mat_usr not in (select distinct E_ResultFormation.MatUser from E_ResultFormation inner join E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation = 'F_24022021_01' and E_Formation.Matricule_Formateur = 0001)
+
+                //--union  select distinct E_Formation.Code Code_formt, E_Formation.Objet ObjForm, E_ResultFormation.MatUser Mat_usr, E_ResultFormation.Usr Nom_usr, E_ResultFormation.Resultat etat, E_ResultFormation.DateTerm ,E_ResultFormation.DeadLine from E_ResultFormation inner join E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation = 'F_24022021_01' and E_Formation.Matricule_Formateur = 0001
+
+
+                 
                 E_FormationController.searchTermCodeF = "searchStringCodeF";
                 E_FormationController.ValTermCodeF = searchStringCodeF;
 
@@ -1659,38 +1790,38 @@ namespace RHEVENT.Controllers
                 E_FormationController.searchTermObjet = "searchStringObjet";
                 E_FormationController.ValTermObjet = searchStringObjet;
 
-                if (!String.IsNullOrEmpty(searchStringCodeF))
-                    r = r.Where(s => s.Code_formt.ToLower().Contains(searchStringCodeF.ToLower()));
+                //if (!String.IsNullOrEmpty(searchStringCodeF))
+                //    r = r.Where(s => s.Code_formt.ToLower().Contains(searchStringCodeF.ToLower()));
 
-                if (!String.IsNullOrEmpty(searchStringObjet))
-                    r = r.Where(s => s.Objet.ToLower().Contains(searchStringCodeF.ToLower()));
+                //if (!String.IsNullOrEmpty(searchStringObjet))
+                //    r = r.Where(s => s.ObjForm.ToLower().Contains(searchStringCodeF.ToLower()));
 
-                if (!String.IsNullOrEmpty(searchStringUsr))
-                    r = r.Where(s => s.Nom_usr.ToLower().Contains(searchStringUsr.ToLower()));
+                //if (!String.IsNullOrEmpty(searchStringUsr))
+                //    r = r.Where(s => s.Nom_usr.ToLower().Contains(searchStringUsr.ToLower()));
 
-                if (!String.IsNullOrEmpty(Etat))
-                    r = r.Where(s => s.Etat == Etat);
+                //if (!String.IsNullOrEmpty(Etat))
+                //    r = r.Where(s => s.etat == Etat);
 
 
-                foreach (var ee in r)
+               for (int o =0; o < dtz.Rows.Count; o++)
                 {
                     E_ResultFormation e_ResultFormation = new E_ResultFormation();
 
-                    e_ResultFormation.Code_Formation = ee.Code_formt;
+                    e_ResultFormation.Code_Formation = dtz.Rows[o]["Code_formt"].ToString();
 
-                    e_ResultFormation.ObjForm = ee.Objet;
+                    e_ResultFormation.ObjForm = dtz.Rows[o]["ObjForm"].ToString() ;
 
-                    e_ResultFormation.MatUser = ee.Mat_usr;
+                    e_ResultFormation.MatUser = dtz.Rows[o]["Mat_usr"].ToString()  ;
 
-                    e_ResultFormation.Usr = ee.Nom_usr;
+                    e_ResultFormation.Usr = dtz.Rows[o]["Nom_usr"].ToString()   ;
 
-                    if (ee.DateDiffus.ToString() != "")
+                    if (dtz.Rows[o]["DateDiffus"].ToString()    != "")
                     {
-                        e_ResultFormation.DateTerm = Convert.ToDateTime(ee.DateDiffus.ToString());
+                        e_ResultFormation.DateTerm = Convert.ToDateTime(dtz.Rows[o]["DateDiffus"].ToString());
                     }
-                    e_ResultFormation.DeadLine = Convert.ToDateTime(ee.DateDiffus.ToString());
+                    e_ResultFormation.DeadLine = Convert.ToDateTime(dtz.Rows[o]["DateDiffus"].ToString());
 
-                    e_ResultFormation.Etat = ee.Etat;
+                    e_ResultFormation.Etat = dtz.Rows[o]["etat"].ToString()  ;
 
                     list.Add(e_ResultFormation);
 
@@ -1701,13 +1832,15 @@ namespace RHEVENT.Controllers
 
             DataTable dt = new DataTable();
 
-            SqlDataAdapter da;
+            //SqlDataAdapter da;
             //da = new SqlDataAdapter(" select distinct  E_ListFormationDiffus.Code_formt, E_ListFormationDiffus.Objet ObjForm, E_ListFormationDiffus.Mat_usr, E_ListFormationDiffus.Nom_usr, E_ListFormationDiffus.deadline, E_ResultFormation.DateTerm , case when(E_ResultFormation.Resultat = 'Complete') then 'Complete' else 'Incomplete' end as Etat from E_ListFormationDiffus left join E_ResultFormation on E_ResultFormation.Code_Formation = E_ListFormationDiffus.Code_formt inner join E_Formation on E_Formation.Code = E_ListFormationDiffus.Code_formt where E_Formation.Matricule_Formateur = "+user.matricule+" and E_ListFormationDiffus.Code_formt = '" + id + "' ", con);
-            da = new SqlDataAdapter("select distinct  E_ListFormationDiffus.Code_formt, E_ListFormationDiffus.Objet ObjForm, E_ListFormationDiffus.Mat_usr, E_ListFormationDiffus.Nom_usr , 'Incomplete' etat , convert(date, '') DateTerm , E_ListFormationDiffus.deadline from E_ListFormationDiffus inner join E_Formation on E_Formation.Code = E_ListFormationDiffus.Code_formt left outer join E_ResultFormation on E_ResultFormation.Code_Formation =  E_ListFormationDiffus.Code_formt where E_Formation.Matricule_Formateur = " + user.matricule + " and E_ListFormationDiffus.Code_formt = '" + id + "' and E_ListFormationDiffus.Mat_usr not in ( select distinct E_ResultFormation.MatUser from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + ") union select distinct E_Formation.Code Code_formt, E_Formation.Objet ObjForm, E_ResultFormation.MatUser Mat_usr,  E_ResultFormation.Usr Nom_usr, E_ResultFormation.Resultat etat , E_ResultFormation.DateTerm ,E_ResultFormation.DeadLine from E_ResultFormation  inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='" + id + "' and  E_Formation.Matricule_Formateur = " + user.matricule + "", con);
+            //da.Fill(dt);
 
+            SqlDataAdapter da;
+            da = new SqlDataAdapter("select distinct  E_ListFormationDiffus.Code_formt, E_ListFormationDiffus.Objet ObjForm, E_ListFormationDiffus.Mat_usr, E_ListFormationDiffus.Nom_usr , 'Incomplete' etat , convert(date, '') DateTerm , E_ListFormationDiffus.deadline from E_ListFormationDiffus inner join E_Formation on E_Formation.Code = E_ListFormationDiffus.Code_formt left outer join E_ResultFormation on E_ResultFormation.Code_Formation =  E_ListFormationDiffus.Code_formt where E_Formation.Matricule_Formateur = "+ user.matricule+" and E_ListFormationDiffus.Code_formt = '"+id+"'   and E_ListFormationDiffus.Mat_usr not in ( select distinct E_ResultFormation.MatUser from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='"+id+"' and  E_Formation.Matricule_Formateur = "+user.matricule+ ")  union  select distinct E_Formation.Code Code_formt, E_Formation.Objet ObjForm, E_ResultFormation.MatUser Mat_usr, E_ResultFormation.Usr Nom_usr, E_ResultFormation.Resultat etat , E_ResultFormation.DateTerm ,E_ResultFormation.DeadLine  from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='"+id+"' and  E_Formation.Matricule_Formateur = "+user.matricule+"   ", con);
             da.Fill(dt);
 
-             
+
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 E_ResultFormation e_ResultFormation = new E_ResultFormation();

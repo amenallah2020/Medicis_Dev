@@ -46,7 +46,10 @@ namespace RHEVENT.Controllers
                 da1.Fill(dt1);
 
             Session["nb"] = dt1.Rows.Count;
-             
+
+            Session["nbFAR"] = dt1.Rows.Count;
+
+
             for (int i = 0; i < dt1.Rows.Count; i++)
             {
                 

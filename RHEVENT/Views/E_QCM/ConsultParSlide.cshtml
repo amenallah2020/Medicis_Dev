@@ -1,0 +1,598 @@
+﻿@model RHEVENT.Models.E_QCM
+
+@{
+    ViewBag.Title = "Evaluation ";
+}
+
+@{
+    ViewBag.titre_page = "E-learning";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+
+}
+
+
+@{ 
+    double dd = Convert.ToDouble(ViewBag.timeexpire);
+
+    var endTime = DateTime.UtcNow.AddSeconds(dd);
+
+    var timeRemaining = TimeSpan.FromTicks(endTime.Ticks - DateTime.UtcNow.Ticks).TotalSeconds.ToString("#");
+  }
+
+
+<h2 class="text" style="color:cornflowerblue">
+    <span class="glyphicon   glyphicon-expand"> </span>
+    Evaluation
+</h2>
+
+<br />
+
+
+@*<style>
+
+    #the-final-countdown {
+        background: #333;
+        font-family: 'Lato', sans-serif;
+        text-align: center;
+        color: #eee;
+        text-shadow: 1px 1px 5px black;
+        padding: 1rem 0;
+        font-size: 3rem;
+        border: 1px solid #000;
+    }
+
+    .width-textarea {
+        max-width: 100%;
+        width: 100%;
+        border: hidden;
+        border-width: thin;
+    }
+
+    /*/**/
+
+
+    p {
+        text-align: right;
+        font-size: 20px;
+        margin-top: 0px;
+        color: blue;
+    }
+</style>*@
+
+<body>
+
+    @*<div id="the-final-countdown">
+            <p></p>
+        </div>*@
+
+    @*<p id="demo"></p>*@
+
+
+    @using (Html.BeginForm("ConsultParSlide", "E_QCM", new { sld = Html.DisplayFor(model => model.NumQ) }, method: FormMethod.Get))
+    {
+        <strong style="color:blue; font-size:20px; margin-left:80%"> <span name="time" id="time">   </span>  </strong>
+
+        @*<div> <span id="minRemaining"></span>: <span id="secRemaining"></span> </div>*@
+
+        <div hidden>
+            @(TempData["Question"] = Html.DisplayFor(model => model.Question) );
+            @(TempData["CodeQcm"] = Html.DisplayFor(model => model.Code_QCM) );
+            @Session["CodeEval"];
+            @(TempData["Q"] = Html.DisplayFor(model => model.NumQ))  ;
+            @(TempData["R1"] = Html.DisplayFor(model => model.Reponse1))  ;
+            @(TempData["R2"] = Html.DisplayFor(model => model.Reponse2))  ;
+            @(TempData["R3"] = Html.DisplayFor(model => model.Reponse3))  ;
+            @(TempData["R4"] = Html.DisplayFor(model => model.Reponse4))  ;
+
+        </div>
+
+        @*<form action="RepUser" method="post" id="Reponse">*@
+
+        <div class="container-fluid" style="border: 1px dashed hidden ; height:400px; background-color:white">
+
+            <div class="card border w3-border-black " style="background-color:white ; border:medium ">
+                <div class="card-header">
+
+                    <div hidden>
+                        <strong class="card-title"> <pre style="font-family:Arial; font-size:16px"> Question :      @Html.DisplayFor(model => model.Code_QCM)  </pre></strong>
+                    </div>
+
+                    <strong class="card-title"> <pre style="font-family:Arial; font-size:16px"> Question :      @Html.DisplayFor(model => model.Question)  </pre></strong>
+                </div>
+
+
+                <div class="card-body">
+                    <p class="card-text">
+                        <dl class="dl-horizontal ">
+
+                            <div id="radio" class="col-lg-12">
+                                <br>
+
+                                <div class="col-lg-12">
+
+                                    @if (@TempData["RP"] != null)
+                                    {
+                                        if (@TempData["R1"].ToString().Trim().Equals(@TempData["RP"].ToString().Trim()))
+                                        {
+                                            <div class="col-md-1">
+                                                <input type="checkbox" onclick="Desc1('@Html.DisplayFor(model => model.Reponse1)')" class="ml-1" id="radio1" value="1" name="radio" onselect="alert('clicke')" checked="checked">
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-1">
+                                                <input type="checkbox" onclick="Desc1('@Html.DisplayFor(model => model.Reponse1)')" class="ml-1" id="radio1" value="1" name="radio" onselect="alert('clicke')">
+                                            </div>
+                                        }
+                                    }
+                                    else if (@TempData["RS"] != null)
+                                    {
+                                        if (@TempData["R1"].ToString().Trim().Equals(@TempData["RS"].ToString().Trim()))
+                                        {
+                                            <div class="col-md-1">
+                                                <input type="checkbox" onclick="Desc1('@Html.DisplayFor(model => model.Reponse1)')" class="ml-1" id="radio1" value="1" name="radio" onselect="alert('clicke')" checked="checked">
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-1">
+                                                <input type="checkbox" onclick="Desc1('@Html.DisplayFor(model => model.Reponse1)')" class="ml-1" id="radio1" value="1" name="radio" onselect="alert('clicke')">
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-1">
+                                            <input type="checkbox" onclick="Desc1('@Html.DisplayFor(model => model.Reponse1)')" class="ml-1" id="radio1" value="1" name="radio" onselect="alert('clicke')">
+                                        </div>
+                                    }
+
+                                    <div class="col-lg-9">
+                                        <label for="radio1" class="  width-textarea ">  @Html.DisplayFor(model => model.Reponse1) </label>
+                                    </div>
+
+
+                                    <br> <br> <br>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    @if (@TempData["RP"] != null)
+                                    {
+                                        if (@TempData["R2"].ToString().Trim().Equals(@TempData["RP"].ToString().Trim()))
+                                        {
+                                            <div class="col-md-1">
+                                                <input type="checkbox" onclick="Desc2('@Html.DisplayFor(model => model.Reponse2)')" class="ml-1" id="radio2" value="2" name="radio" checked="checked">
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-1">
+                                                <input type="radio" onclick="Desc2('@Html.DisplayFor(model => model.Reponse2)')" class="ml-1" id="radio2" value="2" name="radio">
+                                            </div>
+
+                                        }
+                                    }
+                                    else if (@TempData["RS"] != null)
+                                    {
+                                        if (@TempData["R2"].ToString().Trim().Equals(@TempData["RS"].ToString().Trim()))
+                                        {
+                                            <div class="col-md-1">
+                                                <input type="radio" onclick="Desc2('@Html.DisplayFor(model => model.Reponse2)')" class="ml-1" id="radio1" value="1" name="radio" onselect="alert('clicke')" checked="checked">
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-1">
+                                                <input type="checkbox" onclick="Desc2('@Html.DisplayFor(model => model.Reponse2)')" class="ml-1" id="radio1" value="1" name="radio" onselect="alert('clicke')">
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-1">
+                                            <input type="checkbox" onclick="Desc2('@Html.DisplayFor(model => model.Reponse2)')" class="ml-1" id="radio2" value="2" name="radio">
+                                        </div>
+
+                                    }
+
+                                    <div class="col-lg-9">
+                                        <label for="radio2" class=" test-option ">@Html.DisplayFor(model => model.Reponse2)</label>
+                                    </div>
+                                    <br> <br> <br>
+                                </div>
+
+                                @if (@Html.DisplayFor(model => model.Reponse3).ToString() != "")
+                                {
+                                    <div class="col-lg-12">
+
+                                        @if (@TempData["RP"] != null)
+                                        {
+                                            if (@TempData["R3"].ToString().Trim().Equals(@TempData["RP"].ToString().Trim()))
+                                            {
+                                                <div class="col-md-1">
+                                                    <input type="checkbox" onclick="Desc3('@Html.DisplayFor(model => model.Reponse3)')" class="ml-1" id="radio3" value="3" name="radio" checked="checked">
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1">
+                                                    <input type="checkbox" onclick="Desc3('@Html.DisplayFor(model => model.Reponse3)')" class="ml-1" id="radio3" value="3" name="radio">
+                                                </div>
+                                            }
+                                        }
+                                        else if (@TempData["RS"] != null)
+                                        {
+                                            if (@TempData["R3"].ToString().Trim().Equals(@TempData["RS"].ToString().Trim()))
+                                            {
+                                                <div class="col-md-1">
+                                                    <input type="checkbox" onclick="Desc3('@Html.DisplayFor(model => model.Reponse3)')" class="ml-1" id="radio1" value="1" name="radio" onselect="alert('clicke')" checked="checked">
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1">
+                                                    <input type="checkbox" onclick="Desc3('@Html.DisplayFor(model => model.Reponse3)')" class="ml-1" id="radio1" value="1" name="radio" onselect="alert('clicke')">
+                                                </div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-1">
+                                                <input type="checkbox" onclick="Desc3('@Html.DisplayFor(model => model.Reponse3)')" class="ml-1" id="radio3" value="3" name="radio">
+                                            </div>
+                                        }
+
+                                        <div class="col-lg-9">
+                                            <label for="radio3" class=" test-option ">@Html.DisplayFor(model => model.Reponse3)</label>
+                                        </div>
+                                        <br> <br> <br>
+
+                                    </div>
+                                }
+
+                                @if (@Html.DisplayFor(model => model.Reponse4).ToString() != "")
+                                {
+                                    <div class="col-lg-12">
+
+                                        @if (@TempData["RP"] != null)
+                                        {
+                                            if (@TempData["R4"].ToString().Trim().Equals(@TempData["RP"].ToString().Trim()))
+                                            {
+                                                <div class="col-md-1">
+                                                    <input type="checkbox" onclick="Desc4('@Html.DisplayFor(model => model.Reponse4)')" class="ml-1" id="radio4" value="4" name="radio" checked="checked">
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1">
+                                                    <input type="checkbox" onclick="Desc4('@Html.DisplayFor(model => model.Reponse4)')" class="ml-1" id="radio4" value="4" name="radio">
+                                                </div>
+                                            }
+                                        }
+                                        else if (@TempData["RS"] != null)
+                                        {
+                                            if (@TempData["R4"].ToString().Trim().Equals(@TempData["RS"].ToString().Trim()))
+                                            {
+                                                <div class="col-md-1">
+                                                    <input type="checkbox" onclick="Desc4('@Html.DisplayFor(model => model.Reponse4)')" class="ml-1" id="radio1" value="1" name="radio" onselect="alert('clicke')" checked="checked">
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-md-1">
+                                                    <input type="radio" onclick="Desc4('@Html.DisplayFor(model => model.Reponse4)')" class="ml-1" id="radio1" value="1" name="radio" onselect="alert('clicke')">
+                                                </div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-1">
+                                                <input type="checkbox" onclick="Desc4('@Html.DisplayFor(model => model.Reponse4)')" class="ml-1" id="radio4" value="4" name="radio">
+                                            </div>
+                                        }
+
+                                        <div class="col-lg-9">
+                                            <label for="radio4" class=" test-option ">@Html.DisplayFor(model => model.Reponse4)</label>
+                                        </div>
+                                    </div>
+                                    <br> <br> <br>
+                                }
+
+                                <div hidden>
+                                    <input type="text" id="Reponse1" name="Reponse1" class="form-control" /> <br />
+                                </div>
+
+                                <div hidden>
+                                    <input type="text" id="Reponse2" name="Reponse2" class="form-control" /> <br />
+                                </div>
+
+                                <div hidden>
+                                    <input type="text" id="Reponse3" name="Reponse3" class="form-control" /> <br />
+                                </div>
+
+
+                                <div hidden>
+                                    <input type="text" id="Reponse4" name="Reponse4" class="form-control" /> <br />
+                                </div>
+
+                                <input data-val="true" data-val-number="The field questionID must be a number." data-val-required="The questionID field is required." id="questionID" name="questionID" type="hidden" value="3">
+                                <input type="hidden" name="answers" value="1,0">
+                                <input type="hidden" name="subject" value="mvc">
+                                <input type="hidden" id="selectedAnswer" name="selectedAnswer" value="4">
+
+                            </div>
+
+
+                        </dl>
+
+                        <br /> <br />
+
+
+                        @*@if (@Html.DisplayFor(model => model.NumQ) != null)
+                            {
+                                if (Convert.ToInt32(@Html.DisplayFor(model => model.NumQ).ToString()) != 1)
+                                {
+                                    <input type="submit" id="Previous" name="Previous" value="Précédent" class="btn btn-danger ">
+                                }
+                            }*@
+
+                        <br />
+                        @if (@Html.DisplayFor(model => model.NumQ) != null)
+                        {
+                            if (Convert.ToInt32(@Html.DisplayFor(model => model.NumQ).ToString()) != Convert.ToInt32(@ViewBag.count))
+                            {
+                                <div class="col-lg-12">
+                                    <div class="col-md-1">
+
+                                        <input type="submit" id="next" name="next" value="Suivant" class="btn btn-info ">
+                                    </div>
+
+
+                                </div>
+                            }
+                        }
+
+                        @if (@Html.DisplayFor(model => model.NumQ) != null)
+                        {
+                            if (Convert.ToInt32(@Html.DisplayFor(model => model.NumQ).ToString()) == Convert.ToInt32(@ViewBag.count))
+                            {
+                                @*<div onclick="location.href='@Url.Action("ResultQCM", "E_QCM", new { codeEval = @Html.DisplayFor(model => model.Code_EvalByQCM).ToString() }, null)'" style=" color:white ; background-color:forestgreen  " class="btn">  Terminer</div>*@
+
+                                <input type="submit" id="Terminer" name="Terminer" value="Terminer" class="btn  " style="background-color:forestgreen ; color:white">
+
+                            }
+                        }
+
+                    </p>
+                </div>
+            </div>
+
+
+        </div>
+        @*</div>*@
+        @*</form>*@
+    }
+
+     @*  *@
+
+</body>
+
+
+<script>
+
+    function Desc1(r) {
+        document.getElementById("Reponse1").value = '';
+        document.getElementById("Reponse1").value = r;
+
+    }
+</script>
+
+
+<script>
+
+    function Desc2(r) {
+        document.getElementById("Reponse2").value = '';
+        document.getElementById("Reponse2").value = r;
+
+    }
+</script>
+
+
+<script>
+
+    function Desc3(r) {
+        document.getElementById("Reponse3").value = '';
+        document.getElementById("Reponse3").value = r;
+
+    }
+</script>
+
+
+<script>
+
+    function Desc4(r) {
+        document.getElementById("Reponse4").value = '';
+        document.getElementById("Reponse4").value = r;
+
+    }
+</script>
+
+<script type="text/javascript">
+    function setTopMenuActive() {
+        $('#topMenu > ul li a[href *="/online-test"]').addClass('active')
+    }
+    function getResult() {
+        var frm = $("#questionForm");
+        frm.attr("action", "/online-test/test-result");
+        frm.submit();
+    }
+    $(document).ready(function () {
+        stickTLMenus();
+        var temp = $(window).height();
+        $(window).scroll(function () {
+            stickTLMenus();
+        });
+        setTopMenuActive();
+        $("#subscribe-form").on("submit", function (s) { s.preventDefault(), submitSubscribeForm($("#subscribe-form")) })
+        $("input:radio").click(function () {
+            $("#selectedAnswer").val(this.value);
+        });
+    });
+</script>
+
+
+
+
+
+<script>
+    function calculateTimeFraction() {
+        const rawTimeFraction = timeLeft / TIME_LIMIT;
+        return rawTimeFraction - (1 / TIME_LIMIT) * (1 - rawTimeFraction);
+    }
+</script>
+
+<script>
+    function startTimer(duration, display) {
+        var start = Date.now(),
+            diff,
+            minutes,
+            seconds;
+        function timer() {
+            // get the number of seconds that have elapsed since
+            // startTimer() was called
+            diff = duration - (((Date.now() - start) / 1000) | 0);
+
+            // does the same job as parseInt truncates the float
+            minutes = (diff / 60) | 0;
+            seconds = (diff % 60) | 0;
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = minutes + ":" + seconds;
+
+            if (diff <= 0) {
+                // add one second so that the count down starts at the full duration
+                // example 05:00 not 04:59
+                start = Date.now() + 1000;
+            }
+        };
+        // we don't want to wait a full second before the timer starts
+        timer();
+        setInterval(timer, 1000);
+
+    }
+
+    window.onload = function () {
+        var fiveMinutes =  Number(@Session["MinF"].ToString()),
+            display = document.querySelector('#time');
+        startTimer(fiveMinutes, display);
+
+    };
+</script>
+
+
+@*<script>
+     /* Set the date we're counting down to*/
+     var dr = @ViewBag.Duree ;
+
+    //var dd = 'Feb 12, 2021 15:37:25';
+
+    var startTime = Math.floor(Math.Date(@ViewBag.Duree) / 1000);
+
+   //var countDownDate = new Date("Feb 12, 2021 15:37:25").getTime();
+
+      var countDownDate = new Date("Feb 12, 2021 15:37:25").getTime();
+
+
+    //var countDownDate =  Session["min"].getResult();
+
+    // Update the count down every 1 second
+    var x = setInterval(function () {
+
+        // Get today's date and time
+
+        var now = new Date().getTime();
+
+
+
+        // Find the distance between now and the count down date
+
+        var distance = countDownDate - now ;
+
+
+
+        // Time calculations for days, hours, minutes and seconds
+        //var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var days = 0;
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Output the result in an element with id="demo"
+        document.getElementById("demo").innerHTML = hours + "h "
+            + minutes + "m " + seconds + "s ";
+
+        // If the count down is over, write some text
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("demo").innerHTML = "EXPIRED";
+        }
+    }, 1000);
+</script>*@
+
+@*<script>
+        setInterval(function time() {
+            //var d = new Date();
+            var d = (Date) @ViewBag.Duree ;
+            var hours = 24 - d.getHours();
+            var min = 60 - d.getMinutes();
+            if ((min + '').length == 1) {
+                min = '0' + min;
+            }
+            var sec = 60 - d.getSeconds();
+            if ((sec + '').length == 1) {
+                sec = '0' + sec;
+            }
+            jQuery('#the-final-countdown p').html(hours + ':' + min + ':' + sec)
+        }, 1000);
+    </script>*@
+ 
+@*<script>
+
+    var remSeconds = @timeRemaining;
+
+    var secondsCounter = remSeconds % 60;
+
+    function formatNumber(number) {
+        if (number < 10) return '0' + number;
+        else '' + number;
+    }
+
+    function startTick() {
+
+        document.getElementById('secRemaining').innerText = formatNumber(secondsCounter);
+        document.getElementById('minRemaining').innerText = formatNumber(parseInt(remSeconds/60));
+
+        var _tick = setInterval(function () {
+
+            if (remSeconds > 0) {
+                remSeconds = remSeconds - 1;
+                secondsCounter = secondsCounter - 1;
+                document.getElementById('secRemaining').innerText = formatNumber(secondsCounter);
+                document.getElementById('minRemaining').innerText = formatNumber(parseInt(remSeconds / 60));
+
+                if (secondsCounter == 0)
+                    secondsCounter = 60;
+            }
+            else {
+                alert('Expirer');
+                clearInterval(_tick);
+            }
+        }, 1000);
+         
+
+    }
+    startTick();
+</script>*@

@@ -28,12 +28,22 @@ namespace RHEVENT.Controllers
         [HttpPost]  
         public ActionResult Diff(FormCollection formCollection, string id,DateTime dateLim)
         {
+            string codeEval = id;
+
+            if (formCollection["grpId"] == null)
+            {
+                ViewBag.Bloq = "La diffusion a été annulée : Il faut séléctionner au moin un groupe !";
+
+                return RedirectToAction("Index", "E_DiffEval", new { codeEval = codeEval, bloq = @ViewBag.Bloq });
+
+            }
+
             string[] ids = formCollection["grpId"].Split(new char[]{','});
 
             var grp = db.E_GrpByUsr.Find(int.Parse(ids[0]));
 
 
-            string codeEval = id;
+          
 
             ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
 
@@ -46,6 +56,20 @@ namespace RHEVENT.Controllers
             SqlDataAdapter da3;
             da3 = new SqlDataAdapter("select E_listeUsr.Mat_usr ,E_listeUsr.Code_grp  , AspNetUsers.NomPrenom from E_listeUsr inner join AspNetUsers on AspNetUsers.matricule = E_listeUsr.Mat_usr where Code_grp = '" + grp.Code + "' ", con);
             da3.Fill(dt3);
+
+
+            var verifQCM = from m in db.E_QCM
+                           where m.Code_EvalByQCM == codeEval
+                           select m;
+
+
+            if (verifQCM.Count() ==0)
+            {
+                ViewBag.Bloq = "La diffusion a été annulée : L'évaluation est sans QCM !";
+
+                return RedirectToAction("Index", "E_DiffEval", new { codeEval = codeEval, bloq = @ViewBag.Bloq });
+
+            }
 
 
             for (int j = 0; j < dt3.Rows.Count; j++)
@@ -163,8 +187,11 @@ namespace RHEVENT.Controllers
 
 
         public ActionResult Group()
-        { 
+        {
+            ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+
             var list = from m in db.E_GrpByUsr
+                       where m.Matricule_Usr == user.matricule
                        select m;
 
             return View(list.ToList());
@@ -210,7 +237,10 @@ namespace RHEVENT.Controllers
 
             }
 
-            var list = from m in db.E_GrpByUsr 
+            ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+
+            var list = from m in db.E_GrpByUsr
+                       where m.Matricule_Usr == user.matricule
                        select m;
 
             return View(list.ToList());

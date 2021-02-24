@@ -1,0 +1,196 @@
+﻿@model RHEVENT.Models.E_listeUsr
+
+@{
+    ViewBag.titre_page = "E-learning";
+    ViewBag.email = ViewBag.email;
+    ViewBag.nom_prenom = ViewBag.nom_prenom;
+}
+
+<h2 class="text" style="color:cornflowerblue">
+    <span class="glyphicon   glyphicon-expand"> </span>
+    Diffusion de formation par utilisateur
+</h2>
+<br /><br />
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    @*<h3 class="text" style="color:cornflowerblue">Ajouter utilisateur</h3>*@
+</head>
+
+<div class="card border border-info " style="background-color:yellow">
+    <div class="card-header">
+        <strong class="card-title"></strong>
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+            <dl class="dl-horizontal ">
+                <dt>
+                    Formation
+                </dt>
+                <dd>
+                    @ViewBag.CodeFormation
+                </dd>
+
+                <dt>
+                    Date création
+                </dt>
+                <dd>
+                    @ViewBag.DateCreatFormation
+                </dd>
+
+                <dt>
+                    Objet
+                </dt>
+                <dd>
+                    @ViewBag.ObjetFormation
+                </dd>
+            </dl>
+
+        </p>
+    </div>
+
+</div>
+
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @*<dt class="form-horizontal">*@
+
+        <hr />
+
+        <div style="color:red">
+            @*<dt>  <br /> <br /> &nbsp;  &nbsp; &nbsp; @Session["Bloq"].ToString()  </dt>*@
+            <dt>   &nbsp;  &nbsp; &nbsp; @ViewBag.Bloq  </dt><br /> <br />
+        </div>
+
+        @*<div class="form-group">
+                <br />  @Html.LabelFor(a => a.Code_grp, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                <div class="col-md-9">
+                    @Html.DropDownListFor(m => m.Code_grp, new SelectList(@ViewBag.CodeGroup, "Id", "Code"), new { disabled = "disabled" })
+                    @Html.ValidationMessageFor(model => model.Code_grp, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div hidden> <input class="form-control " id="verif" type="search" placeholder="Recherche" name="searchString" value="@ViewData["CurrentFilter"]" /> </div>
+
+
+        <dl class="dl-horizontal ">
+            <dt>
+                Date limite
+            </dt>
+
+            <dd>
+                @*value="0001-01-01"*@
+                <input type="date" id="dateLim" name="dateLim" class="form-control" required />
+            </dd>
+
+        </dl>
+
+        @*<div class="form-group">*@
+        <dl class="dl-horizontal ">
+
+            <dt>
+                Utilisateur
+            </dt>
+
+            @*<div class="col-md-9">*@
+
+            <dd>
+                @if (Session["EtatUsrFor"] != null)
+                {
+                    if (Session["EtatUsrFor"].ToString() == "Interne")
+                    {
+                        <input type="submit" class="btn-link   " style="font-size:14px ; background-color:lightpink" onclick="Desc('Interne')" value="Interne">
+                        <input type="submit" class="btn-link" style="font-size:14px" onclick="Desc('Externe')" value="Externe">
+                    }
+
+                    if (Session["EtatUsrFor"].ToString() == "Externe")
+                    {
+                        <input type="submit" class="btn-link  " style="font-size:14px" onclick="Desc('Interne')" value="Interne">
+                        <input type="submit" class="btn-link btn-warning" style="font-size:14px ; background-color:lightpink" onclick="Desc('Externe')" value="Externe">
+                    }
+                }
+
+                @if (Session["EtatUsrFor"] == null)
+                {
+                    <input type="submit" class="btn-link btn-warning " style="font-size:14px ; background-color:lightpink" onclick="Desc('Interne')" value="Interne">
+                    <input type="submit" class="btn-link" style="font-size:14px" onclick="Desc('Externe')" value="Externe">
+                }
+
+
+                &nbsp;
+
+                @Html.DropDownListFor(m => m.SelectUsr, new SelectList(@ViewBag.listUser, "Matricule", "NomPrenom"), new { @id = "Usr", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SelectUsr, "", new { @class = "text-danger" })
+
+            </dd>
+        </dl>
+
+
+
+
+        @*<div class="form-group">
+                <br />  @Html.LabelFor(model => model.SelectUsr, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                <div class="col-md-9">
+
+                    @Html.DropDownListFor(m => m.SelectUsr, new SelectList(@ViewBag.listUser, "Matricule", "NomPrenom"), new { @id = "Usr" })
+                    @Html.ValidationMessageFor(model => model.SelectUsr, "", new { @class = "text-danger" })
+                </div>
+
+            </div>*@
+
+
+        using (Html.BeginForm("DiffUser", "E_listeUsr", method: FormMethod.Post))
+        {
+            <div hidden>
+                @(TempData["Form"] = ViewBag.codeF);
+
+                @(TempData["Group"] = ViewBag.codeg);
+            </div>
+
+
+
+            <div class="col-lg-12">
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input type="submit" class="btn btn-danger" value="Diffuser" />
+                @*onclick="return confirm('Voulez-vous vraiment diffuser cela?')"*@
+            </div>
+        }
+        @*<div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <br />  <input type="submit" name="btnValid" value="Ajouter" class="btn btn-info" />
+                </div>
+            </div>*@
+        @*</div>*@
+    }
+
+    @*<div>
+            @Html.ActionLink("Retour à la liste", "Index")
+        </div>*@
+
+
+    <div class="col-lg-12">
+        <br /> @Html.ActionLink("Retour à la liste des formations", "Index", "E_Formation")
+    </div>
+</body>
+
+</html>
+
+
+
+
+<script>
+
+    function Desc(r) {
+        document.getElementById("verif").value = '';
+        document.getElementById("verif").value = r;
+
+    }
+</script>

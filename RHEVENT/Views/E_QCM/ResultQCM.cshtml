@@ -31,117 +31,107 @@
         </div>
 
 
-        if (item.Reponse1 == item.ReponseUser && item.EtatRep1 == "Vrai")
-        {
 
+        if ((item.Reponse1 == item.Reponse1User && item.EtatRep1 == "Vrai") || (item.Reponse1 == item.Reponse2User && item.EtatRep1 == "Vrai") || (item.Reponse1 == item.Reponse3User && item.EtatRep1 == "Vrai") || (item.Reponse1 == item.Reponse4User && item.EtatRep1 == "Vrai"))
+        {
             <div class="col-lg-12">
                 <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
                 <strong style="color:limegreen ; font-size:14px ; margin-left:12px">   @Html.DisplayFor(modelItem => item.Reponse1)</strong>
             </div>
         }
-
-        if (item.Reponse1 == item.ReponseUser && item.EtatRep1 == "Faux")
+        else if (item.EtatRep1 == "Vrai")
+        {
+            <div class="col-lg-12">
+                <img src="~/Content/images/vrai.jpg" style=" border-width:0px;" class="img-circle" />
+                <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => item.Reponse1)  </strong> &nbsp; &nbsp; <strong style="color:red">@Session["Incomp1"].ToString()</strong> <br />
+            </div>
+        }
+        else if ((item.Reponse1 == item.Reponse1User && item.EtatRep1 == "Faux") || (item.Reponse1 == item.Reponse2User && item.EtatRep1 == "Faux") || (item.Reponse1 == item.Reponse3User && item.EtatRep1 == "Faux") || (item.Reponse1 == item.Reponse4User && item.EtatRep1 == "Faux"))
         {
             <div class="col-lg-12">
                 <img src="~/Content/images/faux.png" style="border-width:0px;" class="img-circle" />
                 <strong style="color:red ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => item.Reponse1)</strong>
             </div>
         }
-
-        if (item.Reponse1 != item.ReponseUser )
+        else
         {
             <div class="col-lg-12" style="color:black ; font-size:14px ; margin-left:30px">
                 @Html.DisplayFor(modelItem => item.Reponse1)
             </div>
         }
 
-        if (item.Reponse1 != item.ReponseUser && item.EtatRep1 == "Vrai")
-        {
-            <div class="col-lg-12">
-                <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
-                <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => item.Reponse1) <br /> </strong>
-            </div>
-        }
 
 
-        if (item.Reponse2 == item.ReponseUser && item.EtatRep2 == "Vrai")
+        if ((item.Reponse2 == item.Reponse1User && item.EtatRep2 == "Vrai") || (item.Reponse2 == item.Reponse2User && item.EtatRep2 == "Vrai") || (item.Reponse2 == item.Reponse3User && item.EtatRep2 == "Vrai") || (item.Reponse2 == item.Reponse4User && item.EtatRep2 == "Vrai"))
         {
             <div class="col-lg-12">
                 <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
                 <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => item.Reponse2)</strong>
             </div>
         }
-
-        if (item.Reponse2 == item.ReponseUser && item.EtatRep2 == "Faux")
+        else if (item.EtatRep2 == "Vrai")
+        {
+            <div class="col-lg-12">
+                <img src="~/Content/images/vrai.jpg" style=" border-width:0px;" class="img-circle" />
+                <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => item.Reponse2)  </strong> &nbsp; &nbsp; <strong style="color:red">@Session["Incomp2"].ToString()</strong> <br />
+            </div>
+        }
+        else if ((item.Reponse2 == item.Reponse1User && item.EtatRep2 == "Faux") || (item.Reponse2 == item.Reponse2User && item.EtatRep2 == "Faux") || (item.Reponse2 == item.Reponse3User && item.EtatRep2 == "Faux") || (item.Reponse2 == item.Reponse4User && item.EtatRep2 == "Faux"))
         {
             <div class="col-lg-12">
                 <img src="~/Content/images/faux.png" style="border-width:0px;" class="img-circle" />
                 <strong style="color:red ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => item.Reponse2)</strong>
             </div>
         }
-
-        if (item.Reponse2 != item.ReponseUser)
+        else
         {
             <div class="col-lg-12" style="color:black ; font-size:14px ; margin-left:30px">
                 @Html.DisplayFor(modelItem => item.Reponse2)
             </div>
         }
 
-        if (item.Reponse2 != item.ReponseUser && item.EtatRep2 == "Vrai")
-        {
-            <div class="col-lg-12">
-                <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
-                <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => item.Reponse2) <br /></strong>
-            </div>
-        }
 
-        if (item.Reponse3.ToString() == "")
-        {
-            <div class="col-lg-12"  style="visibility:hidden">
-                <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
-                <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => item.Reponse3)</strong>
-            </div>
-        }
 
-        if (item.Reponse3 == item.ReponseUser && item.EtatRep3 == "Vrai")
+
+        if ((item.Reponse3 == item.Reponse1User && item.EtatRep3 == "Vrai") || (item.Reponse3 == item.Reponse2User && item.EtatRep3 == "Vrai") || (item.Reponse3 == item.Reponse3User && item.EtatRep3 == "Vrai") || (item.Reponse3 == item.Reponse4User && item.EtatRep3 == "Vrai"))
         {
             <div class="col-lg-12">
                 <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
                 <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => item.Reponse3)</strong>
             </div>
         }
-
-        if (item.Reponse3 == item.ReponseUser && item.EtatRep3 == "Faux")
+        else if (item.EtatRep3 == "Vrai")
+        {
+            <div class="col-lg-12">
+                <img src="~/Content/images/vrai.jpg" style=" border-width:0px;" class="img-circle" />
+                <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => item.Reponse3) </strong> &nbsp; &nbsp; <strong style="color:red">@Session["Incomp3"].ToString()</strong> <br />
+            </div>
+        }
+        else if ((item.Reponse3 == item.Reponse1User && item.EtatRep3 == "Faux") || (item.Reponse3 == item.Reponse2User && item.EtatRep3 == "Faux") || (item.Reponse3 == item.Reponse3User && item.EtatRep3 == "Faux") || (item.Reponse3 == item.Reponse4User && item.EtatRep3 == "Faux"))
         {
             <div class="col-lg-12">
                 <img src="~/Content/images/faux.png" style="border-width:0px;" class="img-circle" />
                 <strong style="color:red ; font-size:14px ; margin-left:12px">@Html.DisplayFor(modelItem => item.Reponse3)</strong>
             </div>
         }
-
-        if (item.Reponse3 != item.ReponseUser && item.Reponse3 != null)
+        else if (item.Reponse3.ToString() == "")
+        {
+            <div class="col-lg-12" style="visibility:hidden">
+                <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
+                <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => item.Reponse3)</strong>
+            </div>
+        }
+        else
         {
             <div class="col-lg-12" style="color:black ; font-size:14px ; margin-left:30px">
                 @Html.DisplayFor(modelItem => item.Reponse3)
             </div>
-        }
-        if (item.Reponse3 != item.ReponseUser && item.EtatRep3 == "Vrai")
-        {
-            <div class="col-lg-12">
-                <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
-                <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => item.Reponse3) <br /></strong>
-            </div>
+
         }
 
-        if (item.Reponse4.ToString() == "")
-        {
-            <div class="col-lg-12" style="visibility:hidden">
-                <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
-                <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => item.Reponse4)</strong>
-            </div>
-        }
 
-        if (item.Reponse4 == item.ReponseUser && item.EtatRep4 == "Vrai")
+
+        if ((item.Reponse4 == item.Reponse1User && item.EtatRep4 == "Vrai") || (item.Reponse4 == item.Reponse2User && item.EtatRep4 == "Vrai") || (item.Reponse4 == item.Reponse3User && item.EtatRep4 == "Vrai") || (item.Reponse4 == item.Reponse4User && item.EtatRep4 == "Vrai"))
         {
             <div class="col-lg-12">
                 <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
@@ -149,7 +139,15 @@
             </div>
         }
 
-        if (item.Reponse4 == item.ReponseUser && item.EtatRep4 == "Faux")
+        else if (item.EtatRep4 == "Vrai")
+        {
+            <div class="col-lg-12">
+                <img src="~/Content/images/vrai.jpg" style=" border-width:0px;" class="img-circle" />
+                <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => item.Reponse4)  </strong> &nbsp; &nbsp; <strong style="color:red">@Session["Incomp4"].ToString()</strong> <br />
+            </div>
+        }
+
+        else if ((item.Reponse4 == item.Reponse1User && item.EtatRep4 == "Faux") || (item.Reponse4 == item.Reponse2User && item.EtatRep4 == "Faux") || (item.Reponse4 == item.Reponse3User && item.EtatRep4 == "Faux") || (item.Reponse4 == item.Reponse4User && item.EtatRep4 == "Faux"))
         {
             <div class="col-lg-12">
                 <img src="~/Content/images/faux.png" style=" border-width:0px;" class="img-circle" />
@@ -157,20 +155,24 @@
             </div>
         }
 
-        if (item.Reponse4 != item.ReponseUser &&   item.Reponse4 != null)
+        else if (item.Reponse4.ToString() == "")
+        {
+            <div class="col-lg-12" style="visibility:hidden">
+                <img src="~/Content/images/vrai.jpg" style="border-width:0px;" class="img-circle" />
+                <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => item.Reponse4)</strong>
+            </div>
+        }
+
+        else
         {
             <div class="col-lg-12" style="color:black ; font-size:14px ; margin-left:30px">
                 @Html.DisplayFor(modelItem => item.Reponse4)  <br />
             </div>
         }
 
-        if (item.Reponse4 != item.ReponseUser && item.EtatRep4 == "Vrai")
-        {
-            <div class="col-lg-12">
-                <img src="~/Content/images/vrai.jpg" style=" border-width:0px;" class="img-circle" />
-                <strong style="color:limegreen ; font-size:14px ; margin-left:12px"> @Html.DisplayFor(modelItem => item.Reponse4) <br /></strong>
-            </div>
-        }
+
+
+
         <br /> <br />
     }
 

@@ -76,8 +76,14 @@ namespace RHEVENT.Models
         [Display(Name = "")]
         public string EtatRep4 { get; set; }
 
-         
-        public string ReponseUser { get; set; }
+
+        public string Reponse1User { get; set; }
+
+        public string Reponse2User { get; set; }
+
+        public string Reponse3User { get; set; }
+
+        public string Reponse4User { get; set; }
 
 
     }

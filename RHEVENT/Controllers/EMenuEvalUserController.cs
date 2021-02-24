@@ -42,7 +42,8 @@ namespace RHEVENT.Controllers
                 da1.Fill(dt1);
 
             Session["nb"] = dt1.Rows.Count;
-             
+            Session["nbEAR"] = dt1.Rows.Count;
+
             for (int i = 0; i < dt1.Rows.Count; i++)
             {
                 string aa  = Convert.ToString(dt1.Rows[i][0])+ " - " + Convert.ToString(dt1.Rows[i][1]);

@@ -98,15 +98,29 @@
                             @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Employer")))
 
                             {
-                                <a href="@Url.Action("Index", "EMenuFormUser")">Mes formations </a>
+                                if (Session["nbFAR"] != null && Session["nbFAR"].ToString() != "0")
+                                {
+                                    <a href="@Url.Action("Index", "EMenuFormUser")">Mes formations <span style="color:red">(@Session["nbFAR"].ToString())</span></a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("Index", "EMenuFormUser")">Mes formations </a>
+                                }
                             }
                             @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Employer")))
 
                             {
-                                <a href="@Url.Action("Index", "EMenuEvaluationUser")">Mes évaluations </a>
+                                if (Session["nbEAR"] != null && Session["nbEAR"].ToString() != "0")
+                                {
+                                    <a href="@Url.Action("Index", "EMenuEvaluationUser")">Mes évaluations <span style="color:red">(@Session["nbEAR"].ToString())</span> </a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("Index", "EMenuEvaluationUser")">Mes évaluations  </a>
+                                }
                             }
 
-                        </div>
+                            </div> 
 
                     }
 
