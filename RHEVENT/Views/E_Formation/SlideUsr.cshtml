@@ -49,7 +49,7 @@
         @if (@Html.DisplayFor(model => model.CodeEval).ToString() != "" && Convert.ToInt32(@Html.DisplayFor(model => model.NumDiapo).ToString()) == Convert.ToInt32(@ViewBag.count))
         {
 
-        <div onclick="location.href='@Url.Action("Consult", "E_QCM", new { id = @Html.DisplayFor(model => model.CodeEval).ToString() }, null)'" style=" color:white ; background-color:forestgreen " class="btn">  Passer l'évaluation</div>
+        <div onclick="location.href='@Url.Action("ConsultParSlide", "E_QCM", new { id = @Html.DisplayFor(model => model.CodeEval).ToString() }, null)'" style=" color:white ; background-color:forestgreen " class="btn">  Passer l'évaluation</div>
 
         }
     </div>

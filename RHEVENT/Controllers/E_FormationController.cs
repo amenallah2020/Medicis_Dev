@@ -100,7 +100,7 @@ namespace RHEVENT.Controllers
                 if (p <= 9)
                     e_Evaluation.Code_Eval = "Eval_" + NewChaine + "_0" + (a + 1);
                 else
-                    e_Evaluation.Code_Eval = "Eval_" + NewChaine + "_1" + (a + 1);
+                    e_Evaluation.Code_Eval = "Eval_" + NewChaine + "_" + (a + 1);
 
 
                 SqlCommand cmd = new SqlCommand("Insert into E_Evaluation (Code_Eval,CodeForm,Etat_Eval,Date_Creation,Date_Modif,Matricule_Formateur,Objet_Eval,Pourc_Valid,Duree_Eval) values(@Code_Eval,@CodeForm,@Etat_Eval,@Date_Creation,@Date_Modif,@Matricule_Formateur,@Objet_Eval,@Pourc_Valid,@Duree_Eval)", con);
@@ -205,43 +205,62 @@ namespace RHEVENT.Controllers
             if (ModelState.IsValid)
             {
 
-                if (EtatRep1 == "Faux" && EtatRep2 == "Faux" && EtatRep3 == "Faux" && EtatRep4 == "Faux")
-                {
-                    ModelState.AddModelError("", "Il faut une réponse vrai.");
-                    ViewBag.codeEval = e_QCM.Code_EvalByQCM;
-                    ViewBag.codeFor = codeForm;
+                //if (EtatRep1 == "Faux" && EtatRep2 == "Faux" && EtatRep3 == "Faux" && EtatRep4 == "Faux")
+                //{
+                //    ModelState.AddModelError("", "Il faut une réponse vrai.");
+                //    ViewBag.codeEval = e_QCM.Code_EvalByQCM;
+                //    ViewBag.codeFor = codeForm;
 
-                    return View(e_QCM);
-                }
+                //    return View(e_QCM);
+                //}
 
-                int countA = 0;
+                //int countA = 0;
 
-                List<string> aaa = new List<string>();
+                //List<string> aaa = new List<string>();
 
-                aaa.Add(EtatRep1);
+                //aaa.Add(EtatRep1);
 
-                aaa.Add(EtatRep2);
+                //aaa.Add(EtatRep2);
 
-                aaa.Add(EtatRep3);
+                //aaa.Add(EtatRep3);
 
-                aaa.Add(EtatRep4);
+                //aaa.Add(EtatRep4);
 
-                for (int i = 0; i < aaa.Count; i++)
-                {
-                    if (aaa[i].ToString() == "Vrai")
-                    {
-                        countA += 1;
-                    }
-                }
+                //for (int i = 0; i < aaa.Count; i++)
+                //{
+                //    if (aaa[i].ToString() == "Vrai")
+                //    {
+                //        countA += 1;
+                //    }
+                //}
 
-                if (countA > 1)
-                {
-                    ModelState.AddModelError("", "Il faut une seule réponse vrai.");
-                    ViewBag.codeEval = e_QCM.Code_EvalByQCM;
-                    ViewBag.codeFor = codeForm;
+                //if (countA > 1)
+                //{
+                //    ModelState.AddModelError("", "Il faut une seule réponse vrai.");
+                //    ViewBag.codeEval = e_QCM.Code_EvalByQCM;
+                //    ViewBag.codeFor = codeForm;
 
-                    return View(e_QCM);
-                }
+                //    return View(e_QCM);
+                //}
+
+
+
+                //e_QCM.Date_Modif = System.DateTime.Now;
+
+
+                string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+                SqlConnection con = new SqlConnection(constr);
+                con.Open();
+
+
+                SqlCommand cmd = new SqlCommand("UPDATE e_QCM set Date_Modif= '" + System.DateTime.Now + "', Question =  '" + e_QCM.Question + "' , Reponse1 = '" + e_QCM.Reponse1 + "' , EtatRep1 = '" + EtatRep1 + "' ,   Reponse2 = '" + e_QCM.Reponse2 + "', EtatRep2 = '" + EtatRep2 + "' , Reponse3 = '" + e_QCM.Reponse3 + "', EtatRep3 = '" + EtatRep3 + "' , Reponse4 = '" + e_QCM.Reponse4 + "', EtatRep4 = '" + EtatRep4 + "' ,  Coeff = " + e_QCM.Coeff + " where  Id= '" + e_QCM.Id + "'  ", con);
+                cmd.ExecuteNonQuery();
+
+                //db.Entry(e_QCM).State = EntityState.Detached;
+
+                //db.Entry(e_QCM).State = EntityState.Modified;
+
+                db.SaveChanges();
 
 
                 var list = from m in db.E_QCM
@@ -268,25 +287,9 @@ namespace RHEVENT.Controllers
 
                 }
 
-                //e_QCM.Date_Modif = System.DateTime.Now;
-
-
-                string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
-                SqlConnection con = new SqlConnection(constr);
-                con.Open();
-
-
-                SqlCommand cmd = new SqlCommand("UPDATE e_QCM set Date_Modif= '" + System.DateTime.Now + "', Question =  '" + e_QCM.Question + "' , Reponse1 = '" + e_QCM.Reponse1 + "' , EtatRep1 = '" + e_QCM.EtatRep1 + "' ,   Reponse2 = '" + e_QCM.Reponse2 + "', EtatRep2 = '" + e_QCM.EtatRep2 + "' , Reponse3 = '" + e_QCM.Reponse3 + "', EtatRep3 = '" + e_QCM.EtatRep3 + "' , Reponse4 = '" + e_QCM.Reponse4 + "', EtatRep4 = '" + e_QCM.EtatRep4 + "' ,  Coeff = " + e_QCM.Coeff + " where  Code_QCM= '" + e_QCM.Code_QCM + "'  ", con);
-                cmd.ExecuteNonQuery();
-
-                //db.Entry(e_QCM).State = EntityState.Detached;
-
-                //db.Entry(e_QCM).State = EntityState.Modified;
-
-                db.SaveChanges();
-
                 return RedirectToAction("ListQCM", new { codeEval = e_QCM.Code_EvalByQCM, codeF = codeForm });
             }
+
             return View(e_QCM);
         }
 
@@ -472,13 +475,13 @@ namespace RHEVENT.Controllers
                     }
                 }
 
-                if (countA > 1)
-                {
-                    ModelState.AddModelError("", "Il faut une seule réponse vrai.");
-                    ViewBag.codeEval = codeEvl;
-                    ViewBag.codeForm = codeF;
-                    return View(e_QCM);
-                }
+                //if (countA > 1)
+                //{
+                //    ModelState.AddModelError("", "Il faut une seule réponse vrai.");
+                //    ViewBag.codeEval = codeEvl;
+                //    ViewBag.codeForm = codeF;
+                //    return View(e_QCM);
+                //}
 
 
                 e_QCM.Code_EvalByQCM = codeEvl;
@@ -1044,6 +1047,137 @@ namespace RHEVENT.Controllers
         }
 
 
+        [HttpPost]
+        public ActionResult Dupliquer(System.Collections.Generic.IEnumerable<HttpPostedFileBase> files, E_Formation e_Formation, string Eval, string codeFormation, string id)
+        {
+            var list  = from m in db.E_Formation
+                        where m.Code == codeFormation
+                         select m;
+
+
+
+            string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+            SqlConnection con = new SqlConnection(constr);
+            con.Open();
+
+            ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+
+            e_Formation.Matricule_Formateur = user.matricule;
+
+            e_Formation.Date_Creation = System.DateTime.Now;
+  
+            e_Formation.EtatF = "A_realiser";
+
+            e_Formation.Etat_Formation = "Active";
+
+
+            string OldChaine = System.DateTime.Now.ToShortDateString();
+
+            string NewChaine = OldChaine.Replace("/", "");
+
+            string date = System.DateTime.Now.ToShortDateString();
+
+            DataTable dt = new DataTable();
+
+            SqlDataAdapter da;
+            da = new SqlDataAdapter("SELECT  * FROM E_Formation where CONVERT(VARCHAR(10), Date_Creation, 103)='" + date + "'", con);
+            da.Fill(dt);
+
+            int a = dt.Rows.Count;
+
+            
+            int p = a + 1;
+
+            if (p <= 9)
+                e_Formation.Code = "F_" + NewChaine + "_0" + (a + 1);
+            else
+                e_Formation.Code = "F" + NewChaine + "_" + (a + 1);
+
+
+            string nom_formation = e_Formation.Code;
+
+
+            //string fileName = "test.txt";
+            //string sourcePath = @"../../SlideImages/"+codeFormation+"";
+            //string targetPath = @"../../SlideImages/"+nom_formation+"";
+
+            //string sourceFile = System.IO.Path.Combine(sourcePath);
+            //string destFile = System.IO.Path.Combine(targetPath);
+
+
+           
+            string folderName = Server.MapPath("\\SlideImages\\");
+            string pathString = System.IO.Path.Combine(folderName, nom_formation);
+            System.IO.Directory.CreateDirectory(pathString);
+
+            string pathOrig = System.IO.Path.Combine(folderName, codeFormation);
+
+            System.IO.File.Copy(pathOrig, pathString, true);
+
+
+            int i = 0;
+
+            //foreach (var file in files)
+            foreach (var f in list)
+            {
+                //if (file != null && file.ContentLength > 0)
+                //{
+                    //string ext = Path.GetExtension(file.FileName);
+
+                    //if (ext.Equals(".jpg") || ext.Equals(".png") || ext.Equals(".gif") || ext.Equals(".jpeg") || ext.Equals(".JPEG") || ext.Equals(".JPG") || ext.Equals(".PNG") || ext.Equals(".GIF"))
+                    //{
+                        //i++;
+                        //string filename = Path.GetFileName(file.FileName);
+                        //string fichier = "~/SlideImages/" + nom_formation + "/" + filename;
+
+                        //System.Drawing.Bitmap bmpPostedImage = new System.Drawing.Bitmap(file.InputStream);
+                        //System.Drawing.Image image = (System.Drawing.Image)bmpPostedImage;
+                        //bmpPostedImage = new Bitmap(700, 350);
+                        //Graphics graphic = Graphics.FromImage(bmpPostedImage);
+                        //graphic.DrawImage(image, 0, 0, 700, 350);
+                        //graphic.DrawImage(image, new Rectangle(0, 0, 700, 350), 0, 0, 0, 0, GraphicsUnit.Pixel);
+                        //graphic.Dispose();
+                        //bmpPostedImage.Save(Server.MapPath(fichier));
+
+                        //file.SaveAs(Server.MapPath(fichier));
+                         
+                        //string chemin = "../../SlideImages/" + nom_formation + "/" + filename;
+                        SqlCommand cmd = new SqlCommand("Insert into E_Formation (Code,Objet,Etat_Formation,Date_Creation,Matricule_Formateur,ImageName,Numdiapo,Chemin, EtatF   ) values(@Code,@Objet,@Etat_Formation,@Date_Creation,@Matricule_Formateur,@ImageName,@Numdiapo,@Chemin, @EtatF )", con);
+
+                        cmd.Parameters.AddWithValue("@Code", e_Formation.Code);
+                        cmd.Parameters.AddWithValue("@Objet", e_Formation.Objet);
+                        cmd.Parameters.AddWithValue("@Etat_Formation", e_Formation.Etat_Formation);
+                        cmd.Parameters.AddWithValue("@Date_Creation", e_Formation.Date_Creation);
+                        cmd.Parameters.AddWithValue("@Matricule_Formateur", e_Formation.Matricule_Formateur);
+                        cmd.Parameters.AddWithValue("@ImageName", f.ImageName);
+                        cmd.Parameters.AddWithValue("@Numdiapo", f.NumDiapo);
+                        //cmd.Parameters.AddWithValue("@NumFormation", nom_formation);
+                        cmd.Parameters.AddWithValue("@Chemin", f.Chemin);
+
+                        //cmd.Parameters.AddWithValue("@Eval", e_Formation.Eval);
+                        cmd.Parameters.AddWithValue("@EtatF", e_Formation.EtatF);
+                        //cmd.Parameters.AddWithValue("@Deadline", e_Formation.Deadline);
+                        cmd.ExecuteNonQuery();
+
+
+                    //}
+                    //else
+                    //{
+                    //    return Content("<script language='javascript' type='text/javascript'>alert('Type de fichier invalide!');</script>");
+                    //}
+                //}
+                //else
+                //{
+
+                //}
+            }
+
+
+            con.Close();
+            return RedirectToAction("Index", "E_Formation");
+        }
+
+
         [HttpGet]
         public ActionResult Create()
         {
@@ -1130,7 +1264,7 @@ namespace RHEVENT.Controllers
                         graphic.Dispose();
                         bmpPostedImage.Save(Server.MapPath(fichier));
 
-                        //file.SaveAs(Server.MapPath(fichier));
+                         file.SaveAs(Server.MapPath(fichier));
 
 
 

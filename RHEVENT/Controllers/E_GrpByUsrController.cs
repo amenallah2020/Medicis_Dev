@@ -82,39 +82,35 @@ namespace RHEVENT.Controllers
                 }
             }
 
-            DataTable dt3 = new DataTable();
+            //DataTable dt3 = new DataTable();
 
-            SqlDataAdapter da3;
-            da3 = new SqlDataAdapter("select E_listeUsr.Mat_usr ,E_listeUsr.Code_grp  , AspNetUsers.NomPrenom from E_listeUsr inner join AspNetUsers on AspNetUsers.matricule = E_listeUsr.Mat_usr where Code_grp = '" + grp.Code + "' ", con);
-            da3.Fill(dt3);
+            //SqlDataAdapter da3;
+            //da3 = new SqlDataAdapter("select E_listeUsr.Mat_usr ,E_listeUsr.Code_grp  , AspNetUsers.NomPrenom from E_listeUsr inner join AspNetUsers on AspNetUsers.matricule = E_listeUsr.Mat_usr where Code_grp = '" + grp.Code + "' ", con);
+            //da3.Fill(dt3);
              
            
 
-           for (int j=0; j< dt3.Rows.Count; j++)
-            {
-                DataTable dt2 = new DataTable();
+           //for (int j=0; j< dt3.Rows.Count; j++)
+           // {
+           //     DataTable dt2 = new DataTable();
 
-                SqlDataAdapter da2;
-                da2 = new SqlDataAdapter("select * from E_ListFormationDiffus  where Code_formt = '"+codeF+"' and  Mat_usr = '"+ dt3.Rows[j]["Mat_usr"].ToString() +"'", con);
-                da2.Fill(dt2);
+           //     SqlDataAdapter da2;
+           //     da2 = new SqlDataAdapter("select * from E_ListFormationDiffus  where Code_formt = '"+codeF+"' and  Mat_usr = '"+ dt3.Rows[j]["Mat_usr"].ToString() +"'", con);
+           //     da2.Fill(dt2);
 
                 
 
-                int count = dt2.Rows.Count;
+           //     int count = dt2.Rows.Count;
 
-                if (count != 0)
-                { 
-                    ViewBag.Bloq = "La diffusion a été annulée : la formation " + codeF + " est déjà diffusée à " + dt3.Rows[j]["NomPrenom"].ToString() + " de groupe " + dt3.Rows[j]["Code_grp"].ToString() + " !";
+           //     if (count != 0)
+           //     { 
+           //         ViewBag.Bloq = "La diffusion a été annulée : la formation " + codeF + " est déjà diffusée à " + dt3.Rows[j]["NomPrenom"].ToString() + " de groupe " + dt3.Rows[j]["Code_grp"].ToString() + " !";
 
-                    return RedirectToAction("Index", "E_GrpByUsr", new { id = codeF, bloq = @ViewBag.Bloq });
-                }
+           //         return RedirectToAction("Index", "E_GrpByUsr", new { id = codeF, bloq = @ViewBag.Bloq });
+           //     }
 
-                //verif = from m in db.e_ListFormationDiffus
-                //            where m.Code_formt == codeF &&  m.Mat_usr == l.Mat_usr
-                //            select m;
-
-
-            }
+              
+           // }
 
             
 
@@ -156,7 +152,7 @@ namespace RHEVENT.Controllers
                 SqlCommand cmd = new SqlCommand("INSERT INTO E_ListFormationDiffus  ([Mat_usr]  ,[Nom_usr] ,[Code_grp]  ,[Code_formt], code_eval, DateDiffus, MatFormateur, Objet, deadline) " +
                     "SELECT  [Mat_usr]  ,[Nom_usr]   ,[Code_grp]   ,'" + id + "', '" + e_f.CodeEval +"' ,'"+System.DateTime.Now+"' , '"+user.matricule+"', '"+ dd+ "' , CONVERT(nvarchar, '" + dateLim + "',103)     FROM [E_listeUsr] " +
                     "" +  "inner join [dbo].E_GrpByUsr on[dbo].E_GrpByUsr.Code = [dbo].[E_listeUsr].Code_grp  " +
-                    "" +   "" +   "where  E_GrpByUsr.id = '" + g.Id + "' ", con);
+                    "" +   "" +   "where  E_GrpByUsr.id = '" + g.Id + "' and not( E_listeUsr.Mat_usr in (select Mat_usr from E_ListFormationDiffus   where Code_formt = '"+id+"' )) ", con);
 
               
                 cmd.ExecuteNonQuery();
@@ -175,13 +171,10 @@ namespace RHEVENT.Controllers
 
                         string objEvl = dt.Rows[0]["Objet_Eval"].ToString();
 
-
-                       
-
                         SqlCommand cmd3 = new SqlCommand("INSERT INTO E_ListEvaluationDiffus  ([Mat_usr]  ,[Nom_usr] ,[Code_grp]  ,[Code_eval],Code_Formation, DateDiffus, MatFormateur, Objet, deadline) " +
                           "SELECT  [Mat_usr]  ,[Nom_usr]   ,[Code_grp]   ,'" + o.CodeEval + "', '"+o.Code+"', '" + System.DateTime.Now + "' , '" + user.matricule + "', '" + objEvl + "' , CONVERT(nvarchar, '" + dateLim + "',103)     FROM [E_listeUsr] " +
                           "" + "inner join [dbo].E_GrpByUsr on[dbo].E_GrpByUsr.Code = [dbo].[E_listeUsr].Code_grp  " +
-                          "" + "" + "where  E_GrpByUsr.id = '" + g.Id + "' ", con);
+                          "" + "" + "where  E_GrpByUsr.id = '" + g.Id + "' and not( E_listeUsr.Mat_usr in (select Mat_usr from E_ListEvaluationDiffus   where Code_Formation = '"+id+"' ))", con);
                              
                             cmd3.ExecuteNonQuery();
                         
@@ -198,7 +191,7 @@ namespace RHEVENT.Controllers
 
                 DataTable dt4 = new DataTable(); 
                 SqlDataAdapter da4;
-                da4 = new SqlDataAdapter("SELECT AspNetUsers.NomPrenom Nom_Dest, AspNetUsers.Email Email_Dest FROM [E_listeUsr]   inner join [dbo].E_GrpByUsr on[dbo].E_GrpByUsr.Code = [dbo].[E_listeUsr].Code_grp   inner join AspNetUsers on AspNetUsers.matricule =[E_listeUsr].Mat_usr where  E_GrpByUsr.id  = '" + g.Id + "'   ", con);
+                da4 = new SqlDataAdapter("SELECT AspNetUsers.NomPrenom Nom_Dest, AspNetUsers.Email Email_Dest FROM [E_listeUsr]   inner join [dbo].E_GrpByUsr on[dbo].E_GrpByUsr.Code = [dbo].[E_listeUsr].Code_grp   inner join AspNetUsers on AspNetUsers.matricule =[E_listeUsr].Mat_usr where  E_GrpByUsr.id  = '" + g.Id + "'  and  not(AspNetUsers.Email in ( select Email_Destinataire from Emails where Message like '%"+id+"%')) ", con);
                 da4.Fill(dt4);
                  
                 for (int j=0; j<dt4.Rows.Count; j++)
@@ -437,6 +430,7 @@ namespace RHEVENT.Controllers
 
                 var us = from m in db.Users
                      where m.Etat == searchString
+                     orderby m.NomPrenom
                      select m ;
 
                   
@@ -451,6 +445,7 @@ namespace RHEVENT.Controllers
             {
                 var us = from m in db.Users
                          where m.Etat == "Interne"
+                         orderby m.NomPrenom
                          select m;
 
                 listUser = us.ToList();

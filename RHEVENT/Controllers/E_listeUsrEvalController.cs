@@ -208,6 +208,7 @@ namespace RHEVENT.Controllers
         public ActionResult Create(string id)
         {
             var UserQuery = from m in db.Users
+                            orderby m.NomPrenom
                             select m;
 
             //string codef = TempData["Data1"].ToString();

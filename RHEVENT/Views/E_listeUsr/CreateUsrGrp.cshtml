@@ -72,7 +72,7 @@
 
                     &nbsp;
 
-                    @Html.DropDownListFor(m => m.SelectUsr, new SelectList(@ViewBag.listUser, "Matricule", "NomPrenom"), new { @id = "Usr" })
+                    @Html.DropDownListFor(m => m.SelectUsr, new SelectList(@ViewBag.listUser, "Matricule", "NomPrenom"), new { @id = "Usr" , @class= "form-control" })
                     @Html.ValidationMessageFor(model => model.SelectUsr, "", new { @class = "text-danger" })
 
                 </div>

@@ -234,6 +234,12 @@
 
                             @Html.ActionLink("Consulter   |", "Consult", new { id = item.Code })
 
+
+                            @*<a class="btn  btn-link" role="button" href="@Url.Action("Dupliquer", "E_formation" , new { id =  item.Code  })" data-form-method="post">Dupliquer</a>*@
+
+
+                            @* @Html.Action("Dupliquer", "E_Formation", new { id = item.Code }, FormMethod.Post)*@
+
                             @if (item.EtatDiff != null)
                             {
                                 if (item.EtatDiff.ToString() == "")
