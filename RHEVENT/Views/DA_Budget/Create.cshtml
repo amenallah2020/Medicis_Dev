@@ -284,7 +284,7 @@
         @*<td>
             @Html.DisplayFor(modelItem => item.Description)
         </td>*@
-        @if ((Session["statut"].ToString() == "-1") || ((Session["statut"].ToString() == "0")) && (Session["demandeure"].ToString() == Session["userconnecté"].ToString()))
+        @if ((Session["statut"].ToString() == "-1") || (Session["statut"].ToString() == "0"))
         {
             <td>
 
@@ -293,14 +293,7 @@
 
             </td>
         }
-        else if ((Session["statut"].ToString() == "0") && (Session["demandeure"].ToString() != Session["userconnecté"].ToString()))
-        {
-            <td>
-
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id })  
-
-            </td>
-        }
+        
         @*<td>
                     @if ((item.Date_Recp == null) && (@Html.DisplayFor(model => model.dadem.Validee).ToString() == "1"))
                     {

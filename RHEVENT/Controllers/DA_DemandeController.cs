@@ -126,11 +126,11 @@ namespace RHEVENT.Controllers
 
             if (nbrArticle == 0)
             {
-                return Content("<script language='javascript' type='text/javascript'>alert('Veuillez Ajouter au moins un article à la demande');window.location = '/DA_Budget/Create';</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('Veuillez Ajouter au moins un article à la demande');window.location = '/RH_MEDICIS/DA_Budget/Create';</script>");
             }
             else if(pourcentagedem != 100)
             {
-                return Content("<script language='javascript' type='text/javascript'>alert('Veuillez Verifier les pourcentages');window.location = '/DA_ProduitsDem/Create';</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('Veuillez Verifier les pourcentages');window.location = '/RH_MEDICIS/DA_ProduitsDem/Create';</script>");
             }
             else
             {
@@ -359,9 +359,9 @@ namespace RHEVENT.Controllers
 
                 dA_Budget.Réference = Session["reff"].ToString();
                 dA_Budget.Description = Description;
-                dA_Budget.PrixUnitaire = PrixUnitaire1;
+                dA_Budget.PrixUnitaire = PrixUnitaire1.ToString();
                 dA_Budget.Quantité = Quantité1;
-                dA_Budget.Total = Total;
+                dA_Budget.Total = Total.ToString();
                 dA_Budget.Fournisseur = Fournisseur;
 
                 db.DA_Budget.Add(dA_Budget);
@@ -586,99 +586,106 @@ namespace RHEVENT.Controllers
             //    //return Content("<script language='javascript' type='text/javascript'>alert('La date d'action doit etre superieure à celle de reception');window.location = '/DA_Demande/Create';</script>");
             //}
             //else
-
-
-            
-
-            if (dA_Demande.Date_action > dA_Demande.Date_reception)
+            if (dA_Demande.Labo != null)
             {
-                string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
-                SqlConnection con = new SqlConnection(constr);
-                con.Open();
-                SqlDataAdapter da2 = new SqlDataAdapter("SELECT Code FROM DA_TypesAchats where TypeAchat = '" + dA_Demande.TypeAchat + "'", con);
-                DataTable dt2 = new DataTable();
-                da2.Fill(dt2);
-                string typpe = Convert.ToString(dt2.Rows[0][0]);
-
-                SqlDataAdapter da1 = new SqlDataAdapter("SELECT Code FROM DA_Labo where Laboratoire = '" + dA_Demande.Labo + "'", con);
-                DataTable dt1 = new DataTable();
-                da1.Fill(dt1);
-                string labbo = Convert.ToString(dt1.Rows[0][0]);
-
-                DateTime datt = Convert.ToDateTime(dA_Demande.Date_reception);
-                string dayy1 = datt.Day.ToString();
-                string monthh1 = datt.Month.ToString();
-                string yearr1 = datt.Year.ToString();
-                if (dayy1.Length == 1) { dayy1 = "0" + dayy1; }
-                if (monthh1.Length == 1) { monthh1 = "0" + monthh1; }
-                string derniere_ref1 = yearr1 + "-" + monthh1 + "-" + dayy1 + "-";
-                string derniere_ref = labbo + "-" + typpe + "-" + derniere_ref1;
-
-                string dayy = DateTime.Now.Day.ToString();
-                string monthh = DateTime.Now.Month.ToString();
-                string yearr = DateTime.Now.Year.ToString();
-                if (dayy.Length == 1) { dayy = "0" + dayy; }
-                if (monthh.Length == 1) { monthh = "0" + monthh; }
-
-
-                SqlDataAdapter da = new SqlDataAdapter("SELECT top(1) Réference FROM DA_Demande where Réference like '" + derniere_ref + "%' order by Réference desc ", con);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                con.Close();
-                if (dt.Rows.Count > 0)
+                if (dA_Demande.Date_action > dA_Demande.Date_reception)
                 {
-                    string reff = Convert.ToString(dt.Rows[0][0]);
-                    reff = reff.Substring(19, 2);
-                    string index = (Convert.ToInt32(reff) + 1).ToString();
-                    if (index.Length == 1) { index = "0" + index; }
-                    derniere_ref = derniere_ref + index;
-                }
-                else
-                {
-                    derniere_ref = derniere_ref + "01";
-                }
+                    string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+                    SqlConnection con = new SqlConnection(constr);
+                    con.Open();
+                    SqlDataAdapter da2 = new SqlDataAdapter("SELECT Code FROM DA_TypesAchats where TypeAchat = '" + dA_Demande.TypeAchat + "'", con);
+                    DataTable dt2 = new DataTable();
+                    da2.Fill(dt2);
+                    string typpe = Convert.ToString(dt2.Rows[0][0]);
 
-                if (ModelState.IsValid)
-                {
+                    SqlDataAdapter da1 = new SqlDataAdapter("SELECT Code FROM DA_Labo where Laboratoire = '" + dA_Demande.Labo + "'", con);
+                    DataTable dt1 = new DataTable();
+                    da1.Fill(dt1);
+                    string labbo = Convert.ToString(dt1.Rows[0][0]);
 
-                    ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
-                    dA_Demande.Réference = derniere_ref;
-                    dA_Demande.Demandeur = user.nom + " " + user.prenom;
-                    dA_Demande.Etat = "-1";
-                    dA_Demande.Validee = "0";
-                    dA_Demande.Statut = "-1";
-                    dA_Demande.etat_prochain = "0";
-                    dA_Demande.Date_demande = DateTime.Now.Date;
-                    dA_Demande.matrsign = user.signataire;
+                    DateTime datt = Convert.ToDateTime(dA_Demande.Date_reception);
+                    string dayy1 = datt.Day.ToString();
+                    string monthh1 = datt.Month.ToString();
+                    string yearr1 = datt.Year.ToString();
+                    if (dayy1.Length == 1) { dayy1 = "0" + dayy1; }
+                    if (monthh1.Length == 1) { monthh1 = "0" + monthh1; }
+                    string derniere_ref1 = yearr1 + "-" + monthh1 + "-" + dayy1 + "-";
+                    string derniere_ref = labbo + "-" + typpe + "-" + derniere_ref1;
 
-                    //dA_Demande.Date_reception = Date_reception;
-                    //dA_Demande.Date_action = Date_action;
-                   
-                    db.DA_Demande.Add(dA_Demande);
-                    try
+                    string dayy = DateTime.Now.Day.ToString();
+                    string monthh = DateTime.Now.Month.ToString();
+                    string yearr = DateTime.Now.Year.ToString();
+                    if (dayy.Length == 1) { dayy = "0" + dayy; }
+                    if (monthh.Length == 1) { monthh = "0" + monthh; }
+
+
+                    SqlDataAdapter da = new SqlDataAdapter("SELECT top(1) Réference FROM DA_Demande where Réference like '" + derniere_ref + "%' order by Réference desc ", con);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    con.Close();
+                    if (dt.Rows.Count > 0)
                     {
-                        db.SaveChanges();
-                        Session["reff"] = derniere_ref;
-                        Session["labbb"] = dA_Demande.Labo;
-                        Session["statut"] = "-1";
-                        Session["demandeure"] = user.nom + " " + user.prenom;
-                        Session["userconnecté"] = user.nom + " " + user.prenom;
-                        return RedirectToAction("Create", "DA_Budget");
+                        string reff = Convert.ToString(dt.Rows[0][0]);
+                        reff = reff.Substring(19, 2);
+                        string index = (Convert.ToInt32(reff) + 1).ToString();
+                        if (index.Length == 1) { index = "0" + index; }
+                        derniere_ref = derniere_ref + index;
                     }
-                    catch (DbEntityValidationException ex)
+                    else
                     {
-                        foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                        derniere_ref = derniere_ref + "01";
+                    }
+
+                    if (ModelState.IsValid)
+                    {
+
+                        ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+                        dA_Demande.Réference = derniere_ref;
+                        dA_Demande.Demandeur = user.nom + " " + user.prenom;
+                        dA_Demande.MatriculeDem = user.matricule;
+                        dA_Demande.Etat = "-1";
+                        dA_Demande.Validee = "0";
+                        dA_Demande.Statut = "-1";
+                        dA_Demande.etat_prochain = "0";
+                        dA_Demande.Date_demande = DateTime.Now.Date;
+                        dA_Demande.matrsign = user.signataire;
+
+                        //dA_Demande.Date_reception = Date_reception;
+                        //dA_Demande.Date_action = Date_action;
+
+                        db.DA_Demande.Add(dA_Demande);
+                        try
                         {
-                            foreach (var validationError in entityValidationErrors.ValidationErrors)
+                            db.SaveChanges();
+                            Session["reff"] = derniere_ref;
+                            Session["labbb"] = dA_Demande.Labo;
+                            Session["statut"] = "-1";
+                            Session["demandeure"] = user.nom + " " + user.prenom;
+                            Session["userconnecté"] = user.nom + " " + user.prenom;
+                            return RedirectToAction("Create", "DA_Budget");
+                        }
+                        catch (DbEntityValidationException ex)
+                        {
+                            foreach (var entityValidationErrors in ex.EntityValidationErrors)
                             {
-                                Response.Write("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
+                                foreach (var validationError in entityValidationErrors.ValidationErrors)
+                                {
+                                    Response.Write("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
+                                }
                             }
                         }
+
                     }
 
                 }
-               
             }
+            else if(dA_Demande.Labo == null)
+            {
+                ModelState.AddModelError("Labo", "Vous devez selectionnez un labo");
+                
+                //return RedirectToAction("Create");
+            }
+            
             dA_Demande.listesLabo = db.DA_Labo.OrderBy(obj => obj.Laboratoire).ToList<DA_Labo>();
             dA_Demande.listesachats = db.DA_TypesAchats.OrderBy(obj => obj.TypeAchat).ToList<DA_TypesAchats>();
             dA_Demande.listesactions = db.DA_TypesActions.OrderBy(obj => obj.TypeAction).ToList<DA_TypesActions>();
@@ -787,7 +794,7 @@ namespace RHEVENT.Controllers
             ViewBag.pourcentagedem = pourcentagedem.ToString();
             if (pourcentagedem != 100)
             {
-                return Content("<script language='javascript' type='text/javascript'>alert('Veuillez Verifier les pourcentages');window.location = '/DA_ProduitsDem/Create';</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('Veuillez Verifier les pourcentages');window.location = '/RH_MEDICIS/DA_ProduitsDem/Create';</script>");
 
                 //return RedirectToAction("Create", "DA_ProduitsDem");
             }
@@ -917,7 +924,7 @@ namespace RHEVENT.Controllers
         {
             if (MotifRejet == "")
             {
-                return Content("<script language='javascript' type='text/javascript'>alert('Veuillez Sélectionnez un motif de rejet');window.location = '/DA_Demande/demande';</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('Veuillez Sélectionnez un motif de rejet');window.location = '/RH_MEDICIS/DA_Demande/demande';</script>");
             }
             else
             {

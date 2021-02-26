@@ -198,7 +198,7 @@ namespace RHEVENT.Controllers
             ViewBag.CodeGroup = CodeGroup;
 
              
-            List<ApplicationUser> listUser = UserQuery.ToList<ApplicationUser>();
+            List<ApplicationUser> listUser = UserQuery.OrderBy(x=>x.nom).ToList<ApplicationUser>();
 
             ViewBag.listUser = listUser;
 
@@ -646,7 +646,7 @@ namespace RHEVENT.Controllers
                             select m;
             }
 
-            List<ApplicationUser> listUser = UserQuery.ToList<ApplicationUser>();
+            List<ApplicationUser> listUser = UserQuery.OrderBy(x=>x.nom).ToList<ApplicationUser>();
 
             ViewBag.listUser = listUser;
 

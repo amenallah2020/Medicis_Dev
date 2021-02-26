@@ -63,7 +63,7 @@
                         
                     }
 
-                    if ((User.IsInRole("RH") && User.IsInRole("RH_Admin")) || (User.IsInRole("RH") && User.IsInRole("RH_Directeur")) || User.IsInRole("Admin_Medicis"))
+                    if ((User.IsInRole("RH") && User.IsInRole("RH_Directeur")) || User.IsInRole("Admin_Medicis"))
                     {
                        
                        <a class="btn btn-info alert label-info" role="button" href="@Url.Action("CalendrierDirection", "Calendar")">  Calendrier de direction </a>

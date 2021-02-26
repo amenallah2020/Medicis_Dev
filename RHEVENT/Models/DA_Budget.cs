@@ -26,12 +26,12 @@ namespace RHEVENT.Models
 
         [Required]
         [Display(Name = "Prix Unitaire")]
-        public float PrixUnitaire { get; set; }
+        public string PrixUnitaire { get; set; }
 
         [Required]
         public int Quantité { get; set; }
 
-        public float Total { get; set; }
+        public string Total { get; set; }
 
         public string Fournisseur { get; set; }
 

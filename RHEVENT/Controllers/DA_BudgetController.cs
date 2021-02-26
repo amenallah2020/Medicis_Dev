@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -35,13 +36,13 @@ namespace RHEVENT.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Réception(int id,string Date_recep, string PourRecep, string QteRecue)
+        public ActionResult Réception(int id, string Date_recep, string PourRecep, string QteRecue)
         {
             DA_Budget dA_Budget = db.DA_Budget.Find(id);
             dA_Budget.Date_Recp = Date_recep.ToString();
             if (dA_Budget.Type == "Materiels")
             {
-                dA_Budget.PourRecep = Math.Round(((float)((float)(@Convert.ToInt32(QteRecue)) / (float)(dA_Budget.Quantité) * 100)),0).ToString();
+                dA_Budget.PourRecep = Math.Round(((float)((float)(@Convert.ToInt32(QteRecue)) / (float)(dA_Budget.Quantité) * 100)), 0).ToString();
                 dA_Budget.QteRecue = QteRecue;
             }
             if (dA_Budget.Type == "Services")
@@ -49,14 +50,14 @@ namespace RHEVENT.Controllers
                 dA_Budget.PourRecep = PourRecep;
                 dA_Budget.QteRecue = 0.ToString();
             }
-            
+
             string datereception = "";
             datereception = Date_recep.ToString();
             string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
             SqlConnection con = new SqlConnection(constr);
 
             con.Open();
-            string url = "/DA_Budget/Réception/"+id;
+            string url = "/DA_Budget/Réception/" + id;
             //SqlDataAdapter da7 = new SqlDataAdapter("SELECT Date_reception FROM DA_Demande where Réference ='" + Session["reff"].ToString() + "'", con);
             //DataTable dt7 = new DataTable();
             //da7.Fill(dt7);
@@ -97,36 +98,36 @@ namespace RHEVENT.Controllers
                         }
                     }
                 }
-               
 
-                    string test = "1";
-                    SqlDataAdapter da = new SqlDataAdapter("SELECT Date_Recp FROM DA_Budget where Réference ='" + Session["reff"].ToString() + "'", con);
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    for (int i = 0; i < dt.Rows.Count; i++)
-                    {
-                        string date = dt.Rows[i][0].ToString();
-                        if (date == "")
-                        {
-                            test = "0";
-                        }
-                    }
-                    //SqlCommand cmd = new SqlCommand("update DA_Budget set Date_Recp = '" + datereception + "' where  Id='" + id + "'", con);
-                    //cmd.ExecuteNonQuery();
-                    if (test == "0")
-                    {
-                        SqlCommand cmd1 = new SqlCommand("update DA_Demande set Etat = '77' where  Réference='" + dA_Budget.Réference + "'", con);
-                        cmd1.ExecuteNonQuery();
-                    }
-                    else if (test == "1")
-                    {
-                        SqlCommand cmd11 = new SqlCommand("update DA_Demande set Etat = '88' where  Réference='" + dA_Budget.Réference + "'", con);
-                        cmd11.ExecuteNonQuery();
 
+                string test = "1";
+                SqlDataAdapter da = new SqlDataAdapter("SELECT Date_Recp FROM DA_Budget where Réference ='" + Session["reff"].ToString() + "'", con);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    string date = dt.Rows[i][0].ToString();
+                    if (date == "")
+                    {
+                        test = "0";
                     }
-                    con.Close();
+                }
+                //SqlCommand cmd = new SqlCommand("update DA_Budget set Date_Recp = '" + datereception + "' where  Id='" + id + "'", con);
+                //cmd.ExecuteNonQuery();
+                if (test == "0")
+                {
+                    SqlCommand cmd1 = new SqlCommand("update DA_Demande set Etat = '77' where  Réference='" + dA_Budget.Réference + "'", con);
+                    cmd1.ExecuteNonQuery();
+                }
+                else if (test == "1")
+                {
+                    SqlCommand cmd11 = new SqlCommand("update DA_Demande set Etat = '88' where  Réference='" + dA_Budget.Réference + "'", con);
+                    cmd11.ExecuteNonQuery();
 
-                    return RedirectToAction("demande", "DA_Demande");
+                }
+                con.Close();
+
+                return RedirectToAction("demande", "DA_Demande");
                 //}
             }
 
@@ -146,7 +147,7 @@ namespace RHEVENT.Controllers
             return View(budgett);
             //return View(db.<c.ToList());
         }
-        public ActionResult Budget_Dem(string id, string statut, string dem,string labor)
+        public ActionResult Budget_Dem(string id, string statut, string dem, string labor)
         {
             Session["reff"] = id;
             Session["statut"] = statut;
@@ -154,7 +155,7 @@ namespace RHEVENT.Controllers
             Session["labbb"] = labor;
             return RedirectToAction("Create");
         }
-       
+
 
         // GET: DA_Budget/Details/5
         public ActionResult Details(int? id)
@@ -186,7 +187,7 @@ namespace RHEVENT.Controllers
                 var listmateriels = (from m in db.DA_Materiels
                                      where m.Type.Equals("Materiels")
                                      orderby m.Désignation
-                            select m);
+                                     select m);
 
                 var listservices = (from m in db.DA_Materiels
                                     where m.Type.Equals("Services")
@@ -217,7 +218,12 @@ namespace RHEVENT.Controllers
         {
             dA_Budget.Type = typeArticle;
             dA_Budget.Réference = Session["reff"].ToString();
-            dA_Budget.Total = (float)(dA_Budget.PrixUnitaire * dA_Budget.Quantité);
+
+
+            //dA_Budget.Total = ((float)(Convert.ToDouble(dA_Budget.PrixUnitaire)) * dA_Budget.Quantité).ToString();
+
+            float nNumber = Convert.ToSingle(dA_Budget.PrixUnitaire, CultureInfo.InvariantCulture);
+            dA_Budget.Total = (nNumber * dA_Budget.Quantité).ToString();
 
 
             string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
@@ -270,32 +276,39 @@ namespace RHEVENT.Controllers
 
 
                     con.Open();
-                    SqlDataAdapter da = new SqlDataAdapter("SELECT SUM(Total) FROM [RH_MEDICIS].[dbo].[DA_Budget] where Réference ='" + Session["reff"].ToString() + "'", con);
+                    SqlDataAdapter da = new SqlDataAdapter("SELECT SUM(CONVERT(float,REPLACE(Total,',','.'))) FROM DA_Budget where Réference ='" + Session["reff"].ToString() + "'", con);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
 
                     float budgett = 0;
                     if (dt.Rows[0][0].ToString() != "")
                     {
-                        budgett = (float)(Convert.ToDouble(dt.Rows[0][0]));
+                        //budgett = Convert.ToSingle(dt.Rows[0][0].ToString(), CultureInfo.InvariantCulture);
+                        double bdg = Convert.ToDouble(dt.Rows[0][0].ToString());
+                        budgett = (float)(Math.Round(bdg, 3));
                     }
-                    SqlCommand cmd = new SqlCommand("update DA_Demande set Budget = " + budgett + " where  Réference='" + Session["reff"].ToString() + "'", con);
+
+                    SqlCommand cmd = new SqlCommand("update DA_Demande set Budget = '" + dt.Rows[0][0].ToString() + "' where  Réference='" + Session["reff"].ToString() + "'", con);
                     cmd.ExecuteNonQuery();
 
                     SqlDataAdapter da2 = new SqlDataAdapter("SELECT Id,Pourcentage FROM DA_ProduitsDem where Réference = '" + Session["reff"].ToString() + "'", con);
                     DataTable dt2 = new DataTable();
                     da2.Fill(dt2);
-                    for (int i = 0; i < dt2.Rows.Count; i++)
+                    if (dt2.Rows.Count > 0)
                     {
-                        int idd = Convert.ToInt32(dt2.Rows[i][0]);
-                        int pourcent = Convert.ToInt32(dt2.Rows[i][1]);
-                        float montant = budgett * (float)(pourcent) / 100;
-                        double mtn = Convert.ToDouble(montant.ToString());
-                        montant = (float)(Math.Round(mtn, 3));
-                        SqlCommand cmd1 = new SqlCommand("update DA_ProduitsDem set Montant = " + montant + " where  Id='" + idd + "'", con);
-                        cmd1.ExecuteNonQuery();
+                        for (int i = 0; i < dt2.Rows.Count; i++)
+                        {
+                            int idd = Convert.ToInt32(dt2.Rows[i][0]);
+                            int pourcent = Convert.ToInt32(dt2.Rows[i][1]);
+                            float montant = budgett * (float)(pourcent) / 100;
+                            double mtn = Convert.ToDouble(montant.ToString());
+                            montant = (float)(Math.Round(mtn, 3));
+                            SqlCommand cmd1 = new SqlCommand("update DA_ProduitsDem set Montant = '" + montant + "' where  Id='" + idd + "'", con);
+                            cmd1.ExecuteNonQuery();
 
+                        }
                     }
+
 
                     con.Close();
                     return RedirectToAction("Create", "DA_Budget");
@@ -336,7 +349,7 @@ namespace RHEVENT.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             string reference = Session["reff"].ToString();
-            
+
             var listmateriels = (from m in db.DA_Materiels
                                  where m.Type.Equals("Materiels")
                                  orderby m.Désignation
@@ -348,10 +361,11 @@ namespace RHEVENT.Controllers
                                 select m);
 
             DA_Budget dA_Budget = db.DA_Budget.Find(id);
+            ViewBag.Date_Recp_Souh = (dA_Budget.Date_Recp_Souh);
             dA_Budget.listesfournisseurs = db.DA_Fournisseurs.OrderBy(obj => obj.Raison).ToList<DA_Fournisseurs>();
             dA_Budget.listeMateriels = listmateriels.ToList();
             dA_Budget.listeServices = listservices.ToList();
-           
+
             if (dA_Budget == null)
             {
                 return HttpNotFound();
@@ -364,11 +378,15 @@ namespace RHEVENT.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Réference,Article,Quantité,PrixUnitaire,Total,Fournisseur,Date_Recp_Souh,Description,Type")] DA_Budget dA_Budget)
+        public ActionResult Edit([Bind(Include = "Id,Réference,Article,Quantité,PrixUnitaire,Total,Fournisseur,Date_Recp_Souh,Description,Type,PlafondBudget")] DA_Budget dA_Budget)
         {
+
+            float nNumber = Convert.ToSingle(dA_Budget.PrixUnitaire, CultureInfo.InvariantCulture);
+            dA_Budget.Total = (nNumber * dA_Budget.Quantité).ToString();
+
             if (ModelState.IsValid)
             {
-                dA_Budget.Total = (float)(dA_Budget.PrixUnitaire * dA_Budget.Quantité);
+
                 db.Entry(dA_Budget).State = EntityState.Modified;
                 db.SaveChanges();
 
@@ -376,16 +394,18 @@ namespace RHEVENT.Controllers
                 SqlConnection con = new SqlConnection(constr);
 
                 con.Open();
-                SqlDataAdapter da = new SqlDataAdapter("SELECT SUM(Total) FROM [RH_MEDICIS].[dbo].[DA_Budget] where Réference ='" + Session["reff"].ToString() + "'", con);
+                SqlDataAdapter da = new SqlDataAdapter("SELECT SUM(CONVERT(float,REPLACE(Total,',','.'))) FROM DA_Budget where Réference ='" + Session["reff"].ToString() + "'", con);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
 
                 float budgett = 0;
                 if (dt.Rows[0][0].ToString() != "")
                 {
-                    budgett = (float)(Convert.ToDouble(dt.Rows[0][0]));
+                    //budgett = Convert.ToSingle(dt.Rows[0][0].ToString(), CultureInfo.InvariantCulture);
+                    double bdg = Convert.ToDouble(dt.Rows[0][0].ToString());
+                    budgett = (float)(Math.Round(bdg, 3));
                 }
-                SqlCommand cmd = new SqlCommand("update DA_Demande set Budget = " + budgett + " where  Réference='" + Session["reff"].ToString() + "'", con);
+                SqlCommand cmd = new SqlCommand("update DA_Demande set Budget = '" + dt.Rows[0][0].ToString() + "' where  Réference='" + Session["reff"].ToString() + "'", con);
                 cmd.ExecuteNonQuery();
 
                 SqlDataAdapter da2 = new SqlDataAdapter("SELECT Id,Pourcentage FROM DA_ProduitsDem where Réference = '" + Session["reff"].ToString() + "'", con);
@@ -398,7 +418,7 @@ namespace RHEVENT.Controllers
                     float montant = budgett * (float)(pourcent) / 100;
                     double mtn = Convert.ToDouble(montant.ToString());
                     montant = (float)(Math.Round(mtn, 3));
-                    SqlCommand cmd1 = new SqlCommand("update DA_ProduitsDem set Montant = " + montant + " where  Id='" + idd + "'", con);
+                    SqlCommand cmd1 = new SqlCommand("update DA_ProduitsDem set Montant = '" + montant + "' where  Id='" + idd + "'", con);
                     cmd1.ExecuteNonQuery();
                 }
                 con.Close();
@@ -437,18 +457,20 @@ namespace RHEVENT.Controllers
             SqlConnection con = new SqlConnection(constr);
 
             con.Open();
-            SqlDataAdapter da = new SqlDataAdapter("SELECT SUM(Total) FROM [RH_MEDICIS].[dbo].[DA_Budget] where Réference ='" + dA_Budget.Réference + "'", con);
+            SqlDataAdapter da = new SqlDataAdapter("SELECT SUM(CONVERT(float,REPLACE(Total,',','.'))) FROM DA_Budget where Réference ='" + Session["reff"].ToString() + "'", con);
             DataTable dt = new DataTable();
             da.Fill(dt);
 
             float budgett = 0;
-            if(dt.Rows[0][0].ToString() != "")
+            if (dt.Rows[0][0].ToString() != "")
             {
-                budgett = (float)(Convert.ToDouble(dt.Rows[0][0]));
+                //budgett = Convert.ToSingle(dt.Rows[0][0].ToString(), CultureInfo.InvariantCulture);
+                double bdg = Convert.ToDouble(dt.Rows[0][0].ToString());
+                budgett = (float)(Math.Round(bdg, 3));
             }
-             
 
-            SqlCommand cmd = new SqlCommand("update DA_Demande set Budget = " + budgett + " where  Réference='" + dA_Budget.Réference + "'", con);
+
+            SqlCommand cmd = new SqlCommand("update DA_Demande set Budget = '" + dt.Rows[0][0].ToString() + "' where  Réference='" + dA_Budget.Réference + "'", con);
             cmd.ExecuteNonQuery();
 
             SqlDataAdapter da2 = new SqlDataAdapter("SELECT Id,Pourcentage FROM DA_ProduitsDem where Réference = '" + Session["reff"].ToString() + "'", con);
@@ -461,7 +483,7 @@ namespace RHEVENT.Controllers
                 float montant = budgett * (float)(pourcent) / 100;
                 double mtn = Convert.ToDouble(montant.ToString());
                 montant = (float)(Math.Round(mtn, 3));
-                SqlCommand cmd1 = new SqlCommand("update DA_ProduitsDem set Montant = " + montant + " where  Id='" + idd + "'", con);
+                SqlCommand cmd1 = new SqlCommand("update DA_ProduitsDem set Montant = '" + montant + "' where  Id='" + idd + "'", con);
                 cmd1.ExecuteNonQuery();
             }
             con.Close();
@@ -478,6 +500,6 @@ namespace RHEVENT.Controllers
             base.Dispose(disposing);
         }
 
-       
+
     }
 }

@@ -335,37 +335,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202102100908207_m12.cs" />
-    <Compile Include="Migrations\202102100908207_m12.Designer.cs">
-      <DependentUpon>202102100908207_m12.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102101327467_m123.cs" />
-    <Compile Include="Migrations\202102101327467_m123.Designer.cs">
-      <DependentUpon>202102101327467_m123.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102101332041_m1232.cs" />
-    <Compile Include="Migrations\202102101332041_m1232.Designer.cs">
-      <DependentUpon>202102101332041_m1232.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102120933408_m774.cs" />
-    <Compile Include="Migrations\202102120933408_m774.Designer.cs">
-      <DependentUpon>202102120933408_m774.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102121257468_m7745.cs" />
-    <Compile Include="Migrations\202102121257468_m7745.Designer.cs">
-      <DependentUpon>202102121257468_m7745.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102190740345_m112.cs" />
-    <Compile Include="Migrations\202102190740345_m112.Designer.cs">
-      <DependentUpon>202102190740345_m112.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102190813417_m113.cs" />
-    <Compile Include="Migrations\202102190813417_m113.Designer.cs">
-      <DependentUpon>202102190813417_m113.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102190818482_m1134.cs" />
-    <Compile Include="Migrations\202102190818482_m1134.Designer.cs">
-      <DependentUpon>202102190818482_m1134.cs</DependentUpon>
+    <Compile Include="Migrations\202102181009243_d9.cs" />
+    <Compile Include="Migrations\202102181009243_d9.Designer.cs">
+      <DependentUpon>202102181009243_d9.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -387,10 +359,8 @@
     <Compile Include="Models\Dictionnaire.cs" />
     <Compile Include="Models\E_DiffEval.cs" />
     <Compile Include="Models\E_ListEvaluationDiffus_Historiq.cs" />
-    <Compile Include="Models\E_DeadlineEvalUsr.cs" />
     <Compile Include="Models\E_ResultatFormation_Historiq.cs" />
     <Compile Include="Models\E_ResultatFormation.cs" />
-    <Compile Include="Models\E_ResultQCMParSlide.cs" />
     <Compile Include="Models\E_ResultQCM_Historiq.cs" />
     <Compile Include="Models\E_SlideUsr.cs" />
     <Compile Include="Models\E_ResultQCM.cs" />
@@ -444,20 +414,28 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Readme.txt" />
+    <Content Include="assets\countdown\jquery-1.7.1.min.js" />
+    <Content Include="assets\countdown\jquery.countdown.css" />
+    <Content Include="assets\countdown\jquery.countdown.js" />
+    <Content Include="assets\css\styles.css" />
+    <Content Include="assets\img\page_bg_center.jpg" />
+    <Content Include="assets\img\tile_bg.jpg" />
+    <Content Include="assets\js\script.js" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\caroussel_files\docs.theme.min.css" />
     <Content Include="Content\caroussel_files\CustomScript.js" />
-    <Content Include="Content\caroussel_files\jquery.min.js" />
+    <Content Include="Content\caroussel_files\docs.theme.min.css" />
     <Content Include="Content\caroussel_files\Formation.js" />
-    <Content Include="Content\caroussel_files\TimeOut.js" />
+    <Content Include="Content\caroussel_files\jquery.min.js" />
     <Content Include="Content\caroussel_files\owl.carousel.js" />
     <Content Include="Content\caroussel_files\owl.carousel.min.css" />
     <Content Include="Content\caroussel_files\owl.theme.default.min.css" />
+    <Content Include="Content\Chosen\chosen-sprite.png" />
+    <Content Include="Content\Chosen\chosen.min.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\free_css_file\hr-timePicker.css" />
     <Content Include="Content\free_css_file\hr-timePicker.min.css" />
@@ -473,8 +451,12 @@
     <Content Include="Content\images\Adm2.png" />
     <Content Include="Content\images\bg-title-01.jpg" />
     <Content Include="Content\images\bg-title-02.jpg" />
+    <Content Include="Content\images\budget.jfif" />
+    <Content Include="Content\images\change1.jpg" />
+    <Content Include="Content\images\change2.png" />
     <Content Include="Content\images\DA1.jpg" />
     <Content Include="Content\images\DA2.png" />
+    <Content Include="Content\images\detail.jfif" />
     <Content Include="Content\images\details.jfif" />
     <Content Include="Content\images\Diapositive1.png" />
     <Content Include="Content\images\edit.png" />
@@ -498,22 +480,46 @@
     <Content Include="Content\images\icon\logo-mini.png" />
     <Content Include="Content\images\icon\logo-white.png" />
     <Content Include="Content\images\icon\logo.png" />
+    <Content Include="Content\images\icon\MEDICIS.png" />
     <Content Include="Content\images\icon\RH1.png" />
     <Content Include="Content\images\icon\RH2.png" />
     <Content Include="Content\images\icon\Untitled-1.jpg" />
     <Content Include="Content\images\icon\user.png" />
-    <Content Include="Content\images\icon\MEDICIS.png" />
+    <Content Include="Content\images\learn4.png" />
+    <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\mat1.jpg" />
+    <Content Include="Content\images\mat2.png" />
+    <Content Include="Content\images\mat4.png" />
+    <Content Include="Content\images\mat5.png" />
     <Content Include="Content\images\Menu2.jpg" />
     <Content Include="Content\images\menu3.jpg" />
     <Content Include="Content\images\moins.jfif" />
+    <Content Include="Content\images\p1.jpg" />
+    <Content Include="Content\images\p2.jpg" />
+    <Content Include="Content\images\p3.png" />
+    <Content Include="Content\images\p4.jpg" />
+    <Content Include="Content\images\p5.png" />
+    <Content Include="Content\images\p6.png" />
+    <Content Include="Content\images\pp1.jpg" />
+    <Content Include="Content\images\pp2.png" />
     <Content Include="Content\images\RH1.png" />
     <Content Include="Content\images\RH2.png" />
+    <Content Include="Content\images\rhe1.jfif" />
+    <Content Include="Content\images\rhe2.png" />
+    <Content Include="Content\images\rhe3.jfif" />
     <Content Include="Content\images\rhf.jpg" />
+    <Content Include="Content\images\teriak.png" />
     <Content Include="Content\images\time-icon.png" />
-    <Content Include="Content\images\u11.png" />
-    <Content Include="Content\images\usradm.jpg" />
+    <Content Include="Content\images\user.png" />
     <Content Include="Content\images\vrai.jpg" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\SlideImages\F_01122020_001\dragon_chinois_45.jpg" />
+    <Content Include="Content\SlideImages\F_01122020_001\images %281%29.jpg" />
+    <Content Include="Content\SlideImages\F_23122020_01\11.jpg" />
+    <Content Include="Content\SlideImages\F_23122020_01\22.jpg" />
+    <Content Include="Content\SlideImages\F_23122020_07\Diapositive1.PNG" />
+    <Content Include="Content\SlideImages\F_23122020_07\Diapositive2.PNG" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -566,10 +572,8 @@
     <Content Include="css\theme.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery-1.10.2.js" />
-    <Content Include="Site.js" />
+    <Content Include="Scripts\chosen.jquery.min.js" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="lib\jquery-validate\additional-methods.js" />
     <Content Include="lib\jquery-validate\additional-methods.min.js" />
     <Content Include="lib\jquery-validate\jquery.validate.js" />
@@ -706,89 +710,99 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap\wells.less" />
-    <Content Include="Content\bootstrap\variables.less" />
-    <Content Include="Content\bootstrap\utilities.less" />
-    <Content Include="Content\bootstrap\type.less" />
-    <Content Include="Content\bootstrap\tooltip.less" />
-    <Content Include="Content\bootstrap\thumbnails.less" />
-    <Content Include="Content\bootstrap\theme.less" />
-    <Content Include="Content\bootstrap\tables.less" />
-    <Content Include="Content\bootstrap\scaffolding.less" />
-    <Content Include="Content\bootstrap\responsive-utilities.less" />
-    <Content Include="Content\bootstrap\responsive-embed.less" />
-    <Content Include="Content\bootstrap\progress-bars.less" />
-    <Content Include="Content\bootstrap\print.less" />
-    <Content Include="Content\bootstrap\popovers.less" />
-    <Content Include="Content\bootstrap\panels.less" />
-    <Content Include="Content\bootstrap\pagination.less" />
-    <Content Include="Content\bootstrap\pager.less" />
-    <Content Include="Content\bootstrap\normalize.less" />
-    <Content Include="Content\bootstrap\navs.less" />
-    <Content Include="Content\bootstrap\navbar.less" />
-    <Content Include="Content\bootstrap\modals.less" />
-    <Content Include="Content\bootstrap\mixins\vendor-prefixes.less" />
-    <Content Include="Content\bootstrap\mixins\text-overflow.less" />
-    <Content Include="Content\bootstrap\mixins\text-emphasis.less" />
-    <Content Include="Content\bootstrap\mixins\table-row.less" />
-    <Content Include="Content\bootstrap\mixins\tab-focus.less" />
-    <Content Include="Content\bootstrap\mixins\size.less" />
-    <Content Include="Content\bootstrap\mixins\responsive-visibility.less" />
-    <Content Include="Content\bootstrap\mixins\resize.less" />
-    <Content Include="Content\bootstrap\mixins\reset-text.less" />
-    <Content Include="Content\bootstrap\mixins\reset-filter.less" />
-    <Content Include="Content\bootstrap\mixins\progress-bar.less" />
-    <Content Include="Content\bootstrap\mixins\panels.less" />
-    <Content Include="Content\bootstrap\mixins\pagination.less" />
-    <Content Include="Content\bootstrap\mixins\opacity.less" />
-    <Content Include="Content\bootstrap\mixins\nav-vertical-align.less" />
-    <Content Include="Content\bootstrap\mixins\nav-divider.less" />
-    <Content Include="Content\bootstrap\mixins\list-group.less" />
-    <Content Include="Content\bootstrap\mixins\labels.less" />
-    <Content Include="Content\bootstrap\mixins\image.less" />
-    <Content Include="Content\bootstrap\mixins\hide-text.less" />
-    <Content Include="Content\bootstrap\mixins\grid.less" />
-    <Content Include="Content\bootstrap\mixins\grid-framework.less" />
-    <Content Include="Content\bootstrap\mixins\gradients.less" />
-    <Content Include="Content\bootstrap\mixins\forms.less" />
-    <Content Include="Content\bootstrap\mixins\clearfix.less" />
-    <Content Include="Content\bootstrap\mixins\center-block.less" />
-    <Content Include="Content\bootstrap\mixins\buttons.less" />
-    <Content Include="Content\bootstrap\mixins\border-radius.less" />
-    <Content Include="Content\bootstrap\mixins\background-variant.less" />
-    <Content Include="Content\bootstrap\mixins\alerts.less" />
-    <Content Include="Content\bootstrap\mixins.less" />
-    <Content Include="Content\bootstrap\media.less" />
-    <Content Include="Content\bootstrap\list-group.less" />
-    <Content Include="Content\bootstrap\labels.less" />
-    <Content Include="Content\bootstrap\jumbotron.less" />
-    <Content Include="Content\bootstrap\input-groups.less" />
-    <Content Include="Content\bootstrap\grid.less" />
-    <Content Include="Content\bootstrap\glyphicons.less" />
-    <Content Include="Content\bootstrap\forms.less" />
-    <Content Include="Content\bootstrap\dropdowns.less" />
-    <Content Include="Content\bootstrap\component-animations.less" />
-    <Content Include="Content\bootstrap\code.less" />
-    <Content Include="Content\bootstrap\close.less" />
-    <Content Include="Content\bootstrap\carousel.less" />
-    <Content Include="Content\bootstrap\buttons.less" />
-    <Content Include="Content\bootstrap\button-groups.less" />
-    <Content Include="Content\bootstrap\breadcrumbs.less" />
-    <Content Include="Content\bootstrap\bootstrap.less" />
-    <Content Include="Content\bootstrap\badges.less" />
-    <Content Include="Content\bootstrap\alerts.less" />
-    <Content Include="Content\_bootstrap-datetimepicker.less" />
-    <Content Include="Content\bootstrap-datetimepicker-build.less" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Files\ADM FJ.json" />
+    <Content Include="Files\CG.json" />
+    <Content Include="Files\COM.json" />
+    <Content Include="Files\CQ.json" />
+    <Content Include="Files\DAF.json" />
+    <Content Include="Files\IT.json" />
+    <Content Include="Files\MAINT.json" />
+    <Content Include="Files\PM.json" />
+    <Content Include="Files\RH.json" />
+    <Content Include="Content\bootstrap-datetimepicker-build.less" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap\alerts.less" />
+    <Content Include="Content\bootstrap\badges.less" />
+    <Content Include="Content\bootstrap\bootstrap.less" />
+    <Content Include="Content\bootstrap\breadcrumbs.less" />
+    <Content Include="Content\bootstrap\button-groups.less" />
+    <Content Include="Content\bootstrap\buttons.less" />
+    <Content Include="Content\bootstrap\carousel.less" />
+    <Content Include="Content\bootstrap\close.less" />
+    <Content Include="Content\bootstrap\code.less" />
+    <Content Include="Content\bootstrap\component-animations.less" />
+    <Content Include="Content\bootstrap\dropdowns.less" />
+    <Content Include="Content\bootstrap\forms.less" />
+    <Content Include="Content\bootstrap\glyphicons.less" />
+    <Content Include="Content\bootstrap\grid.less" />
+    <Content Include="Content\bootstrap\input-groups.less" />
+    <Content Include="Content\bootstrap\jumbotron.less" />
+    <Content Include="Content\bootstrap\labels.less" />
+    <Content Include="Content\bootstrap\list-group.less" />
+    <Content Include="Content\bootstrap\media.less" />
+    <Content Include="Content\bootstrap\mixins.less" />
+    <Content Include="Content\bootstrap\mixins\alerts.less" />
+    <Content Include="Content\bootstrap\mixins\background-variant.less" />
+    <Content Include="Content\bootstrap\mixins\border-radius.less" />
+    <Content Include="Content\bootstrap\mixins\buttons.less" />
+    <Content Include="Content\bootstrap\mixins\center-block.less" />
+    <Content Include="Content\bootstrap\mixins\clearfix.less" />
+    <Content Include="Content\bootstrap\mixins\forms.less" />
+    <Content Include="Content\bootstrap\mixins\gradients.less" />
+    <Content Include="Content\bootstrap\mixins\grid-framework.less" />
+    <Content Include="Content\bootstrap\mixins\grid.less" />
+    <Content Include="Content\bootstrap\mixins\hide-text.less" />
+    <Content Include="Content\bootstrap\mixins\image.less" />
+    <Content Include="Content\bootstrap\mixins\labels.less" />
+    <Content Include="Content\bootstrap\mixins\list-group.less" />
+    <Content Include="Content\bootstrap\mixins\nav-divider.less" />
+    <Content Include="Content\bootstrap\mixins\nav-vertical-align.less" />
+    <Content Include="Content\bootstrap\mixins\opacity.less" />
+    <Content Include="Content\bootstrap\mixins\pagination.less" />
+    <Content Include="Content\bootstrap\mixins\panels.less" />
+    <Content Include="Content\bootstrap\mixins\progress-bar.less" />
+    <Content Include="Content\bootstrap\mixins\reset-filter.less" />
+    <Content Include="Content\bootstrap\mixins\reset-text.less" />
+    <Content Include="Content\bootstrap\mixins\resize.less" />
+    <Content Include="Content\bootstrap\mixins\responsive-visibility.less" />
+    <Content Include="Content\bootstrap\mixins\size.less" />
+    <Content Include="Content\bootstrap\mixins\tab-focus.less" />
+    <Content Include="Content\bootstrap\mixins\table-row.less" />
+    <Content Include="Content\bootstrap\mixins\text-emphasis.less" />
+    <Content Include="Content\bootstrap\mixins\text-overflow.less" />
+    <Content Include="Content\bootstrap\mixins\vendor-prefixes.less" />
+    <Content Include="Content\bootstrap\modals.less" />
+    <Content Include="Content\bootstrap\navbar.less" />
+    <Content Include="Content\bootstrap\navs.less" />
+    <Content Include="Content\bootstrap\normalize.less" />
+    <Content Include="Content\bootstrap\pager.less" />
+    <Content Include="Content\bootstrap\pagination.less" />
+    <Content Include="Content\bootstrap\panels.less" />
+    <Content Include="Content\bootstrap\popovers.less" />
+    <Content Include="Content\bootstrap\print.less" />
+    <Content Include="Content\bootstrap\progress-bars.less" />
+    <Content Include="Content\bootstrap\responsive-embed.less" />
+    <Content Include="Content\bootstrap\responsive-utilities.less" />
+    <Content Include="Content\bootstrap\scaffolding.less" />
+    <Content Include="Content\bootstrap\tables.less" />
+    <Content Include="Content\bootstrap\theme.less" />
+    <Content Include="Content\bootstrap\thumbnails.less" />
+    <Content Include="Content\bootstrap\tooltip.less" />
+    <Content Include="Content\bootstrap\type.less" />
+    <Content Include="Content\bootstrap\utilities.less" />
+    <Content Include="Content\bootstrap\variables.less" />
+    <Content Include="Content\bootstrap\wells.less" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\_bootstrap-datetimepicker.less" />
+    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile2.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\datepicker-fr.js" />
     <Content Include="Scripts\DatePickerReady.js" />
@@ -824,12 +838,6 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\scheduler.js" />
-    <Content Include="Content\SlideImages\F_01122020_001\dragon_chinois_45.jpg" />
-    <Content Include="Content\SlideImages\F_01122020_001\images %281%29.jpg" />
-    <Content Include="Content\SlideImages\F_23122020_01\11.jpg" />
-    <Content Include="Content\SlideImages\F_23122020_01\22.jpg" />
-    <Content Include="Content\SlideImages\F_23122020_07\Diapositive1.PNG" />
-    <Content Include="Content\SlideImages\F_23122020_07\Diapositive2.PNG" />
     <Content Include="vendor\animsition\animsition.min.css" />
     <Content Include="vendor\animsition\animsition.min.js" />
     <Content Include="vendor\bootstrap-4.1\bootstrap.min.css" />
@@ -1265,15 +1273,10 @@
     <Content Include="Views\DA_Labo\LaboUser.cshtml" />
     <Content Include="Views\DA_Labo\EditLaboUser.cshtml" />
     <Content Include="Views\DA_Demande\demandeTraitee.cshtml" />
-    <Content Include="Views\E_QCM\ConsultParSlide.cshtml" />
-    <Content Include="Views\E_QCM\ResultQCMParSlide.cshtml" />
-    <Content Include="Views\E_listeUsr\DiffUser.cshtml" />
+    <Content Include="Views\DA_Budget\Budget_Dem.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\images_accueil\" />
-    <Folder Include="Content\IMAGES_FOLDER\" />
     <Folder Include="DeleteImg\" />
-    <Folder Include="Files\" />
     <Folder Include="SlideImages\" />
     <Folder Include="Views\ELEARNING\" />
   </ItemGroup>
@@ -1281,29 +1284,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202102100908207_m12.resx">
-      <DependentUpon>202102100908207_m12.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102101327467_m123.resx">
-      <DependentUpon>202102101327467_m123.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102101332041_m1232.resx">
-      <DependentUpon>202102101332041_m1232.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102120933408_m774.resx">
-      <DependentUpon>202102120933408_m774.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102121257468_m7745.resx">
-      <DependentUpon>202102121257468_m7745.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102190740345_m112.resx">
-      <DependentUpon>202102190740345_m112.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102190813417_m113.resx">
-      <DependentUpon>202102190813417_m113.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102190818482_m1134.resx">
-      <DependentUpon>202102190818482_m1134.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202102181009243_d9.resx">
+      <DependentUpon>202102181009243_d9.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

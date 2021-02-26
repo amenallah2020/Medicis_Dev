@@ -14,6 +14,8 @@ using System.Data.Entity.Validation;
 using System.Collections.Generic;
 using System.Web.Security;
 using RHEVENT.ViewModels;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace RHEVENT.Controllers
 {
@@ -175,16 +177,80 @@ namespace RHEVENT.Controllers
 
                     var result = await UserManager.CreateAsync(user, model.Password);
 
-                    //if (result.Succeeded)
-                    //{
-                    //UserManager.AddToRole(user.Id,model.RoleName.ToString());
-                    return RedirectToAction("Index", "ApplicationUsers");
-                    //}
-                    //else
-                    //{
-                    //// return RedirectToAction(result.Errors.ToString());
-                    //return View("Error");
-                    //}
+                string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+                SqlConnection con = new SqlConnection(constr);
+                con.Open();
+                int etatt = 0;
+
+                SqlDataAdapter da2 = new SqlDataAdapter("SELECT Laboratoire FROM DA_Labo", con);
+                DataTable dt2 = new DataTable();
+                da2.Fill(dt2);
+                string matriculee = model.matricule;
+
+                for (int i = 0; i < dt2.Rows.Count; i++)
+                {
+                    string laboratoiree = Convert.ToString(dt2.Rows[i][0]);
+
+                    SqlCommand cmd = new SqlCommand("INSERT INTO DA_LaboUser (Matricule,Laboratoire,Etat)" +
+                    " values(@Matricule,@Laboratoire,@Etat)", con);
+
+                    cmd.Parameters.AddWithValue("@Matricule", matriculee);
+                    cmd.Parameters.AddWithValue("@Laboratoire", laboratoiree);
+                    cmd.Parameters.AddWithValue("@Etat", etatt);
+                    cmd.ExecuteNonQuery();
+                }
+                con.Close();
+
+
+                //string con_str = ConfigurationManager.ConnectionStrings["DemandeChangement"].ToString();
+                //SqlConnection conn = new SqlConnection(con_str);
+                //conn.Open();
+                //Boolean exist_user = false;
+                
+                //SqlCommand verif_user = new SqlCommand("select * from Utilisateurs where email = '" + model.Email + "'", conn);
+                //SqlDataReader rd = verif_user.ExecuteReader();
+                //while (rd.Read())
+                //{
+                //    exist_user = true;
+                //}
+                
+                //if (exist_user == false)
+                //{
+                //    //string signatairee = model.signataire;
+
+                //    ApplicationUser userr = (from m in db.Users
+                //                            where m.matricule == model.signataire
+                //                            select m).Take(1).Single();
+
+                //    string signatairee = userr.Email;
+                //    int ettat = -1;
+                //    if(StatutUsr =="Actif")
+                //    {
+                //        ettat = 1;
+                //    }
+                //    else if (StatutUsr == "Inactif")
+                //    {
+                //        ettat = 0;
+                //    }
+                //    SqlCommand insert = new SqlCommand("insert into Utilisateurs(email,password,matricule,prenom,nom,service,fonction,signataire,Accees,Site,Etat) values " +
+                //        "(@email,@password,@matricule,@prenom,@nom,@service,@fonction,@signataire,@Accees,@Site,@Etat)", conn);
+                //    insert.Parameters.AddWithValue("@email", model.Email);
+                //    insert.Parameters.AddWithValue("@password", model.Password);
+                //    insert.Parameters.AddWithValue("@matricule", model.matricule);
+                //    insert.Parameters.AddWithValue("@prenom", model.prenom);
+                //    insert.Parameters.AddWithValue("@nom", model.nom);
+                //    insert.Parameters.AddWithValue("@service", model.service);
+                //    insert.Parameters.AddWithValue("@fonction", model.fonction);
+                //    insert.Parameters.AddWithValue("@signataire", signatairee);
+                //    insert.Parameters.AddWithValue("@Accees", "0000000000000000");
+                //    insert.Parameters.AddWithValue("@Site", model.site);
+                //    insert.Parameters.AddWithValue("@Etat", ettat);
+                //    insert.ExecuteNonQuery();
+                //}
+                //conn.Close();
+                
+                return RedirectToAction("Index", "ApplicationUsers");
+                    
             }
             catch (DbEntityValidationException e)
             {
@@ -200,10 +266,7 @@ namespace RHEVENT.Controllers
                 }
                 return RedirectToAction(error);
             }
-
-
-
-            //     return View(model);
+            
         }
 
         private void AddErrors(IdentityResult result)
@@ -255,6 +318,8 @@ namespace RHEVENT.Controllers
             applicationUser.fonctions = fonctions;
 
             ViewBag.list_signataires = signataires;
+
+            Session["matricule"] = applicationUser.matricule;
             return View(applicationUser);
         }
 
@@ -270,19 +335,8 @@ namespace RHEVENT.Controllers
             {
                 try
                 {
-
-                    //  Update Role for user
-                    //IdentityResult delete = UserManager.RemoveFromRole(applicationUser.Id,  "Admin");
-                    //IdentityResult delete2 = UserManager.RemoveFromRole(applicationUser.Id, "Chargé_RH");
-                    //IdentityResult delete3 = UserManager.RemoveFromRole(applicationUser.Id, "Employer");
-                    //IdentityResult delete4 = UserManager.RemoveFromRole(applicationUser.Id, "Superieur_Hiéarchique");
-                    //IdentityResult delete5 = UserManager.RemoveFromRole(applicationUser.Id, "Directeur");
-                    //IdentityResult delete6 = UserManager.RemoveFromRole(applicationUser.Id, "Chargé_personnel_RH");
-                    //UserManager.AddToRole(applicationUser.Id, applicationUser.RoleName.ToString());
-
                     string NomUsr = applicationUser.nom + " " + applicationUser.prenom;
-
-
+                    
                     ApplicationUser appuser = db.Users.First(u => u.Id == applicationUser.Id);
                     appuser.Statut = StatutUsr;
                     appuser.NomPrenom = NomUsr;
@@ -301,6 +355,42 @@ namespace RHEVENT.Controllers
                     appuser.site = applicationUser.site;
                     appuser.RoleName = applicationUser.RoleName;
                     db.SaveChanges();
+
+                    string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+                    SqlConnection con = new SqlConnection(constr);
+                    con.Open();
+                    SqlCommand cmd1 = new SqlCommand("update DA_LaboUser set Matricule = '" + appuser.matricule + "' where  Matricule='" + Session["matricule"] + "'", con);
+                    cmd1.ExecuteNonQuery();
+                    con.Close();
+
+                    //ApplicationUser userr = (from m in db.Users
+                    //                         where m.matricule == applicationUser.signataire
+                    //                         select m).Take(1).Single();
+
+                    //string signatairee = userr.Email;
+
+                    //string con_str = ConfigurationManager.ConnectionStrings["DemandeChangement"].ToString();
+                    //SqlConnection conn = new SqlConnection(con_str);
+                    //conn.Open();
+                    //int ettat = -1;
+                    //if (StatutUsr == "Actif")
+                    //{
+                    //    ettat = 1;
+                    //}
+                    //else if (StatutUsr == "Inactif")
+                    //{
+                    //    ettat = 0;
+                    //}
+                    //SqlCommand cmd = new SqlCommand("update Utilisateurs set nom = '" + appuser.nom + "'," +
+                    //    " prenom = '" + appuser.prenom + "', matricule = '" + appuser.matricule + "'," +
+                    //    " email = '" + appuser.Email + "',service = '" + appuser.service + "'," +
+                    //    "Site = '" + appuser.site + "',fonction = '" + appuser.fonction + "'," +
+                    //    "signataire = '" + signatairee + "',Etat = '" + ettat + "' " +
+                    //    "where  matricule = '" + Session["matricule"] + "'", conn);
+                    //cmd.ExecuteNonQuery();
+
+                    //conn.Close();
+
                     return RedirectToAction("Index");
                 }catch(DbEntityValidationException e) {
                     foreach (var eve in e.EntityValidationErrors)
@@ -347,6 +437,26 @@ namespace RHEVENT.Controllers
             ApplicationUser applicationUser = db.Users.Find(id);
             db.Users.Remove(applicationUser);
             db.SaveChanges();
+
+            string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+            SqlConnection con = new SqlConnection(constr);
+            con.Open();
+            SqlCommand cmd1 = new SqlCommand("delete from DA_LaboUser where Matricule = '" + applicationUser.matricule + "'", con);
+            cmd1.ExecuteNonQuery();
+            con.Close();
+
+            //string con_str = ConfigurationManager.ConnectionStrings["DemandeChangement"].ToString();
+            //SqlConnection conn = new SqlConnection(con_str);
+            //conn.Open();
+
+            //string matriculee = applicationUser.matricule;
+
+
+            //SqlCommand cmd = new SqlCommand("delete from Utilisateurs where  matricule = '" + matriculee + "'", conn);
+            //cmd.ExecuteNonQuery();
+
+            //conn.Close();
+
             return RedirectToAction("Index");
         }
 
@@ -377,6 +487,22 @@ namespace RHEVENT.Controllers
                 UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
                 userManager.RemovePassword(model.Id);
                 userManager.AddPassword(model.Id, model.Password);
+
+                //string con_str = ConfigurationManager.ConnectionStrings["DemandeChangement"].ToString();
+                //SqlConnection conn = new SqlConnection(con_str);
+                //conn.Open();
+                //ApplicationUser userr = (from m in db.Users
+                //                         where m.Id == model.Id
+                //                         select m).Take(1).Single();
+
+                //string matriculee = userr.matricule;
+
+
+                //SqlCommand cmd = new SqlCommand("update Utilisateurs set password = '" + model.Password + "' where  matricule = '" + matriculee + "'", conn);
+                //cmd.ExecuteNonQuery();
+
+                //conn.Close();
+
                 return View("OK");
             }
             else
@@ -407,6 +533,19 @@ namespace RHEVENT.Controllers
                         ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
                         user.EmailConfirmed = true;
                         db.SaveChanges();
+
+                        //string con_str = ConfigurationManager.ConnectionStrings["DemandeChangement"].ToString();
+                        //SqlConnection conn = new SqlConnection(con_str);
+                        //conn.Open();
+
+                        //string matriculee = user.matricule;
+
+
+                        //SqlCommand cmd = new SqlCommand("update Utilisateurs set password = '" + cpuser.Password + "' where  matricule = '" + matriculee + "'", conn);
+                        //cmd.ExecuteNonQuery();
+
+                        //conn.Close();
+
                         return RedirectToAction("Index", "Home");
                     }
                     else

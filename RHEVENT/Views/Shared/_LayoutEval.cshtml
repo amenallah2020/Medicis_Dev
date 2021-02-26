@@ -73,7 +73,9 @@
                     (ViewContext.RouteData.Values["controller"].ToString() == "EMenuEvaluationUser") ||
                     (ViewContext.RouteData.Values["controller"].ToString() == "EMenuEvalUser") ||
                     (ViewContext.RouteData.Values["controller"].ToString() == "E_EvalRealiseeUser") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "E_MenuElearning"))
+                    (ViewContext.RouteData.Values["controller"].ToString() == "E_MenuElearning")||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "E_DiffEval") ||
+                    (ViewContext.RouteData.Values["controller"].ToString() == "E_QCM"))
                 {
                     if (User.IsInRole("Admin_Medicis") || User.IsInRole("Elearning"))
                     {
