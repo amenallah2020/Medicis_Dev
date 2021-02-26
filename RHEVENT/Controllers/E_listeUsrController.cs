@@ -177,13 +177,15 @@ namespace RHEVENT.Controllers
             {
                   UserQuery = from m in db.Users
                                 where m.Etat == searchString
+                                orderby m.NomPrenom
                                 select m; 
             }
             else
             {
                   UserQuery = from m in db.Users
                                 where m.Etat == "Interne"
-                                select m; 
+                              orderby m.NomPrenom
+                              select m; 
             }
 
 
@@ -313,12 +315,14 @@ namespace RHEVENT.Controllers
             {
                 UserQuery = from m in db.Users
                             where m.Etat == searchString
+                            orderby m.NomPrenom
                             select m;
             }
             else
             {
                 UserQuery = from m in db.Users
                             where m.Etat == "Interne"
+                            orderby m.NomPrenom
                             select m;
             }
 
