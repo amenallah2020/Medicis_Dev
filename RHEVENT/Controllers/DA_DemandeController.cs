@@ -11,8 +11,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using RHEVENT.Models;
-
-
+using Rotativa;
 
 namespace RHEVENT.Controllers
 {
@@ -42,6 +41,13 @@ namespace RHEVENT.Controllers
             
         }
 
+        public ActionResult ExporterPDF()
+        {
+            return new ActionAsPdf("MesDemandes")
+            {
+                FileName= Server.MapPath("../Content/PDF/demande.pdf")
+            };
+        }
         // GET: DA_Demande
 
         public ActionResult demande_dem(string id, string statut, string dem,string labor)
@@ -97,9 +103,9 @@ namespace RHEVENT.Controllers
             }
             return RedirectToAction("DemandesAll");
         }
+
+
         
-
-
         public ActionResult demande(/*string id*/)
         {
             string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();

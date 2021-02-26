@@ -95,7 +95,7 @@ namespace RHEVENT.Controllers
         }
 
         [HttpGet]
-        public ActionResult ConsultParSlide(string id,string counter, string Reponse1, string Reponse2, string Reponse3, string Reponse4, string next, string Previous, string sld, string Terminer, string SNQ)
+        public ActionResult ConsultParSlide(string id, string counter, string Reponse1, string Reponse2, string Reponse3, string Reponse4, string next, string Previous, string sld, string Terminer, string SNQ)
         {
             string ooid = id.Substring(0, 16);
 
@@ -177,7 +177,7 @@ namespace RHEVENT.Controllers
 
             E_Evaluation ddd = (from m in db.E_Evaluation
                                 where m.Code_Eval == ooid
-                               select m).Single();
+                                select m).Single();
 
 
             Session["MM"] = dd.Duree_Eval;
@@ -300,7 +300,7 @@ namespace RHEVENT.Controllers
                         db.E_RepUser.Add(e_RepUser);
 
                     }
-                   
+
                     if (Reponse2.ToString() != "")
                     {
                         E_RepUser e_RepUser = new E_RepUser();
@@ -339,7 +339,7 @@ namespace RHEVENT.Controllers
                         db.E_RepUser.Add(e_RepUser);
 
                     }
-                  
+
 
                     if (Reponse3.ToString() != "")
                     {
@@ -377,7 +377,7 @@ namespace RHEVENT.Controllers
                         db.E_RepUser.Add(e_RepUser);
 
                     }
-                    
+
 
                     if (Reponse4.ToString() != "")
                     {
@@ -418,9 +418,9 @@ namespace RHEVENT.Controllers
 
                     }
 
-                  
+
                     //return RedirectToAction("ResultQCM", "E_QCM", new { codeEval = Eval });
-                    return RedirectToAction("ResultQCMParSlide", "E_QCM", new { codeEval = Eval , Slide = slid ,  Terminer ="Terminer" });
+                    return RedirectToAction("ResultQCMParSlide", "E_QCM", new { codeEval = Eval, Slide = slid, Terminer = "Terminer" });
 
 
                 }
@@ -431,14 +431,14 @@ namespace RHEVENT.Controllers
                 if (next == "Suivant")
                 {
                     E_DeadLlineEvalUsr zz = (from m in db.E_DeadLlineEvalUsr
-                                            where m.Code_eval == ooid && m.MatUser == user.matricule
-                                            select m).Single();
+                                             where m.Code_eval == ooid && m.MatUser == user.matricule
+                                             select m).Single();
 
-                     
 
-                    TimeSpan diff =   (zz.Deadline - DateTime.Now);
 
-                    int   sssa = (int)( diff.TotalSeconds);
+                    TimeSpan diff = (zz.Deadline - DateTime.Now);
+
+                    int sssa = (int)(diff.TotalSeconds);
 
                     Session["MinF"] = sssa;
 
@@ -517,7 +517,7 @@ namespace RHEVENT.Controllers
                         db.E_RepUser.Add(e_RepUser);
 
                     }
-                
+
 
                     if (Reponse2.ToString() != "")
                     {
@@ -557,7 +557,7 @@ namespace RHEVENT.Controllers
                         db.E_RepUser.Add(e_RepUser);
 
                     }
-                
+
                     if (Reponse3.ToString() != "")
                     {
                         E_RepUser e_RepUser = new E_RepUser();
@@ -594,7 +594,7 @@ namespace RHEVENT.Controllers
                         db.E_RepUser.Add(e_RepUser);
 
                     }
-                    
+
                     if (Reponse4.ToString() != "")
                     {
                         E_RepUser e_RepUser = new E_RepUser();
@@ -674,7 +674,7 @@ namespace RHEVENT.Controllers
                     }
 
 
-                    return RedirectToAction("ResultQCMParSlide", "E_QCM", new { codeEval = Eval, Slide = slid , sessionminf = Session["MinF"].ToString() });
+                    return RedirectToAction("ResultQCMParSlide", "E_QCM", new { codeEval = Eval, Slide = slid, sessionminf = Session["MinF"].ToString() });
 
                 }
             }
@@ -686,16 +686,16 @@ namespace RHEVENT.Controllers
 
             //int nbr = ll.Count();
 
-            DataTable dt444 = new DataTable(); 
+            DataTable dt444 = new DataTable();
             SqlDataAdapter da444;
-            da444 = new SqlDataAdapter("select distinct CodeQcm from E_RepUser where Code_eval = '"+ooid+ "' and CodeQcm in (select Code_QCM from E_QCM where Code_EvalByQCM =  '" + ooid + "')"  , con);
+            da444 = new SqlDataAdapter("select distinct CodeQcm from E_RepUser where Code_eval = '" + ooid + "' and CodeQcm in (select Code_QCM from E_QCM where Code_EvalByQCM =  '" + ooid + "')", con);
             da444.Fill(dt444);
 
 
             if (dt444.Rows.Count < ss.Count())
             {
 
-                
+
 
                 if (SNQ != null)
                 {
@@ -708,7 +708,7 @@ namespace RHEVENT.Controllers
 
                     TimeSpan diff = (zz.Deadline - DateTime.Now);
 
-                    int sssa = (int)(diff.TotalSeconds) ;
+                    int sssa = (int)(diff.TotalSeconds);
 
                     Session["MinF"] = sssa;
 
@@ -744,6 +744,21 @@ namespace RHEVENT.Controllers
                 else
                 {
 
+                    var exist = from m in db.E_DeadLlineEvalUsr
+                                where m.Code_eval == ooid
+                                select m;
+
+                    int ext = exist.Count();
+
+                    if (ext != 0)
+                    {
+                        SqlCommand cmda = new SqlCommand("delete from E_DeadLlineEvalUsr where Code_eval = '" + ooid + "' ", con);
+                        cmda.ExecuteNonQuery();
+
+                        return RedirectToAction("ResultQCM", "E_QCM", new { codeEval = id });
+
+                    }
+
                     SqlCommand command33 = new SqlCommand("select DATEDIFF(SECOND, '0:00:00', Duree_Eval ) sec from E_Evaluation where Code_Eval='" + ooid + "'    ", con);
                     SqlDataAdapter da33 = new SqlDataAdapter(command33);
                     DataTable dt33 = new DataTable();
@@ -753,7 +768,7 @@ namespace RHEVENT.Controllers
                     for (int z = 0; z < dt33.Rows.Count; z++)
                     {
 
-                        DateTime date =  System.DateTime.Now.AddSeconds(Convert.ToInt32(dt3.Rows[z]["sec"].ToString()));
+                        DateTime date = System.DateTime.Now.AddSeconds(Convert.ToInt32(dt3.Rows[z]["sec"].ToString()));
 
                         SqlCommand cmd = new SqlCommand("Insert into E_DeadLlineEvalUsr (Code_eval,MatUser,Deadline) values (@Code_eval,@MatUser,@Deadline) ", con);
 
@@ -765,8 +780,7 @@ namespace RHEVENT.Controllers
 
                     }
 
-                    //if (i < dt.Rows.Count)
-                    //{
+
                     e_QCM.Code_QCM = Convert.ToString(dt.Rows[i]["Code_QCM"]);
 
                     e_QCM.Question = Convert.ToString(dt.Rows[i]["Question"]);
@@ -782,15 +796,15 @@ namespace RHEVENT.Controllers
                     e_QCM.Reponse4 = Convert.ToString(dt.Rows[i]["Reponse4"]);
 
 
-                    //i++;
+
 
                     return View(e_QCM);
-                    //}
+
                 }
 
 
-               
-                
+
+
             }
 
             else if (dt444.Rows.Count == ss.Count())
@@ -2015,7 +2029,7 @@ namespace RHEVENT.Controllers
 
         public ActionResult ResultQCM(string codeEval)
         {
-             
+
             if (Session["Evl"] != null)
             {
                 codeEval = Session["Evl"].ToString();
@@ -2043,7 +2057,71 @@ namespace RHEVENT.Controllers
             SqlDataAdapter da;
             da = new SqlDataAdapter("select distinct Code_EvalByQCM,  E_Formation.Code CodeForm, Code_QCM, E_ListEvaluationDiffus.Objet ObjEval,  E_ListEvaluationDiffus.deadline,  E_Formation.Objet ObjForm, CONVERT(date, E_RepUser.Date_Creation,103) DateEval ,  E_RepUser.MatUser,    AspNetUsers.NomPrenom Usr , E_QCM.Question, Coeff,  E_QCM.Reponse1, E_QCM.EtatRep1, E_QCM.Reponse2, E_QCM.EtatRep2, E_QCM.Reponse3, E_QCM.EtatRep3, E_QCM.Reponse4, E_QCM.EtatRep4  from E_QCM inner join E_RepUser on E_RepUser.Code_eval = E_QCM.Code_EvalByQCM and E_RepUser.CodeQcm = E_QCM.Code_QCM inner join E_ListEvaluationDiffus on E_ListEvaluationDiffus.Code_Eval = E_QCM.Code_EvalByQCM left join E_Formation on E_Formation.CodeEval = E_QCM.Code_EvalByQCM   inner join AspNetUsers on AspNetUsers.matricule = E_ListEvaluationDiffus.Mat_usr where E_QCM.Code_EvalByQCM = '" + codeEval + "' and AspNetUsers.matricule = " + user.matricule + "", con);
             da.Fill(dt);
-             
+
+
+            if (dt.Rows.Count == 0)
+            {
+
+                DataTable dtd = new DataTable();
+
+                SqlDataAdapter dad;
+                dad = new SqlDataAdapter("select distinct E_QCM.Code_EvalByQCM, E_Formation.Objet ObjForm, E_Evaluation.Objet_Eval, E_Formation.Code CodeForm, E_ListEvaluationDiffus.deadline,E_QCM.Code_QCM, CONVERT(date, '') DateEval , '' MatUser, '' Usr, E_QCM.Question,Coeff,  E_QCM.Reponse1, E_QCM.EtatRep1, E_QCM.Reponse2, E_QCM.EtatRep2, E_QCM.Reponse3, E_QCM.EtatRep3, E_QCM.Reponse4, E_QCM.EtatRep4   from E_QCM inner join E_Evaluation on E_Evaluation.Code_Eval = E_QCM.Code_EvalByQCM left join E_Formation on E_Formation.Code = E_Evaluation.CodeForm inner join E_ListEvaluationDiffus on E_ListEvaluationDiffus.Code_Eval = E_QCM.Code_EvalByQCM where E_QCM.Code_EvalByQCM = '" + codeEval + "'", con);
+                dad.Fill(dtd);
+
+                for (int z = 0; z < dtd.Rows.Count; z++)
+                {
+                    SqlCommand cmd = new SqlCommand("Insert into E_ResultQCM_Historiq (Code_EvalByQCM,   CodeForm, ObjEval, ObjForm, Deadline, Code_QCM,DateEval,MatUser,Usr, Question,Coeff,Reponse1,EtatRep1,Reponse2,EtatRep2,Reponse3,EtatRep3,Reponse4,EtatRep4 ,  Score, Resultat , DateHisto) values(@Code_EvalByQCM,   @CodeForm, @ObjEval, @ObjForm, @Deadline,@Code_QCM,@DateEval,@MatUser, @Usr,@Question,@Coeff,@Reponse1,@EtatRep1,@Reponse2,@EtatRep2,@Reponse3,@EtatRep3,@Reponse4,@EtatRep4 ,  @Score, @Resultat , @DateHisto)", con);
+
+                    cmd.Parameters.AddWithValue("@Code_EvalByQCM", codeEval);
+                    cmd.Parameters.AddWithValue("@ObjForm", dtd.Rows[z]["ObjForm"].ToString());
+                    cmd.Parameters.AddWithValue("@ObjEval", dtd.Rows[z]["Objet_Eval"].ToString());
+                    cmd.Parameters.AddWithValue("@CodeForm", dtd.Rows[z]["CodeForm"].ToString());
+                    cmd.Parameters.AddWithValue("@DeadLine", Convert.ToDateTime(dtd.Rows[z]["deadline"].ToString()));
+                    cmd.Parameters.AddWithValue("@Code_QCM", dtd.Rows[z]["Code_QCM"].ToString());
+                    cmd.Parameters.AddWithValue("@DateEval", Convert.ToDateTime(dtd.Rows[z]["DateEval"].ToString()));
+                    cmd.Parameters.AddWithValue("@MatUser", user.matricule);
+                    cmd.Parameters.AddWithValue("@Usr", user.NomPrenom);
+                    cmd.Parameters.AddWithValue("@Question", dtd.Rows[z]["Question"].ToString());
+                    cmd.Parameters.AddWithValue("@Coeff", dtd.Rows[z]["Coeff"].ToString());
+                    cmd.Parameters.AddWithValue("@Reponse1", dtd.Rows[z]["Reponse1"].ToString());
+                    cmd.Parameters.AddWithValue("@EtatRep1", dtd.Rows[z]["EtatRep1"].ToString());
+                    cmd.Parameters.AddWithValue("@Reponse2", dtd.Rows[z]["Reponse2"].ToString());
+                    cmd.Parameters.AddWithValue("@EtatRep2", dtd.Rows[z]["EtatRep2"].ToString());
+                    cmd.Parameters.AddWithValue("@Reponse3", dtd.Rows[z]["Reponse3"].ToString());
+                    cmd.Parameters.AddWithValue("@EtatRep3", dtd.Rows[z]["EtatRep3"].ToString());
+                    cmd.Parameters.AddWithValue("@Reponse4", dtd.Rows[z]["Reponse4"].ToString());
+                    cmd.Parameters.AddWithValue("@EtatRep4", dtd.Rows[z]["EtatRep4"].ToString());
+
+                    cmd.Parameters.AddWithValue("@DateHisto", System.DateTime.Now);
+
+                    //cmd.Parameters.AddWithValue("@Reponse1User", null);
+                    //cmd.Parameters.AddWithValue("@Reponse2User", null);
+                    //cmd.Parameters.AddWithValue("@Reponse3User", null);
+                    //cmd.Parameters.AddWithValue("@Reponse4User", null);
+
+                    cmd.Parameters.AddWithValue("@Score", 0);
+                    cmd.Parameters.AddWithValue("@Resultat", "Invalide");
+
+                    cmd.ExecuteNonQuery();
+
+
+                    ViewBag.Score = 0;
+
+                    ViewBag.Valid = "Invalide";
+
+                    SqlCommand cmd6 = new SqlCommand("delete from E_ResultFormation where Code_Formation = '" + dtd.Rows[z]["CodeForm"].ToString() + "' ", con);
+                    cmd6.ExecuteNonQuery();
+
+
+                    SqlCommand cmd7 = new SqlCommand("delete from E_SlideUsr where Code_Formation = '" + dtd.Rows[z]["CodeForm"].ToString() + "' ", con);
+                    cmd7.ExecuteNonQuery();
+
+                }
+
+
+                List<E_ResultQCM> lista = new List<E_ResultQCM>();
+                return View(lista);
+            }
 
             ViewBag.CodeEval = codeEval;
 
@@ -2204,13 +2282,13 @@ namespace RHEVENT.Controllers
 
                     DataTable dt66 = new DataTable();
                     SqlDataAdapter da66;
-                    da66 = new SqlDataAdapter("select  * from E_ResultQCM where Code_EvalByQCM= '" + codeEval+ "' and Code_QCM = '"+dt.Rows[i]["Code_QCM"].ToString()+"' ", con);
+                    da66 = new SqlDataAdapter("select  * from E_ResultQCM where Code_EvalByQCM= '" + codeEval + "' and Code_QCM = '" + dt.Rows[i]["Code_QCM"].ToString() + "' ", con);
                     da66.Fill(dt66);
 
 
-                    for (int oo= 0; oo <dt66.Rows.Count; oo++)
-                    { 
-                        e.Reponse1User = dt66.Rows[oo]["Reponse1User"].ToString() ;
+                    for (int oo = 0; oo < dt66.Rows.Count; oo++)
+                    {
+                        e.Reponse1User = dt66.Rows[oo]["Reponse1User"].ToString();
 
                         e.Reponse2User = dt66.Rows[oo]["Reponse2User"].ToString();
 
@@ -2226,15 +2304,15 @@ namespace RHEVENT.Controllers
                     //    cpt += e.Coeff;
                     //}
 
-                    
+
                 }
 
                 list.Add(e);
             }
 
             var listQCM = from m in db.E_QCM
-                              where m.Code_EvalByQCM == codeEval
-                              select m;
+                          where m.Code_EvalByQCM == codeEval
+                          select m;
 
 
             DataTable dtr = new DataTable();
@@ -2242,13 +2320,13 @@ namespace RHEVENT.Controllers
             dar = new SqlDataAdapter("select  * from E_ResultQCM where Code_EvalByQCM= '" + codeEval + "' ", con);
             dar.Fill(dtr);
 
-            for(int rr =0; rr< dtr.Rows.Count; rr++)
+            for (int rr = 0; rr < dtr.Rows.Count; rr++)
             {
                 int cpt = 0;
 
                 DataTable dty = new DataTable();
                 SqlDataAdapter day;
-                day = new SqlDataAdapter("select  * from E_ResultQCM where Code_EvalByQCM= '" + codeEval + "' and  Code_QCM = '"+ dtr.Rows[rr]["Code_QCM"].ToString() +"'", con);
+                day = new SqlDataAdapter("select  * from E_ResultQCM where Code_EvalByQCM= '" + codeEval + "' and  Code_QCM = '" + dtr.Rows[rr]["Code_QCM"].ToString() + "'", con);
                 day.Fill(dty);
 
                 List<string> liste = new List<string>();
@@ -2257,9 +2335,9 @@ namespace RHEVENT.Controllers
                 {
                     string a = dty.Rows[yy]["Reponse1"].ToString();
 
-                    if ((dty.Rows[yy]["Reponse1User"].ToString()== dty.Rows[yy]["Reponse1"].ToString() && dty.Rows[yy]["EtatRep1"].ToString() == "Vrai") || (dty.Rows[yy]["Reponse2User"].ToString() == dty.Rows[yy]["Reponse1"].ToString() && dty.Rows[yy]["EtatRep1"].ToString() == "Vrai") || (dty.Rows[yy]["Reponse3User"].ToString() == dty.Rows[yy]["Reponse1"].ToString() && dty.Rows[yy]["EtatRep1"].ToString() == "Vrai") || (dty.Rows[yy]["Reponse4User"].ToString() == dty.Rows[yy]["Reponse1"].ToString() && dty.Rows[yy]["EtatRep1"].ToString() == "Vrai"))
+                    if ((dty.Rows[yy]["Reponse1User"].ToString() == dty.Rows[yy]["Reponse1"].ToString() && dty.Rows[yy]["EtatRep1"].ToString() == "Vrai") || (dty.Rows[yy]["Reponse2User"].ToString() == dty.Rows[yy]["Reponse1"].ToString() && dty.Rows[yy]["EtatRep1"].ToString() == "Vrai") || (dty.Rows[yy]["Reponse3User"].ToString() == dty.Rows[yy]["Reponse1"].ToString() && dty.Rows[yy]["EtatRep1"].ToString() == "Vrai") || (dty.Rows[yy]["Reponse4User"].ToString() == dty.Rows[yy]["Reponse1"].ToString() && dty.Rows[yy]["EtatRep1"].ToString() == "Vrai"))
                     {
-                        cpt += Convert.ToInt32( dty.Rows[yy]["Coeff"].ToString()) ;
+                        cpt += Convert.ToInt32(dty.Rows[yy]["Coeff"].ToString());
                     }
 
                     if ((dty.Rows[yy]["Reponse1User"].ToString() == dty.Rows[yy]["Reponse2"].ToString() && dty.Rows[yy]["EtatRep2"].ToString() == "Vrai") || (dty.Rows[yy]["Reponse2User"].ToString() == dty.Rows[yy]["Reponse2"].ToString() && dty.Rows[yy]["EtatRep2"].ToString() == "Vrai") || (dty.Rows[yy]["Reponse3User"].ToString() == dty.Rows[yy]["Reponse2"].ToString() && dty.Rows[yy]["EtatRep2"].ToString() == "Vrai") || (dty.Rows[yy]["Reponse4User"].ToString() == dty.Rows[yy]["Reponse2"].ToString() && dty.Rows[yy]["EtatRep2"].ToString() == "Vrai"))
@@ -2281,24 +2359,24 @@ namespace RHEVENT.Controllers
 
                 }
 
-                
+
                 string ss;
 
-                if (rr == dty.Rows.Count) 
-                      ss = dty.Rows[rr-1]["Code_QCM"].ToString(); 
+                if (rr == dty.Rows.Count)
+                    ss = dty.Rows[rr - 1]["Code_QCM"].ToString();
                 else
                     ss = dty.Rows[rr]["Code_QCM"].ToString();
 
 
                 var ee = from m in db.E_QCM
                          where m.Code_EvalByQCM == codeEval && m.Code_QCM == ss
-                         select m ;
+                         select m;
 
                 int contVrai = 0;
 
-           
 
-                foreach(E_QCM e in ee)
+
+                foreach (E_QCM e in ee)
                 {
                     if (e.EtatRep1 == "Vrai")
                         contVrai += 1;
@@ -2314,220 +2392,219 @@ namespace RHEVENT.Controllers
                 }
 
                 E_QCM coef = (from m in db.E_QCM
-                         where m.Code_EvalByQCM == codeEval
-                         select m).Take(1).Single();
+                              where m.Code_EvalByQCM == codeEval
+                              select m).Take(1).Single();
 
                 if (contVrai != cpt)
                     cpt = 0;
                 else
                     cpt = coef.Coeff;
 
-                 
+
 
                 cptQ += cpt;
             }
 
             foreach (E_QCM ee in listQCM)
-                {
-                    //if ((e.Reponse3 != null && e.Reponse1 != null && e.Reponse2 != null) || (e.Reponse4 != null && e.Reponse1 != null && e.Reponse2 != null) || (e.Reponse3 != null && e.Reponse4 != null && e.Reponse1 != null && e.Reponse2 != null))
-                    cptTotal += ee.Coeff;
+            {
+                //if ((e.Reponse3 != null && e.Reponse1 != null && e.Reponse2 != null) || (e.Reponse4 != null && e.Reponse1 != null && e.Reponse2 != null) || (e.Reponse3 != null && e.Reponse4 != null && e.Reponse1 != null && e.Reponse2 != null))
+                cptTotal += ee.Coeff;
 
 
-                }
+            }
 
-                double scr = Math.Round((float)cptQ / (float)cptTotal * 100);
+            double scr = Math.Round((float)cptQ / (float)cptTotal * 100);
 
-                ViewBag.Score = scr;
+            ViewBag.Score = scr;
 
-                var prcVal = from m in db.E_Evaluation
-                             where m.Code_Eval == codeEval
-                             select m;
-
-                foreach (E_Evaluation d in prcVal)
-                {
-                    if (scr >= d.Pourc_Valid)
-                    {
-                        ViewBag.Valid = "Valide";
-                    }
-                    else if (scr < d.Pourc_Valid)
-                    {
-                        ViewBag.Valid = "Invalide";
-                    }
-                }
-
-
-                SqlCommand cmd2 = new SqlCommand("Update E_ResultQCM set Resultat = '" + ViewBag.Valid + "' , Score = " + scr + " where Code_EvalByQCM = '" + codeEval + "'", con);
-                cmd2.ExecuteNonQuery();
-
-
-                var vf = from m in db.E_ResultQCM
-                         where m.Code_EvalByQCM == codeEval && m.Resultat == "Invalide"
+            var prcVal = from m in db.E_Evaluation
+                         where m.Code_Eval == codeEval
                          select m;
 
-
-                foreach (E_ResultQCM r in vf)
+            foreach (E_Evaluation d in prcVal)
+            {
+                if (scr >= d.Pourc_Valid)
                 {
-                        if (r.Reponse1User == null)
-                            r.Reponse1User = " ";
+                    ViewBag.Valid = "Valide";
+                }
+                else if (scr < d.Pourc_Valid)
+                {
+                    ViewBag.Valid = "Invalide";
+                }
+            }
 
-                        if (r.Reponse2User == null)
-                            r.Reponse2User = " ";
 
-                        if (r.Reponse3User == null)
-                            r.Reponse3User = " ";
+            SqlCommand cmd2 = new SqlCommand("Update E_ResultQCM set Resultat = '" + ViewBag.Valid + "' , Score = " + scr + " where Code_EvalByQCM = '" + codeEval + "'", con);
+            cmd2.ExecuteNonQuery();
 
-                        if (r.Reponse4User == null)
-                            r.Reponse4User = " ";
+
+            var vf = from m in db.E_ResultQCM
+                     where m.Code_EvalByQCM == codeEval && m.Resultat == "Invalide"
+                     select m;
+
+
+            foreach (E_ResultQCM r in vf)
+            {
+                if (r.Reponse1User == null)
+                    r.Reponse1User = " ";
+
+                if (r.Reponse2User == null)
+                    r.Reponse2User = " ";
+
+                if (r.Reponse3User == null)
+                    r.Reponse3User = " ";
+
+                if (r.Reponse4User == null)
+                    r.Reponse4User = " ";
 
                 SqlCommand cmd4 = new SqlCommand("INSERT INTO [dbo].[E_ResultQCM_Historiq] (DateHisto, [Code_EvalByQCM] ,[CodeForm] ,[Code_QCM] ,[MatUser] ,[Usr]  ,[DateEval]  ,[Score] ,[Resultat],[ObjEval],[ObjForm],[DeadLine],[Question],[Coeff],[Reponse1],[EtatRep1],[Reponse2],[EtatRep2] ,[Reponse3],[EtatRep3],[Reponse4],[EtatRep4],[Reponse1User],[Reponse2User],[Reponse3User],[Reponse4User]) VALUES (@DateHisto, @Code_EvalByQCM ,@CodeForm ,@Code_QCM ,@MatUser ,@Usr  ,@DateEval  ,@Score ,@Resultat, @ObjEval ,@ObjForm ,@DeadLine ,@Question ,@Coeff ,@Reponse1 ,@EtatRep1 ,@Reponse2 ,@EtatRep2 ,@Reponse3 ,@EtatRep3 ,@Reponse4 ,@EtatRep4 ,@Reponse1User,@Reponse2User,@Reponse3User,@Reponse4User)", con);
 
-                    cmd4.Parameters.AddWithValue("@DateHisto", System.DateTime.Now);
-                    cmd4.Parameters.AddWithValue("@Code_EvalByQCM", r.Code_EvalByQCM);
-                    cmd4.Parameters.AddWithValue("@Code_QCM", r.Code_QCM);
-                    cmd4.Parameters.AddWithValue("@CodeForm", r.CodeForm);
-                    cmd4.Parameters.AddWithValue("@MatUser", r.MatUser);
-                    cmd4.Parameters.AddWithValue("@Usr", r.Usr);
-                    cmd4.Parameters.AddWithValue("@DateEval", r.DateEval);
-                    cmd4.Parameters.AddWithValue("@Score", r.Score);
-                    cmd4.Parameters.AddWithValue("@Resultat", r.Resultat);
-                    cmd4.Parameters.AddWithValue("@ObjEval", r.ObjEval);
-                    cmd4.Parameters.AddWithValue("@ObjForm", r.ObjForm);
-                    cmd4.Parameters.AddWithValue("@DeadLine", r.DeadLine);
-                    cmd4.Parameters.AddWithValue("@Question", r.Question);
-                    cmd4.Parameters.AddWithValue("@Coeff", r.Coeff);
-                    cmd4.Parameters.AddWithValue("@Reponse1", r.Reponse1);
-                    cmd4.Parameters.AddWithValue("@Reponse2", r.Reponse2);
-                    cmd4.Parameters.AddWithValue("@Reponse3", r.Reponse3);
-                    cmd4.Parameters.AddWithValue("@Reponse4", r.Reponse4);
-                    cmd4.Parameters.AddWithValue("@Reponse1User", r.Reponse1User);
-                    cmd4.Parameters.AddWithValue("@Reponse2User", r.Reponse2User);
-                    cmd4.Parameters.AddWithValue("@Reponse3User", r.Reponse3User);
-                    cmd4.Parameters.AddWithValue("@Reponse4User", r.Reponse4User);
-                    cmd4.Parameters.AddWithValue("@EtatRep1", r.EtatRep1);
-                    cmd4.Parameters.AddWithValue("@EtatRep2", r.EtatRep2);
-                    cmd4.Parameters.AddWithValue("@EtatRep3", r.EtatRep3);
-                    cmd4.Parameters.AddWithValue("@EtatRep4", r.EtatRep4);
+                cmd4.Parameters.AddWithValue("@DateHisto", System.DateTime.Now);
+                cmd4.Parameters.AddWithValue("@Code_EvalByQCM", r.Code_EvalByQCM);
+                cmd4.Parameters.AddWithValue("@Code_QCM", r.Code_QCM);
+                cmd4.Parameters.AddWithValue("@CodeForm", r.CodeForm);
+                cmd4.Parameters.AddWithValue("@MatUser", r.MatUser);
+                cmd4.Parameters.AddWithValue("@Usr", r.Usr);
+                cmd4.Parameters.AddWithValue("@DateEval", r.DateEval);
+                cmd4.Parameters.AddWithValue("@Score", r.Score);
+                cmd4.Parameters.AddWithValue("@Resultat", r.Resultat);
+                cmd4.Parameters.AddWithValue("@ObjEval", r.ObjEval);
+                cmd4.Parameters.AddWithValue("@ObjForm", r.ObjForm);
+                cmd4.Parameters.AddWithValue("@DeadLine", r.DeadLine);
+                cmd4.Parameters.AddWithValue("@Question", r.Question);
+                cmd4.Parameters.AddWithValue("@Coeff", r.Coeff);
+                cmd4.Parameters.AddWithValue("@Reponse1", r.Reponse1);
+                cmd4.Parameters.AddWithValue("@Reponse2", r.Reponse2);
+                cmd4.Parameters.AddWithValue("@Reponse3", r.Reponse3);
+                cmd4.Parameters.AddWithValue("@Reponse4", r.Reponse4);
+                cmd4.Parameters.AddWithValue("@Reponse1User", r.Reponse1User);
+                cmd4.Parameters.AddWithValue("@Reponse2User", r.Reponse2User);
+                cmd4.Parameters.AddWithValue("@Reponse3User", r.Reponse3User);
+                cmd4.Parameters.AddWithValue("@Reponse4User", r.Reponse4User);
+                cmd4.Parameters.AddWithValue("@EtatRep1", r.EtatRep1);
+                cmd4.Parameters.AddWithValue("@EtatRep2", r.EtatRep2);
+                cmd4.Parameters.AddWithValue("@EtatRep3", r.EtatRep3);
+                cmd4.Parameters.AddWithValue("@EtatRep4", r.EtatRep4);
 
-                    cmd4.ExecuteNonQuery();
+                cmd4.ExecuteNonQuery();
 
-                    SqlCommand cmd3 = new SqlCommand("delete from E_ResultQCM where Code_EvalByQCM = '" + r.Code_EvalByQCM + "' and Resultat = 'Invalide'", con);
-                    cmd3.ExecuteNonQuery();
+                SqlCommand cmd3 = new SqlCommand("delete from E_ResultQCM where Code_EvalByQCM = '" + r.Code_EvalByQCM + "' and Resultat = 'Invalide'", con);
+                cmd3.ExecuteNonQuery();
 
-                    SqlCommand cmd44 = new SqlCommand("delete from E_RepUser where Code_eval = '" + r.Code_EvalByQCM + "'", con);
-                    cmd44.ExecuteNonQuery();
-
-
-                    DataTable dt5 = new DataTable();
-
-                    SqlDataAdapter da5;
-                    da5 = new SqlDataAdapter("select [Code_Formation] ,[ObjForm] ,[MatUser] ,[Usr]  ,[DateTerm]  ,[Resultat] ,E_ResultFormation.[DeadLine] ,[Etat] from E_ResultFormation inner join [E_ListFormationDiffus] on [E_ListFormationDiffus].Code_formt = E_ResultFormation.Code_Formation where[E_ListFormationDiffus].Code_eval = '" + r.Code_EvalByQCM + "' ", con);
-                    da5.Fill(dt5);
+                SqlCommand cmd44 = new SqlCommand("delete from E_RepUser where Code_eval = '" + r.Code_EvalByQCM + "'", con);
+                cmd44.ExecuteNonQuery();
 
 
-                    for (int ii = 0; ii < dt5.Rows.Count; ii++)
-                    {
+                DataTable dt5 = new DataTable();
 
-                        SqlCommand cmd5 = new SqlCommand("INSERT INTO [dbo].[E_ResultFormation_Historiq] (DateHisto , [Code_Formation] ,[ObjForm] ,[MatUser] ,[Usr]  ,[DateTerm]  ,[Resultat] ,[DeadLine] ,[Etat])  VALUES (@DateHisto , @Code_Formation ,@ObjForm ,@MatUser ,@Usr  ,@DateTerm  ,@Resultat ,@DeadLine ,@Etat)", con);
-
-                        cmd5.Parameters.AddWithValue("@DateHisto", System.DateTime.Now);
-                        cmd5.Parameters.AddWithValue("@Code_Formation", dt5.Rows[ii]["Code_Formation"].ToString());
-                        cmd5.Parameters.AddWithValue("@ObjForm", dt5.Rows[ii]["ObjForm"].ToString());
-                        cmd5.Parameters.AddWithValue("@MatUser", dt5.Rows[ii]["MatUser"].ToString());
-                        cmd5.Parameters.AddWithValue("@Usr", dt5.Rows[ii]["Usr"].ToString());
-                        cmd5.Parameters.AddWithValue("@DateTerm", Convert.ToDateTime(dt5.Rows[ii]["DateTerm"].ToString()));
-                        cmd5.Parameters.AddWithValue("@Resultat", dt5.Rows[ii]["Resultat"].ToString());
-                        cmd5.Parameters.AddWithValue("@DeadLine", Convert.ToDateTime(dt5.Rows[ii]["DeadLine"].ToString()));
-                        cmd5.Parameters.AddWithValue("@Etat", dt5.Rows[ii]["Etat"].ToString());
-
-                        cmd5.ExecuteNonQuery();
+                SqlDataAdapter da5;
+                da5 = new SqlDataAdapter("select [Code_Formation] ,[ObjForm] ,[MatUser] ,[Usr]  ,[DateTerm]  ,[Resultat] ,E_ResultFormation.[DeadLine] ,[Etat] from E_ResultFormation inner join [E_ListFormationDiffus] on [E_ListFormationDiffus].Code_formt = E_ResultFormation.Code_Formation where[E_ListFormationDiffus].Code_eval = '" + r.Code_EvalByQCM + "' ", con);
+                da5.Fill(dt5);
 
 
-                        SqlCommand cmd6 = new SqlCommand("delete from E_ResultFormation where Code_Formation = '" + dt5.Rows[ii]["Code_Formation"].ToString() + "' ", con);
-                        cmd6.ExecuteNonQuery();
+                for (int ii = 0; ii < dt5.Rows.Count; ii++)
+                {
+
+                    SqlCommand cmd5 = new SqlCommand("INSERT INTO [dbo].[E_ResultFormation_Historiq] (DateHisto , [Code_Formation] ,[ObjForm] ,[MatUser] ,[Usr]  ,[DateTerm]  ,[Resultat] ,[DeadLine] ,[Etat])  VALUES (@DateHisto , @Code_Formation ,@ObjForm ,@MatUser ,@Usr  ,@DateTerm  ,@Resultat ,@DeadLine ,@Etat)", con);
+
+                    cmd5.Parameters.AddWithValue("@DateHisto", System.DateTime.Now);
+                    cmd5.Parameters.AddWithValue("@Code_Formation", dt5.Rows[ii]["Code_Formation"].ToString());
+                    cmd5.Parameters.AddWithValue("@ObjForm", dt5.Rows[ii]["ObjForm"].ToString());
+                    cmd5.Parameters.AddWithValue("@MatUser", dt5.Rows[ii]["MatUser"].ToString());
+                    cmd5.Parameters.AddWithValue("@Usr", dt5.Rows[ii]["Usr"].ToString());
+                    cmd5.Parameters.AddWithValue("@DateTerm", Convert.ToDateTime(dt5.Rows[ii]["DateTerm"].ToString()));
+                    cmd5.Parameters.AddWithValue("@Resultat", dt5.Rows[ii]["Resultat"].ToString());
+                    cmd5.Parameters.AddWithValue("@DeadLine", Convert.ToDateTime(dt5.Rows[ii]["DeadLine"].ToString()));
+                    cmd5.Parameters.AddWithValue("@Etat", dt5.Rows[ii]["Etat"].ToString());
+
+                    cmd5.ExecuteNonQuery();
 
 
-                        SqlCommand cmd7 = new SqlCommand("delete from E_SlideUsr where Code_Formation = '" + dt5.Rows[ii]["Code_Formation"].ToString() + "' ", con);
-                        cmd7.ExecuteNonQuery();
+                    SqlCommand cmd6 = new SqlCommand("delete from E_ResultFormation where Code_Formation = '" + dt5.Rows[ii]["Code_Formation"].ToString() + "' ", con);
+                    cmd6.ExecuteNonQuery();
 
-                    }
+
+                    SqlCommand cmd7 = new SqlCommand("delete from E_SlideUsr where Code_Formation = '" + dt5.Rows[ii]["Code_Formation"].ToString() + "' ", con);
+                    cmd7.ExecuteNonQuery();
 
                 }
-                
 
-            
+            }
+
+
+
             return View(list);
         }
-
 
 
         //POST: E_QCM/Edit/5
         // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier.Pour
         // plus de détails, voir https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Code_QCM,Code_EvalByQCM,Date_Creation,Question,Reponse1,Reponse2,Reponse3,Reponse4,Coeff")] E_QCM e_QCM , string EtatRep1 , string EtatRep2 , string EtatRep3 , string EtatRep4)
         {
             if (ModelState.IsValid)
             {
-                if (EtatRep1 == "Faux" && EtatRep2 == "Faux" && EtatRep3 == "Faux" && EtatRep4 == "Faux")
-                {
-                    ModelState.AddModelError("", "Il faut une réponse vrai.");
-                    ViewBag.codeEval = e_QCM.Code_EvalByQCM ;
+                //if (EtatRep1 == "Faux" && EtatRep2 == "Faux" && EtatRep3 == "Faux" && EtatRep4 == "Faux")
+                //{
+                //    ModelState.AddModelError("", "Il faut une réponse vrai.");
+                //    ViewBag.codeEval = e_QCM.Code_EvalByQCM ;
 
-                    return View(e_QCM);
-                }
+                //    return View(e_QCM);
+                //}
 
-                int countA = 0;
+                //int countA = 0;
 
-                List<string> aaa = new List<string>();
+                //List<string> aaa = new List<string>();
 
-                aaa.Add(EtatRep1);
+                //aaa.Add(EtatRep1);
 
-                aaa.Add(EtatRep2);
+                //aaa.Add(EtatRep2);
 
-                aaa.Add(EtatRep3);
+                //aaa.Add(EtatRep3);
 
-                aaa.Add(EtatRep4);
+                //aaa.Add(EtatRep4);
 
-                for (int i = 0; i < aaa.Count; i++)
-                {
-                    if (aaa[i].ToString() == "Vrai")
-                    {
-                        countA += 1;
-                    }
-                }
+                //for (int i = 0; i < aaa.Count; i++)
+                //{
+                //    if (aaa[i].ToString() == "Vrai")
+                //    {
+                //        countA += 1;
+                //    }
+                //}
 
-                if (countA > 1)
-                {
-                    ModelState.AddModelError("", "Il faut une seule réponse vrai.");
-                    ViewBag.codeEval = e_QCM.Code_EvalByQCM;
-                    return View(e_QCM);
-                }
-
-
-                var list = from m in db.E_QCM
-                           where m.Id == e_QCM.Id
-                           select m;
+                //if (countA > 1)
+                //{
+                //    ModelState.AddModelError("", "Il faut une seule réponse vrai.");
+                //    ViewBag.codeEval = e_QCM.Code_EvalByQCM;
+                //    return View(e_QCM);
+                //}
 
 
-                foreach(E_QCM e in list)
-                {
-                    e_QCM.Code_EvalByQCM = e.Code_EvalByQCM;
-
-                    e_QCM.Code_QCM = e.Code_QCM;
-
-                    e_QCM.Date_Creation = e.Date_Creation;
-
-                    e_QCM.EtatRep1 = e.EtatRep1;
-
-                    e_QCM.EtatRep2 = e.EtatRep2;
-
-                    e_QCM.EtatRep3 = e.EtatRep3;
-
-                    e_QCM.EtatRep4 = e.EtatRep4;
+                //var list = from m in db.E_QCM
+                //           where m.Id == e_QCM.Id
+                //           select m;
 
 
-                }
+                //foreach(E_QCM e in list)
+                //{
+                //    e_QCM.Code_EvalByQCM = e.Code_EvalByQCM;
+
+                //    e_QCM.Code_QCM = e.Code_QCM;
+
+                //    e_QCM.Date_Creation = e.Date_Creation;
+
+                //    e_QCM.EtatRep1 = e.EtatRep1;
+
+                //    e_QCM.EtatRep2 = e.EtatRep2;
+
+                //    e_QCM.EtatRep3 = e.EtatRep3;
+
+                //    e_QCM.EtatRep4 = e.EtatRep4;
+
+
+                //}
 
                 //e_QCM.Date_Modif = System.DateTime.Now;
 
@@ -2537,7 +2614,11 @@ namespace RHEVENT.Controllers
                 con.Open();
 
 
-                SqlCommand cmd = new SqlCommand("UPDATE e_QCM set Date_Modif= '" + System.DateTime.Now + "', Question =  '" + e_QCM.Question + "' , Reponse1 = '" + e_QCM.Reponse1 + "' , EtatRep1 = '" + e_QCM.EtatRep1 + "' ,   Reponse2 = '" + e_QCM.Reponse2 + "', EtatRep2 = '" + e_QCM.EtatRep2 + "' , Reponse3 = '" + e_QCM.Reponse3 + "', EtatRep3 = '" + e_QCM.EtatRep3 + "' , Reponse4 = '" + e_QCM.Reponse4 + "', EtatRep4 = '" + e_QCM.EtatRep4 + "' ,  Coeff = " + e_QCM.Coeff + " where  Code_QCM= '" + e_QCM.Code_QCM + "'  ", con);
+                //SqlCommand cmd = new SqlCommand("UPDATE e_QCM set Date_Modif= '" + System.DateTime.Now + "', Question =  '" + e_QCM.Question + "' , Reponse1 = '" + e_QCM.Reponse1 + "' , EtatRep1 = '" + e_QCM.EtatRep1 + "' ,   Reponse2 = '" + e_QCM.Reponse2 + "', EtatRep2 = '" + e_QCM.EtatRep2 + "' , Reponse3 = '" + e_QCM.Reponse3 + "', EtatRep3 = '" + e_QCM.EtatRep3 + "' , Reponse4 = '" + e_QCM.Reponse4 + "', EtatRep4 = '" + e_QCM.EtatRep4 + "' ,  Coeff = " + e_QCM.Coeff + " where  Code_QCM= '" + e_QCM.Code_QCM + "'  ", con);
+                //cmd.ExecuteNonQuery();
+
+
+                SqlCommand cmd = new SqlCommand("UPDATE e_QCM set Date_Modif= '" + System.DateTime.Now + "', Question =  '" + e_QCM.Question + "' , Reponse1 = '" + e_QCM.Reponse1 + "' , EtatRep1 = '" + EtatRep1 + "' ,   Reponse2 = '" + e_QCM.Reponse2 + "', EtatRep2 = '" + EtatRep2 + "' , Reponse3 = '" + e_QCM.Reponse3 + "', EtatRep3 = '" + EtatRep3 + "' , Reponse4 = '" + e_QCM.Reponse4 + "', EtatRep4 = '" + EtatRep4 + "' ,  Coeff = " + e_QCM.Coeff + " where  Id= '" + e_QCM.Id + "'  ", con);
                 cmd.ExecuteNonQuery();
 
                 //db.Entry(e_QCM).State = EntityState.Detached;

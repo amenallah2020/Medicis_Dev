@@ -61,27 +61,27 @@
 
 
 
-                if ((ViewContext.RouteData.Values["controller"].ToString() == "EMenuFormateur") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "E_Formation") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "E_ListFormationDiffus") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "E_GrpByUsr") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "E_listeUsr") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "E_listFormationDiffus")||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "EMenuEvaluation") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "E_Evaluation") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "E_ListEvaluationDiffus") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "E_listEvaluationDiffus") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "EMenuFormUser") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "EMenuUser") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "EMenuEvaluationUser") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "EMenuEvalUser") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "E_EvalRealiseeUser") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "E_MenuElearning") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "E_DiffEval") ||
-                    (ViewContext.RouteData.Values["controller"].ToString() == "E_QCM") )
-                {
-                    if (User.IsInRole("Admin_Medicis") || User.IsInRole("Elearning"))
-                    {
+                            if ((ViewContext.RouteData.Values["controller"].ToString() == "EMenuFormateur") ||
+                                (ViewContext.RouteData.Values["controller"].ToString() == "E_Formation") ||
+                                (ViewContext.RouteData.Values["controller"].ToString() == "E_ListFormationDiffus") ||
+                                (ViewContext.RouteData.Values["controller"].ToString() == "E_GrpByUsr") ||
+                                (ViewContext.RouteData.Values["controller"].ToString() == "E_listeUsr") ||
+                                (ViewContext.RouteData.Values["controller"].ToString() == "E_listFormationDiffus")||
+                                (ViewContext.RouteData.Values["controller"].ToString() == "EMenuEvaluation") ||
+                                (ViewContext.RouteData.Values["controller"].ToString() == "E_Evaluation") ||
+                                (ViewContext.RouteData.Values["controller"].ToString() == "E_ListEvaluationDiffus") ||
+                                (ViewContext.RouteData.Values["controller"].ToString() == "E_listEvaluationDiffus") ||
+                                (ViewContext.RouteData.Values["controller"].ToString() == "EMenuFormUser") ||
+                                (ViewContext.RouteData.Values["controller"].ToString() == "EMenuUser") ||
+                                (ViewContext.RouteData.Values["controller"].ToString() == "EMenuEvaluationUser") ||
+                                (ViewContext.RouteData.Values["controller"].ToString() == "EMenuEvalUser") ||
+                                (ViewContext.RouteData.Values["controller"].ToString() == "E_EvalRealiseeUser") ||
+                                (ViewContext.RouteData.Values["controller"].ToString() == "E_MenuElearning") ||
+                                (ViewContext.RouteData.Values["controller"].ToString() == "E_DiffEval") ||
+                                (ViewContext.RouteData.Values["controller"].ToString() == "E_QCM") )
+                            {
+                                if (User.IsInRole("Admin_Medicis") || User.IsInRole("Elearning"))
+                                {
 
                         <button class="dropdown-btn active">
                             E-learning
@@ -89,34 +89,34 @@
                         </button>
 
                         <div class="dropdown-container1">
-                            @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Formateur")))
+                            @if(User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Formateur")))
                             {
-                                <a href="@Url.Action("Index", "EMenuFormateur")">Gestion des formations </a>
-                                <a href="@Url.Action("Group", "E_GrpByUsr")">Gestion grp de diffusion </a>
-                                <a href="@Url.Action("Index", "EMenuEvaluation")">Gestion des évaluations </a>
+                                <a href = "@Url.Action("Index", "EMenuFormateur")">Gestion des formations</a>
+                                <a href = "@Url.Action("Group", "E_GrpByUsr")">Gestion grp de diffusion</a>
+                                <a href = "@Url.Action("Index", "EMenuEvaluation")">Gestion des évaluations</a>
                             }
-                            @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Employer")))
+            @if(User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Employer")))
 
                             {
                                 if (Session["nbFAR"] != null && Session["nbFAR"].ToString() != "0")
                                 {
-                                    <a href="@Url.Action("Index", "EMenuFormUser")">Mes formations <span style="color:red">(@Session["nbFAR"].ToString())</span></a>
+                                    <a href = "@Url.Action("Index", "EMenuFormUser")">Mes formations<span style="color:red">(@Session["nbFAR"].ToString())</span></a>
                                 }
                                 else
                                 {
-                                    <a href="@Url.Action("Index", "EMenuFormUser")">Mes formations </a>
+                                    <a href = "@Url.Action("Index", "EMenuFormUser")">Mes formations</a>
                                 }
                             }
-                            @if (User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Employer")))
+                            @if(User.IsInRole("Admin_Medicis") || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Admin")) || (User.IsInRole("Elearning") && User.IsInRole("Elearning_Employer")))
 
                             {
                                 if (Session["nbEAR"] != null && Session["nbEAR"].ToString() != "0")
                                 {
-                                    <a href="@Url.Action("Index", "EMenuEvaluationUser")">Mes évaluations <span style="color:red">(@Session["nbEAR"].ToString())</span> </a>
+                                    <a href = "@Url.Action("Index", "EMenuEvaluationUser")">Mes évaluations<span style="color:red">(@Session["nbEAR"].ToString())</span> </a>
                                 }
                                 else
                                 {
-                                    <a href="@Url.Action("Index", "EMenuEvaluationUser")">Mes évaluations  </a>
+                                    <a href = "@Url.Action("Index", "EMenuEvaluationUser")">Mes évaluations</a>
                                 }
                             }
 

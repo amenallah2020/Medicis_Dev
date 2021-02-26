@@ -77,6 +77,9 @@
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.1.7.3\lib\net461\Rotativa.dll</HintPath>
+    </Reference>
     <Reference Include="ServiceStack.Interfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
       <HintPath>..\packages\ServiceStack.Interfaces.5.7.0\lib\net45\ServiceStack.Interfaces.dll</HintPath>
     </Reference>
@@ -291,24 +294,24 @@
     <Compile Include="Controllers\DA_TypesActionsController.cs" />
     <Compile Include="Controllers\DA_WorkflowTypAchController.cs" />
     <Compile Include="Controllers\DictionnairesController.cs" />
-    <Compile Include="Controllers\EMenuEvaluationUserController.cs" />
     <Compile Include="Controllers\EMenuEvaluationController.cs" />
-    <Compile Include="Controllers\E_MenuElearning.cs" />
-    <Compile Include="Controllers\E_MenuRH.cs" />
-    <Compile Include="Controllers\E_MenuAdmMedicis.cs" />
-    <Compile Include="Controllers\E_EvalRealiseeUserController.cs" />
-    <Compile Include="Controllers\EMenuFormUserController.cs" />
+    <Compile Include="Controllers\EMenuEvaluationUserController.cs" />
     <Compile Include="Controllers\EMenuEvalUserController.cs" />
-    <Compile Include="Controllers\EMenuUserController.cs" />
     <Compile Include="Controllers\EMenuFormateurController.cs" />
+    <Compile Include="Controllers\EMenuFormUserController.cs" />
+    <Compile Include="Controllers\EMenuUserController.cs" />
+    <Compile Include="Controllers\E_DiffEvalController.cs" />
+    <Compile Include="Controllers\E_EvalRealiseeUserController.cs" />
     <Compile Include="Controllers\E_EvaluationController.cs" />
     <Compile Include="Controllers\E_FormationController.cs" />
-    <Compile Include="Controllers\E_DiffEvalController.cs" />
     <Compile Include="Controllers\E_GrpByUsrController.cs" />
-    <Compile Include="Controllers\E_listeUsrEvalController.cs" />
     <Compile Include="Controllers\E_listeUsrController.cs" />
+    <Compile Include="Controllers\E_listeUsrEvalController.cs" />
     <Compile Include="Controllers\E_ListEvaluationDiffusController.cs" />
     <Compile Include="Controllers\E_ListFormationDiffusController.cs" />
+    <Compile Include="Controllers\E_MenuAdmMedicis.cs" />
+    <Compile Include="Controllers\E_MenuElearning.cs" />
+    <Compile Include="Controllers\E_MenuRH.cs" />
     <Compile Include="Controllers\E_QCMController.cs" />
     <Compile Include="Controllers\MesDemAjoutsController.cs" />
     <Compile Include="Controllers\MotifsRejetsController.cs" />
@@ -335,9 +338,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202102181009243_d9.cs" />
-    <Compile Include="Migrations\202102181009243_d9.Designer.cs">
-      <DependentUpon>202102181009243_d9.cs</DependentUpon>
+    <Compile Include="Migrations\202102251317304_m1.cs" />
+    <Compile Include="Migrations\202102251317304_m1.Designer.cs">
+      <DependentUpon>202102251317304_m1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -357,10 +360,12 @@
     <Compile Include="Models\DA_TypesAchats.cs" />
     <Compile Include="Models\DA_WorkflowTypAch.cs" />
     <Compile Include="Models\Dictionnaire.cs" />
+    <Compile Include="Models\E_DeadlineEvalUsr.cs" />
     <Compile Include="Models\E_DiffEval.cs" />
     <Compile Include="Models\E_ListEvaluationDiffus_Historiq.cs" />
     <Compile Include="Models\E_ResultatFormation_Historiq.cs" />
     <Compile Include="Models\E_ResultatFormation.cs" />
+    <Compile Include="Models\E_ResultQCMParSlide.cs" />
     <Compile Include="Models\E_ResultQCM_Historiq.cs" />
     <Compile Include="Models\E_SlideUsr.cs" />
     <Compile Include="Models\E_ResultQCM.cs" />
@@ -572,6 +577,10 @@
     <Content Include="css\theme.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Rotativa\help-wkhtmltoimage.txt" />
+    <Content Include="Rotativa\help-wkhtmltopdf.txt" />
+    <Content Include="Rotativa\wkhtmltoimage.exe" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\chosen.jquery.min.js" />
     <Content Include="Global.asax" />
     <Content Include="lib\jquery-validate\additional-methods.js" />
@@ -801,6 +810,9 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\_bootstrap-datetimepicker.less" />
+    <Content Include="libman.json" />
+    <Content Include="App_Browsers\qt.browser" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile2.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
@@ -1274,8 +1286,12 @@
     <Content Include="Views\DA_Labo\EditLaboUser.cshtml" />
     <Content Include="Views\DA_Demande\demandeTraitee.cshtml" />
     <Content Include="Views\DA_Budget\Budget_Dem.cshtml" />
+    <Content Include="Views\E_listeUsr\DiffUser.cshtml" />
+    <Content Include="Views\E_QCM\ConsultParSlide.cshtml" />
+    <Content Include="Views\E_QCM\ResultQCMParSlide.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\PDF\" />
     <Folder Include="DeleteImg\" />
     <Folder Include="SlideImages\" />
     <Folder Include="Views\ELEARNING\" />
@@ -1284,8 +1300,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202102181009243_d9.resx">
-      <DependentUpon>202102181009243_d9.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202102251317304_m1.resx">
+      <DependentUpon>202102251317304_m1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

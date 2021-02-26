@@ -196,7 +196,7 @@ namespace RHEVENT.Controllers
             ViewBag.CodeGroup = CodeGroup;
 
              
-            List<ApplicationUser> listUser = UserQuery.OrderBy(x=>x.nom).ToList<ApplicationUser>();
+            List<ApplicationUser> listUser = UserQuery.ToList<ApplicationUser>();
 
             ViewBag.listUser = listUser;
 
@@ -547,9 +547,9 @@ namespace RHEVENT.Controllers
                         Serveur serveur = (from m in db.Serveur
                                            select m).Single();
 
-                        string Message = "Bonjour" + "\n" + "Vous avez une formation à réaliser." + "\n" + "Lien: " + serveur.Serv + "/E_formation/SlideUsr?codeF=" + e_f.Code;
+                    string Message = "<HTML><Head></Head><Body>Bonjour<div><br/></div><div>" + "Vous avez une formation à réaliser.</div>" + "<div> Lien Formation :  " + "<a href=" + serveur.Serv + "/E_Formation/SlideUsr?codeF=" + e_f.Code + ">" + e_f.Code + " : " + e_f.Objet + "</a></div><div><br/><br/>Bien Cordialement</div></Body></HTML>";
 
-                        SqlCommand cmd4 = new SqlCommand("Insert into Emails (Destinataire ,Email_Destinataire ,Sujet ,Message ,Current_User_Event ,Date_email ,Etat_Envoi) values (@Destinataire ,@Email_Destinataire ,@Sujet ,@Message ,@Current_User_Event ,@Date_email ,@Etat_Envoi)", con);
+                    SqlCommand cmd4 = new SqlCommand("Insert into Emails (Destinataire ,Email_Destinataire ,Sujet ,Message ,Current_User_Event ,Date_email ,Etat_Envoi) values (@Destinataire ,@Email_Destinataire ,@Sujet ,@Message ,@Current_User_Event ,@Date_email ,@Etat_Envoi)", con);
 
                         cmd4.Parameters.AddWithValue("@Destinataire", Nom_dest);
                         cmd4.Parameters.AddWithValue("@Email_Destinataire", Email_dest);
@@ -642,7 +642,7 @@ namespace RHEVENT.Controllers
                             select m;
             }
 
-            List<ApplicationUser> listUser = UserQuery.OrderBy(x=>x.nom).ToList<ApplicationUser>();
+            List<ApplicationUser> listUser = UserQuery.ToList<ApplicationUser>();
 
             ViewBag.listUser = listUser;
 

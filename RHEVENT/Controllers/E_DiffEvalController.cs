@@ -22,11 +22,11 @@ namespace RHEVENT.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         public IEnumerable<E_listeUsr> liste2 = null;
-         
+
         // GET: E_GrpByUsr
 
-        [HttpPost]  
-        public ActionResult Diff(FormCollection formCollection, string id,DateTime dateLim)
+        [HttpPost]
+        public ActionResult Diff(FormCollection formCollection, string id, DateTime dateLim)
         {
             string codeEval = id;
 
@@ -38,12 +38,12 @@ namespace RHEVENT.Controllers
 
             }
 
-            string[] ids = formCollection["grpId"].Split(new char[]{','});
+            string[] ids = formCollection["grpId"].Split(new char[] { ',' });
 
             var grp = db.E_GrpByUsr.Find(int.Parse(ids[0]));
 
 
-          
+
 
             ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
 
@@ -63,7 +63,7 @@ namespace RHEVENT.Controllers
                            select m;
 
 
-            if (verifQCM.Count() ==0)
+            if (verifQCM.Count() == 0)
             {
                 ViewBag.Bloq = "La diffusion a été annulée : L'évaluation est sans QCM !";
 
@@ -72,50 +72,50 @@ namespace RHEVENT.Controllers
             }
 
 
-            for (int j = 0; j < dt3.Rows.Count; j++)
-            {
-                DataTable dt2 = new DataTable();
+            //for (int j = 0; j < dt3.Rows.Count; j++)
+            //{
+            //    DataTable dt2 = new DataTable();
 
-                SqlDataAdapter da2;
-                da2 = new SqlDataAdapter("select * from E_ListEvaluationDiffus  where Code_eval = '" + codeEval + "' and  Mat_usr = '" + dt3.Rows[j]["Mat_usr"].ToString() + "'", con);
-                da2.Fill(dt2);
+            //    SqlDataAdapter da2;
+            //    da2 = new SqlDataAdapter("select * from E_ListEvaluationDiffus  where Code_eval = '" + codeEval + "' and  Mat_usr = '" + dt3.Rows[j]["Mat_usr"].ToString() + "'", con);
+            //    da2.Fill(dt2);
 
 
 
-                int count = dt2.Rows.Count;
+            //    int count = dt2.Rows.Count;
 
-                if (count != 0)
-                {
-                    ViewBag.Bloq = "La diffusion a été annulée : l'évaluation " + codeEval + " est déjà diffusée à " + dt3.Rows[j]["NomPrenom"].ToString() + " de groupe " + dt3.Rows[j]["Code_grp"].ToString() + " !";
+            //    if (count != 0)
+            //    {
+            //        ViewBag.Bloq = "La diffusion a été annulée : l'évaluation " + codeEval + " est déjà diffusée à " + dt3.Rows[j]["NomPrenom"].ToString() + " de groupe " + dt3.Rows[j]["Code_grp"].ToString() + " !";
 
-                    return RedirectToAction("Index", "E_DiffEval", new { codeEval = codeEval, bloq = @ViewBag.Bloq });
-                }
+            //        return RedirectToAction("Index", "E_DiffEval", new { codeEval = codeEval, bloq = @ViewBag.Bloq });
+            //    }
 
-               
 
-            }
+
+            //}
 
             var evl = (from m in db.E_Evaluation
                        where m.Code_Eval == codeEval
-                        select m).Take(1);
+                       select m).Take(1);
 
             E_Evaluation e_ev = (from m in db.E_Evaluation
-                                    where m.Code_Eval == codeEval
-                                   select m).Take(1).Single();
+                                 where m.Code_Eval == codeEval
+                                 select m).Take(1).Single();
 
             string dd = null;
             foreach (E_Evaluation o in evl)
             {
-                  dd = o.Objet_Eval;
+                dd = o.Objet_Eval;
             }
-          
-           
+
+
             foreach (string ide in ids)
             {
                 var g = db.E_GrpByUsr.Find(int.Parse(ide));
-                 
+
                 //g.Etat_Grp = "Oui";
-                 
+
                 db.Entry(g).State = EntityState.Modified;
 
 
@@ -125,24 +125,24 @@ namespace RHEVENT.Controllers
 
                 //foreach (E_Formation e in form)
                 //{
-                     
-                SqlCommand cmd = new SqlCommand("INSERT INTO E_ListEvaluationDiffus  ([Mat_usr]  ,[Nom_usr] ,[Code_grp]  ,[Code_eval], DateDiffus, MatFormateur, Objet, deadline) " +
-                    "SELECT  [Mat_usr]  ,[Nom_usr]   ,[Code_grp]   ,'"+id+"', '"+System.DateTime.Now+"' , '"+user.matricule+"', '"+ dd+ "' , CONVERT(nvarchar, '" + dateLim + "',103)     FROM [E_listeUsr] " +
-                    "" +  "inner join E_GrpByUsr on[dbo].E_GrpByUsr.Code = [dbo].[E_listeUsr].Code_grp  " +
-                    "" +   "" +   "where  E_GrpByUsr.id = '" + g.Id + "' ", con);
 
-              
+                SqlCommand cmd = new SqlCommand("INSERT INTO E_ListEvaluationDiffus  ([Mat_usr]  ,[Nom_usr] ,[Code_grp]  ,[Code_eval], DateDiffus, MatFormateur, Objet, deadline) " +
+                    "SELECT  [Mat_usr]  ,[Nom_usr]   ,[Code_grp]   ,'" + id + "', '" + System.DateTime.Now + "' , '" + user.matricule + "', '" + dd + "' , CONVERT(nvarchar, '" + dateLim + "',103)     FROM [E_listeUsr] " +
+                    "" + "inner join[RH_MEDICIS].[dbo].E_GrpByUsr on[dbo].E_GrpByUsr.Code = [dbo].[E_listeUsr].Code_grp  " +
+                    "" + "" + "where  E_GrpByUsr.id = '" + g.Id + "'  and not( E_listeUsr.Mat_usr in (select Mat_usr from E_ListEvaluationDiffus   where Code_eval = '" + id + "' )) ", con);
+
+
                 cmd.ExecuteNonQuery();
 
 
                 SqlCommand cmd2 = new SqlCommand("update dbo.E_Evaluation set EtatDiff = 'Diffusee' where Code_Eval =  '" + codeEval + "' ", con);
-                 
+
                 cmd2.ExecuteNonQuery();
 
 
                 DataTable dt4 = new DataTable();
                 SqlDataAdapter da4;
-                da4 = new SqlDataAdapter("SELECT AspNetUsers.NomPrenom Nom_Dest, AspNetUsers.Email Email_Dest FROM [E_listeUsr]   inner join E_GrpByUsr on[dbo].E_GrpByUsr.Code = [dbo].[E_listeUsr].Code_grp   inner join AspNetUsers on AspNetUsers.matricule =[E_listeUsr].Mat_usr where  E_GrpByUsr.id  = '" + g.Id + "'   ", con);
+                da4 = new SqlDataAdapter("SELECT AspNetUsers.NomPrenom Nom_Dest, AspNetUsers.Email Email_Dest FROM [E_listeUsr]   inner join[RH_MEDICIS].[dbo].E_GrpByUsr on[dbo].E_GrpByUsr.Code = [dbo].[E_listeUsr].Code_grp   inner join AspNetUsers on AspNetUsers.matricule =[E_listeUsr].Mat_usr where  E_GrpByUsr.id  = '" + g.Id + "'  and  not(AspNetUsers.Email in ( select Email_Destinataire from Emails where Message like '%" + id + "%')) ", con);
                 da4.Fill(dt4);
 
                 for (int j = 0; j < dt4.Rows.Count; j++)
@@ -153,8 +153,8 @@ namespace RHEVENT.Controllers
 
                     Serveur serveur = (from m in db.Serveur
                                        select m).Single();
-                    //<HTML><Head></Head><Body>Bonjour<div><br/></div><div>" + "Vous avez une évaluation à réaliser.</div>" + "<div> Lien Evaluation:  " + "<a href=" + serveur.Serv + "/E_QCM/Consult/"+ e_ev.Code_Eval +">" + e_ev.Code_Eval + "</a></div><div><br/><br/>Bien Cordialement</div></Body></HTML>
-                    string Message = "<HTML><Head></Head><Body>Bonjour<div><br/></div><div>" + "Vous avez une évaluation à réaliser.</div>" + "<div> Lien Evaluation:  " + "<a href=" + serveur.Serv + "/E_QCM/Consult/" + e_ev.Code_Eval + ">" + e_ev.Code_Eval +" : "+e_ev.Objet_Eval+ "</a></div><div><br/><br/>Bien Cordialement</div></Body></HTML>";
+
+                    string Message = "<HTML><Head></Head><Body>Bonjour<div><br/></div><div>" + "Vous avez une évaluation à réaliser.</div>" + "<div> Lien Evaluation:  " + "<a href=" + serveur.Serv + "/EMenuEvalUser/Index/>" + e_ev.Code_Eval + " : " + e_ev.Objet_Eval + "</a></div><div><br/><br/>Bien Cordialement</div></Body></HTML>";
 
                     SqlCommand cmd4 = new SqlCommand("Insert into Emails (Destinataire ,Email_Destinataire ,Sujet ,Message ,Current_User_Event ,Date_email ,Etat_Envoi) values (@Destinataire ,@Email_Destinataire ,@Sujet ,@Message ,@Current_User_Event ,@Date_email ,@Etat_Envoi)", con);
 
@@ -173,13 +173,13 @@ namespace RHEVENT.Controllers
 
                 //}
                 db.SaveChanges();
-                 
+
             }
-             
+
 
             //foreach (E_Evaluation f in form)
             //{
-                return RedirectToAction("Index","E_Evaluation");
+            return RedirectToAction("Index", "E_Evaluation");
             //}
 
             return View();
@@ -198,7 +198,7 @@ namespace RHEVENT.Controllers
         }
 
 
-        public ActionResult Index(string codeEval , string bloq)
+        public ActionResult Index(string codeEval, string bloq)
         {
 
             ViewBag.Bloq = "";
@@ -216,21 +216,21 @@ namespace RHEVENT.Controllers
 
             int count = l.Count();
 
-            if (count ==0)
+            if (count == 0)
             {
                 E_Evaluation e = db.E_Evaluation.Find(Convert.ToInt32(codeEval));
 
                 ViewBag.CodeEval = e.Code_Eval;
-                 
+
                 ViewBag.objEval = e.Objet_Eval;
 
             }
             else
             {
-                foreach(E_Evaluation f in l)
+                foreach (E_Evaluation f in l)
                 {
                     ViewBag.CodeEval = f.Code_Eval;
-                     
+
                     ViewBag.objEval = f.Objet_Eval;
 
                 }
@@ -249,13 +249,13 @@ namespace RHEVENT.Controllers
         // GET: E_GrpByUsr/Details/5
         public ActionResult Details(int? id)
         {
-          
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            
+
             E_GrpByUsr e_GrpByUsr = db.E_GrpByUsr.Find(id);
 
 
@@ -264,7 +264,7 @@ namespace RHEVENT.Controllers
             string codeg = e_GrpByUsr.Code;
 
             var listUsr = from m in db.E_listeUsr
-                          where  m.Code_grp == codeg
+                          where m.Code_grp == codeg
                           select m;
 
             E_listeUsr e_listeUsr = new E_listeUsr();
@@ -330,7 +330,7 @@ namespace RHEVENT.Controllers
         }
 
         public ActionResult DetailGrp(string id)
-        { 
+        {
             E_GrpByUsr e = db.E_GrpByUsr.Find(Convert.ToInt32(id));
 
             if (e == null)
@@ -342,7 +342,7 @@ namespace RHEVENT.Controllers
                 foreach (E_listeUsr ee in list)
                 {
                     ViewBag.codeGrp = ee.Code_grp;
-                     
+
                 }
 
                 liste2 = list;
@@ -350,7 +350,7 @@ namespace RHEVENT.Controllers
             else
             {
                 ViewBag.codeGrp = e.Code;
- 
+
                 liste2 = from m in db.E_listeUsr
                          where m.Code_grp == e.Code
                          select m;
@@ -361,10 +361,10 @@ namespace RHEVENT.Controllers
 
         public ActionResult CreateG(string id)
         {
-             
-              E_GrpByUsr e = db.E_GrpByUsr.Find(Convert.ToInt32(id));
-             
-            
+
+            E_GrpByUsr e = db.E_GrpByUsr.Find(Convert.ToInt32(id));
+
+
             List<ApplicationUser> listUser = db.Users.ToList();
 
             ViewBag.listUser = listUser;
@@ -385,14 +385,14 @@ namespace RHEVENT.Controllers
 
             if (list.Count == 0)
             {
-                E_GrpByUsr e = db.E_GrpByUsr.Find(Convert.ToInt32(id)); 
+                E_GrpByUsr e = db.E_GrpByUsr.Find(Convert.ToInt32(id));
             }
 
 
             foreach (E_Formation e in r)
-            {  
-              ViewBag.CodeFormation = e.Code;
-                 
+            {
+                ViewBag.CodeFormation = e.Code;
+
             }
 
 
@@ -409,7 +409,7 @@ namespace RHEVENT.Controllers
 
             ViewBag.listUser = listUser;
 
-            return View( );
+            return View();
         }
 
         // POST: E_GrpByUsr/Create
@@ -421,7 +421,7 @@ namespace RHEVENT.Controllers
         {
             if (ModelState.IsValid)
             {
-               
+
                 db.E_GrpByUsr.Add(e_GrpByUsr);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -432,7 +432,7 @@ namespace RHEVENT.Controllers
 
         [HttpGet]
         public ActionResult Diffuser(string id, E_GrpByUsr e_GrpByUsr)
-        { 
+        {
 
             E_GrpByUsr e = db.E_GrpByUsr.Find(Convert.ToInt32(id));
 
@@ -470,17 +470,17 @@ namespace RHEVENT.Controllers
         }
 
 
-        [HttpPost] 
+        [HttpPost]
         public ActionResult Diffuser(int id)
         {
             if (ModelState.IsValid)
             {
-                
+
                 E_GrpByUsr e_GrpByUsr = db.E_GrpByUsr.Find(id);
 
                 //e_GrpByUsr.Etat_Grp = "Oui";
 
-           
+
 
                 db.Entry(e_GrpByUsr).State = EntityState.Modified;
 
@@ -489,7 +489,7 @@ namespace RHEVENT.Controllers
                 con.Open();
 
 
-                SqlCommand cmd = new SqlCommand("INSERT INTO E_ListFormationDiffus  ([Mat_usr]  ,[Nom_usr] ,[Code_grp]  ,[Code_formt]) SELECT  [Mat_usr]  ,[Nom_usr]   ,[Code_grp]   ,[Code_formt] FROM [E_listeUsr] inner join E_GrpByUsr on[dbo].E_GrpByUsr.Code = [dbo].[E_listeUsr].Code_grp  where  E_GrpByUsr.id = '" + id + "' ", con);
+                SqlCommand cmd = new SqlCommand("INSERT INTO E_ListFormationDiffus  ([Mat_usr]  ,[Nom_usr] ,[Code_grp]  ,[Code_formt]) SELECT  [Mat_usr]  ,[Nom_usr]   ,[Code_grp]   ,[Code_formt] FROM [E_listeUsr] inner join[RH_MEDICIS].[dbo].E_GrpByUsr on[dbo].E_GrpByUsr.Code = [dbo].[E_listeUsr].Code_grp  where  E_GrpByUsr.id = '" + id + "' ", con);
                 cmd.ExecuteNonQuery();
 
 
@@ -522,7 +522,7 @@ namespace RHEVENT.Controllers
                 //    return RedirectToAction("Index", new { id = f.Id });
                 //}
 
-             
+
 
             }
 
@@ -546,13 +546,13 @@ namespace RHEVENT.Controllers
                 int c = listc.ToList().Count;
 
                 if (c != 0)
-                { 
+                {
                     ViewBag.ErrorMessage = $"Ce nom est déjà utilisé par un autre groupe ";
-                     
-                    return View("ExistGrpG"); 
+
+                    return View("ExistGrpG");
 
                 }
- 
+
                 ApplicationUser login = db.Users.Find(User.Identity.GetUserId());
 
                 //e_GrpByUsr.Etat_Grp = "Non";
@@ -580,7 +580,7 @@ namespace RHEVENT.Controllers
                     e_listeUsr.Mat_usr = u.matricule;
 
                     e_listeUsr.Nom_usr = u.NomPrenom;
-                     
+
                 }
 
                 if (ModelState.IsValid)
@@ -600,12 +600,12 @@ namespace RHEVENT.Controllers
         //[HttpPost, ActionName("AddUser")]
         //[HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddUser( E_GrpByUsr e_GrpByUsr,  E_listeUsr e_listeUsr, string id)
-        { 
+        public ActionResult AddUser(E_GrpByUsr e_GrpByUsr, E_listeUsr e_listeUsr, string id)
+        {
             if (ModelState.IsValid)
-            { 
+            {
                 var listc = from m in db.E_GrpByUsr
-                            where m.Code == e_GrpByUsr.Code 
+                            where m.Code == e_GrpByUsr.Code
                             select m;
 
                 int c = listc.ToList().Count;
@@ -627,22 +627,22 @@ namespace RHEVENT.Controllers
 
                     //ViewBag.codeF = Convert.ToString(dt.Rows[0][0]);
 
-                     
+
                     return View("ExistGrp");
 
-                
+
                 }
 
 
                 //E_Formation e = db.E_Formation.Find(Convert.ToInt32 (e_GrpByUsr.Code_Formation));
-                 
+
                 //e_GrpByUsr.Code_Formation = e.Code;
-                 
+
 
                 ApplicationUser login = db.Users.Find(User.Identity.GetUserId());
 
                 //e_GrpByUsr.Etat_Grp = "Non";
-                 
+
                 e_GrpByUsr.Matricule_Usr = login.matricule;
 
 
@@ -676,11 +676,11 @@ namespace RHEVENT.Controllers
                     db.E_listeUsr.Add(e_listeUsr);
                     db.SaveChanges();
 
-                    return RedirectToAction("Index","E_listeUsr", new { id = e_GrpByUsr.Id });
+                    return RedirectToAction("Index", "E_listeUsr", new { id = e_GrpByUsr.Id });
                 }
 
                 return View(e_GrpByUsr);
-            } 
+            }
             return View();
         }
 
@@ -718,7 +718,7 @@ namespace RHEVENT.Controllers
 
         public ActionResult DeleteG(int? id)
         {
-           
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -762,7 +762,7 @@ namespace RHEVENT.Controllers
         [HttpPost, ActionName("DeleteG")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmedG(int id)
-        { 
+        {
             string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
             SqlConnection con = new SqlConnection(constr);
             con.Open();
@@ -774,15 +774,15 @@ namespace RHEVENT.Controllers
             da.Fill(dt);
 
             string codeg = Convert.ToString(dt.Rows[0][0]);
- 
+
             SqlCommand cmd = new SqlCommand("delete FROM E_listeUsr where Code_grp='" + codeg + "' ", con);
             cmd.ExecuteNonQuery();
 
             SqlCommand cmd2 = new SqlCommand("delete FROM E_GrpByUsr where id='" + id + "'", con);
             cmd2.ExecuteNonQuery();
-             
+
             con.Close();
-                
+
             return RedirectToAction("Group");
         }
 
@@ -811,7 +811,7 @@ namespace RHEVENT.Controllers
         [HttpPost]
         public async Task<ActionResult> DeleteGroup(int id)
         {
-             
+
             string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
             SqlConnection con = new SqlConnection(constr);
             con.Open();
@@ -824,7 +824,7 @@ namespace RHEVENT.Controllers
 
             string codeg = Convert.ToString(dt.Rows[0][0]);
 
-            
+
 
             SqlCommand cmd = new SqlCommand("delete FROM E_listeUsr where Code_grp='" + codeg + "' ", con);
             cmd.ExecuteNonQuery();
@@ -834,8 +834,8 @@ namespace RHEVENT.Controllers
 
 
             con.Close();
- 
- 
+
+
             return RedirectToAction("Group");
         }
 
@@ -873,7 +873,7 @@ namespace RHEVENT.Controllers
             SqlCommand cmd2 = new SqlCommand("delete FROM E_GrpByUsr where id='" + id + "'", con);
             cmd2.ExecuteNonQuery();
 
- 
+
             con.Close();
 
             //var list = from m in db.E_GrpByUsr
@@ -932,7 +932,7 @@ namespace RHEVENT.Controllers
 
             //db.SaveChanges();
 
-           
+
 
             return RedirectToAction("Index", new { id = ff });
         }

@@ -20,7 +20,7 @@ namespace RHEVENT.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-
+         
         public static string searchTermCodeF = string.Empty;
 
         public static string ValTermCodeF = string.Empty;
@@ -100,7 +100,7 @@ namespace RHEVENT.Controllers
                 if (p <= 9)
                     e_Evaluation.Code_Eval = "Eval_" + NewChaine + "_0" + (a + 1);
                 else
-                    e_Evaluation.Code_Eval = "Eval_" + NewChaine + "_1" + (a + 1);
+                    e_Evaluation.Code_Eval = "Eval_" + NewChaine + "_" + (a + 1);
 
 
                 SqlCommand cmd = new SqlCommand("Insert into E_Evaluation (Code_Eval,CodeForm,Etat_Eval,Date_Creation,Date_Modif,Matricule_Formateur,Objet_Eval,Pourc_Valid,Duree_Eval) values(@Code_Eval,@CodeForm,@Etat_Eval,@Date_Creation,@Date_Modif,@Matricule_Formateur,@Objet_Eval,@Pourc_Valid,@Duree_Eval)", con);
@@ -205,43 +205,62 @@ namespace RHEVENT.Controllers
             if (ModelState.IsValid)
             {
 
-                if (EtatRep1 == "Faux" && EtatRep2 == "Faux" && EtatRep3 == "Faux" && EtatRep4 == "Faux")
-                {
-                    ModelState.AddModelError("", "Il faut une réponse vrai.");
-                    ViewBag.codeEval = e_QCM.Code_EvalByQCM;
-                    ViewBag.codeFor = codeForm;
+                //if (EtatRep1 == "Faux" && EtatRep2 == "Faux" && EtatRep3 == "Faux" && EtatRep4 == "Faux")
+                //{
+                //    ModelState.AddModelError("", "Il faut une réponse vrai.");
+                //    ViewBag.codeEval = e_QCM.Code_EvalByQCM;
+                //    ViewBag.codeFor = codeForm;
 
-                    return View(e_QCM);
-                }
+                //    return View(e_QCM);
+                //}
 
-                int countA = 0;
+                //int countA = 0;
 
-                List<string> aaa = new List<string>();
+                //List<string> aaa = new List<string>();
 
-                aaa.Add(EtatRep1);
+                //aaa.Add(EtatRep1);
 
-                aaa.Add(EtatRep2);
+                //aaa.Add(EtatRep2);
 
-                aaa.Add(EtatRep3);
+                //aaa.Add(EtatRep3);
 
-                aaa.Add(EtatRep4);
+                //aaa.Add(EtatRep4);
 
-                for (int i = 0; i < aaa.Count; i++)
-                {
-                    if (aaa[i].ToString() == "Vrai")
-                    {
-                        countA += 1;
-                    }
-                }
+                //for (int i = 0; i < aaa.Count; i++)
+                //{
+                //    if (aaa[i].ToString() == "Vrai")
+                //    {
+                //        countA += 1;
+                //    }
+                //}
 
-                if (countA > 1)
-                {
-                    ModelState.AddModelError("", "Il faut une seule réponse vrai.");
-                    ViewBag.codeEval = e_QCM.Code_EvalByQCM;
-                    ViewBag.codeFor = codeForm;
+                //if (countA > 1)
+                //{
+                //    ModelState.AddModelError("", "Il faut une seule réponse vrai.");
+                //    ViewBag.codeEval = e_QCM.Code_EvalByQCM;
+                //    ViewBag.codeFor = codeForm;
 
-                    return View(e_QCM);
-                }
+                //    return View(e_QCM);
+                //}
+
+
+
+                //e_QCM.Date_Modif = System.DateTime.Now;
+
+
+                string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+                SqlConnection con = new SqlConnection(constr);
+                con.Open();
+
+
+                SqlCommand cmd = new SqlCommand("UPDATE e_QCM set Date_Modif= '" + System.DateTime.Now + "', Question =  '" + e_QCM.Question + "' , Reponse1 = '" + e_QCM.Reponse1 + "' , EtatRep1 = '" + EtatRep1 + "' ,   Reponse2 = '" + e_QCM.Reponse2 + "', EtatRep2 = '" + EtatRep2 + "' , Reponse3 = '" + e_QCM.Reponse3 + "', EtatRep3 = '" + EtatRep3 + "' , Reponse4 = '" + e_QCM.Reponse4 + "', EtatRep4 = '" + EtatRep4 + "' ,  Coeff = " + e_QCM.Coeff + " where  Id= '" + e_QCM.Id + "'  ", con);
+                cmd.ExecuteNonQuery();
+
+                //db.Entry(e_QCM).State = EntityState.Detached;
+
+                //db.Entry(e_QCM).State = EntityState.Modified;
+
+                db.SaveChanges();
 
 
                 var list = from m in db.E_QCM
@@ -268,28 +287,11 @@ namespace RHEVENT.Controllers
 
                 }
 
-                //e_QCM.Date_Modif = System.DateTime.Now;
-
-
-                string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
-                SqlConnection con = new SqlConnection(constr);
-                con.Open();
-
-
-                SqlCommand cmd = new SqlCommand("UPDATE e_QCM set Date_Modif= '" + System.DateTime.Now + "', Question =  '" + e_QCM.Question + "' , Reponse1 = '" + e_QCM.Reponse1 + "' , EtatRep1 = '" + e_QCM.EtatRep1 + "' ,   Reponse2 = '" + e_QCM.Reponse2 + "', EtatRep2 = '" + e_QCM.EtatRep2 + "' , Reponse3 = '" + e_QCM.Reponse3 + "', EtatRep3 = '" + e_QCM.EtatRep3 + "' , Reponse4 = '" + e_QCM.Reponse4 + "', EtatRep4 = '" + e_QCM.EtatRep4 + "' ,  Coeff = " + e_QCM.Coeff + " where  Code_QCM= '" + e_QCM.Code_QCM + "'  ", con);
-                cmd.ExecuteNonQuery();
-
-                //db.Entry(e_QCM).State = EntityState.Detached;
-
-                //db.Entry(e_QCM).State = EntityState.Modified;
-
-                db.SaveChanges();
-
                 return RedirectToAction("ListQCM", new { codeEval = e_QCM.Code_EvalByQCM, codeF = codeForm });
             }
+
             return View(e_QCM);
         }
-
 
         public ActionResult ListEval(string CodeEval, string CodeF)
         {
@@ -443,6 +445,7 @@ namespace RHEVENT.Controllers
         {
             if (ModelState.IsValid)
             {
+                /*
                 if (EtatRep1 == "Faux" && EtatRep2 == "Faux" && EtatRep3 == "Faux" && EtatRep4 == "Faux")
                 {
                     ModelState.AddModelError("", "Il faut une réponse vrai.");
@@ -471,14 +474,14 @@ namespace RHEVENT.Controllers
                         countA += 1;
                     }
                 }
-
-                if (countA > 1)
-                {
-                    ModelState.AddModelError("", "Il faut une seule réponse vrai.");
-                    ViewBag.codeEval = codeEvl;
-                    ViewBag.codeForm = codeF;
-                    return View(e_QCM);
-                }
+                */
+                //if (countA > 1)
+                //{
+                //    ModelState.AddModelError("", "Il faut une seule réponse vrai.");
+                //    ViewBag.codeEval = codeEvl;
+                //    ViewBag.codeForm = codeF;
+                //    return View(e_QCM);
+                //}
 
 
                 e_QCM.Code_EvalByQCM = codeEvl;
@@ -505,8 +508,8 @@ namespace RHEVENT.Controllers
                 int o = qcm.Count();
 
                 if (o != 0)
-                {
-                    e_QCM.NumQ = o + 1;
+                {  
+                    e_QCM.NumQ = o + 1; 
                 }
                 else
                 {
@@ -660,7 +663,7 @@ namespace RHEVENT.Controllers
             SqlConnection con = new SqlConnection(constr);
             con.Open();
 
-
+            
 
             ViewData["CurrentFilterCodeF"] = searchStringCodeF;
             ViewData["CurrentFilterUsr"] = searchStringUsr;
@@ -815,7 +818,7 @@ namespace RHEVENT.Controllers
                 Response.BinaryWrite(pck2.GetAsByteArray());
                 Response.End();
                 return View();
-
+                
             }
 
             DataTable dt = new DataTable();
@@ -891,7 +894,7 @@ namespace RHEVENT.Controllers
 
 
         // GET: E_Formation
-        public ActionResult Index(string searchStringCodeF, string searchStringCodeE, string searchStringObjet)
+        public ActionResult Index(string searchStringCodeF , string searchStringCodeE , string searchStringObjet)
         {
             //, string searchStringDateC
             ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
@@ -912,15 +915,15 @@ namespace RHEVENT.Controllers
 
             List<E_Formation> list = new List<E_Formation>();
 
-            //|| searchStringDateC != null
+             //|| searchStringDateC != null
             if (!String.IsNullOrEmpty(searchStringCodeF) || !String.IsNullOrEmpty(searchStringCodeE) || !String.IsNullOrEmpty(searchStringObjet))
             {
                 var r = (from m in db.E_Formation
                          where m.Matricule_Formateur == user.matricule && m.Etat_Formation == "Active"
-                         select new { m.Code, m.CodeEval, m.Objet, m.Date_Creation, m.EtatDiff }).Distinct();
+                         select new { m.Code, m.CodeEval , m.Objet ,   m.Date_Creation , m.EtatDiff }).Distinct();
 
-
-
+             
+               
                 E_FormationController.searchTermCodeF = "searchStringCodeF";
                 E_FormationController.ValTermCodeF = searchStringCodeF;
 
@@ -931,7 +934,7 @@ namespace RHEVENT.Controllers
                 E_FormationController.ValTermObjet = searchStringObjet;
 
                 if (!String.IsNullOrEmpty(searchStringCodeF))
-                    r = r.Where(s => s.Code.ToLower().Contains(searchStringCodeF.ToLower()));
+                    r = r.Where(s => s.Code.ToLower(). Contains(searchStringCodeF.ToLower()));
 
 
                 if (!String.IsNullOrEmpty(searchStringCodeE))
@@ -959,7 +962,7 @@ namespace RHEVENT.Controllers
 
                     e.NumDiapo = 0;
 
-                    e.Date_Creation = ff.Date_Creation;
+                    e.Date_Creation = ff.Date_Creation ;
 
                     e.Objet = ff.Objet;
 
@@ -969,7 +972,7 @@ namespace RHEVENT.Controllers
 
                     e.Id = 0;
 
-                    e.EtatDiff = ff.EtatDiff;
+                    e.EtatDiff = ff.EtatDiff ;
 
                     list.Add(e);
                 }
@@ -988,7 +991,7 @@ namespace RHEVENT.Controllers
 
 
 
-
+          
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -998,7 +1001,7 @@ namespace RHEVENT.Controllers
                 string dd = dt.Rows[i]["code"].ToString();
 
 
-
+                  
                 SqlDataAdapter da2;
                 da2 = new SqlDataAdapter(" SELECT  TOP (1) Date_Creation, Objet , Id  FROM [E_Formation] where   Code =  '" + dd + "'", con);
                 da2.Fill(dt2);
@@ -1030,7 +1033,7 @@ namespace RHEVENT.Controllers
 
 
 
-
+        
             return View(list);
 
             //ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
@@ -1191,6 +1194,7 @@ namespace RHEVENT.Controllers
         public ActionResult Consult(string id)
         {
             //E_Formation e = db.E_Formation.Find(id); 
+
             if (Session["userconnecté"] == null)
             {
                 return RedirectToAction("Login", "Account");
@@ -1201,7 +1205,7 @@ namespace RHEVENT.Controllers
 
                 return View();
             }
-            
+
             //string constr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
             //SqlConnection con = new SqlConnection(constr);
             //con.Open();
@@ -1394,10 +1398,13 @@ namespace RHEVENT.Controllers
             }
 
             else
-                {
-                    if (codeF != null)
+            {
+                if (codeF != null)
                     codeF = codeF.Substring(0, 13);
+
                 ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+
+
                 var verifForm = from m in db.E_ResultFormation
                                 where m.Code_Formation == codeF && m.MatUser == user.matricule
                                 select m;
@@ -1676,10 +1683,9 @@ namespace RHEVENT.Controllers
                 //    return RedirectToAction("ResultQCM", "E_QCM", new { codeEval = id });
                 //}
             }
-            
-            
-                return View();
+            return View();
         }
+
 
         public ActionResult Statistique(string id , string searchStringCodeF, string searchStringObjet, string searchStringUsr, string Etat)
         {
@@ -1849,7 +1855,7 @@ namespace RHEVENT.Controllers
             //da.Fill(dt);
 
             SqlDataAdapter da;
-            da = new SqlDataAdapter(" select distinct  E_ListFormationDiffus.Code_formt, E_ListFormationDiffus.Objet ObjForm, E_ListFormationDiffus.Mat_usr, E_ListFormationDiffus.Nom_usr, E_ListFormationDiffus.deadline, E_ResultFormation.DateTerm , case when(E_ResultFormation.Resultat = 'Complete') then 'Complete' else 'Incomplete' end as Etat from E_ListFormationDiffus left join E_ResultFormation on E_ResultFormation.Code_Formation = E_ListFormationDiffus.Code_formt inner join E_Formation on E_Formation.Code = E_ListFormationDiffus.Code_formt where E_Formation.Matricule_Formateur = "+user.matricule+" and E_ListFormationDiffus.Code_formt = '" + id + "' ", con);
+            da = new SqlDataAdapter("select distinct  E_ListFormationDiffus.Code_formt, E_ListFormationDiffus.Objet ObjForm, E_ListFormationDiffus.Mat_usr, E_ListFormationDiffus.Nom_usr , 'Incomplete' etat , convert(date, '') DateTerm , E_ListFormationDiffus.deadline from E_ListFormationDiffus inner join E_Formation on E_Formation.Code = E_ListFormationDiffus.Code_formt left outer join E_ResultFormation on E_ResultFormation.Code_Formation =  E_ListFormationDiffus.Code_formt where E_Formation.Matricule_Formateur = "+ user.matricule+" and E_ListFormationDiffus.Code_formt = '"+id+"'   and E_ListFormationDiffus.Mat_usr not in ( select distinct E_ResultFormation.MatUser from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='"+id+"' and  E_Formation.Matricule_Formateur = "+user.matricule+ ")  union  select distinct E_Formation.Code Code_formt, E_Formation.Objet ObjForm, E_ResultFormation.MatUser Mat_usr, E_ResultFormation.Usr Nom_usr, E_ResultFormation.Resultat etat , E_ResultFormation.DateTerm ,E_ResultFormation.DeadLine  from E_ResultFormation inner join   E_Formation on E_Formation.Code = E_ResultFormation.Code_Formation where code_formation ='"+id+"' and  E_Formation.Matricule_Formateur = "+user.matricule+"   ", con);
             da.Fill(dt);
 
 

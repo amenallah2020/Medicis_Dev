@@ -28,7 +28,11 @@
 
         @if (@Html.DisplayFor(model => model.NumDiapo) != null)
         {
-            if (Convert.ToInt32(@Html.DisplayFor(model => model.NumDiapo).ToString()) != 1)
+            if (Convert.ToInt32(@Html.DisplayFor(model => model.NumDiapo).ToString()) == 1)
+            {
+                <input type="submit" id="Previous" name="Previous" disabled="disabled" value="Précédent" class="btn btn-danger ">
+            }
+            else if (Convert.ToInt32(@Html.DisplayFor(model => model.NumDiapo).ToString()) != 1)
             {
                 <input type="submit" id="Previous" name="Previous" value="Précédent" class="btn btn-danger ">
             }
@@ -36,12 +40,29 @@
 
         @if (@Html.DisplayFor(model => model.NumDiapo) != null)
         {
-            if (Convert.ToInt32(@Html.DisplayFor(model => model.NumDiapo).ToString()) != Convert.ToInt32(@ViewBag.count))
+            if (Convert.ToInt32(@Html.DisplayFor(model => model.NumDiapo).ToString()) == Convert.ToInt32(@ViewBag.count))
+            {
+                <input type="submit" id="next" name="next" disabled="disabled" value="Suivant" style="margin-left:auto" class="btn btn-primary ">
+            }
+            else if (Convert.ToInt32(@Html.DisplayFor(model => model.NumDiapo).ToString()) != Convert.ToInt32(@ViewBag.count))
             {
                 <input type="submit" id="next" name="next" value="Suivant" style="margin-left:auto" class="btn btn-primary ">
             }
         }
-       
+
+        @if (@Html.DisplayFor(model => model.NumDiapo) == null)
+        {
+            <span class="col-lg-12" style="color:blue; font-size:14px  ">
+                1/@ViewBag.count
+            </span>
+        }
+        else
+        {
+            <span class="col-lg-12" style="color:blue; font-size:14px">
+                @Html.DisplayFor(model => model.NumDiapo)/@ViewBag.count
+            </span>
+
+        }
 
 
 
@@ -49,9 +70,10 @@
         @if (@Html.DisplayFor(model => model.CodeEval).ToString() != "" && Convert.ToInt32(@Html.DisplayFor(model => model.NumDiapo).ToString()) == Convert.ToInt32(@ViewBag.count))
         {
 
-        <div onclick="location.href='@Url.Action("Consult", "E_QCM", new { id = @Html.DisplayFor(model => model.CodeEval).ToString() }, null)'" style=" color:white ; background-color:forestgreen " class="btn">  Passer l'évaluation</div>
+            <div onclick="location.href='@Url.Action("Consult", "E_QCM", new { id = @Html.DisplayFor(model => model.CodeEval).ToString() }, null)'" style=" color:white ; background-color:forestgreen " class="btn">  Passer l'évaluation</div>
 
         }
+        
     </div>
         @*if (  Convert.ToInt32(@Html.DisplayFor(model => model.NumDiapo).ToString()) == Convert.ToInt32(@ViewBag.count))
             {
@@ -59,23 +81,13 @@
                 <div onclick="location.href='@Url.Action("Terminer", "E_Formation", new { Codef = @Html.DisplayFor(model => model.Code).ToString() }, null)'" style=" color:white ; background-color:forestgreen ; margin-left:92% " class="btn"> Terminer</div>
 
             }*@
+    <br />
+        <br />
 
-        <br /><center><img src="@Html.DisplayFor(model => model.Chemin)" style="width:80% "></center>
+    <center><img src="@Html.DisplayFor(model => model.Chemin)" style="border-radius:10px;border-width:thin; border: 2px solid black;width:80%"></center>
 
 
-        if (@Html.DisplayFor(model => model.NumDiapo) == null)
-        {
-            <div class="col-lg-12" style="color:blue; font-size:14px  ">
-                1/@ViewBag.count
-            </div>
-        }
-        else
-        {
-            <div class="col-lg-12" style="color:blue; font-size:14px">
-                @Html.DisplayFor(model => model.NumDiapo)/@ViewBag.count
-            </div>
-
-        }
+        
 
         <div hidden>
             <input value="@Html.DisplayFor(model => model.Code)" name="codeform" />
